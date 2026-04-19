@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Harnessing AI — Harness Engineering · 驾驭工程</title>
+    <meta name="description" content="A bilingual book about Harness Engineering — shaping environments for AI coding agents.">
+    <style>
+        html, body { margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #24292e;
+            background: #fafbfc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2em;
+        }
+        main {
+            max-width: 40em;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.6rem;
+            margin: 0 0 0.25em;
+            line-height: 1.2;
+        }
+        .subtitle {
+            color: #586069;
+            margin: 0 0 2em;
+        }
+        .picker {
+            display: flex;
+            gap: 1em;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .picker a {
+            display: inline-block;
+            padding: 0.75em 1.5em;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #0366d6;
+            text-decoration: none;
+            font-size: 1rem;
+            min-width: 10em;
+        }
+        .picker a:hover,
+        .picker a:focus {
+            background: #f6f8fa;
+            border-color: #0366d6;
+        }
+        .note {
+            margin-top: 2em;
+            font-size: 0.85rem;
+            color: #6a737d;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Harnessing AI: The Craft of Shaping Agents</h1>
+        <p class="subtitle">《驾驭工程：给 AI 套上缰绳》</p>
+        <div class="picker">
+            <a href="./en/" hreflang="en">Read in English →</a>
+            <a href="./zh_CN/" hreflang="zh-CN">阅读中文版 →</a>
+        </div>
+        <p class="note">
+            If your browser allows scripts, you will be redirected automatically.
+            Otherwise, pick a language above.
+        </p>
+    </main>
+    <script src="./en/_static/lang-redirect.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+# verified: 2026-04-17 · metrics.yaml · MDD guardian · weekly review contract
+metrics_version: "0.1"
+project: todo-cli
+cadence: weekly
+signals:
+  - name: pytest_pass_rate
+    source: ci
+    target: "= 1.00"
+    rationale: TDD guardian — a failing test halts the release train.
+  - name: broken_link_count
+    source: make book-linkcheck
+    target: "<= 0"
+    rationale: SDD guardian — stale docs silently mis-spec the agent.
+  - name: mean_review_time_hours
+    source: gitlab_api
+    target: "<= 24"
+    rationale: MDD guardian — review latency is the canary for workflow health.
+  - name: agent_turns_to_green
+    source: harness_log
+    target: "<= 3"
+    rationale: Meta-signal — rising turns-to-green means the spec or test is ambiguous.

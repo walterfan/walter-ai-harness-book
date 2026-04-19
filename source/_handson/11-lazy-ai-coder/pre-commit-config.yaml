@@ -1,0 +1,25 @@
+# verified: 2026-04-17 · Ch.11 hands-on · symlink-safe copy of the final pre-commit config
+# To be landed on main as part of §14.4.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - {id: trailing-whitespace}
+      - {id: end-of-file-fixer}
+      - {id: check-yaml}
+      - {id: detect-private-key}
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks: [{id: gitleaks}]
+  - repo: local
+    hooks:
+      - id: prompts-lint
+        name: prompts-lint
+        entry: python scripts/prompts_lint.py config/prompts.yaml
+        language: system
+        pass_filenames: false
+      - id: mcp-schema-check
+        name: mcp-schema-check
+        entry: go run ./cmd/mcp-schema-check
+        language: system
+        pass_filenames: false

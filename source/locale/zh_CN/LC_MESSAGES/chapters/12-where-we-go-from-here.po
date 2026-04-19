@@ -1,0 +1,679 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-18 21:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:6
+#: 20d1700436574354a46af249c058d1da
+msgid "Where We Go from Here"
+msgstr "从这里出发，往哪走"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:8
+#: 28f01aac511a4a59aa6ace9648db1007
+msgid ""
+"*A book that does not end with a checklist is a book that does not expect to"
+" be used.*"
+msgstr "*一本不以清单收尾的书，就是一本不打算被拿来用的书。*"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:10
+#: 8c53f48e4ca343c480076f4a6787f403
+msgid "§12.1 — The Thesis in One Page"
+msgstr "§12.1 —— 一页纸上的立论"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:12
+#: 21bd17672fd742ce972266f172c91e78
+#, python-brace-format
+msgid ""
+"The book's analytical spine fits onto one page: three guardians × four zones"
+" = twelve cells, each cell an artefact a team can ship. Every cell below is "
+"a `{ref}` link back into its Chapter 05 H3 subsection."
+msgstr ""
+"本书的分析骨架，一页就装得下：三大护法 × 四区域 ＝ 十二格，每一格都是一件团队可以交付的制品。下表每一格都是一条 `{ref}` 链接，回指第 05"
+" 章里对应的 H3 小节。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:21
+#: 07f7b09611344450845652f63bd38391
+msgid "**Bridle** — steers before writing"
+msgstr "**缰绳** —— 在下笔之前先掰方向"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:22
+#: ff49f0555b014c059552e079751900cb
+msgid "**Fence** — refuses bad work"
+msgstr "**护栏** —— 拒掉不合格的活"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:23
+#: d86f95024aae46019f384fcef06a6ce7
+msgid "**Paddock** — bounds the agent's roam"
+msgstr "**牧场** —— 圈定智能体能跑的范围"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:24
+#: 5ef45e74b29848979aba2a7a7c2805f9
+msgid "**Groom** — tends the harness itself"
+msgstr "**梳理** —— 照看挽具本身"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:25
+#: 97854415126e488abf6319bc3c3d5ec2
+msgid "**SDD**"
+msgstr "**SDD**"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:26
+#: 3def97714b874cb8b549f1fba8d99aa0
+#, python-brace-format
+msgid "{ref}`sdd-x-bridle`"
+msgstr "{ref}`sdd-x-bridle`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:27
+#: 857ce06a605640e9b8d1db747b8b645c
+#, python-brace-format
+msgid "{ref}`sdd-x-fence`"
+msgstr "{ref}`sdd-x-fence`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:28
+#: 12a0317ba6e8497b905239f12b6e5b57
+#, python-brace-format
+msgid "{ref}`sdd-x-paddock`"
+msgstr "{ref}`sdd-x-paddock`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:29
+#: 273c4e2ca1b54fd8a60031d3662c1721
+#, python-brace-format
+msgid "{ref}`sdd-x-groom`"
+msgstr "{ref}`sdd-x-groom`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:30
+#: 46fa534d772b4169be6ced592fee8510
+msgid "**TDD**"
+msgstr "**TDD**"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:31
+#: b524d17ef8c7447d8ab6603f04b8d19d
+#, python-brace-format
+msgid "{ref}`tdd-x-bridle`"
+msgstr "{ref}`tdd-x-bridle`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:32
+#: 6d2babc6d74445ba97eeb25ee44cfeb1
+#, python-brace-format
+msgid "{ref}`tdd-x-fence`"
+msgstr "{ref}`tdd-x-fence`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:33
+#: c42032f91cc645c5ad06ca9f5ebd075a
+#, python-brace-format
+msgid "{ref}`tdd-x-paddock`"
+msgstr "{ref}`tdd-x-paddock`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:34
+#: ef4965d60bd84a36b68ad09d230bd5aa
+#, python-brace-format
+msgid "{ref}`tdd-x-groom`"
+msgstr "{ref}`tdd-x-groom`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:35
+#: 033965aa7b3c458b96556fdd667bd418
+msgid "**MDD**"
+msgstr "**MDD**"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:36
+#: 3a272962e0da4126b9d193be1592af27
+#, python-brace-format
+msgid "{ref}`mdd-x-bridle`"
+msgstr "{ref}`mdd-x-bridle`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:37
+#: 16cf87ec0ca440c18ee2ea3ac57977a2
+#, python-brace-format
+msgid "{ref}`mdd-x-fence`"
+msgstr "{ref}`mdd-x-fence`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:38
+#: daa48975a6234e208e5366a5b06d695a
+#, python-brace-format
+msgid "{ref}`mdd-x-paddock`"
+msgstr "{ref}`mdd-x-paddock`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:39
+#: 91379f55bf7a4e36b5eff6cc5c616948
+#, python-brace-format
+msgid "{ref}`mdd-x-groom`"
+msgstr "{ref}`mdd-x-groom`"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:42
+#: 0853994212e844d6ac66b77ba9adb399
+#, python-brace-format
+msgid ""
+"All twelve `{ref}` links resolve to live subsections in Ch.05; a reader who "
+"clicks any one of them lands on a working artefact and a definition."
+msgstr "全部十二条 `{ref}` 链接都指向第 05 章中实打实的小节；读者点开任何一条，都会落在一件可用的制品与一则定义上。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:45
+#: 87fd2c833fb6453a83909b2c3adb599f
+msgid "§12.2 — 30/60/90-Day Action Checklist"
+msgstr "§12.2 —— 30/60/90 天行动清单"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:47
+#: 86e225b80b554cad99c7fda2ced435ab
+msgid ""
+"The book's single most important claim is that you do not need to adopt all "
+"twelve cells at once. You pick **one**, ship it, ship the *column* or the "
+"*row* it sits in, then run a full HarnessCard review. Below are the three "
+"sub-tasks with hands-on pointers; a standalone copy lives at "
+"`_handson/12-where-we-go-from-here/checklist-30-60-90.md`."
+msgstr ""
+"本书最重要的那一条主张是：你 *不必* 把十二格一次性全采纳。你挑 **一格**、把它交付、再把它所在的那一 *列* 或 *行* 交付，然后跑一轮完整的"
+" HarnessCard 评审。下面是这三个子任务，带 hands-on 指针；独立副本放在 `_handson/12-where-we-go-"
+"from-here/checklist-30-60-90.md`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:53
+#: b51094cfddb345cd9cb06c098b2eff57
+msgid "Day 1–30 · One Cell"
+msgstr "Day 1–30 · 一格"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:55
+#: 52546bf1952b44449c2cc666c8d00b47
+msgid ""
+"Pick one matrix cell, ship one artefact for it, run it against the "
+"HarnessCard rubric from Appendix D."
+msgstr "挑一格矩阵单元，为它交付一件制品，再拿附录 D 的 HarnessCard 评分尺跑一遍。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:58
+#: 448a742e84424fdc891f95fe10883f1f
+#, python-brace-format
+msgid ""
+"**SDD × Bridle.** Commit an `AGENTS.md` based on `_handson/05-harness-"
+"anatomy/sdd-x-bridle/AGENTS.md.sample`; ties into {ref}`sdd-x-bridle`."
+msgstr ""
+"**SDD × 缰绳。** 以 `_handson/05-harness-anatomy/sdd-x-bridle/AGENTS.md.sample` "
+"为底，提交一份 `AGENTS.md`；与 {ref}`sdd-x-bridle` 相挂钩。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:61
+#: 83e91f1315b0473baf015086cf0613b0
+#, python-brace-format
+msgid ""
+"**TDD × Fence.** Install a `PreToolUse` hook based on `_handson/05-harness-"
+"anatomy/tdd-x-fence/hooks.json`; ties into {ref}`tdd-x-fence`."
+msgstr ""
+"**TDD × 护栏。** 以 `_handson/05-harness-anatomy/tdd-x-fence/hooks.json` 为底，装一条 "
+"`PreToolUse` 钩子；与 {ref}`tdd-x-fence` 相挂钩。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:64
+#: ad0d5448201543bfaeef7735dfe216bd
+#, python-brace-format
+msgid ""
+"**MDD × Fence.** Adopt a per-session cost cap from `_handson/05-harness-"
+"anatomy/mdd-x-fence/cost-cap.yaml`; ties into {ref}`mdd-x-fence`."
+msgstr ""
+"**MDD × 护栏。** 采纳 `_handson/05-harness-anatomy/mdd-x-fence/cost-cap.yaml` "
+"中那条\"单次会话成本上限\"；与 {ref}`mdd-x-fence` 相挂钩。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:68
+#: 62debce1c2954628be66d5abcf81e8ff
+#, python-brace-format
+msgid ""
+"Ford, Parsons & Kua {cite}`ford2017buildingevolutionary` supply the framing:"
+" one fitness function at a time is already a real improvement."
+msgstr ""
+"Ford、Parsons 与 Kua {cite}`ford2017buildingevolutionary` 提供了这件事的大框架：一次只上一条 "
+"fitness function，就已是一次真实的改进。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:71
+#: 53122c42fdbd4716b9895fc681e97a96
+msgid "Pitfall — The Day-30 \"we are done\" trap"
+msgstr "陷阱 —— 第 30 天 \"我们搞完了\" 的坑"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:74
+#: 9e47c67df98a4d7d8240481e36bd7fd3
+msgid ""
+"A team ships one cell by Day 30, celebrates, and stops. Ninety days later "
+"the cell has decayed — no Groom job was added, no review cadence was "
+"established, nobody owns the artefact. The +1 became +0.3 and is trending "
+"toward zero. **Why**: a single cell is a seed, not a crop. The Day-30 "
+"milestone exists to prove the team *can* ship a harness artefact; the Day-60"
+" milestone exists to prove the team can *keep* one alive. Teams that skip "
+"the second milestone end the quarter with the same harness theatre they "
+"started with, minus a week of engineering time. **Fix**: the Day-30 exit "
+"criterion is not \"artefact is merged\" but \"the artefact has an owner, a "
+"review cadence, and one refused or measured event in its log\". An unused "
+"cell is a rehearsal, not a production."
+msgstr ""
+"一支团队在第 30 天交付了一格，庆祝、然后停下来。九十天之后，这格已经腐化——没有 Groom "
+"任务被加上、没有评审节奏被建立、没有人署名持有这件制品。那个 +1 变成 +0.3，并在往 0 "
+"靠拢。**为什么**：单一格子是一粒种子，不是一茬庄稼。第 30 天的里程碑是为了证明这支团队 *能* 交付一件挽具制品；第 60 "
+"天的里程碑则是为了证明这支团队 "
+"*能让它活下来*。跳过第二个里程碑的团队，季末拿到的还是当初那场挽具剧场，只不过额外赔掉了一周工程师时间。**解法**：第 30 "
+"天的出口判据不是\"制品已合并\"，而是\"这件制品有归属、有评审节奏、日志里至少有一次 refused 或 measured "
+"事件\"。没被用起来的格子是排练，不是演出。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:89
+#: b09dd1ce73944310b44e2b84be723e82
+msgid "Day 31–60 · One Row or One Column"
+msgstr "Day 31–60 · 一行，或一列"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:91
+#: 151e8d2504ce4590af6df165fb280e4d
+msgid ""
+"Extend to a full row (one guardian across all four zones) or a full column "
+"(one zone across all three guardians)."
+msgstr "扩展到完整一行（一位护法横跨全部四个区域），或完整一列（一个区域横跨全部三位护法）。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:94
+#: 6bfac46cf933401b91b27283aa2ebdac
+#, python-brace-format
+msgid ""
+"**Full SDD row.** Ship Bridle + Fence + Paddock + Groom artefacts from "
+"`_handson/05-harness-anatomy/sdd-x-*/`. Cells {ref}`sdd-x-bridle`, "
+"{ref}`sdd-x-fence`, {ref}`sdd-x-paddock`, {ref}`sdd-x-groom`."
+msgstr ""
+"**完整 SDD 行。** 交付 `_handson/05-harness-anatomy/sdd-x-*/` 下的缰绳 ＋ 护栏 ＋ 牧场 ＋ 梳理 "
+"四件制品。对应格子：{ref}`sdd-x-bridle`、{ref}`sdd-x-fence`、{ref}`sdd-x-"
+"paddock`、{ref}`sdd-x-groom`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:98
+#: d49c41a6c8bf4ce3b10c966c299c2da7
+#, python-brace-format
+msgid ""
+"**Full Fence column.** Ship SDD + TDD + MDD fences from "
+"`_handson/05-harness-anatomy/*-x-fence/`. Cells {ref}`sdd-x-fence`, "
+"{ref}`tdd-x-fence`, {ref}`mdd-x-fence`."
+msgstr ""
+"**完整护栏列。** 交付 `_handson/05-harness-anatomy/*-x-fence/` 下的 SDD ＋ TDD ＋ MDD "
+"三道护栏。对应格子：{ref}`sdd-x-fence`、{ref}`tdd-x-fence`、{ref}`mdd-x-fence`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:101
+#: ff4e0087a481449cb436cad906d1418c
+#, python-brace-format
+msgid ""
+"**Operating drumbeat.** Adopt the weekly entropy audit "
+"(`_handson/06-operating-a-harness/entropy-audit.yml`) and the artefact state"
+" model (`_handson/06-operating-a-harness/artefact-state-model.yaml`); these "
+"harden the Groom row — {ref}`sdd-x-groom`, {ref}`tdd-x-groom`, {ref}`mdd-x-"
+"groom`."
+msgstr ""
+"**运行节拍。** 采纳每周熵审计（`_handson/06-operating-a-harness/entropy-"
+"audit.yml`）与制品状态机（`_handson/06-operating-a-harness/artefact-state-"
+"model.yaml`）；这两件一起，把\"梳理\"那一行夯实 —— {ref}`sdd-x-groom`、{ref}`tdd-x-"
+"groom`、{ref}`mdd-x-groom`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:107
+#: 67b1eeb189114e76b9cf6be7e46004f1
+#, python-brace-format
+msgid ""
+"Forsgren, Humble & Kim's DORA-metrics work {cite}`forsgren2018accelerate` "
+"argues that a quarterly cadence is the right unit for measurement; day 31–60"
+" is the second month of your first quarter."
+msgstr ""
+"Forsgren、Humble 与 Kim 的 DORA 度量工作 {cite}`forsgren2018accelerate` "
+"主张：季度节奏才是度量的合适单位；第 31–60 天就是你第一个季度的第二个月。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:111
+#: 5e8367e3baef4ec48ee77c064b755949
+msgid "Pitfall — The Day-60 \"row or column?\" paralysis"
+msgstr "陷阱 —— 第 60 天 \"一行还是一列？\" 的瘫痪"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:114
+#: a288cb08c98045ccaaa6573b95e4c9a1
+msgid ""
+"A team reaches Day 31 with one cell shipped and spends the next three weeks "
+"in a committee debate: *row* or *column*? Which guardian? Which zone? By Day"
+" 60 no second artefact has shipped; the team reports \"strategy work\" in "
+"retro. **Why**: the row-or- column choice is optimisation theatre — either "
+"direction is a real improvement, and the wrong choice (if one exists) is "
+"recoverable in the next quarter. Time spent choosing is time not spent "
+"shipping. **Fix**: pick the direction whose *weakest cell* is the most "
+"embarrassing to name out loud. If you are ashamed to show a colleague your "
+"`AGENTS.md` today, ship the full SDD row; if your CI fails intermittently "
+"and nobody rotates the key that fixes it, ship the full Fence column. The "
+"embarrassment test resolves the paralysis in five minutes and picks the "
+"direction that was always going to matter most."
+msgstr ""
+"一支团队在第 31 天时已经交付了一格，接下来三周全耗在一场委员会辩论里：是 *一行* 还是 *一列*？哪位护法？哪一区域？到第 60 "
+"天，第二件制品一件都没出；团队在回顾会上汇报\"战略工作\"。**为什么**：一行或一列，本身是一场\"优化剧场\"——任一方向都是真实改进，而\"错误选择\"（如果真有的话）在下一个季度都可救。选择时花掉的时间，就是没有交付的时间。**解法**：挑那个"
+" *最弱格子* 最让你不好意思当众说出口的方向。如果今天把 `AGENTS.md` 给同事看你会脸红，就上完整 SDD 行；如果 CI "
+"时不时挂、却没人去轮换那把能修它的密钥，就上完整护栏列。这个\"尴尬测试\"能在五分钟内解开这场瘫痪，并挑出那个原本就最重要的方向。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:130
+#: 61c88e1da9384279b254ca922ace149a
+msgid "Day 61–90 · A Production HarnessCard Review"
+msgstr "Day 61–90 · 一次生产级 HarnessCard 评审"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:132
+#: 6252f1cbd0c24919b16eabaadd6a6aa6
+#, python-brace-format
+msgid ""
+"Run a full HarnessCard review on a production codebase using the blank "
+"template from Appendix D (see {ref}`apd-harnesscard-template`), land at "
+"least one harness-driven improvement, and record the measurable delta."
+msgstr ""
+"在一份生产代码库上，用附录 D 的空白模板（见 {ref}`apd-harnesscard-template`）跑一次完整 HarnessCard "
+"评审，合入至少一项由挽具驱动的改进，并记录可度量的 delta。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:136
+#: e5773a33c120417d8dd943451bd61055
+#, python-brace-format
+msgid ""
+"**Score.** Fill the twelve-cell blank HarnessCard at {ref}`apd-harnesscard-"
+"template` — every cell gets a 0–5 score and a one-line evidence note. Cross-"
+"check against {ref}`sdd-x-bridle`, {ref}`tdd-x-fence`, and {ref}`mdd-x-"
+"fence` using `_handson/11-lazy-ai-coder/HarnessCard-Act1.md` as a worked "
+"precedent."
+msgstr ""
+"**打分。** 把 {ref}`apd-harnesscard-template` 里那张十二格的空白 HarnessCard 填满 —— 每格给出 "
+"0–5 的分数与一行证据备注。用 `_handson/11-lazy-ai-coder/HarnessCard-Act1.md` 作为实例参考，跟 "
+"{ref}`sdd-x-bridle`、{ref}`tdd-x-fence` 与 {ref}`mdd-x-fence` 交叉核对。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:142
+#: 4e68dd3cae0c4ae1887c13ebf4bcae46
+#, python-brace-format
+msgid ""
+"**Raise one cell.** Pick the lowest-scoring cell, land one fix scoped to it "
+"(a `make` target, a hook, a YAML, a script — see `_handson/11-lazy-ai-"
+"coder/reproduce.sh` for the worked pattern) and tie the fix back to the "
+"target cell (e.g. {ref}`mdd-x-paddock`)."
+msgstr ""
+"**抬升一格。** 选得分最低的那一格，合入一项收束在这一格里的修复（一个 `make` 目标、一个钩子、一段 YAML、一段脚本 —— 以 "
+"`_handson/11-lazy-ai-coder/reproduce.sh` 为已跑通的样板），并把这项修复绑回它所针对的那一格（例如 "
+"{ref}`mdd-x-paddock`）。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:146
+#: 8e243e7069544546a13f6b128fa918c6
+#, python-brace-format
+msgid ""
+"**Re-score and attach.** Author the post-fix HarnessCard using "
+"`_handson/11-lazy-ai-coder/HarnessCard-Act4.md` as a template, attach it to "
+"the release PR, and include a one-line delta note naming which cell moved "
+"(e.g. {ref}`sdd-x-groom`) and by how much."
+msgstr ""
+"**重评并挂载。** 用 `_handson/11-lazy-ai-coder/HarnessCard-Act4.md` 作模板，写出修复后的 "
+"HarnessCard，挂到发布 PR 上，并附一行 delta 备注：指名是哪一格在动（例如 {ref}`sdd-x-groom`）、动了多少。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:151
+#: e19300aa72c6441c91356c3245a9af32
+#, python-brace-format
+msgid ""
+"Lehman's evolution laws {cite}`lehman1980laws` explain why a quarterly re-"
+"score is not optional: unmaintained harnesses decay by default."
+msgstr "Lehman 的演化定律 {cite}`lehman1980laws` 解释了\"季度重评\"为什么不是可选项：无人维护的挽具，默认就是会腐化。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:154
+#: cda478d5912d4ae8b86e529eacb62b5b
+msgid "Pitfall — Three ways the Day-90 review goes wrong"
+msgstr "陷阱 —— 第 90 天评审会翻车的三种方式"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:157
+#: c58975d597874ce7bcbab0d795cc97d2
+msgid ""
+"**Self-scored.** The engineer who shipped the fix also scores it; scores "
+"drift up +0.5 on average. *Fix*: the Day-90 scorer is not the Day-30 "
+"shipper."
+msgstr "**自打分。** 交付修复的那位工程师同时也是打分人；分数平均偏移 +0.5。*解法*：第 90 天的打分人，不能是第 30 天的交付人。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:161
+#: 4271e7e038e047d690f55134bc01bacb
+msgid ""
+"**Inputs not outcomes.** Cell scores rise while DORA metrics don't. Every "
+"cell score must carry one outcome metric it is *predicted* to move (the "
+"Ch.11 *vanity delta* pitfall develops this in full)."
+msgstr ""
+"**投入而非产出。** 格子得分在涨，DORA 指标却不动。每一项格子得分，都必须配一条它 *被预言要移动* 的产出指标（第 11 章的 *虚荣 "
+"delta* 陷阱对此做了完整展开）。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:165
+#: ee10d38d9c4c4005978ef8a5f862f9cd
+msgid ""
+"**Raising the top, not the bottom.** The team lifts a 4 to a 5 instead of a "
+"1 to a 2; the mean rises but the weakest load-bearing dimension doesn't. "
+"*Fix*: the Day-90 ritual must pick the lowest-scoring cell, even when a "
+"stronger cell is tempting."
+msgstr ""
+"**抬高顶、不抬低底。** 团队把一个 4 抬成 5，而不是把一个 1 抬成 2；均值在升，承重最弱的那个维度却纹丝不动。*解法*：第 90 "
+"天的仪式必须去挑得分最低的那一格，哪怕更强的某一格更诱人。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:171
+#: ee8a1fcf8c0142caa9ade8ddcf7a3595
+msgid "§12.3 — Open Questions"
+msgstr "§12.3 —— 悬而未决的问题"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:173
+#: 7b42f68c0dad468282da4f8f4712dc2e
+msgid ""
+"At most seven directions where the book raises questions it does not answer."
+" Each carries at least one citation that sketches the adjacent literature."
+msgstr "最多七个方向——在这些方向上，本书提出了自己并未回答的问题。每一条至少配一处引用，勾勒相邻文献。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:177
+#: fd769448a9744170b158fe6ee7261081
+#, python-brace-format
+msgid ""
+"**Meta-harness versioning under multi-tenant LLM deployments.** How should "
+"harness rules survive a provider rolling out a model change mid-quarter, "
+"especially when customers share a tenant? {cite}`huyen2025aieng`."
+msgstr ""
+"**多租户 LLM 部署下的元挽具版本化。** "
+"当供应商在季度中段推送模型变更、尤其当多个客户共享同一租户时，挽具规则该如何存活？{cite}`huyen2025aieng`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:181
+#: 2482dbe5c38c43d4ab878f32c4bf8e8c
+#, python-brace-format
+msgid ""
+"**When to migrate from blog-format `.md` context into a structured RAG "
+"pipeline.** Karpathy's context-engineering framing "
+"{cite}`karpathy2025context` bears on this but does not resolve it."
+msgstr ""
+"**何时把博客体 `.md` 上下文迁移到结构化 RAG 管道。** Karpathy 的 context engineering 定义 "
+"{cite}`karpathy2025context` 与此相关，但并没有给出答案。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:184
+#: 88b1b48b7d1c49d6ad74d01164fa5806
+#, python-brace-format
+msgid ""
+"**HarnessCards for polyglot monorepos and cross-geography teams.** Does the "
+"3 × 4 matrix survive scaling up the unit of analysis? {cite}`conway1968law`."
+msgstr ""
+"**多语言 monorepo 与跨地域团队的 HarnessCard。** 当分析单位被放大，这套 3 × 4 "
+"矩阵还扛得住吗？{cite}`conway1968law`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:187
+#: 2e4cb3d699ed43b18a53094d99247ad8
+#, python-brace-format
+msgid ""
+"**Continuous vs milestone-level entropy measurement.** Can entropy reduction"
+" be measured continuously across a sprint, or is milestone measurement the "
+"highest useful resolution? {cite}`lehman1980laws`."
+msgstr ""
+"**连续型 vs 里程碑型熵度量。** 熵的下降能在一次 sprint "
+"中被连续度量吗？还是说\"按里程碑\"就已经是最高有用分辨率？{cite}`lehman1980laws`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:190
+#: 6f9d52722b5a4986b9e18f38ac5d3acf
+#, python-brace-format
+msgid ""
+"**Benchmarks that distinguish good harnesses from bad ones.** The Terminal-"
+"Bench 2.0 data point is suggestive but not settled "
+"{cite}`langchain2026tbench`."
+msgstr ""
+"**能把好挽具与坏挽具区分开的基准测试。** Terminal-Bench 2.0 提供了一个暗示性的数据点，但尚未成为定论 "
+"{cite}`langchain2026tbench`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:193
+#: 9f060a21872743f2bc077033af2373be
+#, python-brace-format
+msgid ""
+"**HarnessCard disclosure requirements for safety-critical agents.** Should "
+"regulators require HarnessCard-style disclosure the way they require SBOMs? "
+"{cite}`car2025decomposition`."
+msgstr ""
+"**安全关键型智能体的 HarnessCard 披露要求。** 监管机构是否应像要求 SBOM 一样，要求 HarnessCard "
+"式披露？{cite}`car2025decomposition`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:196
+#: 80fb31ca05d94e04b76fb8d61e1dda40
+#, python-brace-format
+msgid ""
+"**The half-life of a skill.** How long does a `SKILL.md` keep its load-"
+"bearing value before prompt drift erodes it? {cite}`anthropic2024skills`."
+msgstr ""
+"**一项技能的半衰期。** 在 prompt 漂移把一份 `SKILL.md` "
+"侵蚀掉之前，它还能承重多久？{cite}`anthropic2024skills`。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:200
+#: 210c292c60c8480f9ce4ac3680a1c013
+msgid "§12.4 — What the book is *not* arguing"
+msgstr "§12.4 —— 本书 *并未* 主张的事"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:202
+#: 1130a26b6b4f429981d5fa47352c9862
+msgid ""
+"A reader who has made it this far deserves the honest footnote on what this "
+"book's thesis does and does not claim."
+msgstr "一位读到这里的读者，有资格拿到一则诚实的脚注——说明本书的主张所包含、以及 *不* 包含的东西。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:205
+#: d9a9629394324e1185611fb44c05660b
+msgid ""
+"**Harnesses do not replace taste.** Nothing in the 3×4 matrix tells a team "
+"*which problem is worth solving*, which architecture to adopt, or when a "
+"`SKILL.md` is answering the wrong question. The harness constrains *how* the"
+" agent writes code; it does not originate *what* code is worth writing. "
+"Chapter 02's Stage-4 pitfall applies at the whole-book level."
+msgstr ""
+"**挽具不能替代品味。** 3×4 矩阵里没有一格会告诉一支团队 *哪个问题值得解决*、该采用何种架构、或某份 `SKILL.md` "
+"在回答一个错问题。挽具约束的是\"智能体 *怎样* 写代码\"；它不产生\"*什么* 代码值得写\"。第 02 章 Stage-4 "
+"的陷阱，在整本书层面同样成立。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:211
+#: 936f3becb85940608c8bf45d144fb298
+msgid ""
+"**Not every team needs every cell.** The §03.5 *when not to use* section is "
+"not a rhetorical concession; a solo prototype, a throwaway script, or a "
+"frozen legacy system genuinely do not pay back the harness investment. A "
+"team adopting the twelve-cell discipline for a forty-line CSV parser is "
+"performing harness theatre whether they know it or not."
+msgstr ""
+"**并不是每支团队都需要每一格。** §03.5 "
+"的\"何时不用\"并不是一段修辞让步；独自做的原型、一次性的脚本、一套被冻结的遗留系统，的确不会偿还这份挽具投资。一支为了一段四十行 CSV "
+"解析器就去采用十二格纪律的团队，无论自觉与否，都在上演一场挽具剧场。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:217
+#: 0ee8a7ec44504c38bcc92a0659f29ab2
+#, python-brace-format
+msgid ""
+"**The naming is not settled.** The four-zone vocabulary is practitioner-"
+"origin (§05.Provenance). If CAR {cite}`car2025decomposition` or LangChain's "
+"five-part anatomy {cite}`langchain2026tbench` fits your team better, use "
+"that framing and translate. The book's bet is on the *three-guardian × "
+"twelve-cell decomposition* as a Monday-morning planning tool, not on the "
+"zone names as a final taxonomy."
+msgstr ""
+"**命名并未板上钉钉。** 这份四区域词汇来自从业者（见 §05.Provenance）。若 CAR "
+"{cite}`car2025decomposition` 或 LangChain 的五部分解剖 {cite}`langchain2026tbench` "
+"更适合你的团队，就用那一套框架，并做翻译即可。本书押注的是 *三大护法 × 十二格分解* "
+"作为\"周一早上可用的规划工具\"，并未押注\"这些区域名\"成为终极分类法。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:224
+#: 98f0b5525852411182587932178e0666
+msgid ""
+"**The pitfalls are not exhaustive.** The inline callouts name the failures "
+"the author has debugged, watched others debug, or read credible accounts of."
+" They are a starting vocabulary, not a complete bestiary — §12.3 names where"
+" new failure modes are most likely to surface next."
+msgstr ""
+"**那些陷阱并未穷尽。** 行内的 callout "
+"只点出了作者自己调试过、看别人调试过、或读过可信记录的那些失败模式。它们是一份起步词汇表，不是一部完整异兽录——§12.3 "
+"指出了下一轮新失败模式最可能冒出来的地方。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:230
+#: e66cae1443b94e26a4010db84c654781
+msgid ""
+"If this chapter's 30/60/90 checklist, the 3×4 matrix, and the pitfall "
+"vocabulary give your team one refused-commit event, one measured signal, and"
+" one revised `AGENTS.md` bullet in the next ninety days, the book has done "
+"its job."
+msgstr ""
+"若本章的 30/60/90 清单、3×4 矩阵、以及这份陷阱词汇表，能在接下来九十天里给你的团队带来：一次被拒的 commit "
+"事件、一条被度量的信号、一条被修订过的 `AGENTS.md` 条目——那本书的活儿就算干完了。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:235
+#: 90c6d99ba5794d618a70372372061f08
+msgid "Research Foundations"
+msgstr "研究脉络"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:237
+#: a3f15c293a154d65baccd6e6cafd5ba1
+#, python-brace-format
+msgid ""
+"**DORA / Accelerate** {cite}`forsgren2018accelerate` — cadence and metric "
+"lineage for the 30/60/90 framing."
+msgstr ""
+"**DORA ／ Accelerate** {cite}`forsgren2018accelerate` —— 支撑 30/60/90 "
+"这一框架的节奏与度量谱系。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:239
+#: 71a0d1b3dfa244b68e212e1ba4ec32f3
+#, python-brace-format
+msgid ""
+"**Lehman's laws** {cite}`lehman1980laws` — why the 90-day review must recur."
+msgstr "**Lehman 定律** {cite}`lehman1980laws` —— 为什么 90 天评审必须周而复始。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:241
+#: e8d1d09c1ef44742aa249a6500071df4
+#, python-brace-format
+msgid ""
+"**Evolutionary architecture** {cite}`ford2017buildingevolutionary` — the "
+"fitness-function lineage for one-cell-at-a-time improvement."
+msgstr ""
+"**演化式架构** {cite}`ford2017buildingevolutionary` —— 支撑\"一次一格\"式改进的那条 fitness-"
+"function 谱系。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:244
+#: a99a1bc3d085434297202109af4057c4
+msgid "Hands-On"
+msgstr "动手环节"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:246
+#: 12fda4bc0f6c45e78ecda4be7da73ac4
+msgid ""
+"Two copyable artefacts live under `book/source/_handson/12-where-we-go-from-"
+"here/`:"
+msgstr "在 `book/source/_handson/12-where-we-go-from-here/` 下，住着两份可直接拷走的制品："
+
+#: ../../source/chapters/12-where-we-go-from-here.md:249
+#: 38b6b04fadfc40b8bde6ea70fa7c27bb
+msgid ""
+"`checklist-30-60-90.md` — the checklist as standalone markdown ready to "
+"paste into a team wiki."
+msgstr "`checklist-30-60-90.md` —— 以独立 markdown 形式交付的这份清单，适合直接粘进团队 wiki。"
+
+#: ../../source/chapters/12-where-we-go-from-here.md:251
+#: b53922834882405e9f1d0b3ef1591678
+msgid ""
+"`open-questions.md` — the open-questions list as a standalone file "
+"researchers can cite."
+msgstr "`open-questions.md` —— 以独立文件形式交付的悬而未决问题清单，便于研究者引用。"
+
+#~ msgid "Draft"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Content for this chapter will be written in task 9.1. When ``status`` is "
+#~ "flipped to ``complete``, this chapter MUST organize its body into three H2 "
+#~ "sections in fixed order: ``The Thesis in One Page``, ``30/60/90-Day Action "
+#~ "Checklist`` (with three H3 subsections — Day 1–30, Day 31–60, Day 61–90), "
+#~ "and ``Open Questions``, per the ``book-structure`` spec."
+#~ msgstr ""

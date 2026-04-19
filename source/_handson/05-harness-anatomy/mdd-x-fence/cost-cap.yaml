@@ -1,0 +1,13 @@
+# verified: 2026-04-17 · MDD × Fence · budget circuit-breaker, rejected over limit
+cost_cap_version: "0.1"
+per_session_usd:   2.00
+per_day_usd:       50.00
+per_month_usd:     800.00
+action_on_breach:
+  soft: warn_in_status_line
+  hard: refuse_new_tool_calls_until_reset
+alerts:
+  - channel: slack
+    at: 0.75  # of the monthly cap
+  - channel: email
+    at: 0.95

@@ -1,0 +1,19 @@
+# verified: 2026-04-17 · entropy · weekly dep/secret audit — .github/workflows/entropy-audit.yml
+name: entropy-audit
+on:
+  schedule: [{cron: "0 8 * * MON"}]  # every Monday 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: cargo audit
+        run: cargo install cargo-audit --locked && cargo audit
+      - name: npm audit
+        run: npm audit --audit-level=moderate || true
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+      - name: write weekly report
+        run: python scripts/entropy_report.py > reports/entropy-$(date +%F).md

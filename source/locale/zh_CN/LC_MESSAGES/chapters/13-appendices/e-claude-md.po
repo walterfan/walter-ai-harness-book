@@ -1,0 +1,295 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-18 09:55+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:6
+#: e7e08cef109f4d57b76d456e0cb5e70a
+msgid "Appendix E — Sample `CLAUDE.md` Template"
+msgstr "附录 E —— `CLAUDE.md` 样板模板"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:8
+#: a4a5a54f1cb44afa860dca526bc12dfe
+msgid ""
+"This appendix consolidates the hands-on fragments from Chapters 03, 04, 05, "
+"and 06 (including the Tauri-Todo arc) into a single `CLAUDE.md` a reader can"
+" drop directly into a fresh repository. Every block carries a `<!-- origin: "
+"..., zone: ..., guardian: ... -->` header comment so the resulting file "
+"remains auditable against the twelve-cell matrix."
+msgstr ""
+"本附录把第 03、04、05、06 章（含 Tauri-Todo 那条弧线）中的 hands-on 片段，合并成一份 "
+"`CLAUDE.md`，供读者直接丢进一份全新仓库使用。每一块都带一条 `<!-- origin: ..., zone: ..., guardian: "
+"... -->` 头注，这样生成出来的文件，仍然可以对照十二格矩阵审计。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:14
+#: 7657a731ee784e968628b56ad025f999
+#, python-brace-format
+msgid ""
+"**Licensing.** The template below is published under MIT; copy, modify, and "
+"redistribute without further acknowledgement. Citations are tracked in "
+"`_bib/*.bib` and do not travel with the template itself; the CAR HarnessCard"
+" schema {cite}`car2025decomposition` is the upstream disclosure format it is"
+" designed to feed."
+msgstr ""
+"**许可证。** 下面这份模板以 MIT 协议发布；拷贝、修改、再分发皆不需要额外致谢。引用记录住在 `_bib/*.bib` "
+"里，不会随模板一起旅行；CAR HarnessCard schema {cite}`car2025decomposition` "
+"是它被设计去对接的上游披露格式。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:20
+#: aa45f7bdbd214e3999ff91dcbebdbebc
+msgid "The consolidated template"
+msgstr "合并后的那份模板"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:22
+#: 60d7387dd3cb4dafb69a8e55c59aedb9
+#, python-brace-format
+msgid ""
+"# CLAUDE.md\n"
+"\n"
+"<!-- origin: chapters/03-what-is-harness-engineering.md, zone: Bridle, guardian: SDD -->\n"
+"## Role and scope\n"
+"You are a coding agent for <project-name>. You may edit <allowed paths>.\n"
+"You must not touch <forbidden paths>. Every new public function gets a\n"
+"docstring and a test; no exceptions.\n"
+"\n"
+"<!-- origin: chapters/04-three-guardians.md, zone: Bridle, guardian: SDD -->\n"
+"## Spec discipline\n"
+"Before editing any source file, read the matching spec under `specs/`\n"
+"(or, if absent, `docs/adr/`). If the spec is older than the code by\n"
+"more than 30 days, surface this as a risk and pause.\n"
+"\n"
+"<!-- origin: chapters/04-three-guardians.md, zone: Bridle, guardian: TDD -->\n"
+"## Test discipline\n"
+"Before writing implementation code, locate or author the failing test\n"
+"that captures the requirement. A commit that does not green one test\n"
+"does not advance the project.\n"
+"\n"
+"<!-- origin: chapters/04-three-guardians.md, zone: Bridle, guardian: MDD -->\n"
+"## Metric discipline\n"
+"Before merging any change that touches a user-facing path, confirm the\n"
+"metrics north-star (`mean agent turns to green` on the fixed benchmark)\n"
+"has not regressed.\n"
+"\n"
+"<!-- origin: chapters/05-harness-anatomy.md · SDD × Paddock -->\n"
+"## Acceptance Gate (Verification Table)\n"
+"\n"
+"| # | Requirement                          | Checked by        |\n"
+"|---|--------------------------------------|-------------------|\n"
+"| 1 | Acceptance tests green               | Test Engineer     |\n"
+"| 2 | `AGENTS.md` rules unchanged or versioned | Architect     |\n"
+"| 3 | `CHANGELOG.md` entry under Unreleased | PO               |\n"
+"\n"
+"<!-- origin: chapters/05-harness-anatomy.md · TDD × Fence -->\n"
+"## Pre-edit hooks (Claude Code)\n"
+"\n"
+"Install `.claude/hooks.json` as follows:\n"
+"\n"
+"```json\n"
+"{\n"
+"  \"hooks\": {\n"
+"    \"PreToolUse\": [\n"
+"      {\"matcher\": \"Write|Edit|MultiEdit\",\n"
+"       \"command\": \"pytest -q -m 'not slow'\",\n"
+"       \"stopOnFailure\": true}\n"
+"    ]\n"
+"  }\n"
+"}\n"
+msgstr ""
+"# CLAUDE.md\n"
+"\n"
+"<!-- origin: chapters/03-what-is-harness-engineering.md, zone: Bridle, guardian: SDD -->\n"
+"## 角色与范围\n"
+"你是 <project-name> 的一名编码智能体。你可以编辑 <allowed paths>。\n"
+"你绝不可触动 <forbidden paths>。每一个新增的 public 函数都要配一条\n"
+"docstring 与一条测试；没有例外。\n"
+"\n"
+"<!-- origin: chapters/04-three-guardians.md, zone: Bridle, guardian: SDD -->\n"
+"## 规约纪律\n"
+"在编辑任何一份源文件之前，先读 `specs/` 下与之匹配的规约（若不存在，\n"
+"则看 `docs/adr/`）。若规约比代码老 30 天以上，把这件事作为风险浮上来，\n"
+"然后暂停。\n"
+"\n"
+"<!-- origin: chapters/04-three-guardians.md, zone: Bridle, guardian: TDD -->\n"
+"## 测试纪律\n"
+"在写实现代码之前，先找到或写出那条把需求钉住的、当前仍红的测试。\n"
+"若一次 commit 不让至少一条测试由红转绿，它就没让项目往前走。\n"
+"\n"
+"<!-- origin: chapters/04-three-guardians.md, zone: Bridle, guardian: MDD -->\n"
+"## 度量纪律\n"
+"在合并任何一项触及用户侧路径的变更之前，确认那条北极星度量\n"
+"（固定基准上 `mean agent turns to green`）没有回归。\n"
+"\n"
+"<!-- origin: chapters/05-harness-anatomy.md · SDD × Paddock -->\n"
+"## 验收关卡（验证表）\n"
+"\n"
+"| # | 需求                                  | 由谁核对             |\n"
+"|---|---------------------------------------|----------------------|\n"
+"| 1 | 验收测试全绿                          | Test Engineer        |\n"
+"| 2 | `AGENTS.md` 规则未变、或已版本化      | Architect            |\n"
+"| 3 | `CHANGELOG.md` 在 Unreleased 下有条目 | PO                   |\n"
+"\n"
+"<!-- origin: chapters/05-harness-anatomy.md · TDD × Fence -->\n"
+"## 写前钩子（Claude Code）\n"
+"\n"
+"按下面的方式安装 `.claude/hooks.json`：\n"
+"\n"
+"```json\n"
+"{\n"
+"  \"hooks\": {\n"
+"    \"PreToolUse\": [\n"
+"      {\"matcher\": \"Write|Edit|MultiEdit\",\n"
+"       \"command\": \"pytest -q -m 'not slow'\",\n"
+"       \"stopOnFailure\": true}\n"
+"    ]\n"
+"  }\n"
+"}\n"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:76
+#: 99707e16d4444d4aa536bde5fb5e1299
+msgid "Cost cap"
+msgstr "成本上限"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:78
+#: fe4038b3a0f04477be25d8c03394d360
+msgid ""
+"A per-session cap of $2.00 and a monthly cap of $800.00 apply; breaches "
+"refuse new tool calls until manual reset. The per-repo configuration file "
+"lives at `.harness/cost-cap.yaml`."
+msgstr ""
+"单次会话上限 $2.00，月度上限 $800.00；触顶后，在手动重置之前拒绝新的工具调用。每仓库的配置文件住在 `.harness/cost-"
+"cap.yaml`。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:83
+#: 71f429fe34bb426ab82c779b0e748d5c
+msgid "Weekly groom schedule"
+msgstr "每周梳理时间表"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:85
+#: 033e21626ec74a4982b871d670627562
+msgid ""
+"Monday: run the entropy audit workflow; file issues for any new CVE, stale "
+"`verified:` header, or broken link. Friday: verify spec surface has no drift"
+" > 3 items; otherwise trigger a mid-sprint re-spec."
+msgstr ""
+"周一：跑熵审计工作流；遇到任何新增 CVE、陈旧的 `verified:` 头注、或失效链接，立即开 issue。周五：核验规约表面是否漂移超过 3 "
+"项；若超过，触发一次 sprint 中段的重新规约。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:91
+#: dcdca79bf86d4e57918be7fac3aa7d18
+msgid "Tauri-Todo house rules (when the repo is a Tauri 2 app)"
+msgstr "Tauri-Todo 家规（当这份仓库是一个 Tauri 2 应用时）"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:93
+#: bda6fc16e9dc4f26b9e2e63fcd2c988e
+msgid "Rust crate `src-tauri/` owns IPC, storage, and OS integration."
+msgstr "Rust crate `src-tauri/` 持有 IPC、存储、操作系统集成。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:94
+#: 808340f13cff47028e29cda2a6257f34
+msgid "TypeScript app in `src/` owns UI and input validation only."
+msgstr "`src/` 下的 TypeScript 应用只持有 UI 与输入校验。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:95
+#: bba4e6e630cf4f878440ae6c6a4c1166
+msgid "Never call OS APIs directly from TS; route through `invoke()`."
+msgstr "绝不要从 TS 直接调用操作系统 API；一律经由 `invoke()` 转接。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:96
+#: e1b04321f18b4caf92b106f533dc5292
+msgid "Never add a dependency without `cargo audit` in the same commit."
+msgstr "绝不要在同一笔 commit 中引入依赖却不跑 `cargo audit`。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:99
+#: 2a43f748a7b74059b2119669bf51c4e8
+msgid "Committed gates"
+msgstr "提交侧关卡"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:101
+#: 37e93d5541e44bd99eb6304bd81fd13b
+msgid "A commit is only valid if, in order:"
+msgstr "一次 commit 只有在以下项目按序全部成立时才有效："
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:102
+#: e75a76cf07b04a45bd479585cd1a37cb
+msgid "`pytest -q` passes."
+msgstr "`pytest -q` 通过。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:103
+#: 21211136336d4828ac07079e52f53a9e
+msgid "`ruff check .` (or language-equivalent linter) passes."
+msgstr "`ruff check .`（或相应语言的等价 linter）通过。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:104
+#: d75e4a8047ae48c9bc67b4620d3f3dce
+msgid "`gitleaks` finds no secrets."
+msgstr "`gitleaks` 找不到任何密钥。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:105
+#: 2d81ef6e003847578ffd4977df7d3c70
+msgid "`make prompts-lint` (or equivalent spec validator) passes."
+msgstr "`make prompts-lint`（或等价的规约校验器）通过。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:106
+#: 036b07e6dd514314a7d765650e70cbfd
+msgid "No `TODO` markers added without a matching issue link."
+msgstr "不允许新增 `TODO` 标记而没有与之对应的 issue 链接。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:109
+#: c5a01c09267e4708969994b93ea627b9
+msgid "HarnessCard self-disclosure"
+msgstr "HarnessCard 自我披露"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:111
+#: ffa6e2d64a1141d8a3df8b0bd89e8666
+msgid ""
+"When you finish a non-trivial change, update `HarnessCard.md` at the repo "
+"root and append a one-line entry to `HARNESSCARD-CHANGELOG.md` naming which "
+"cell's score moved and by how much."
+msgstr ""
+"每完成一项非小的变更，就更新仓库根目录的 `HarnessCard.md`，并在 `HARNESSCARD-CHANGELOG.md` "
+"追加一行——点名哪一格的分数动了、动了多少。"
+
+#: ../../source/chapters/13-appendices/e-claude-md.md:114
+#: b7517210a03f41b0927259782ca1a3c9
+msgid ""
+"\n"
+"## Copy-paste note\n"
+"\n"
+"The block above is MIT-licensed and intentionally text-only — no images,\n"
+"no external fetches, no secrets. It is designed to be dropped into a\n"
+"reader's repo as `CLAUDE.md` with no further editing required other\n"
+"than substituting `<project-name>` and `<allowed paths>`.\n"
+msgstr ""
+"\n"
+"## 粘贴使用说明\n"
+"\n"
+"上面这段以 MIT 协议发布，且刻意全为文本——没有图片、没有外部抓取、\n"
+"没有密钥。它被设计成可以直接丢进读者的仓库、命名为 `CLAUDE.md`，\n"
+"除了把 `<project-name>` 与 `<allowed paths>` 替换掉之外，不需要任何\n"
+"额外修改。\n"
+
+#~ msgid "Appendix E · Sample `CLAUDE.md` Template"
+#~ msgstr ""
+
+#~ msgid "Draft"
+#~ msgstr ""
+
+#~ msgid "Content for this appendix will be written in task 10.5."
+#~ msgstr ""

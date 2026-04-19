@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-19 11:53+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/chapters/13-appendices/index.md:6
+#: 18448b8366204659b1179cb7d6c00b97
+msgid "Appendices"
+msgstr "附录"
+
+#: ../../source/chapters/13-appendices/index.md:8
+msgid ""
+"The five lettered appendices collect material that benefits from being "
+"separate from the narrative but that readers return to frequently: a role-"
+"grouped FAQ, a glossary, a reading list, the HarnessCard template, and a "
+"consolidated ``CLAUDE.md`` sample. The sixth body of appendix-style "
+"material — a 60-minute internal-talk script distilled from the whole book "
+"— has been promoted to **Part 0 · Presentation** at the front of the "
+"book, because it is meant to be *given* rather than *consulted*."
+msgstr ""
+"这五份带字母的附录汇集了那些\"从叙事中分出来更合适、却又会被读者频繁回访\"的材料："
+"一份按角色分组的 FAQ、一份术语表、一份阅读单、HarnessCard 模板，以及一份合并起来"
+"的 ``CLAUDE.md`` 样板。第六份曾经以附录形态存在的材料 —— 一份从全书凝练出来的 "
+"60 分钟内部分享讲稿 —— 已被提前到全书最前面的 **Part 0 · Presentation**，"
+"因为它是用来 *讲* 的，而不是用来 *查阅* 的。"

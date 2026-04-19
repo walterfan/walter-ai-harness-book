@@ -1,0 +1,12 @@
+# verified: 2026-04-17 · .pre-commit-config.yaml fragment · 10 lines
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks: [{id: ruff, args: [--fix]}, {id: ruff-format}]
+  - repo: local
+    hooks:
+      - id: pytest-fast
+        name: pytest (fast lane)
+        entry: pytest -q -m "not slow"
+        language: system
+        pass_filenames: false

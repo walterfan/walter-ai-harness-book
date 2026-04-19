@@ -1,0 +1,931 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-19 22:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/part0-presentation/index.md:6 94298b72f615487dab899e31f5f13cf4
+msgid "Part 0 · 部门分享：给 AI 套上缰绳（60 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:8 69d6d5be3c6c416f80a5a9ab2654fde3
+msgid ""
+"*把整本《Harnessing AI》压成一小时，让部门同事一次听懂 Harness Engineering "
+"在讲什么、为什么非做不可、以及周一上班 应该动哪一行代码。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:12 43907a71b7e445c8ad46c97ed12bdda7
+msgid "使用说明"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:15 e1cdb7c7ef9941788a8621fa2067ac10
+msgid ""
+"这一部分**不是**一章独立的技术内容，而是整本书的 **60 分钟分享版**。 面向的是 *部门内部同事* —— 前后端工程师，大多数人用过 "
+"Cursor / Codex / Claude Code，但没专门做过 harness 系统设计。节奏是 **8 段 × 约 7 分钟 + Q&A"
+" 4 分钟**。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:20 7b49fad8fad04d56b2a3a52d59a38a82
+msgid "`index.md`（本文）—— 可直接通读的讲稿，讲者可以当\"口水稿\"用。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:21 d99f2f00f2684cfc926298c6fe302db9
+msgid ""
+"`outline.md` —— 分钟级 speaker outline，精确到每分钟讲什么， 含**目标 / 钩子 / 可跳 / 别讲 / "
+"深一层**五段式。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:23 517554aed8f84290917cc6c194a350e9
+msgid ""
+"`slides.md` —— 每页一张 slide 的大纲（每 `##` 对应一张）， `>` 引用块是 speaker notes，方便复制到 "
+"Keynote / Google Slides 的 Outline 视图一次性导入。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:26 3a303693fd984f5eb2b62123e412b2fb
+msgid ""
+"`../_handson/13-one-hour-talk/SLIDES.md` —— 已经排版好的 Marp "
+"兼容版幻灯片（带讲者备注），可直接投影或导出为 PDF。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:29 b9fd74903c0b4c65ba3d8c78c73bcf9e
+msgid "书中所有用到的概念、数字、引用，都指向后续章节里的某一章。 这一讲只给 **主脊** —— 不陷入任何一个细节 —— 细节请回到相应 Part。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:32 9e142d33eab949fe9cc1e8b14acad605
+msgid ""
+"**术语约定**：讲稿里涉及 `CLAUDE.md / AGENTS.md / SKILL.md / MCP / pre-commit / "
+"Bridle / Fence / Paddock / Groom / SDD / TDD / MDD / HarnessCard` "
+"这些概念时，**保留英文原词**。这些词 在书里都有精确定义，硬翻反而会丢掉它们的工程意涵。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:38 3b49a4792c504f9986ab6f87666bf74d
+msgid "§F.0 · 开场（2 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:40 0e33690b3c3e42f8872d672dcfab3de3
+msgid "为什么今天站在这里"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:42 b43cd95802ed4d5db00c8f95cfc96093
+msgid ""
+"**一句话中心论点.** 2026 年，AI 编码的杠杆点 **从模型本身移到了 模型周围的环境**；我们部门写代码的方式正在被这一转移重塑，而且"
+" 再不讨论一次，下一轮 code review 上我们就会各说各话。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:46 d5b8b03a25394e06a3c9a4b5684a0ade
+msgid ""
+"**白板时刻.** 在白板左边写一个大写的 \"M\"（Model），右边写一个 大写的 \"E\"（Environment）。画一个箭头从 "
+"\"M\" 指向 \"E\"，箭头上写 \"2022–2024\"；再画一个箭头从 \"E\" 指向 \"M\"，写 \"2026\"。说： "
+"「过去我们想着怎么把模型调得更听话；现在我们想着怎么把环境建 得让一个普通模型也干不坏事。」"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:52 ddb0e52ca2f440cab592d0e21c870498
+msgid "**三条 2026 年的事实.** 每条 15 秒："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:54 e648dd74aae5473a98e229f9fe18c5b5
+msgid "**OpenAI 的 Codex 团队**，8 周内上线约 **100 万行生产代码**， 其中 **0 行由人手写**。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:56 e9cfcde0563d4825b4364bf0b18ac680
+msgid "**LangChain 团队** 没换模型，只改了模型 *周围的脚手架*，就把 Terminal Bench 2.0 成绩从第 30 名冲进前 5。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:58 53f63066d8ac4332960befe9fc02f926
+msgid "**Anthropic** 在 *权限弹窗、技能编写规范、MCP server 契约* 上 花的工程时间，比花在模型权重上的多。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:61 0740f75553cd49cb8345d7d598c89782
+msgid "**回书链接.** 《Foreword》（第 01 章）及《The Four-Stage Evolution》（第 02 章）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:63 8ef2060b12af4117a57b292e9272136a
+msgid "§F.1 · 起点：四个阶段（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:65 f3a9f38f1d124c359c6402bef1475e79
+msgid "从 Prompt 到 Harness，为什么每一步都卡在下一步面前"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:67 c015fe332cd74698928eaa009843494e
+msgid ""
+"**一句话中心论点.** 工作工程师跟大模型协作的方式，在 2022–2026 年 间经历了 "
+"**四阶段演化**；每一个阶段都解决了上一阶段无法解决的问题， 也都有一个上一阶段观察不到的新问题。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:71 aa2b16c2b59640bca12a3a0a564f4a38
+msgid "**白板时刻.** 画一条时间轴，标四个节点："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:73 0bbc50778f9449d0b255a3177d15458d
+msgid ""
+"2022–2024     2025          2025–2026       2026–\n"
+"Prompt   →   Context   →   Skill       →   Harness\n"
+"怎么问？    给看什么？    怎么把流程写下来？  造什么环境？\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:79 ff432e8a8f7447f3a5bba198e2c5a056
+msgid "每一步的 **主要人工制品**："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:81 f46b2f44dc08481abfe9e890650a4c81
+msgid "**Prompt**：一条巧妙的提示字符串。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:82 d59c1592ece943bea631a21e80fc6d07
+msgid "**Context**：一张检索 ／ 上下文图。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:83 607f6918338142a5be678c183ea76989
+msgid "**Skill**：一份 `SKILL.md` 或 command 定义。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:84 ace763f1f0b8486e9523777e4c413cea
+msgid "**Harness**：**仓库本身** —— `CLAUDE.md` ＋ 护栏 ＋ 钩子 ＋ 巡检。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:86 ad1e0aa49f2242e6ad82b491ae808d4b
+msgid "**两句要带走的话.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:88 ca6c5b0d845d42238e0c107ec4d104d8
+msgid "*前三个阶段都在调「询问层」，Harness 阶段把干预点移到了「环境层」。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:89 b0c2326b52a84a4283fb576618d004c1
+msgid "*前三个阶段可以一个工程师单独做，Harness 必须以仓库为单位做。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:91 7b9d2fed12684b8b88c51b103b88072e
+msgid ""
+"**一个要提防的误读.** \"Harness 就是 prompt 长一点。\" 不是。Prompt 是 "
+"一次对话一次性塞进去的文本；Harness 是留在仓库里、下一轮智能体 也会读到、且违反就被机械拒绝的那一组制品。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:95 a7e02105e1ea4c3391e386633d9f1e51
+msgid ""
+"**回书链接.** 第 02 章《The Four-Stage Evolution》完整论证，尤其是 Stage 1 / 2 / 3 "
+"各自裂缝的那三段。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:98 e66a1277466c47f6b20384e6f8f7678b
+msgid "§F.2 · 定义：Harness Engineering 是什么（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:100
+#: 3e5daec4545842cbae35b295b3f0320e
+msgid "一句话定义，五条「是」，五条「不是」"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:102
+#: 13e0e9798d214f1187046c57e6ed0247
+msgid ""
+"**一句话中心论点.** *Harness Engineering 是一门 **刻意设计、运行、 演化 AI 编码智能体周围结构** "
+"的工程学科，目的是让它产出的软件 **可验证、可观测、可理解**。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:106
+#: ed1d19187d59495188f2c5a701638eb5
+msgid "**白板时刻.** 在 \"一句话定义\" 下面写三个竖排的字："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:108
+#: 601f50dea5364a3d8ad17a57294cb85f
+msgid ""
+"可验证   verifiable\n"
+"可观测   observable\n"
+"可理解   understandable\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:114
+#: 36e79485738b4b2f900594b1125536e6
+msgid "然后说：「这三词不是修辞，每一个背后都有一门四十年历史的工程学科。 我们马上讲。」"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:117
+#: c5f33e98e9e8491baae81d55d9cef5e9
+msgid "**五条「是」（快念）.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:119
+#: e423da2c82fa499386aaf360c005205b
+msgid ""
+"**面向智能体的规约** —— `CLAUDE.md` ／ `AGENTS.md` ／ `SKILL.md` ／ MCP server "
+"manifest，把它们当代码 review。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:121
+#: 52b793f4996445cda08443d87423c816
+msgid "**审批门与护栏** —— pre-commit 钩子、lint 规则、PR 强制评审、 CI 必过项。无论作者是人还是 AI，坏制品一律拦。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:123
+#: 52d0106d6b7449f3b46f68d9217016cf
+msgid "**沙箱** —— 容器 ／ VM ／ 只读挂载 ／ 临时 worktree，让智能体碰 不到生产。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:125
+#: c8c62bc86d984674b0ac951269b43bff
+msgid "**面向智能体的文档** —— runbook ／ ADR ／ skill 文件，智能体自己 能读懂，以减少环境幻觉。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:127
+#: c5a9e9a0c2114c8e8acd45d84a2ed580
+msgid "**度量与反馈面** —— 测试通过率、每轮成本、lint 违规数、 from-fail-to-green 时间，团队 *每周* 看一次。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:130
+#: c507fbe73bb74a848058fc611ba1c4f7
+msgid "**五条「不是」（更快念）.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:132
+#: 1d60725e61d74b9891a668ea84cacbc4
+msgid "**不是** 推理运行栈（那是 AI Engineering）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:133
+#: 0df989f17514428a802f3ec440b287a2
+msgid "**不是** ML 评测基准（那是输入，不是本体）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:134
+#: dd581b79c6634aaa93d6e5a74c6482b3
+msgid "**不是** IDE 插件（Cursor ／ Copilot 是客户端，harness 住在仓库里）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:135
+#: ae11d60df2cb4718bc71969ed869d068
+msgid "**不是** 智能体框架 SDK（LangChain ／ AutoGen 是砖块，不是房子）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:136
+#: 756e4cfdc98b423c8d715f56eb509a34
+msgid "**不是** 部署流水线（DevOps 接管于 \"commit 合入之后\"）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:138
+#: ec56f07c3ce244dd8c39921c94ba7d4f
+msgid ""
+"**归属检验.** *如果一件制品塑造智能体 **在 commit 之前** 试图 产出什么，它属于 harness；如果它塑造 commit "
+"**之后** 发生什么， 它属于 DevOps。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:142
+#: 03546b9789054787b284bf0e3e7b2cfc
+msgid ""
+"**回书链接.** 第 03 章《What is Harness Engineering?》，尤其是 §03.1 一句话定义与 §03.2 "
+"的「IS ／ IS NOT」归属边界。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:145
+#: a45bb64faf1c4927a7b23697ca9dfd2d
+msgid "§F.3 · 三护法：SDD → TDD → MDD（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:147
+#: d22aa9b70ec341d6a62ecedced8b159f
+msgid "为什么有了智能体以后，因果顺序反了"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:149
+#: 2fa2a6f0bfaf4104b66b917b90fcaa8f
+msgid ""
+"**一句话中心论点.** Harness Engineering 不发明新学科，它 **征召三门 旧学科**，把它们 "
+"**重新排序**、前置到智能体动笔之前：**SDD → TDD → MDD**。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:152
+#: c9aa7ae76fe44f7ba6a08781042ecd3e
+msgid "**白板时刻.** 画两条因果链，上下对照："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:154
+#: 448a246ea3e94269a4bed8211efa2508
+msgid ""
+"传统软件工程 ：   test   →   implement   →   observe\n"
+"(人写代码)          TDD         (人)           MDD\n"
+"\n"
+"AI 辅助工程  ：   specify   →   test     →    observe\n"
+"(智能体写代码)     SDD          TDD           MDD\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:162
+#: e17a87c2d7274bdcaca30f90357f3844
+msgid ""
+"**为什么翻转？** 在人写代码时代，测试是第一份可执行规约，人会 顶着它改到合为止；**在智能体时代，人写的主要制品移到更上游 "
+"——`CLAUDE.md` ／ `AGENTS.md` ／ skill 文件**。如果规约含糊， "
+"智能体会非常自信地幻觉出一种行为，这时写的测试只会把幻觉钉住， 而不是抓住它。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:168
+#: 7de6cff072a047da9e497f729a9f2694
+msgid "**三护法各一句.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:170
+#: ff3e203e40b34db3b987d2e222d0465f
+msgid ""
+"**SDD — Specification-Driven Development.** *可理解性护法。* "
+"把意图变成智能体能读的规约（`AGENTS.md` ／ ADR ／ prompt 规约）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:172
+#: 3c45770a20204f25aa6e05b3c999f7eb
+msgid ""
+"**TDD — Test-Driven Development.** *可验证性护法。* 先写那条 \"还红着\" "
+"的测试，作为智能体对规约的解释之证伪面。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:174
+#: f4a66a9b62ab494b821bf2cd78e9b4d8
+msgid ""
+"**MDD — Metric-Driven Development.** *可观测性护法。* 把每轮 turns-to-"
+"green、每月成本、lint 违规数等指标写下来，每周看。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:177
+#: 605a1689443147019250ea6707985063
+msgid ""
+"**一个要提防的误读.** 「我们已经有 CI 了啊。」CI 只是 TDD ／ MDD 的 **牧场**。它在合入那一刻才发声；Harness "
+"的问题是在键盘按下那一刻 发声。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:181
+#: 3cb07e4a77d846c59e39cd95f5604a65
+msgid "**回书链接.** 第 04 章《The Three Guardians》，特别是「为什么因果 顺序要翻转」那一节。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:184
+#: 316550204def411d8455b444b04a070a
+msgid "§F.4 · 骨架：3 × 4 矩阵（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:186
+#: 0842b34cbaad41bf95faf79ddddf41e0
+msgid "一张表，十二格，装下整个框架"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:188
+#: 3434dd11a9d846648c0f1f75d61eadd1
+msgid "**一句话中心论点.** 画不出来的框架是口号，不是分析工具。本书的 分析骨架是一张 **3 × 4 矩阵**：三行 ＝ 三护法，四列 ＝ 四区域。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:191
+#: 3183e3d0d60e46fcba90eaa3e10be876
+msgid "**白板时刻.** 直接画这张表："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:193
+#: bf25fc04c021436cacf31cbbddc3eec8
+msgid ""
+"              缰绳           护栏         牧场          梳理\n"
+"              Bridle         Fence        Paddock       Groom\n"
+"              (写前引导)     (写时拒绝)    (写后边界)     (维持本身)\n"
+"\n"
+"SDD (说)      AGENTS.md      prompt-lint  acceptance   sources-of-truth\n"
+"                             schema 校验   gate         索引\n"
+"\n"
+"TDD (证)      pre-edit       pre-commit   CI / 集成     flaky\n"
+"              钩子导引        钩子拒绝     测试          隔离\n"
+"\n"
+"MDD (观)      北极星指标      成本上限      SLI 面板      指标元审\n"
+"              放在显眼处      触顶拒调用    红线          季度轮替\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:208
+#: c0d14f5e55584621b180867fa69e7087
+msgid "**四区域各一句.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:210
+#: 5e042cc20269447e9b41e7d0750cc5e7
+msgid "**Bridle（缰绳）** —— 智能体敲第一个键之前 *看什么、听什么*。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:211
+#: c531181e4c914d2c96e1ea9cde342fef
+msgid "**Fence（护栏）** —— 不管作者是谁，*一律拒绝* 坏制品。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:212
+#: fef9d89a4b0548e38886ba09ac8498e1
+msgid "**Paddock（牧场）** —— 智能体 *可以撒欢的那块地* 的边界。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:213
+#: 361295206f9c428ebc16df85f7c7ed30
+msgid "**Groom（梳理）** —— 维护 *挽具本身* 的那些重复性工作。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:215
+#: 6967113be03f43a1a29ce18af8612572
+msgid "**三个配对的学术框架（各 10 秒）.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:217
+#: 931667be79284f65889adbbab10eeccd
+msgid ""
+"**CAR ／ HarnessCard**（学术参考）：Control ／ Agency ／ Runtime "
+"三层分解，配一份标准化披露格式。本书案例研究打分的骨架。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:219
+#: 4100880b18f54acc807f886772069c8b
+msgid ""
+"**Thoughtworks 三分法**：context engineering ＋ architectural constraints ＋ "
+"garbage collection。最像 DevOps 的那一种。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:221
+#: 0307b6b02b334d1ea1ca416d8f9da651
+msgid ""
+"**LangChain 五件套**：prompts / tools / middleware / memory / harness。 对单个 "
+"agent 实例最细的切法。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:224
+#: 89220b6568ab4e8a8cec5188e5b68b2f
+msgid "**回书链接.** 第 05 章《Harness Anatomy》§05.Overview 和 §05.Provenance。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:226
+#: f1cc9353ca464a51be2976f0d7221b24
+msgid "§F.5 · 四个案例研究的教训（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:228
+#: 535a92c8f2eb4e3c9fff2d981bde7161
+msgid "同样的矩阵，落到四个真实项目上会怎样"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:230
+#: 4c8593d3db544a1e83a24085a705698d
+msgid ""
+"**一句话中心论点.** 同一张 3 × 4 矩阵，落到 *运行时、技能库、 工作流、闭源产品* 这四类项目上，会凸显 "
+"**不同的强项与不同的风险**。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:233
+#: 9803de9f239e4c95b5ba359786b22b96
+msgid "**白板时刻.** 画一条横轴，从左到右四个点："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:235
+#: 13553bcafb084b21b6b0f1027d947d53
+msgid ""
+"OpenHarness   Superpowers   lazy-scrum-team   Claude Code\n"
+"运行时 + 沙箱  技能库        工作流编码         闭源产品\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:240
+#: ab6a4291b80948db9825bab060b21a24
+msgid "**每一个案例一句话.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:242
+#: 8fa3bd53e7bd4186b848a82f589cd059
+msgid ""
+"**OpenHarness（第 07 章，港大 DS Lab，开源）** —— *唯一一份 \"就像读过第 05 章之后才写的\" "
+"开源参考实现*。十个子系统整齐对 应到矩阵格子；Runtime 层 Paddock 尤其强。警醒：它是参考实现， 不是你的运行时。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:246
+#: 32a52a8d4a0d488fa72a77df0d6cb91f
+msgid ""
+"**Superpowers（第 08 章，Joseph Vincent，开源）** —— *OpenHarness "
+"的哲学反面。只出技能库，不出运行时*。三十几份 `SKILL.md`， 强在 SDD × Bridle。警醒：\"光靠技能能不能做我们的挽具？\""
+" —— *不能*，少了 Fence 与 Paddock。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:250
+#: c9a4f0ccc7ee41d993fd3de5a6f27c19
+msgid ""
+"**lazy-scrum-team（第 09 章，开源 skill 包）** —— *把 Scrum 角色 "
+"与交接本身当挽具*。三件可复用的模式：Artefact State Model、 Rework Matrix、Hard vs Soft "
+"Gates。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:253
+#: ffb1e0c5aadb4763829e8ec09834ecc5
+msgid ""
+"**Claude Code（第 10 章，Anthropic，闭源；经由张汉东《马书》分析）** —— *本书唯一的闭源案例*。挽具职责分布在 "
+"bundled prompt ＋ hooks 契约 ＋ skills 系统 *三处*。警醒：闭源意味着你看得到行为但拿不到源， "
+"分析结论永远带一个有效期标注。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:258
+#: 66f98a5cc54d47579a486f75faa61994
+msgid "**一句带走.** *矩阵是尺子，案例是用它量出来的刻度；要你部门抄 作业，选一个最接近你们技术栈的案例。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:261
+#: 64125807a2bb4ea682edeea19f3ee66c
+msgid "**回书链接.** 第 07–10 章全部。每一章末尾都有一张填好的 HarnessCard， 可直接当\"别人是怎么打分的\"的参照。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:264
+#: ae3d72dad7994e5f85c3650f73f7611f
+msgid "§F.6 · 自证其身：Lazy AI Coder 四幕（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:266
+#: b4e660abf32b47de8146f9baa429b642
+msgid "本书对自己的那座仓库做了一次审计，然后改了五处"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:268
+#: dc4785e3b23c484ea802db56dbdde293
+msgid ""
+"**一句话中心论点.** *如果这套框架连书的宿主仓库自己都打不分、 改不动，那它就是错的。* 本书第 11 章把 3 × 4 矩阵扣在 "
+"`walterfan/lazy-ai-coder` 自己头上，做了一场四幕实盘。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:272
+#: 79154ab5b041481194321769c0fca961
+msgid "**白板时刻.** 画四个方块横向排开："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:274
+#: 338e3d526e2346fa8ea5544ed4d964d8
+msgid ""
+"Act 1       Act 2         Act 3         Act 4\n"
+"审计        短板          实盘修复       度量 delta\n"
+"(Audit)     (Shortcomings) (Fixes)       (Measure)\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:280
+#: e2ac39d7099d4eed9f5c9790f476317b
+msgid "**四幕各一句.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:282
+#: bbb0d704b39c4381b05303dd1641c3e3
+msgid ""
+"**Act 1 · 审计.** 填一张初始 HarnessCard，落在矩阵的 **左下角** ——SDD × Fence、SDD × "
+"Groom、TDD × Fence、MDD × Bridle ／ Groom 是五格最弱的。不是烂仓库，是「有普通可生存技术债」的仓库。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:285
+#: 46cd7a827833414e913322165683fe23
+msgid "**Act 2 · 短板.** 列出五个具体短板，每一个都 **打上严重度、 证据指针、落到哪一格**。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:287
+#: d7d5a35050a74d0a920568e5d2caaf67
+msgid "缺 `make prompts-lint`（SDD × Fence）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:288
+#: e49b3d67dce549218af8f142335187c5
+msgid "MCP 工具 schema 没对齐 handler（TDD × Fence）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:289
+#: 1832b1163f0c47099614cc04a8f2e96c
+msgid "没有 LLM 调用的成本可观测面板（MDD × Bridle）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:290
+#: c765682e28b64b318151568a011c6294
+msgid "……"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:291
+#: f0a1b2d57afc4b79b43f75548c80b06a
+msgid "**Act 3 · 修复.** 五笔真实 commit 进 main；`reproduce.sh` 可复现。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:292
+#: 380a4d1579034301b9b0c9f4cda9e283
+msgid "**Act 4 · 度量 delta.** 重新打分："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:293
+#: b60279c584f64963807c42b22bd7d88b
+msgid "SDD 均值 1.75 → 3.00（+1.25）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:294
+#: 2ca29f9ff0ed4f449e80f5b3378dfd45
+msgid "TDD 均值 2.00 → 2.75（+0.75）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:295
+#: 5adfcf80fe9b45868a21efd1735b4ea3
+msgid "MDD 均值 1.50 → 1.50（+0.00，没动）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:296
+#: e86f73804c5547bf9b867a77a0b2a8d2
+msgid "**总分 1.75 → 2.42（+0.67）**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:298
+#: a695d52567c14b61b98ff0c266889e66
+msgid ""
+"**一个要提防的误读.** 「HarnessCard 就是虚荣分数。」不是。只要你 把评分尺（附录 D）公开、把证据指针公开、把变化 delta "
+"公开，它就 不是虚荣分数。\"分数涨了但事故没少\" ——那才是 *vanity delta*。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:302
+#: abdb6e6ab6b644538ba3bc65cfa81c91
+msgid ""
+"**回书链接.** 第 11 章《Lazy AI Coder Four-Act Worked Example》与 附录 D《HarnessCard"
+" Template》。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:305
+#: 90e076fd82aa4b36bf67548777b3f225
+msgid "§F.7 · 周一上班怎么办：30 ／ 60 ／ 90 天清单（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:307
+#: 503bab4a65a44287b069ff05871692e2
+msgid "最重要的一条：你不用一次性做完十二格"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:309
+#: 832c6a1d80bb40369cf890a24ed76733
+msgid ""
+"**一句话中心论点.** *本书最重要的单一主张：你不必一次上 12 格。 你挑 **一格**，上它；然后上它所在的 **整行** 或 "
+"**整列**；再走一 次完整的 HarnessCard 评审。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:313
+#: 2bc85f374d7c445fa4b28bb69f1fd412
+msgid "**白板时刻.** 画三个里程碑："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:315
+#: 02655d55d6ea48f286456c6473a96c8a
+msgid ""
+"Day 1–30        Day 31–60           Day 61–90\n"
+"一格            一行 或 一列         一次完整评审\n"
+"one cell        one row or column   full HarnessCard review\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:321
+#: 469e1aab60ab48f1a1ae15483eee3125
+msgid "**每一段的推荐切入点.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:323
+#: cadae98ea6fb4516a146451078260d71
+msgid "**Day 1–30 · 一格.** 推荐从下面三者挑一个："
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:324
+#: 7e72ff6f15c4464eb5ce0c2a517e8b09
+msgid "**SDD × Bridle** —— 提交一份基于样本的 `AGENTS.md`。便宜，之后 每一轮都赚。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:326
+#: 45efad28d0a14a1dbebbc35d4a7584b3
+msgid "**TDD × Fence** —— 装一条 `PreToolUse` 钩子，测试红的时候拒绝 写文件。单兵也能受益。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:328
+#: 300b7608582a4f52a2d8bcfbeeffa9e1
+msgid "**MDD × Fence** —— 给 LLM 调用加一个每会话成本上限。过线就 拒绝新调用。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:330
+#: 72072fcac5274342833e061b6c78bf3c
+msgid "**Day 31–60 · 一行 或 一列.** 把第一格扩到所在的整行（同一护法下 补齐四个区域）或整列（同一区域下补齐三个护法）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:332
+#: 8e326a94e7d24fcea12ec2fb48c7e12d
+msgid "**Day 61–90 · 一次完整评审.** 按附录 D 的评分尺打一张 HarnessCard， 公开 delta。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:335
+#: ed352f12d4d34731b6ce45c834ac8c1c
+msgid "**三条要提防的误读（快念）.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:337
+#: 49cd9e9f134b4dc6a9c1f6c9e1f73256
+msgid "**\"Day 30 我们就搞定了\"陷阱** —— 没人给挽具本身排维护班，90 天后 那格的分数从 +1 掉回 +0.3。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:339
+#: cd57e75fc0cd40dd8adf325d2499d990
+msgid "**\"Groom 以后再说\"陷阱** —— 一开始就没把梳理列入范围；没有 `Groom` 的挽具不是挽具，是装饰。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:341
+#: b3c220e7397c490da772981d56fa8a95
+msgid ""
+"**\"凑齐了再发布\"陷阱** —— 等到十二格都 ≥ 3 分才敢上线。错了。 你要的是「一格上线 ＋ 公开承认其余十一格的分数」，而不是 "
+"「全格就绪的神话」。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:345
+#: decb8b20813c468c9e6c74f8167ad389
+msgid ""
+"**回书链接.** 第 12 章《Where We Go from Here》§12.2「30／60／90-Day Action "
+"Checklist」与其配套的 pitfalls。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:348
+#: 23c0e1082a42418e9d694a6d797dfd7d
+msgid "§F.8 · Q&A ／ 收尾（4 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:350
+#: 5c26cfb7a7304225bbd57d628e509002
+msgid "三句要被记住的话 ＋ 三道常见问"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:352
+#: 872174bf5e0048ef853bc5efcbb61490
+msgid "**三句要被记住的话（逐字念）.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:354
+#: c97b6e644b134c23bb6485a4d53c57fa
+msgid ""
+"**Harness Engineering 不是给流程再加一层**；是在一组已经过载 的清单中 "
+"**提取出那一小撮会机械拒绝坏工作的制品**，其余皆为 装饰。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:357
+#: 556fd86ef0f54a26a9de600772f4bcf7
+msgid "**SDD → TDD → MDD，顺序不能乱**；在 AI 辅助时代，规约是人写 的主要制品，测试是对智能体解释的证伪面，度量是闭环信号。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:359
+#: 943b4c26df084b6b92bf0894e595f4ef
+msgid "**不要一次做 12 格**；挑 1 格，30 天内上线，60 天内扩到一行一列， 90 天内公开一次 HarnessCard。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:362
+#: 9c8f6430064948c8bf2dfafe6b986b02
+msgid "**三道常见问（每问 60–90 秒）.**"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:364
+#: e9949d25b7a742e5a3229e215cb39aff
+msgid "*Q：这跟我们现有的 CI 流水线有什么区别？*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:365
+#: 70938d17a96f4558aeaeee70d2ebc0fb
+msgid ""
+"*A：CI 是 TDD ／ MDD 的 **牧场**。它在合入那一刻发声；挽具在 键盘按下那一刻发声。如果你家 CI 周五晚上才抓到周二早上可以 "
+"在 commit 时抓住的 bug，你缺的是 Fence，不是又一条 CI 规则。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:368
+#: 90a578351edb43cda1fb0b96dc187825
+msgid "*Q：三个护法一定要全上吗？*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:369
+#: 9ac0081108da459a98f032864eb09452
+msgid ""
+"*A：不用。30／60／90 清单说得很明白：Day 30 上一格就算一步实 质性进展。单兵先做 TDD × Fence；团队通常从 SDD × "
+"Bridle 起步。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:371
+#: 772d93c8148c40b1875629c4a9855f6d
+msgid "*Q：这不就是 DevOps 的重新包装？*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:372
+#: 22063ae8eb5446d6b108729ec9405b10
+msgid ""
+"*A：不是。归属检验很简单：塑造 commit **之前** 的，是挽具；塑造 commit **之后** 的，是 DevOps。Harness "
+"比 DevOps 早发生一拍。*"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:375
+#: 91bca9cb108f4dc1ab86a9bf6a221e36
+msgid ""
+"**收尾画面.** 把开场那张 M → E 图擦掉一半 —— 只留下 E。说： 「从今天起，我们团队对 AI 编码的讨论，先从环境开始。谁愿意做 "
+"Day 30 的那一格？」"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:379
+#: b69e13174f9f4e21a40d0d4848dc2d60
+msgid "**回书链接.** 附录 A（FAQ）、附录 B（术语表）、附录 D（HarnessCard 模板）、附录 E（`CLAUDE.md` 样板）。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:382
+#: adec268233a047068e430e5ea86fbf04
+msgid "§F.App · 给讲者的附加说明"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:384
+#: 87fe3cdf3821484f96444d816729a7fd
+msgid "时间表"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:386
+#: 4e65b02038a7498492c50e15c6a3ca0b
+msgid ""
+"00:00–00:02   §F.0 开场\n"
+"00:02–00:09   §F.1 四阶段演化\n"
+"00:09–00:16   §F.2 定义\n"
+"00:16–00:23   §F.3 三护法\n"
+"00:23–00:30   §F.4 3×4 矩阵\n"
+"00:30–00:37   §F.5 四个案例\n"
+"00:37–00:44   §F.6 Lazy AI Coder 四幕\n"
+"00:44–00:51   §F.7 30/60/90 清单\n"
+"00:51–00:55   §F.8 Q&A 收尾\n"
+"00:55–01:00   缓冲 / 追问\n"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:399
+#: 9da7753df063447799f28b49a537c8d6
+msgid "讲稿使用建议"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:401
+#: b8860a70b8c949beb820e68f0c03426a
+msgid "**投影比例.** 每节 1–2 张幻灯片即可；矩阵表格那一张（§F.4） 与 30 ／ 60 ／ 90 里程碑那一张（§F.7）建议单独成页。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:403
+#: 6c75cbcaaa084ccb877accce38a2a94a
+msgid "**白板优先.** §F.0、§F.1、§F.3、§F.4、§F.6 都带有「白板时刻」—— 它们比幻灯片更能让听众跟着你的因果链走一遍。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:405
+#: bf196073f26247d093ee3e6d0137c501
+msgid "**延伸阅读.** 现场可以把附录 C 的阅读单当作 handout 打印一张。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:406
+#: bc62a931d337465e9f523baeb3b4812e
+msgid ""
+"**现场动手（可选，把 90 分钟场做成工作坊）.** §F.8 之前加一段 「每人填一张 HarnessCard 的 SDD × Bridle "
+"格」，评分 0–5，证据 写自家仓库里那份 `AGENTS.md` 或它的缺席。"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:410
+#: 4876d359f99e44f890f2e729387562d2
+msgid "一键资源链接"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:412
+#: 9e8a35c7014548db9b627495a4cb85a4
+msgid "本书仓库：<https://github.com/walterfan/lazy-ai-coder>"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:413
+#: 1d215449a91646f28dee890e20618ab4
+msgid ""
+"**配套幻灯片（Marp 兼容，带讲者备注）：** `_handson/13-one-hour-talk/SLIDES.md`（见同目录 "
+"`README.md` 的 三种用法说明 —— 直接阅读、Marp 导出、粘贴进 Keynote／PPT）"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:416
+#: e17bf45cbfb441c08c364bcf9ffd872a
+msgid "**分钟级 speaker outline：** 同目录下的 `outline.md`"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:417
+#: 0c063b11ab8649b19b1c8b0b45edb24b
+msgid "**每页一张 slide 的文字大纲：** 同目录下的 `slides.md`"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:418
+#: b51a25e542ba49c881db67b7bd5ae38b
+msgid "30/60/90 清单：`_handson/12-where-we-go-from-here/checklist-30-60-90.md`"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:419
+#: e2f64feb50d44c79b45f2f19f62dbf4c
+msgid "HarnessCard 模板：附录 D"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:420
+#: e36b81d89da945f4bc61ed3876f2e14a
+msgid "`CLAUDE.md` 样板：附录 E"
+msgstr ""
+
+#: ../../source/part0-presentation/index.md:421
+#: 233a5d26685445cb8bc493a85987f979
+msgid "精选阅读单：附录 C"
+msgstr ""
+

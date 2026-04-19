@@ -1,0 +1,25 @@
+{
+  "$comment": "verified: 2026-04-17 · Ch.10 Claude Code hands-on · stop-on-test-failure hook. Synthesized from Anthropic's public hooks documentation; NOT a copy of any Claude Code internal file.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "command": "pytest -q -m 'not slow' || exit 2",
+        "description": "Refuse edits while the test tree is red. Exit code 2 is the documented 'stop the tool call' signal."
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "command": "git diff --stat | tee .claude/.last-edit-diff",
+        "description": "Capture a diff summary after every edit so the session log carries an audit trail."
+      }
+    ],
+    "SessionEnd": [
+      {
+        "command": "python scripts/session_cost_report.py",
+        "description": "Write a per-session cost report into .claude/reports/; feeds the MDD Groom audit."
+      }
+    ]
+  }
+}

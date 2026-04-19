@@ -1,0 +1,865 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-19 22:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/part0-presentation/slides.md:6 357b03d52cb447019f5f8eb5138bee3f
+msgid "Slides 大纲"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:8 222cfc23899a41beb73143cd335e6707
+msgid "使用方式"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:11
+#: 5738f316ecb14381907b79b3d9ae4f40
+msgid "本文件是 **每页一张 slide 的大纲** —— 每一个 `##` 对应一张 slide。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:13
+#: cdd012cbb72a4258b72cfb9ae2db9505
+msgid "**bullet** 是片上文字（精简，不超过 5 行；每行原则上不超过 10 个汉字）。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:14
+#: fb401168cf3446d09499c14d7a85a296
+msgid "**引用块** `>` 是 speaker notes（讲稿备注），不上屏。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:15
+#: 805c03759bdb43e78e9eb2408acb7e9c
+msgid ""
+"可以直接复制到 Keynote / Google Slides / PowerPoint 的 Outline 视图 一次性导入，也可以用 "
+"[slidev](https://sli.dev/) 或 [Marp](https://marp.app/) 渲染。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:18
+#: c664a7d15efc4acab5bde529854dd778
+msgid ""
+"如果你想直接拿一份 **排好版的 Marp 幻灯片**，见 `../_handson/13-one-hour-"
+"talk/SLIDES.md`；本文件是它的来源大纲。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:21
+#: a366ab0400a54e95848e4e60781fe4d0
+msgid ""
+"一共 **~28 张 slide**（开场 / 结尾各 1 张 + 8 段内容 × 2–4 张）。 排练时如果某张停留超 3 "
+"分钟，说明那张内容太多，需要拆或砍。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:24
+#: 94b6aca76cb540adb66e7bf53c86ceba
+msgid ""
+"**术语约定**：`CLAUDE.md / AGENTS.md / SKILL.md / MCP / pre-commit / Bridle / "
+"Fence / Paddock / Groom / SDD / TDD / MDD / HarnessCard` 不翻译。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:31
+#: 10423cb63ff44b14b3ef7ae1a1df0d88
+msgid "Slide 1 —— 标题页"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:33
+#: f4b75a2029604ffb87dc0435efb347dc
+msgid "Harnessing AI —— 给 AI 套上缰绳"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:34
+#: 37a48287eb154b5abca672ed0af7e019
+msgid "一小时部门内部分享"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:35
+#: d1c0ce3c07ef49f8bad69010b79ffea1
+msgid "Walter Fan · 2026"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:37
+#: 8a4396ee4c6140669a63d583e58df187
+msgid "开场不要急着讲话。让标题停 10 秒。报家门 1 句。 承诺 —— *\"我今天只讲主脊，不陷细节；最后留 4 分钟给 Q&A。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:42
+#: 52537e3c9e994fc5a44bfa349309f763
+msgid "Slide 2 —— 议程"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:44
+#: c5114c69ca7f464ca5159c12413a2595
+msgid "8 段 × 约 7 分钟 + Q&A 4 分钟"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:45
+#: 10fa8fa289fe4b81bcffceb06a70b933
+msgid "§F.0 开场 → §F.8 收尾"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:46
+#: b48cae100ea5437abc05c7433846922f
+msgid "每段都有 **一张白板 + 一句中心论点 + 回书锚点**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:48
+#: 82d5a6d0c9104ff38bbd919544f8e498
+msgid ""
+"15 秒。不念完整张表。只说 —— *\"我会走 8 段，每段 7 分钟； 最后留 4 分钟 Q&A。整场没有问答环节 —— 所有问题都请憋到最后"
+" 一次性问。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:54
+#: 23280639ecd94442b9a1815f8b2570f1
+msgid "Slide 3 —— §F.0 开场：Model → Environment"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:56
+#: a0ead7dea3364b16a6e9a714d0e921c7
+msgid "M → E"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:57
+#: 7573d5fb1ec845d490280eb6ed7b9764
+msgid "杠杆点移动了"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:58
+#: 09fa154664404eb99a0b2960f5590a7b
+msgid "过去：调模型；现在：造环境"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:60
+#: 5f77100c33d54a1690d805650b21a065
+msgid ""
+"在白板左边写大写 \"M\"，右边写大写 \"E\"。 画箭头 **2022–2024: M ← 调得更听话** / **2026: E ← "
+"建得让模型干不坏事**。 说 —— *\"过去我们想着怎么把模型调得更听话；现在我们想着怎么把 环境建得让一个普通模型也干不坏事。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:67
+#: c25bccf1c04446bcaf28bbe2162b5040
+msgid "Slide 4 —— §F.0 · 三条 2026 年的事实"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:69
+#: 185330475cd44db38596600ca7c7299c
+msgid "OpenAI Codex：8 周 100 万行生产代码，0 行人手写"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:70
+#: bc322a34f74e45dc8af1a0163a3fe4c7
+msgid "LangChain：不换模型，改脚手架，Terminal Bench 2.0 进前 5"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:71
+#: 7cb225cae13e4a7a8140bba16470098c
+msgid "Anthropic：权限 / 技能 / MCP 的工程时间 > 模型权重"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:73
+#: 243b3f55a013435e843c8ba351e4c22b
+msgid "每条 15 秒，一共 45 秒。念完之后加一句 —— *\"三件事的共性是 —— 他们变的都不是模型，是模型周围的东西。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:78
+#: 1d6169f6740c4e10a54839e07cb46216
+msgid "Slide 5 —— §F.1 · 四阶段演化"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:80
+#: 08ca9afcaf244cc0bb71167ee128d977
+msgid "2022–2024 · **Prompt** · 怎么问？"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:81
+#: 316a763acb7f4753a7733ad401d3a30c
+msgid "2025 · **Context** · 给看什么？"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:82
+#: dd05489255964546a8032cab02c56a34
+msgid "2025–2026 · **Skill** · 怎么把流程写下来？"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:83
+#: 9553c3250850445b8ee9c5f55a773464
+msgid "2026– · **Harness** · 造什么环境？"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:85
+#: 4f689df88d52440293832c0c7d1f9ed2
+msgid "画时间轴时故意停在 **Skill** 这一格，问一句 *\"那 2026 以后呢？\"* 让听众接 \"Harness\"（大概率有人接得上）。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:90
+#: 117079d0e66f4d829e20200c6a29297e
+msgid "Slide 6 —— §F.1 · 每阶段的主要制品"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:92
+#: afa949e7b50645de9c95f5993786e3ec
+msgid "Prompt：一条巧妙的提示字符串"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:93
+#: e9199c4663ca4958bf7a237f00b0a756
+msgid "Context：一张检索图"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:94
+#: 536fa8872e4a4fc3b09125efc573b545
+msgid "Skill：`SKILL.md` / command"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:95
+#: bfca08681df0469cadf5ff92d3b3b48c
+msgid "Harness：**仓库本身** —— `CLAUDE.md` + 护栏 + 钩子 + 巡检"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:97
+#: e2b2a2da2f174210a0439cd12969cb23
+msgid ""
+"强调 **\"仓库本身\"** —— 这是 Harness 和前三阶段最大的分野。 前三阶段可以一个工程师单独做；Harness "
+"必须以仓库为单位做。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:102
+#: 052a6d3503da4fe0af31b1dcd2f3f96b
+msgid "Slide 7 —— §F.1 · 两句带走"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:104
+#: 1ab11676a9b34a82b5d8c0695d09f08e
+msgid "前三阶段调\"询问层\"，Harness 把干预点移到\"环境层\""
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:105
+#: ef4d43cc57c748b2bd15a2f22698946c
+msgid "前三阶段个人做，Harness **以仓库为单位**做"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:107
+#: 5b2493dcb81e4c209462d617d1d4c5d6
+msgid "放慢念。这两句是 §F.1 的全部。 如果超时，可以把前面的 Slide 6 砍掉，直接从 Slide 5 跳到这里。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:112
+#: 2097742f4085481f927524d9585cdfc1
+msgid "Slide 8 —— §F.2 · 一句话定义"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:114
+#: 53b2f17afcfb4c6eb9f71b2d801a9d6c
+msgid "Harness Engineering ="
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:115
+#: 08e90c595ccc4db387cbfb6548e602c0
+msgid "**刻意设计、运行、演化**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:116
+#: f864f96596f84b6099ac49a4e3533af5
+msgid "AI 编码智能体**周围的结构**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:117
+#: 95a729c42f2a41ceab57730decff497e
+msgid "目的：让产出 **可验证 / 可观测 / 可理解**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:119
+#: d5f63081922540daab18f3e82f8e5755
+msgid "可验证 / 可观测 / 可理解三词竖着写在白板左栏，停 3 秒再说 —— *\"这三词不是修辞。每一个背后都有一门四十年历史的工程学科。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:124
+#: 2900a45b6ab549dba39f74e74e610b38
+msgid "Slide 9 —— §F.2 · 是 × 5"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:126
+#: 4c7af7c975684b67babee674f4ce3c05
+msgid "面向智能体的规约（`CLAUDE.md`/`AGENTS.md`/`SKILL.md`/MCP manifest）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:127
+#: d675600338c84c43bd5e14a57cab2a0f
+msgid "审批门与护栏（pre-commit / lint / PR review / CI）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:128
+#: 5ca9d091012e4fe98a581513a00c014d
+msgid "沙箱（容器 / VM / 只读挂载 / 临时 worktree）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:129
+#: 9099515f8e8443a091afb426b2d137dd
+msgid "面向智能体的文档（runbook / ADR / skill）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:130
+#: f33a5d527b75436d9f004eb68d29173e
+msgid "度量与反馈面（成本 / 违规数 / turns-to-green）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:132
+#: 3c31e59f062745a792c5f2a5ccc67e73
+msgid "**快念**。每条 10 秒。重点不在记住每条，而在听众形成 *\"原来 harness 的范围是这些东西\"* 的整体印象。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:137
+#: 6eea3b6414fc4260aa56f95f3efbe8d8
+msgid "Slide 10 —— §F.2 · 不是 × 5"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:139
+#: c948280c14c5476eb9df94ef59793c39
+msgid "**不是** 推理运行栈（AI Engineering）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:140
+#: 4ca7ceb241c547d8bbb1dc63718fcc1e
+msgid "**不是** ML 评测基准"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:141
+#: 7f0f1a01ce814968a398d1146893f6bc
+msgid "**不是** IDE 插件（Cursor / Copilot 是客户端）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:142
+#: db8d2ad0e50443d8a8350694e5100017
+msgid "**不是** Agent 框架 SDK（LangChain / AutoGen）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:143
+#: 7bbbdd0c91d84e1e82b8cb846d77815a
+msgid "**不是** 部署流水线（DevOps）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:145
+#: b84e784354064db09b1928fc5b427495
+msgid ""
+"比\"是\"还要快。每条 8 秒。 关键在于收尾那句 **归属检验** —— *\"commit 之前 = harness；commit 之后 ="
+" DevOps。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:151
+#: 9a9ef77d95a9452ea78fbb1c2f7cd336
+msgid "Slide 11 —— §F.3 · 因果顺序反转"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:153
+#: 728c08f6ab1f414caad2a68827a5c7ce
+msgid ""
+"传统：  test   →  implement  →  observe\n"
+"AI：    specify → test       →  observe\n"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:158
+#: 3536cbe9a3b049fb9dd48c7c5d1bba0e
+msgid "人写代码：测试是第一份规约"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:159
+#: f8dd0afa0f9c4ea5849826c19992a201
+msgid "智能体写代码：**规约前置**，测试抓幻觉"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:161
+#: 5252ce27394d4fb084f8bbe61dad73c8
+msgid ""
+"画完后停 5 秒不说话，让听众自己读出 *\"咦，SDD 顶到最前面去了\"*。 然后说 —— "
+"*\"为什么翻转？因为人写的主要制品从代码移到了规约。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:166
+#: 11e49187f8034672a0690ef0ea5ebdd7
+msgid "Slide 12 —— §F.3 · 三护法"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:168
+#: 826f0c2802904b02bbe483115e4e4c03
+msgid "**SDD** · Specification-Driven · 说 · 可理解"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:169
+#: 3d076c92091e4f06a360909c16c4f484
+msgid "**TDD** · Test-Driven · 证 · 可验证"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:170
+#: e8e71b7d1f254421a6c024812f846b62
+msgid "**MDD** · Metric-Driven · 观 · 可观测"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:172
+#: 3d892d580d64475fb5947841991733a2
+msgid ""
+"三个单词 + 三个动词 + 三个形容词。**念完即走**。 一个要提防的误读：*\"我们已经有 CI 了啊。\"* —— 回一句： *\"CI 是"
+" TDD/MDD 的牧场；harness 在键盘按下那一刻就发声。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:178
+#: 00568c5b8adb4049b867ccab349e7888
+msgid "Slide 13 —— §F.4 · 3 × 4 矩阵（全屏）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:180
+#: 95b7458e33d34403a1f4675009e2aae8
+msgid ""
+"          Bridle    Fence      Paddock     Groom\n"
+"          写前      写时        写后        维护\n"
+"\n"
+"SDD (说)  AGENTS    lint       gate        索引\n"
+"TDD (证)  pre-edit  pre-commit CI          flaky 隔离\n"
+"MDD (观)  北极星    成本上限    SLI         指标轮替\n"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:189
+#: c4c6a322c31b4298ae40251e84e33b36
+msgid ""
+"**本场最重要的一张 slide**。不要用动画 —— 一上来就全显示。 讲稿停在这里 4 分钟：4 列各 30 秒 + 3 行各 30 秒 + "
+"收尾 30 秒。 收尾那句：*\"这张表是剩下 30 分钟的地图。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:195
+#: 715b407c295744e79ab33a6b091657e8
+msgid "Slide 14 —— §F.4 · 四区域各一句"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:197
+#: 06724209b7dd488cb4311ff00a76ac88
+msgid "**Bridle（缰绳）** 敲第一个键之前 *看什么、听什么*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:198
+#: d0390eaf900d4542b6cee714ae81a110
+msgid "**Fence（护栏）** 不管作者是谁，*一律拒绝* 坏制品"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:199
+#: 0776f1cdd04347d7b95544af03e949b1
+msgid "**Paddock（牧场）** *可以撒欢的那块地* 的边界"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:200
+#: 90d423e60643458db4825eaae56e90c5
+msgid "**Groom（梳理）** 维护 *挽具本身* 的重复性工作"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:202
+#: 9a39e15d0eb9452e861a808685d9fe37
+msgid "如果 Slide 13 时间用完了，这张可以砍。否则 1 分钟讲完。 强调 Groom —— *\"没有 Groom 的挽具，是装饰。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:207
+#: ea081b3a3d934a9896adab368a82cd31
+msgid "Slide 15 —— §F.5 · 四个案例横轴"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:209
+#: 7e64b7bc475542f399a763903edde540
+msgid ""
+"OpenHarness  Superpowers  lazy-scrum-team  Claude Code\n"
+"运行时+沙箱   技能库       工作流编码        闭源产品\n"
+"(第 07 章)   (第 08 章)   (第 09 章)       (第 10 章)\n"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:215
+#: e9a4f606313b4861a275fbe8357f5cd2
+msgid "同一张矩阵，落在四种形态的项目上"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:217
+#: 0931401019b34ce7934bcb7704537d6d
+msgid "画完后问一句 —— *\"大家手里这个 repo，更像左边还是右边？\"* 停两秒再继续。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:222
+#: 36dc7c39949c402fbed1424c1ddb06a3
+msgid "Slide 16 —— §F.5 · 每案一句"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:224
+#: 00c50b244f4c4ae0ba48250570660421
+msgid "**OpenHarness** —— 唯一\"读过第 05 章才写的\"开源参考实现"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:225
+#: 0ee888f9a6ce4b95b753ffd800d1f718
+msgid "**Superpowers** —— 哲学反面：只出技能不出运行时"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:226
+#: 203af7f9bf544da0a272687c5a382c01
+msgid "**lazy-scrum-team** —— 把 Scrum 角色与交接当挽具"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:227
+#: de134ed0e8f6467e80da2b76cdfca138
+msgid "**Claude Code** —— 闭源；职责分布在 prompt+hooks+skills 三处"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:229
+#: 91c4ae41a6ac45cb8345433aa880eab9
+msgid ""
+"每个 60 秒。重点是让听众 **识别** 自己项目最像哪个，不是评判哪个更好。 一句带走 —— "
+"*\"矩阵是尺子，案例是刻度。挑最像你技术栈的那一个抄。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:234
+#: e4f06a9a027f4d9c841d45e3f2ec57ed
+msgid "Slide 17 —— §F.6 · Lazy AI Coder 四幕"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:236
+#: 6fe276fb2a104c55bfd3e026a4fc8431
+msgid ""
+"Act 1    Act 2        Act 3       Act 4\n"
+"审计     短板         修复         度量 delta\n"
+"Audit    Short-       Fixes        Measure\n"
+"         comings\n"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:243
+#: 1b68866df8e6436987ab197d1031078e
+msgid "本书对自己的仓库做了一次实盘"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:244
+#: 7975e7a095a34476862c43c8bebbcae2
+msgid "矩阵 → 审计 → 修复 → 重打分"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:246
+#: f9533c4156574e7da89c60fec3d55c9c
+msgid "开场一句 —— *\"如果这套框架连书自己的宿主仓库都打不分、改不动， 那它就是错的。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:251
+#: 05e524a445594119bfd7448760908b48
+msgid "Slide 18 —— §F.6 · Act 4 的 delta"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:253
+#: 38b56435861d4895a001f064c6a37361
+msgid "SDD 均值 **1.75 → 3.00**（+1.25）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:254
+#: 38bf1a57bfa84ac9aa6e1b82b6a8baa6
+msgid "TDD 均值 **2.00 → 2.75**（+0.75）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:255
+#: e0b9404981a04d87a1cf53650ae8d0a2
+msgid "MDD 均值 **1.50 → 1.50**（+0.00）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:256
+#: 6d06a7fa10a84ed5aad28503090f4408
+msgid "**总分 1.75 → 2.42**（+0.67）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:258
+#: b088a2afb17e4c3d8efaca2389eda7fc
+msgid ""
+"念 \"1.75\" 慢，念 \"3.00\" 快 —— 听众自己会算 delta。 提防 —— *\"HarnessCard ≠ "
+"虚荣分数。只要你公开评分尺、证据指针、 delta，它就是分析工具不是虚荣。\"* 说明 —— *\"MDD 没动是故意的。90 天内先把 SDD"
+" 做到及格才配谈 MDD。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:265
+#: bf839aa548b74289a4c973a20dd4114f
+msgid "Slide 19 —— §F.7 · 三个里程碑"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:267
+#: 4dcc3fc30b0a428787f0f953b203716e
+msgid ""
+"Day 1–30     Day 31–60        Day 61–90\n"
+"一格         一行 或 一列      一次完整评审\n"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:272
+#: 296246dd025440f2a76208f72894bf52
+msgid "**不必一次做完 12 格**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:273
+#: bcb7d56e10c1429d9c1ed321735726a5
+msgid "挑一格 → 扩到行/列 → 公开打分"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:275
+#: f02e468490394cb7b9f37cd3d4a4567e
+msgid ""
+"画完后直接问 —— *\"如果我们部门只做 Day 30 这一步， 你会选 SDD × Bridle 还是 TDD × Fence？为什么？\"*"
+" 这一问会让下一张 slide 的 Q&A 氛围自动热起来。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:281
+#: db2c5726d6dc4adfa4792f8e60dd64fb
+msgid "Slide 20 —— §F.7 · Day 30 三个推荐切入点"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:283
+#: 8f46cbf9185e46de9b5930d20ee0e102
+msgid "**SDD × Bridle** —— 写一份 `AGENTS.md` （便宜，之后每一轮都赚）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:285
+#: edea461943bd4a1280c2264ead267f61
+msgid "**TDD × Fence** —— 装一条 `PreToolUse` 钩子 （测试红时拒写；单兵受益）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:287
+#: 5e07042b55ab41b08644946d44952925
+msgid "**MDD × Fence** —— LLM 调用加会话成本上限 （过线拒新调用）"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:290
+#: 30164123c7a74104b7a173d81733a775
+msgid "三条都是\"单兵 Day 1 就能上\"的格。 团队通常从 SDD × Bridle 起步；单兵通常从 TDD × Fence 起步。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:295
+#: 7f0028cdb597401dbee9703136f9bd54
+msgid "Slide 21 —— §F.7 · 三个要提防的陷阱"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:297
+#: 466f0480d1ee40d980a2615c0e2b68da
+msgid "**\"Day 30 搞定了\"陷阱** —— 无 Groom，90 天后分数回落"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:298
+#: 2f5874a202b64fd6969fcef213086408
+msgid "**\"Groom 以后再说\"陷阱** —— 一开始就不放 Groom = 装饰"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:299
+#: a9e2625765a0435bbfaff9579a2d33ef
+msgid "**\"凑齐了再发布\"陷阱** —— 等 12 格 ≥ 3 再上线 = 永远不上"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:301
+#: f80d650c80184c6b90fc80f8b20abba7
+msgid "这张是 §F.7 的收口。念完三条再放 Slide 22。 强调中间那条 —— *\"没有 Groom 的挽具，不是挽具，是装饰。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:306
+#: ec252e57cb064a4293b94c3b6aa4ce28
+msgid "Slide 22 —— §F.8 · 三句要被记住的话"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:308
+#: 998e1fdc8e4b4caf8f801c35e19473d0
+msgid "Harness Engineering 不是加一层流程，是 **提取会机械拒绝坏工作的那一小撮制品**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:309
+#: f7d5942d8a2a4f5d8f6547e70d5f2a6a
+msgid "**SDD → TDD → MDD**，顺序不能乱"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:310
+#: 4edafe88de924268b1cf7310ea3ceca7
+msgid "不做 12 格 —— **挑 1 格，30 天上线，90 天公开 HarnessCard**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:312
+#: fa0c7ebdaffa4534a4137a4bce2e361c
+msgid "**逐字念**。这是全场信号量最高的一张 slide。 念完后停 3 秒，再开 Q&A mic。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:317
+#: e0d2136fae4449579086eeb46eddf7bd
+msgid "Slide 23 —— §F.8 · 常见问 Q1"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:319
+#: d7ab718c5d4b47deb1ee8d829cf1fcc6
+msgid "Q：**跟 CI 流水线有什么区别？**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:320
+#: 7fb5727e16744e9294acd823c10030a6
+msgid "A：CI 是 TDD / MDD 的 **牧场**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:321
+#: 7b1efdf8e11f4b239a7545b3c2cacffb
+msgid "合入那一刻发声"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:322
+#: 09a6919592c24e17a0849cb906c98808
+msgid "Harness 在 **键盘按下那一刻** 发声"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:324
+#: b70453df84eb4d1b8de3343af15768a7
+msgid ""
+"60–90 秒。如果听众追问 *\"那我们把 CI 加个 pre-commit 不就行了？\"* —— 回答 *\"那就是 Fence。你已经在做"
+" harness 了，只是还没意识到。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:329
+#: cc8291a9314140c2b60fe1d6ec9fdc21
+msgid "Slide 24 —— §F.8 · 常见问 Q2 + Q3"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:331
+#: bff3f6c80a774fc8a262bfd157c29f12
+msgid "Q：**三个护法一定要全上吗？**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:332
+#: c219fe7e6dc34c13b87ed392313833ed
+msgid "A：不用。Day 30 一格就算进展"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:333
+#: 0beed9263dcc4ec6a5b06db3260b8126
+msgid "Q：**这不就是 DevOps 重新包装？**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:334
+#: 86fa873f142a43dc9b0ed259d7faa36e
+msgid "A：不是。**commit 前 = harness；commit 后 = DevOps**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:336
+#: ce525e773c0c4797b364003c00117ef2
+msgid "每问 45 秒。不要展开。 如果听众继续追问 DevOps 边界，引到附录 A（FAQ）。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:341
+#: 5fd7402eadd6460bb858045d9c34c9c5
+msgid "Slide 25 —— §F.8 · 收尾画面"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:343
+#: ca9e28121b054342b9b52772e1b2b24e
+msgid "只剩下 E"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:344
+#: b0ce4857ba5d4ed59127b71306b221b7
+msgid "从今天起，**先从环境开始**"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:345
+#: 865918b6ba274402942b2d33506f602a
+msgid "*谁愿意做 Day 30 的那一格？*"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:347
+#: 4bdf65657d41462b801a14e851492979
+msgid "把开场那张 M → E 图擦掉一半，只留 E。 最后一句是 **行动号召** —— 让分享会从\"听讲\"变成\"行动\"。 当场记下志愿者的名字。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:353
+#: 02541405d4d5431abd72df0cd08c8d57
+msgid "Slide 26 —— 资源链接"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:355
+#: be4a5c1468884f3191702bc5494a6c58
+msgid "本书仓库：<https://github.com/walterfan/lazy-ai-coder>"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:356
+#: 568501d9dc53444c93b09a12c2a71baf
+msgid "讲稿 / 大纲 / 幻灯片：`book/source/part0-presentation/`"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:357
+#: 5b48b21ce5e84e3f8d674536a05b8c7d
+msgid "Marp 版幻灯片：`_handson/13-one-hour-talk/SLIDES.md`"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:358
+#: 684658c711e14fbf98a72bbc4c277b8f
+msgid "30/60/90 清单：`_handson/12-where-we-go-from-here/`"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:359
+#: 1c1f8dc6606446ffbc74217482257212
+msgid "HarnessCard 模板：附录 D · `CLAUDE.md` 样板：附录 E"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:361
+#: 8c876ad16b174d73963e6ed55f23c3ca
+msgid "停在这一页不关机。让想私下追问的同事有时间逮住讲者。 附录 C 的阅读单打印出来当 handout 发。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:366
+#: d66e8620c0364a0a98ee37d06b650329
+msgid "Slide 27 —— 谢谢"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:368
+#: 3e68447966fb495da5e811b24b1a2656
+msgid "谢谢"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:369
+#: b4b183ab36d54d1f8d0079f4af7aea30
+msgid "问题 & 讨论"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:370
+#: 87b8714d81fd4790b471df3800883882
+msgid "walter@example.com"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:372
+#: 298ebd411fb54ca29ec888573de14ab6
+msgid ""
+"最后 2–3 分钟 Q&A。 如果没人问，可以自问自答 —— *\"我猜有人会问 X，答案是 Y。\"* "
+"这是一种可用的\"暖场\"手法，尤其在中国技术分享会里。"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:378
+#: acb4b1097c3448d5aad85b63d833b379
+msgid "Slide 28（可选）—— 工作坊手册索引"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:380
+#: 4121ce24313944929a484e19e76b01f5
+msgid "**30 分钟版**：§F.0 → §F.1 → §F.2 → §F.4 → §F.7"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:381
+#: 5fd917253f32445bb3477e85a4faffd7
+msgid "**60 分钟版**：全跑"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:382
+#: b7e23e0b52d44733a71a86c9afd9882b
+msgid "**90 分钟版**：§F.7 后加 25 分钟动手填 HarnessCard"
+msgstr ""
+
+#: ../../source/part0-presentation/slides.md:384
+#: 8dd772d037f94438af34221370808097
+msgid "这张只在 90 分钟工作坊场景展示。详见 `outline.md · 应急切法` 一节。"
+msgstr ""
+

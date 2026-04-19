@@ -1,0 +1,8 @@
+# verified: 2026-04-17 · HarnessCard fragment · 10 lines
+harnesscard_version: "0.2"
+project: todo-cli
+sdd:   {spec: CLAUDE.md, owner: walter, last_reviewed: 2026-04-17}
+tdd:   {gate: pre-commit-config.fragment.yaml, coverage_floor: 0.80}
+mdd:   {signals: [pytest_pass_rate, ruff_violations, mean_agent_turns_to_green]}
+approval_gate: pre-commit
+evolution_log: CHANGELOG.md

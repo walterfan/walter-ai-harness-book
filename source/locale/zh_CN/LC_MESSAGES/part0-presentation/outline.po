@@ -1,0 +1,722 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-19 22:13+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/part0-presentation/outline.md:6
+#: 967ea2fd0c3b46b99597fbe7fda3cb8e
+msgid "Speaker Outline —— 分钟级节奏表"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: b59ff6767841483b99ba9c6ce74a86f5
+msgid "使用方式"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:11
+#: 4d63a24668f84004a98f53285a1135b5
+msgid "这一份是讲者的 **口袋小抄**，不是完整稿。每一个 7 分钟的段落列出："
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:13
+#: bf7de5a32c3841d8b4083f755ff62868
+msgid "**目标**：这几分钟要让听众 *记住* 哪一件事。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:14
+#: 73a759196f6d47bfaa9c625179ce51fc
+msgid "**钩子**：用什么话 / 什么图 / 什么反问把听众拉住。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:15
+#: 40d94d49efe9466d95cf278eb4375f5a
+msgid "**可跳**：时间紧时可以砍的部分（delta 值是节省的分钟数）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:16
+#: d8444cc1bb024c31a82d84cd70498323
+msgid "**别讲**：**一定**不要陷进去的细节。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:17
+#: 8791f55d7f1c42b8bf1a7b8947fde450
+msgid "**深一层**（可选）：如果气氛好、时间够，多讲一句反直觉的话。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:19
+#: d0bb531715a74e888ddd3118cb8b035f
+msgid "所有内容都指向 `index.md`（可读稿）里的对应节。开讲前请至少通读一次 `index.md`，再把这份 outline 打印出来放在讲台上。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:22
+#: d59d9820ac9b4606aad97d2bd0ed7540
+msgid ""
+"**术语约定**：`CLAUDE.md / AGENTS.md / SKILL.md / MCP / pre-commit / Bridle / "
+"Fence / Paddock / Groom / SDD / TDD / MDD / HarnessCard` 一律用英文。中文硬翻会丢细节。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:27
+#: 8a13e10bce404b50a14d8882267277ae
+msgid "总览（60 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 9821d73c605745ecad57e57481770437
+msgid "段落"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: b3174ab2debd4ee3b7dd027b18a83ab2
+msgid "分钟"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: c04935e71d2d4937a3eb07413d569d7f
+msgid "累计"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 4241fe0224434d39b2e380f4e48ac7e5
+msgid "节奏"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 74ad0750cb2546f3ab38aacb99dfd824
+msgid "§F.0 开场 —— M → E"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 1ccdb11eff3d49e09289b50f73372585 bfa43c3ad6b74b688405a0cc19ff3b8d
+msgid "2"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: c018b1460aad4d5a91b680ff25143846
+msgid "慢、画白板"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: a43e86eecf8a4c63b7832fcf785557b2
+msgid "§F.1 四阶段演化"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 06863f74045e4cb4b552dd0ed98cffeb 9c7eb87005614d2ab231ae9b931b191f
+#: a33952639ace40509bd1d1276c56816e b1058d1cb8b64f2bb29f29276a020ef6
+#: dca5f25dae6746fba45959cdae239f92 f49b21cfa00c466597cd7fa8bee3280d
+#: f851526f4edd4bf6bc17e84a019acca1
+msgid "7"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 4520cfd614dc454fac8fbf892cd754a4
+msgid "9"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: ef0062e8e82247cd9757bdf26c352c0e
+msgid "论证、不急"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: a4e636cc95744203b25aa0d43cdac863
+msgid "§F.2 定义：是 / 不是"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: f59bff6e5ffd44859d8d9799ccb742f7
+msgid "16"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 6246dd51638343369ae3d358250041ba
+msgid "快念 5+5"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: fdd5e0f54c4a42e8ae967a24c91e7a88
+msgid "§F.3 三护法 SDD → TDD → MDD"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 69765bbc35fb47aaab1a03e64eb19b34
+msgid "23"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 221bc4e6bf3d46678500900a999a1a71
+msgid "画因果翻转图"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: bc7bbf0b2ea34783bb13ccd89775a38f
+msgid "§F.4 3 × 4 矩阵"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 5693da47d0b14a409415b68788e02f57
+msgid "30"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: c9d35079c7364d69a64873776672962c
+msgid "**必画全表**"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: ddac85573b5746fbaeaf9e77a9761b1c
+msgid "§F.5 四个案例"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 184e37d3fef14ad4b6d938129c9e10c6
+msgid "37"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: dbb14de9d85d45a1aca6448ecfcaf144
+msgid "每案一句话"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: e05a852cda764e8ca3b17efc4c6702cd
+msgid "§F.6 Lazy AI Coder 四幕"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 433d81a0b52c409aba2cfc74decbfca9
+msgid "44"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 937e2389a4bd4bca8503ea3655fda726
+msgid "自证其身"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 9064e93e4df848b89737b575898e9781
+msgid "§F.7 30 / 60 / 90 清单"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 3970219c7b604b589e3285ed3c2bacc2
+msgid "51"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 869434d7ac8d4b72838b7a476ca469ec
+msgid "**高能收口**"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: d73a822d08744620aa92801138c995ff
+msgid "§F.8 Q&A 收尾"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: b2ce2442e0a549e08f7b181334de8607
+msgid "4"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 1e455ac4ae2c49899058aa81816222c5
+msgid "55"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 147d76598e474f9bb7d27c30cc54a33f
+msgid "留给同事"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: a5ef6cb6428348b2b9539dad35f5beec
+msgid "缓冲 / 追问"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: de349276fbde49d39e52eddac337d600
+msgid "5"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: 6f279ddfe7bc48c485b7ab60c5e880a3
+msgid "60"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:8
+#: a77f28528c8c45008bedc1fab568ffd3
+msgid "任其自然"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:42
+#: 33077308553c41aa917013fd282dd12e
+msgid ""
+"**排演过两轮以上再上台**。第一轮只讲稿（不开幻灯片也不画白板）， 确认自己对 *流畅度* 有信心；第二轮完整跑一次，**一定**把 §F.4 "
+"的矩阵 和 §F.7 的三个里程碑用白板完整画一遍，记下两段分别花了多少分钟。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:46
+#: 11e68004f0d84143af132823936f2775
+msgid "0:00 – 0:02 §F.0 · 开场（2 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:48
+#: 909561b6676346cbae4b866fc7f7841d
+msgid "**目标**：让听众 **立刻接受** 这一讲的中心比喻 —— *杠杆点从 M 移到了 E*。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:49
+#: 9d273022fa534720beae23c2ef1a8205
+msgid "**钩子**：第一张 slide 只写 \"Model → Environment\"，停 5 秒；再开口讲。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:50
+#: e61884a195f74db4ad0567d3b91b9516
+msgid "**可跳**：**不可跳**。这 2 分钟是全场的钩子。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:51
+#: 0b7b8548e2eb4e79a1e0559eeaa19687
+msgid "**别讲**：不要现在就讲 SDD / TDD / MDD 的内容，那是 §F.3 的。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:52
+#: d5086a7f95cb4a8bbcdbb7214c431008
+msgid ""
+"**深一层**：三条 2026 事实念完之后可以加一句 —— *\"注意：这三件事 的共性是 —— 他们变的都不是模型，是模型周围的东西。\"* "
+"让听众自己 把因果链闭合。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:56
+#: 107ed767828f4efd93fc201d32cd6865
+msgid "0:02 – 0:09 §F.1 · 四阶段演化（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:58
+#: b0e6090a86954a2c98daa782efc05e01
+msgid ""
+"**目标**：让听众记住 `Prompt → Context → Skill → Harness` 四个词的顺序， 以及 "
+"**每一步都是被上一步的裂缝逼出来的**。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:60
+#: 7f9153413c1549c2ba8b8a251a6b5929
+msgid ""
+"**钩子**：画时间轴时故意停在 \"Skill\" 这一格，问一句 *\"那 2026 以后呢？\"* 让听众接 "
+"\"Harness\"（大概率有人接得上）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:62
+#: aae9f92a45ac4f8ba7dda6009bbb313e
+msgid "**可跳**：如果超时，可砍掉\"每阶段代表性制品\"那一段，直接冲进 \"两句要带走的话\"（**省 ~2 分钟**）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:64
+#: 697ba2a895d2484ab672b91cef799a4c
+msgid "**别讲**：不要细讲 LangChain / Cursor / Claude 各自属于哪一阶段 —— §F.5 会展开。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:66
+#: ebafaddd4e574019b60565f379360d9c
+msgid ""
+"**深一层**：加一句 —— *\"前三阶段你可以一个人做；Harness 你必须以 仓库为单位做。这是 2026 和 2024 "
+"最本质的差别。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:69
+#: b7705e14a56546da9cf86080090c7291
+msgid "0:09 – 0:16 §F.2 · 定义（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:71
+#: ae5b90a7f4454048bbc0f04faa2b37d4
+msgid "**目标**：让听众拿到 **一句话定义** + 可用的 **归属检验**（commit 之前 / 之后）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:72
+#: 50e5d73d102247c887a31296e71eccd6
+msgid "**钩子**：把 \"可验证 / 可观测 / 可理解\" 竖着写在白板左栏，停 3 秒， 再开口说 *\"这三词不是修辞。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:74
+#: 539205f16a9c47bdbe07701c8f14da42
+msgid "**可跳**：五条\"不是\"里砍两条最末尾的（SDK 与部署流水线），听众 自己能推出来（**省 ~1 分钟**）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:76
+#: 42d1827e023f427eb368945760f9678e
+msgid "**别讲**：不要纠缠 \"Harness 和 AI Engineering 的关系\"。一句话带过， 抢时间。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:78
+#: 49659e78d0cd4d94816088631e1ab25e
+msgid ""
+"**深一层**：*\"注意 'IS / IS NOT' 清单 5+5 里，'不是' 比 '是' 信息量 更大。每一条 'IS NOT' "
+"都堵住一个常见混淆。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:81
+#: ab6fae4d5253484da23d2e9b5fa27f0a
+msgid "0:16 – 0:23 §F.3 · 三护法（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:83
+#: 7cc7dcb2dba64030ae3e4be6a333b00a
+msgid ""
+"**目标**：让听众记住 **因果顺序反转** —— 从 `test → implement → observe` 变成 `specify → "
+"test → observe`。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:85
+#: 66ced1a74c4a4c51bc3081cec67ab84d
+msgid "**钩子**：上下对照那两行画出来之后，停 5 秒不说话，让听众自己 读出 **\"咦，SDD 顶到最前面去了\"**。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:87
+#: a023861727954c599b8ceaf9572f82b0
+msgid ""
+"**可跳**：三护法各自一句的注释可以合并为 **三个单词 + 一个动词** 的 快念（`SDD — 说 / TDD — 证 / MDD — "
+"观`）（**省 ~1 分钟**）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:89
+#: 81e76b04d1ab4e81b8b56ec01f717083
+msgid "**别讲**：不要展开 \"书里有多少处对 SDD 的引用\"，也不要辩论 SDD 和 BDD 的差别 —— 附录 B 有，但这里不是场合。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:91
+#: 0a83e178854a4c5aa090bf8aea8231a1
+msgid "**深一层**：*\"为什么翻转？ —— 因为人写的主要制品从代码移到了规约。 这是 AI 辅助时代工程师劳动分工的最根本改变。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:94
+#: b660d465f3514c23afd91191ae5246a2
+msgid "0:23 – 0:30 §F.4 · 3 × 4 矩阵（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:96
+#: 4d8749d85bdc4c349ae42c72fba4f12c
+msgid ""
+"**目标**：**让每个人离场时能背出四个英文词** —— Bridle / Fence / Paddock / "
+"Groom。这是全场最\"骨头\"的 7 分钟。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:98
+#: 28532013fc7d42f9a50d3ecdb681d248
+msgid ""
+"**钩子**：**必须画全表**。不要用幻灯片 —— 一边画一边念。边画边说 *\"这张表就是剩下 30 分钟的地图，接下来所有东西都落回这 12"
+" 格。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:100
+#: 40d65a3a23924b9aa1a1aa6e34a15acc
+msgid ""
+"**可跳**：三个学术参考框架（CAR / Thoughtworks / LangChain）可以 只留 CAR / HarnessCard "
+"一行，其余两行一句话带过（**省 ~1 分钟**）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:102
+#: 92247238c8834600aab6a2ac5760e168
+msgid "**别讲**：不要每一格都举例。听众记不住 12 个例子，记得住 4 个列"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:103
+#: c42179e2a5b54d6790a2c958c008d249
+msgid "3 个行 + 一句话归纳就够了。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:104
+#: 0c370fdfaaa048b6933dcac8e87caffa
+msgid ""
+"**深一层**：*\"如果你家团队对这张表的反应是 '我们已经有了 8 格'， 那问题不在缺的 4 格，在那 8 格里 "
+"**有几格是装饰、有几格是真正会 拒绝坏工作的**。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:108
+#: c950b661ae9545e897831d99e2c240bc
+msgid "0:30 – 0:37 §F.5 · 四个案例（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:110
+#: 8694c59069b741c3ad19106db5db5097
+msgid "**目标**：让听众 **识别自己的项目最像哪一个案例**，从而有一个 \"抄作业对象\"。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:112
+#: 385414ff03da46d1988f0a154a44e7c9
+msgid "**钩子**：画完横轴四个点后问一句 —— *\"大家手里这个 repo，更像 左边还是右边？\"* 停两秒再继续。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:114
+#: 7a4925b4a343416d8d3343cac7e140c2
+msgid "**可跳**：如果超时，砍掉 Claude Code 那一段（**省 ~2 分钟**），理由 简单：它是唯一的闭源案例，不可直接抄作业。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:116
+#: 043061e8a5274cb293d956a8218ea2bb
+msgid "**别讲**：不要评价哪一份开源项目 \"写得更好\" —— 这一节目的是 识别差异，不是打分。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:118
+#: 4108f76c973647d9b39dac521849d980
+msgid ""
+"**深一层**：*\"Superpowers 是 OpenHarness 的哲学反面 —— 一个只出 "
+"技能不出运行时，另一个只出运行时不出具体技能。这两种极端都不是 完整的挽具。一个完整的挽具，四列四列都得有人管。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:122
+#: 580e530a273b43f0aeaaccce111c188c
+msgid "0:37 – 0:44 §F.6 · Lazy AI Coder 四幕（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:124
+#: 0688b6b0005a412f8a0f45722d1be789
+msgid "**目标**：让听众看到 **这套方法论对自己的宿主仓库也打分打得出来**。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:125
+#: 1c20dba9317746bd8fa5acbd4adf0190
+msgid ""
+"**钩子**：念出 \"SDD 均值 1.75 → 3.00\" 时刻意把 \"1.75\" 读慢、\"3.00\" 读快 —— 听众会自动算出 "
+"delta。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:127
+#: 27b0f5668be7474b98d860d6fef1000c
+msgid "**可跳**：把 Act 2 五个短板中的 \"MCP schema\" 与\"文档漂移\" 两条合并 （**省 ~1 分钟**）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:129
+#: 2011701e5cfc4c7693604eef63fb2d17
+msgid "**别讲**：不要展开讨论 `reproduce.sh` 的细节；**想演示就在现场敲**， 不想演示就只放链接。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:131
+#: fe27e650445a46c08c0bde91693ff5ff
+msgid "**深一层**：*\"MDD 那一行没动，是故意的。90 天内要先把 SDD 做到 及格才配谈 MDD —— 先有规约才有可观察的内容。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:134
+#: 273b5602aced474ebb836ba12803445c
+msgid "0:44 – 0:51 §F.7 · 30 / 60 / 90 清单（7 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:136
+#: 5a686ceddcd4437f8a97f69e87ee8a0d
+msgid "**目标**：**听众听完这一节离开前，每个人心里都有一格是 \"我周一会动它的\"**。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:137
+#: 21232cc42c7b449cab6e782e17b7d48b
+msgid ""
+"**钩子**：画完三个里程碑后直接问一句 —— *\"如果我们部门只做 Day 30 这一步，你会选 SDD × Bridle 那格还是 TDD "
+"× Fence 那格？为什么？\"* —— 这一问会让下一节 Q&A 自动热起来。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:140
+#: ae33eaf36e714c339e83cf1853822dae
+msgid ""
+"**可跳**：如果时间紧，把\"三条要提防的误读\"一条一条砍；最值得保 留的是 **\"Day 30 我们就搞定了\"陷阱**（**最多省 ~2"
+" 分钟**）。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:142
+#: 4636169a8422439698bfeb807ad689bc
+msgid "**别讲**：不要列具体 PR 数量；那是虚荣指标。强调 \"delta + 证据指针\"。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:143
+#: 7645b821a9db4a29bb3f9092f6c64005
+msgid ""
+"**深一层**：*\"本书最不想让你做的事情 —— **是先把 12 格全填齐再发布**。 公开承认你只做完 1 格，比公开假装 12 "
+"格都在工作有价值得多。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:146
+#: 75d20a5536114bd185443fe738a30bb2
+msgid "0:51 – 0:55 §F.8 · Q&A 收尾（4 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:148
+#: 781661e071ba4b3a8bb8320a6168b93d
+msgid "**目标**：**把三句要被记住的话喊出去**，然后开 mic。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:149
+#: 8c8de7e998e64f88b8a0c106b66409a5
+msgid "**钩子**：把开场那张 M → E 图擦掉一半，只留 E，说 *\"从今天起， 先从环境开始。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:151
+#: ff3617251e9f4c65be24c47cd67f9792
+msgid "**可跳**：**不可跳**。这 4 分钟不是凑数。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:152
+#: c4ed056c18dd4b939326985b034ac809
+msgid "**别讲**：不要在 Q&A 环节介绍新概念 —— 同事问什么你答什么， 有歧义就引到附录。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:154
+#: 566806abeccb40ff9493b9e9cdbe31ae
+msgid ""
+"**深一层**：如果有人问 *\"我们部门没时间做这个\"* —— 用这句话挡住： *\"这问题本身是 MDD "
+"的第一个信号。你没有的不是时间，是衡量 '把挽具装上能省多少返工' 的那张表。\"*"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:158
+#: 054f129118c1455fb23ce9d8eacd8189
+msgid "0:55 – 1:00 缓冲 / 追问（5 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:160
+#: 497287d6be1543adb881cc8f13324941
+msgid "**目标**：让想 **私下追问** 的同事有时间逮住讲者。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:161
+#: e85d24427f9745cc9ec37658df0e786d
+msgid "**钩子**：不离场。把附录 C（阅读单）的链接贴到 Q&A 屏幕上不关机。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:162
+#: e4bd33147c0f4c7e925e41afc8b5d1a6
+msgid "**可跳**：这是缓冲，可以全砍给 Q&A 延续。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:163
+#: de2acd3e393e47879f5225ec1d2833e3
+msgid "**别讲**：不要新起一个话题。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:164
+#: 32461f42c8e04b64aeedfac3dbebd8ac
+msgid ""
+"**深一层**：如果还有 3 分钟以上，问一句 *\"有没有哪位愿意做 Day 30 那格的主 owner？我们这周就拉一个 15 "
+"分钟立项会。\"* —— 这一句 能把分享会从 \"听讲\" 变成 \"行动\"。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:168
+#: 8319b24c16a9438e9b40bee9de5757da
+msgid "应急切法"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:170
+#: c13c96659fe6431ab65469b7b30b72db
+msgid "**30 分钟版**（半小时席间分享）："
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:172
+#: a1874f7389cb4b5f8a0e2838efeb9960
+msgid "§F.0（2 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:173
+#: 10e95ffa84d949be948dea2a1eb92d57
+msgid "§F.1（4 分钟，砍掉\"代表性制品\"段）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:174
+#: e7cbbc4486aa46a19cb18f159229bcb4
+msgid "§F.2（4 分钟，砍到只剩一句话定义 + 归属检验）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:175
+#: db8bc7cfbd554088982f16aaef499639
+msgid "§F.4（6 分钟，**完整画矩阵**，但每列一句话）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:176
+#: ef7864bc986b4a68991e191719782e4d
+msgid "§F.7（8 分钟，**完整讲三个里程碑**）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:177
+#: d7de9c72783a42f4940fa019d5fafdbf
+msgid "Q&A（6 分钟）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:179
+#: 9c18ffb0e68b430b88d398a659668e4d
+msgid "**90 分钟版**（工作坊）："
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:181
+#: 1014c7a84b0342aca2ed616f5e87ed46
+msgid "照 60 分钟版跑完 §F.0–§F.7。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:182
+#: df1c8eb3e3164c8fbdd9acd34f47ae0a
+msgid ""
+"§F.8 之前插入 25 分钟动手：**每人填一张 HarnessCard 的 \"SDD × Bridle\" 格**，评分 "
+"0–5，证据写自家仓库里的 `AGENTS.md` 或它的缺席。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:185
+#: db2862165054493bb5a612614d9eedfa
+msgid "由志愿者读 3–5 份，集体讨论打分差异。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:186
+#: 3d810cf424cf465b84d8a67b0c0744d6
+msgid "回到 §F.8 收尾。"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:188
+#: f4baff923f524dc0bdcd9561f392d24e
+msgid "开讲前清单"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:190
+#: 32837cf81cf644169c7e1e384b91bb17
+msgid "白板笔 ≥ 2 色可用（黑 + 红）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:191
+#: fc4d55a06c2d4e92976317ed4e79fa7f
+msgid "房间内有计时器或站在看得到钟的位置"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:192
+#: 1c6a080fa3ca4805be344ed184fd25db
+msgid "`SLIDES.md` 已经导出为 PDF 或 PPTX 并打开"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:193
+#: 7bcd3707f2c042d5a9a50eb672286c67
+msgid "笔记本连上投影，`reproduce.sh`（§F.6）可现场跑（可选）"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:194
+#: 4f42571f60cd4747beb436df4a68f599
+msgid "附录 C 的阅读单打印 ≥ 10 份当 handout"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:195
+#: 030f150fc015435faa5bb1136b85dd0d
+msgid "在脑子里把 §F.4 矩阵无声过一遍，确认 **闭眼都能画对 12 格**"
+msgstr ""
+
+#: ../../source/part0-presentation/outline.md:196
+#: afe4d8239f00413a90cff72c82518cbc
+msgid "记住三句 \"要被记住的话\"（§F.8），逐字念得出来"
+msgstr ""
+

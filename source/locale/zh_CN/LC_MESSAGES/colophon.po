@@ -1,0 +1,237 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-18 09:55+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/colophon.md:5 a5d8197036b74f6eb79f69fcb9a7ec46
+msgid "Colophon"
+msgstr "版记"
+
+#: ../../source/colophon.md:7 e85e946d0560455799a0c7a035ece89f
+msgid "How this book was built"
+msgstr "本书是怎样造出来的"
+
+#: ../../source/colophon.md:9 21b081d9b4aa4f54b50bc7fe08ca602f
+#, python-brace-format
+msgid ""
+"*Harnessing AI: The Craft of Shaping Agents* — rendered in Chinese as "
+"《驾驭工程：给 AI 套上缰绳》 — is produced from a single English Markdown source tree "
+"under ``book/source/``, translated into Simplified Chinese via ``sphinx-"
+"intl`` gettext catalogs, and rendered to HTML by **Sphinx** + **MyST** + "
+"**sphinxcontrib-bibtex** + the **Read the Docs** theme. Citations live in "
+"BibTeX files under ``_bib/``; diagrams are authored as ``{mermaid}`` "
+"(inline) or ``{plantuml}`` (separate ``.puml`` file) directives. A "
+"structural linter — ``make book-lint`` — enforces the three-guardian × four-"
+"zone matrix contract, the dual-track chapter skeleton, Chapter 03's "
+"definition sections, Chapter 05's provenance declaration, Chapter 11's four-"
+"act structure, and Chapter 12's 30/60/90 checklist discipline."
+msgstr ""
+"*Harnessing AI: The Craft of Shaping Agents* —— 中文名《驾驭工程：给 AI 套上缰绳》—— 是从 "
+"``book/source/`` 下一棵单一的英文 Markdown 源码树生成的，经由 ``sphinx-intl`` 的 gettext "
+"catalog 翻译成简体中文，再由 **Sphinx** ＋ **MyST** ＋ **sphinxcontrib-bibtex** ＋ **Read"
+" the Docs** 主题渲染成 HTML。引用住在 ``_bib/`` 下的 BibTeX 文件里；图则用 ``{mermaid}``（嵌入式）或 "
+"``{plantuml}``（独立 ``.puml`` 文件）directive 编写。一把结构 linter —— ``make book-"
+"lint`` —— 负责强制执行那份\"三护法 × 四区域\"矩阵契约、双轨章骨架、第 03 章的定义小节、第 05 章的出处声明、第 11 "
+"章的四幕结构、以及第 12 章的 30／60／90 清单纪律。"
+
+#: ../../source/colophon.md:22 96741d853dac4edb9517d6b8d717c612
+msgid "The book is its own harness demonstration"
+msgstr "本书本身就是它自己的那套挽具示范"
+
+#: ../../source/colophon.md:24 3843d122c0724111a078e379b544d5ee
+msgid ""
+"The book is written the way it preaches. We apply the 3×4 matrix to the book"
+" itself, and cross-reference each cell to the chapter that taught the "
+"concept:"
+msgstr "本书是按它自己宣讲的那套方式写出来的。我们把那张 3×4 矩阵施加在本书自身之上，并把每一格回指到教过该概念的那一章："
+
+#: ../../source/colophon.md:28 87a3ed7794794c32830289db008fddcc
+#, python-brace-format
+msgid ""
+"**Bridle (guidance)** — ``_bib/`` supplies the canonical citation record; "
+"every chapter's Research Foundations section carries ``{cite}`` roles "
+"resolving to entries here. See {ref}`sdd-x-bridle` for the general pattern."
+msgstr ""
+"**缰绳（引导）** —— ``_bib/`` 提供权威引用记录；每一章的 Research Foundations 小节中的 ``{cite}`` "
+"角色，都会解析到这里的条目。通用模式见 {ref}`sdd-x-bridle`。"
+
+#: ../../source/colophon.md:32 de423c82b7c743caa22b97364ecc7f93
+#, python-brace-format
+msgid ""
+"**Fence (constraints)** — ``make book-lint`` enforces every structural "
+"contract; the ``book-structure`` spec, in turn, enforces what ``book-lint`` "
+"must check. See {ref}`sdd-x-fence` for the general pattern and {ref}`tdd-x-"
+"fence` for the hook-level twin."
+msgstr ""
+"**护栏（约束）** —— ``make book-lint`` 强制执行每一份结构契约；``book-structure`` 规约，反过来，又强制规定"
+" ``book-lint`` 必须去检查哪些东西。通用模式见 {ref}`sdd-x-fence`，钩子层的孪生兄弟见 {ref}`tdd-x-"
+"fence`。"
+
+#: ../../source/colophon.md:36 f45f03547563444d9fc333076c13d82b
+#, python-brace-format
+msgid ""
+"**Paddock (boundaries / acceptance)** — a strict Sphinx build (``-W --keep-"
+"going -n``) gates every PR touching ``book/**``. See {ref}`tdd-x-paddock` "
+"for the general pattern."
+msgstr ""
+"**牧场（边界 ／ 验收）** —— 一次严格的 Sphinx 构建（``-W --keep-going -n``）会为每一份触及 "
+"``book/**`` 的 PR 把关。通用模式见 {ref}`tdd-x-paddock`。"
+
+#: ../../source/colophon.md:39 d670ab1be14841b08dc0be35cc302d5d
+#, python-brace-format
+msgid ""
+"**Groom (maintenance)** — ``make book-intl`` keeps the zh_CN ``.po`` "
+"catalogs fresh; the translation-freshness banner surfaces rot automatically."
+" See {ref}`sdd-x-groom` and {ref}`mdd-x-groom` for the grooming patterns the"
+" book's own workflow instantiates."
+msgstr ""
+"**梳理（维护）** —— ``make book-intl`` 让 zh_CN 的 ``.po`` catalog "
+"保持新鲜；翻译新鲜度横幅会自动把朽坏浮上来。本书自身工作流所实例化的那些梳理模式，见 {ref}`sdd-x-groom` 与 {ref}`mdd-x-"
+"groom`。"
+
+#: ../../source/colophon.md:44 57d67c19336044f7a4c0b7b0686b2470
+msgid "License & attribution"
+msgstr "许可证与署名"
+
+#: ../../source/colophon.md:46 5db90a8ccc56487886e16497ab9633c5
+msgid "Prose and diagrams authored for this book: **CC-BY-SA-4.0**."
+msgstr "为本书撰写的正文与图：**CC-BY-SA-4.0**。"
+
+#: ../../source/colophon.md:47 0cbabc0d6b9f43b29384afc6d592b348
+msgid ""
+"Code samples authored for this book: **MIT**, matching the rest of the host "
+"repository."
+msgstr "为本书写的代码样例：**MIT**，与宿主仓库的其余部分保持一致。"
+
+#: ../../source/colophon.md:49 fd8802ab511d419ba47731f9912e084d
+msgid ""
+"Quoted excerpts from third-party sources (OpenHarness, Superpowers, 《马书》, "
+"etc.) retain their upstream licenses; each excerpt carries an inline "
+"attribution footer naming the source and license."
+msgstr ""
+"引用自第三方来源（OpenHarness、Superpowers、《马书》等）的片段，保留各自上游的许可证；每一段引文都附一段嵌入式署名脚注，点名出处与许可证。"
+
+#: ../../source/colophon.md:53 1427cb13e7e34af497e6d66677fac076
+msgid "See ``book/LICENSE`` for the definitive text."
+msgstr "权威条款见 ``book/LICENSE``。"
+
+#: ../../source/colophon.md:55 4cd419e112424004a900276c4265c859
+msgid "Author & acknowledgements"
+msgstr "作者与致谢"
+
+#: ../../source/colophon.md:57 f9ebff990ad04b13a943bcb3c444c075
+msgid ""
+"Author: Walter Fan. Editorial review, translation, and harness-testing "
+"contributions are credited in the chapter where they land. A rolling "
+"acknowledgement index lives at the bottom of ``book/CONTRIBUTING.md``."
+msgstr ""
+"作者：Walter Fan。编辑评审、翻译、挽具实测方面的贡献，在各自落地的那一章里单独署名。一份滚动更新的致谢索引住在 "
+"``book/CONTRIBUTING.md`` 的末尾。"
+
+#: ../../source/colophon.md:62 239c53c4edfa4b57b14d9d77c9a41bc4
+msgid "Credits and thanks"
+msgstr "鸣谢"
+
+#: ../../source/colophon.md:64 978f1de25b114f07be15a2c72090d011
+msgid ""
+"Specific projects, books, and individuals whose work is load-bearing in this"
+" book:"
+msgstr "那些作品在本书中起到承重作用的具体项目、书籍与个人："
+
+#: ../../source/colophon.md:67 522c781734074263887b194b9e61fb71
+#, python-brace-format
+msgid ""
+"**HKU Data Science Lab** for **OpenHarness** {cite}`hkuds2025openharness` — "
+"the open-source reference implementation Chapter 07 treats."
+msgstr ""
+"**港大数据科学实验室** 之 **OpenHarness** {cite}`hkuds2025openharness` —— 第 07 "
+"章所处理的那份开源参考实现。"
+
+#: ../../source/colophon.md:69 7afe95dc05064801bdcc61ebf25f51a1
+#, python-brace-format
+msgid ""
+"**Joseph Vincent (David Vincent, `obra`)** for **Superpowers** "
+"{cite}`vincent2025superpowers` — the skills library Chapter 08 treats."
+msgstr ""
+"**Joseph Vincent（David Vincent，`obra`）** 之 **Superpowers** "
+"{cite}`vincent2025superpowers` —— 第 08 章所处理的那份技能库。"
+
+#: ../../source/colophon.md:71 45d308e02371498db65f23de28ab85ef
+#, python-brace-format
+msgid ""
+"**The `lazy-scrum-team` authors** {cite}`lazyscrumteam2026` — whose "
+"workflow-encoded harness is Chapter 09's canonical treatment."
+msgstr ""
+"**`lazy-scrum-team` 的作者们** {cite}`lazyscrumteam2026` —— 他们那份以工作流编码的挽具，是第 09 "
+"章的权威对象。"
+
+#: ../../source/colophon.md:73 b689290fbc4d409aa4eba0f08cdb253a
+#, python-brace-format
+msgid ""
+"**Zhang Handong (张汉东)** for **《马书》** {cite}`zhangbook2026` — the reverse-"
+"engineering study that makes Chapter 10 tractable."
+msgstr "**张汉东** 之 **《马书》** {cite}`zhangbook2026` —— 正是那份逆向工程研究，让第 10 章得以成立。"
+
+#: ../../source/colophon.md:75 bb847c85e2574d9cbab3de084d52934b
+#, python-brace-format
+msgid ""
+"**The authors of the CAR / HarnessCard position paper** "
+"{cite}`car2025decomposition` — whose disclosure format Appendix D serialises"
+" against."
+msgstr ""
+"**CAR ／ HarnessCard 立场论文的作者们** {cite}`car2025decomposition` —— 附录 D "
+"所遵循序列化的那套披露格式。"
+
+#: ../../source/colophon.md:78 5bf73a7f46b141d4968fdadc8eb4578c
+#, python-brace-format
+msgid ""
+"**The `walkinglabs/awesome-harness-engineering` curators** "
+"{cite}`walkinglabs2026awesome` — the ongoing curated list that complements "
+"this long-form methodology."
+msgstr ""
+"**`walkinglabs/awesome-harness-engineering` 的维护者们** "
+"{cite}`walkinglabs2026awesome` —— 那份与本书这份长篇方法论互补的、持续更新的精选列表。"
+
+#~ msgid ""
+#~ "The book is written the way it preaches. We apply the 3×4 matrix to the book"
+#~ " itself:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Bridle (guidance)** — ``_bib/`` supplies the canonical citation record; "
+#~ "every chapter's Research Foundations section carries ``{cite}`` roles "
+#~ "resolving to entries here."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Fence (constraints)** — ``make book-lint`` enforces every structural "
+#~ "contract; the ``book-structure`` spec, in turn, enforces what ``book-lint`` "
+#~ "must check."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Paddock (boundaries / acceptance)** — a strict Sphinx build (``-W --keep-"
+#~ "going -n``) gates every PR touching ``book/**``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Groom (maintenance)** — ``make book-intl`` keeps the zh_CN ``.po`` "
+#~ "catalogs fresh; the translation-freshness banner surfaces rot automatically."
+#~ msgstr ""

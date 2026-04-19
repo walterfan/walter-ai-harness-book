@@ -1,0 +1,14 @@
+<!-- verified: 2026-04-17 · AGENTS.md fragment · SDD guardian · 14 lines -->
+
+# AGENTS.md — todo-cli
+
+## Machine-checkable spec block
+
+- **entrypoint:** `todo/__main__.py`
+- **subcommands:** add, list, done, remove (one file each under `todo/cmds/`)
+- **storage contract:** `todo/storage.py::save(items) -> None` — atomic;
+  tests pin this signature in `tests/test_storage.py`.
+- **invariant:** no subcommand may call `print()` outside
+  `todo/cmds/_io.py` — enforced by `scripts/check_io_boundary.py`.
+- **agent rule:** before editing any file listed above, read
+  `tests/test_<name>.py` if it exists.

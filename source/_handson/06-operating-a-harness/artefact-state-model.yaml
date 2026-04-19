@@ -1,0 +1,12 @@
+# verified: 2026-04-17 · approval gates · lazy-scrum-team Artefact State Model
+artefact_state_model_version: "0.1"
+states: [draft, review, approved, archived]
+transitions:
+  - {from: draft,     to: review,   trigger: author_submit}
+  - {from: review,    to: draft,    trigger: reviewer_request_changes}
+  - {from: review,    to: approved, trigger: reviewer_approve}
+  - {from: approved,  to: archived, trigger: release_shipped}
+  - {from: archived,  to: review,   trigger: reopen_for_change}
+invariants:
+  - "an approved artefact cannot go back to draft without an archive step"
+  - "only the Final Acceptance role can transition review → approved"

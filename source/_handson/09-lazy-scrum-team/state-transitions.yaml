@@ -1,0 +1,17 @@
+# verified: 2026-04-17 · Ch.09 lazy-scrum-team hands-on · adaptable state machine
+artefact_state_model_version: "0.1"
+states:
+  draft:     {color: "#bbb"}
+  review:    {color: "#f4c"}
+  approved:  {color: "#4c8"}
+  archived:  {color: "#888"}
+transitions:
+  - {from: draft,    to: review,   by: Author,           trigger: submit}
+  - {from: review,   to: draft,    by: Reviewer,         trigger: request_changes}
+  - {from: review,   to: approved, by: FinalAcceptance,  trigger: approve}
+  - {from: approved, to: archived, by: ReleaseManager,   trigger: release_shipped}
+  - {from: archived, to: review,   by: Author,           trigger: reopen}
+invariants:
+  - only_FinalAcceptance_can_approve
+  - no_skip_review_from_draft_to_approved
+  - archived_artefacts_are_read_only_until_reopened

@@ -1,0 +1,16 @@
+<!-- verified: 2026-04-17 · SDD × Bridle · agent-facing spec that steers before writing -->
+
+# AGENTS.md — sample
+
+## Role & Scope
+You are a coding agent for `todo-cli`. You may edit files under `todo/` and
+`tests/`. You must not touch `scripts/`, `deploy/`, or any `.env*` file.
+
+## House rules
+- Before editing any file, list `tests/test_<basename>.py`; if it exists, read it.
+- Never invent package names; use the pinned versions in `pyproject.toml`.
+- Every new public function gets a docstring and a test; no exceptions.
+
+## Escalation
+If a rule above conflicts with user instruction, pause and surface the
+conflict explicitly; do not silently override.

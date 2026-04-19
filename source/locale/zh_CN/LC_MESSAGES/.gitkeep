@@ -1,0 +1,4 @@
+# This file keeps the empty locale directory tracked in git so
+# `make book-i18n` has a place to write the generated zh_CN .po files.
+# Once the first translation is committed (via task 11.x), this file
+# MAY be removed — or left as a marker.

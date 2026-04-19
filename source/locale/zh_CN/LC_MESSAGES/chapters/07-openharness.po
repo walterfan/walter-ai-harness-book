@@ -1,0 +1,815 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Walter Fan
+# This file is distributed under the same license as the Harnessing AI: The
+# Craft of Shaping Agents package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Harnessing AI: The Craft of Shaping Agents\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-18 21:31+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/chapters/07-openharness.md:7 6e62f7824796473f9a96ea969981006b
+msgid "Case Study: OpenHarness"
+msgstr "案例研究：OpenHarness"
+
+#: ../../source/chapters/07-openharness.md:9 0d836ba917194582b7be8fc4571cbb13
+msgid "*The closest thing to a textbook harness that ships as open source.*"
+msgstr "*开源世界里，最接近\"教科书级挽具\"的那一具。*"
+
+#: ../../source/chapters/07-openharness.md:11 ea15bfae5b064a659240ea55718e666a
+#, python-brace-format
+msgid ""
+"OpenHarness, authored by the HKU Data Science Lab (HKUDS) and released as "
+"MIT-licensed open source {cite}`hkuds2025openharness`, is the reference "
+"implementation the book returns to most often. It reads as if its authors "
+"had already written Chapter 05: the repository is neatly divided into ten "
+"subsystems, each of which maps onto a specific cell or small cluster of "
+"cells in the three-guardian × four-zone matrix. This chapter walks through "
+"those subsystems, quotes the Agent Loop core, and scores the whole project "
+"against the Ch.05 matrix."
+msgstr ""
+"OpenHarness 由香港大学数据科学实验室（HKUDS）编写，以 MIT 许可开源发布 "
+"{cite}`hkuds2025openharness`。它是本书最常回头引用的那份参考实现。读它的感觉，就像作者们已经先写过第 05 "
+"章：仓库整齐地分成十个子系统，每一个都刚好对应到\"三护法 × 四区域\"矩阵里的某一格、或某一小簇格子。本章逐个走过这些子系统、引用 Agent "
+"Loop 核心那一小段代码，并给整个项目按第 05 章的矩阵打一次分。"
+
+#: ../../source/chapters/07-openharness.md:20 15ea4a16a93b4f4d98d7a235edc6b2b9
+msgid "§07.1 — Ten subsystems at a glance"
+msgstr "§07.1 —— 一眼看清十个子系统"
+
+#: ../../source/chapters/07-openharness.md:22 9e130ca8e8c740f4816ca7daa542661a
+msgid ""
+"OpenHarness as of the 2026-03 snapshot is organised around ten subsystems "
+"that roughly correspond to the ten directories under `src/openharness/` in "
+"the upstream tree:"
+msgstr ""
+"以 2026-03 的快照为准，OpenHarness 围绕十个子系统组织，大致对应上游仓库 `src/openharness/` 下面的十个目录："
+
+#: ../../source/chapters/07-openharness.md:26 639349481427484f91cb3ca434f3c78f
+msgid "`api/` — OpenAI-compatible clients and Copilot auth adapters."
+msgstr "`api/` —— OpenAI 兼容的客户端，以及 Copilot 认证适配器。"
+
+#: ../../source/chapters/07-openharness.md:27 8ea76885327040439ee50cfc7a6992e7
+msgid ""
+"`autopilot/` — the long-running agent service that the book's Chapter 02 "
+"stage-4 example alludes to."
+msgstr "`autopilot/` —— 那个长期运行的智能体服务，本书第 02 章第 4 阶段的例子就隐指它。"
+
+#: ../../source/chapters/07-openharness.md:29 10ebed1f414e49f8b1af532d83714027
+msgid ""
+"`channels/` — integrations with Slack, Discord, Feishu, Telegram, and eight "
+"more messaging surfaces."
+msgstr "`channels/` —— 与 Slack、Discord、飞书、Telegram 以及另外八个消息面的集成。"
+
+#: ../../source/chapters/07-openharness.md:31 6c3968ae97f8485398040afb052aff6c
+msgid "`config/` — schema + settings + path helpers; a textbook SDD × Fence."
+msgstr "`config/` —— schema、settings、路径助手；教科书式的 SDD × 护栏。"
+
+#: ../../source/chapters/07-openharness.md:32 66a140156ecb4c289b4970688056e2e3
+msgid "`coordinator/` — agent-definition registry."
+msgstr "`coordinator/` —— 智能体定义的注册表。"
+
+#: ../../source/chapters/07-openharness.md:33 6c6d10a0069f4bdfa9b8a8d2a0a6e1f9
+msgid "`engine/` — the Agent Loop itself (see §07.2 below)."
+msgstr "`engine/` —— Agent Loop 本身（见下文 §07.2）。"
+
+#: ../../source/chapters/07-openharness.md:34 b4755964f5d1480ea2aefaa67e0a18ec
+msgid "`hooks/` — event bus powering the hook-driven fence."
+msgstr "`hooks/` —— 事件总线，驱动那道以 hook 为核心的护栏。"
+
+#: ../../source/chapters/07-openharness.md:35 9cd21da4bba14f71ba354c4396138b6b
+msgid "`mcp/` — MCP client wiring; the channel for tool use."
+msgstr "`mcp/` —— MCP 客户端接线；工具使用的那条通道。"
+
+#: ../../source/chapters/07-openharness.md:36 72b875e7a3c043d5b340721add774960
+msgid "`memory/` — conversation memory manager."
+msgstr "`memory/` —— 会话记忆管理器。"
+
+#: ../../source/chapters/07-openharness.md:37 107ad052cdf84b1aae42cf6f70ed1308
+msgid ""
+"`sandbox/` — Docker-backed execution isolation; a Runtime-layer paddock."
+msgstr "`sandbox/` —— 基于 Docker 的执行隔离；Runtime 层的牧场。"
+
+#: ../../source/chapters/07-openharness.md:39 431f034117ca418783125a72e5bfa2b3
+msgid ""
+"A reader who wanted to verify every claim in this chapter would `ls "
+"src/openharness/` in a fresh clone of "
+"[`HKUDS/OpenHarness`](https://github.com/HKUDS/OpenHarness) and see the same"
+" ten names. The taxonomy is extracted *from the code*, not imposed on it."
+msgstr ""
+"想逐条核对本章说法的读者，可以在一份全新的 "
+"[`HKUDS/OpenHarness`](https://github.com/HKUDS/OpenHarness) 克隆里 `ls "
+"src/openharness/`，会看到同样这十个名字。这份分类学是 *从代码里抽取出来* 的，不是外部强加上去的。"
+
+#: ../../source/chapters/07-openharness.md:45 29adf12c6cae4316bc3d9f4bfd09fb7a
+msgid "§07.2 — The Agent Loop (≤ 20 lines, MIT-attributed)"
+msgstr "§07.2 —— Agent Loop（不超过 20 行，MIT 署名）"
+
+#: ../../source/chapters/07-openharness.md:47 2bf5a735ebab4ccdb0a5dfe0ae4b73ec
+#, python-brace-format
+msgid ""
+"The heart of any harness is its agent loop. OpenHarness's "
+"`engine/query_engine.py` compresses the ReAct-style loop "
+"{cite}`yao2022react` into a form that is easy to audit and easy to "
+"instrument. The shape of the loop — slightly shortened here for exposition —"
+" is:"
+msgstr ""
+"任何一具挽具的核心，都是它的 agent loop。OpenHarness 的 `engine/query_engine.py` 把 ReAct 式循环"
+" {cite}`yao2022react` 压缩成一种既便于审计、也便于埋点的形态。为便于讲解，这里略作删节："
+
+#: ../../source/chapters/07-openharness.md:53 9548abe5b27047b2aa55f08ad181da51
+msgid ""
+"# Adapted from OpenHarness/src/openharness/engine/query_engine.py\n"
+"# MIT License, Copyright (c) 2025 HKUDS.\n"
+"def step(self, state):\n"
+"    messages = self.memory.window(state)\n"
+"    plan = self.model.complete(messages, tools=self.tools.schemas())\n"
+"    if plan.tool_calls:\n"
+"        outputs = [self.tools.invoke(c) for c in plan.tool_calls]\n"
+"        state = self.memory.extend(state, plan, outputs)\n"
+"        return state, \"continue\"\n"
+"    return self.memory.extend(state, plan, []), \"halt\"\n"
+msgstr ""
+"# Adapted from OpenHarness/src/openharness/engine/query_engine.py\n"
+"# MIT License, Copyright (c) 2025 HKUDS.\n"
+"def step(self, state):\n"
+"    messages = self.memory.window(state)\n"
+"    plan = self.model.complete(messages, tools=self.tools.schemas())\n"
+"    if plan.tool_calls:\n"
+"        outputs = [self.tools.invoke(c) for c in plan.tool_calls]\n"
+"        state = self.memory.extend(state, plan, outputs)\n"
+"        return state, \"continue\"\n"
+"    return self.memory.extend(state, plan, []), \"halt\"\n"
+
+#: ../../source/chapters/07-openharness.md:66 9c8d2e40288942ccbb41716df61e85ec
+msgid ""
+"What matters for the book's argument is not the ≤ 20 lines themselves but "
+"the three decisions they encode: (a) the model emits tool-calls as first-"
+"class structured output rather than free-form text; (b) the memory manager "
+"owns the context-window policy; (c) the loop *explicitly distinguishes* "
+"\"continue\" from \"halt\" states. All three decisions are visible to the "
+"human reviewer, which is what makes this harness auditable."
+msgstr ""
+"对本书的论点而言，重要的不是这不到二十行本身，而是它们把三项决定编码了进去：(a) 模型把工具调用当作一等结构化输出发出，而不是自由文本；(b) "
+"记忆管理器 *持有* 上下文窗口策略；(c) 这个循环 *显式地* "
+"把\"continue\"和\"halt\"两种状态分开。这三项决定，对人类评审者都是 *可见* 的——而正是这份可见性，让这具挽具可以被审计。"
+
+#: ../../source/chapters/07-openharness.md:74 629bff52cef6404fbb2af4cf156b25d8
+msgid "§07.3 — The 43-tool taxonomy (Toolformer-style)"
+msgstr "§07.3 —— 43 个工具的分类（Toolformer 风格）"
+
+#: ../../source/chapters/07-openharness.md:76 e3a7daef3b14436f94605a22111e519d
+#, python-brace-format
+msgid ""
+"OpenHarness ships 43 first-party tools at the 2026-03 snapshot "
+"{cite}`hkuds2025openharness`. A partial grouping:"
+msgstr ""
+"在 2026-03 的快照里，OpenHarness 自带 43 个一方工具 {cite}`hkuds2025openharness`。部分分组如下："
+
+#: ../../source/chapters/07-openharness.md:83 b7058a1598c64ccd8ef61225259e6e72
+msgid "Group"
+msgstr "分组"
+
+#: ../../source/chapters/07-openharness.md:84 fdab8219b7754b969e94035a66656656
+msgid "Count"
+msgstr "数量"
+
+#: ../../source/chapters/07-openharness.md:85 103b8ea782fc4a909d39b35c8b56079d
+msgid "Examples"
+msgstr "例子"
+
+#: ../../source/chapters/07-openharness.md:86 68e0d4022dd44484aa54972de2f92314
+msgid "File & code navigation"
+msgstr "文件与代码浏览"
+
+#: ../../source/chapters/07-openharness.md:87 27a5fab6d1c6430497a2b3dc47c25cbf
+msgid "9"
+msgstr "9"
+
+#: ../../source/chapters/07-openharness.md:88 f9879f0d4d284e258da3c21b49b5d405
+msgid "`read_file`, `grep`, `list_dir`, `semantic_search`"
+msgstr "`read_file`、`grep`、`list_dir`、`semantic_search`"
+
+#: ../../source/chapters/07-openharness.md:89 6ae322642ce04d3abf5d13cbaecf7d88
+msgid "Editing"
+msgstr "编辑"
+
+#: ../../source/chapters/07-openharness.md:90 a0876b2b9a734d1b8371e4464d90332d
+msgid "6"
+msgstr "6"
+
+#: ../../source/chapters/07-openharness.md:91 35396e96ab414408adfddcb0f40858f2
+msgid "`write_file`, `str_replace`, `apply_patch`, `delete_file`"
+msgstr "`write_file`、`str_replace`、`apply_patch`、`delete_file`"
+
+#: ../../source/chapters/07-openharness.md:92 7dc4193b7e684418af02e6b5ad171a25
+msgid "Shell & process"
+msgstr "Shell 与进程"
+
+#: ../../source/chapters/07-openharness.md:93 123cd9a97344419cba621ef6b8054efb
+msgid "5"
+msgstr "5"
+
+#: ../../source/chapters/07-openharness.md:94 ae6ec6233e5f4df0b7fc8ced72ccdf20
+msgid ""
+"`run_command`, `await_job`, `tail_terminal`, `kill_job`, `cat_terminal`"
+msgstr "`run_command`、`await_job`、`tail_terminal`、`kill_job`、`cat_terminal`"
+
+#: ../../source/chapters/07-openharness.md:95 9c07135d442e4f09ae90bbe9a0f25c34
+msgid "VCS"
+msgstr "VCS"
+
+#: ../../source/chapters/07-openharness.md:96
+#: ../../source/chapters/07-openharness.md:128
+#: ../../source/chapters/07-openharness.md:132
+#: ../../source/chapters/07-openharness.md:148
+#: ../../source/chapters/07-openharness.md:163
+#: 92877490c9b048a28c95a6bcb2a22f30 b1ad8fddf8874a98a1b915a6cf725da7
+#: ca672d2a913c4d47a2a5468e2d0cb935 cbc3b4a239b1457c9aa314bbb9b306aa
+#: ed76fb902d70431d8a4c8794d6a5f973
+msgid "4"
+msgstr "4"
+
+#: ../../source/chapters/07-openharness.md:97 3e22d8468e8a4103b131626221a5fb8f
+msgid "`git_status`, `git_diff`, `git_commit`, `git_log`"
+msgstr "`git_status`、`git_diff`、`git_commit`、`git_log`"
+
+#: ../../source/chapters/07-openharness.md:98 fbc42dca50284c56a52412a75f83abf3
+msgid "Web & fetch"
+msgstr "Web 与抓取"
+
+#: ../../source/chapters/07-openharness.md:99
+#: ../../source/chapters/07-openharness.md:102
+#: ../../source/chapters/07-openharness.md:136
+#: ../../source/chapters/07-openharness.md:140
+#: ../../source/chapters/07-openharness.md:144
+#: ../../source/chapters/07-openharness.md:153
+#: ../../source/chapters/07-openharness.md:159
+#: ../../source/chapters/07-openharness.md:167
+#: 17ea90560c5d46c4bf1723bdd6bfc60e 22d2db2045084050918ddd00e52414f1
+#: 3317102166e04bc781706968289b0fae 3722b6806ac94d2ca73afeb6409cd150
+#: 98bfb2e7bbcb41ebab062acd52660abf aa374e7f60f344b18ab8253cbb04a81c
+#: cedc46fb962649b9801a07153c6574ee fc6070201651433486a46ca801f7cdff
+msgid "3"
+msgstr "3"
+
+#: ../../source/chapters/07-openharness.md:100
+#: cbbc150181384baa98d75f25836d32bb
+msgid "`web_search`, `web_fetch`, `read_lints`"
+msgstr "`web_search`、`web_fetch`、`read_lints`"
+
+#: ../../source/chapters/07-openharness.md:101
+#: 00fedee92af448aeaf4882dea2d6768b
+msgid "MCP client"
+msgstr "MCP 客户端"
+
+#: ../../source/chapters/07-openharness.md:103
+#: 73ca95c1301643c59c8d28f2a6f751a0
+msgid "`mcp_call`, `mcp_fetch_resource`, `mcp_list_resources`"
+msgstr "`mcp_call`、`mcp_fetch_resource`、`mcp_list_resources`"
+
+#: ../../source/chapters/07-openharness.md:104
+#: a843afc70d6443b9ad0cc10f5dc58674
+msgid "Miscellaneous"
+msgstr "其他杂项"
+
+#: ../../source/chapters/07-openharness.md:105
+#: 350a0a2eb5db4a85b12333306860d53c
+msgid "13"
+msgstr "13"
+
+#: ../../source/chapters/07-openharness.md:106
+#: aa62216364454e9f95746327d9aece4e
+msgid "memory, sandbox, channel, notebook, and helper tools"
+msgstr "记忆、sandbox、channel、notebook 及各类辅助工具"
+
+#: ../../source/chapters/07-openharness.md:109
+#: 24f01d1b3e24415abcb7d765104fafc6
+#, python-brace-format
+msgid ""
+"The grouping makes a Toolformer-style {cite}`schick2023toolformer` argument "
+"concrete: the tools are not an afterthought, they are the primary surface "
+"the agent acts through. The MCP specification {cite}`anthropic2024mcp` "
+"extends this surface to third-party tools."
+msgstr ""
+"这份分组，把 Toolformer 式的论点 {cite}`schick2023toolformer` "
+"做成了具体的东西：工具不是事后补上的附属品，它们是智能体 *行动* 所经过的首要平面。MCP 规范 {cite}`anthropic2024mcp` "
+"把这个面进一步延伸到了第三方工具。"
+
+#: ../../source/chapters/07-openharness.md:114
+#: 454ac155772d4988a5a58fae31a5a6b5
+msgid "§07.4 — 12-cell highlight map"
+msgstr "§07.4 —— 十二格亮点图"
+
+#: ../../source/chapters/07-openharness.md:116
+#: 1b4f1c2e2df44e74985713fe1ecf7802
+msgid ""
+"Every case-study chapter in the book scores the harness against the twelve "
+"Ch.05 cells on a 0–5 scale, with 1–3 sentences of evidence citing specific "
+"files under `oss/OpenHarness/`."
+msgstr ""
+"本书的每一章案例研究，都会按第 05 章的十二格、以 0–5 分制给挽具打分，并用 1–3 句话、引用 `oss/OpenHarness/` "
+"下的具体文件作为证据。"
+
+#: ../../source/chapters/07-openharness.md:124
+#: dbd200b67eef4fd1a563055e8cb460df
+msgid "Cell"
+msgstr "格子"
+
+#: ../../source/chapters/07-openharness.md:125
+#: 213e4846b1224f4b9ef8f21632824765
+msgid "Score"
+msgstr "得分"
+
+#: ../../source/chapters/07-openharness.md:126
+#: d6bac269f43548b4b10dd48985fe2eb6
+msgid "Evidence"
+msgstr "证据"
+
+#: ../../source/chapters/07-openharness.md:127
+#: 8050bdfacfde452b811946288ad82d2d
+msgid "SDD × Bridle"
+msgstr "SDD × 缰绳"
+
+#: ../../source/chapters/07-openharness.md:129
+#: f9765b35112b467ea351de327920aea3
+msgid ""
+"`README.md`, `src/openharness/prompts/system_prompt.py` and the "
+"`openharness/prompts/context.py` bundle steer agent behaviour."
+msgstr ""
+"`README.md`、`src/openharness/prompts/system_prompt.py`，以及 "
+"`openharness/prompts/context.py` 打包在一起引导智能体的行为。"
+
+#: ../../source/chapters/07-openharness.md:131
+#: 905710e64fec48aa90f8a401fefb5232
+msgid "SDD × Fence"
+msgstr "SDD × 护栏"
+
+#: ../../source/chapters/07-openharness.md:133
+#: d3f2d3c4665646a7a37ec0a4624f8892
+msgid ""
+"`config/schema.py` + `config/settings.py` validate every launch-time config;"
+" bad config aborts the process."
+msgstr "`config/schema.py` ＋ `config/settings.py` 校验每一次启动时的配置；坏配置直接让进程终止。"
+
+#: ../../source/chapters/07-openharness.md:135
+#: 8a9de042271c4c72ad48543cfcc52f10
+msgid "SDD × Paddock"
+msgstr "SDD × 牧场"
+
+#: ../../source/chapters/07-openharness.md:137
+#: 47f40806f8fb44e7877ca1e706e9b301
+msgid ""
+"No explicit acceptance-table pattern; review relies on upstream PR review + "
+"the `autopilot/service.py` state machine."
+msgstr "没有显式的验收表模式；评审依赖上游的 PR review，加上 `autopilot/service.py` 的状态机。"
+
+#: ../../source/chapters/07-openharness.md:139
+#: 586bc2f38c0940c6ba4c602266ce9a8e
+msgid "SDD × Groom"
+msgstr "SDD × 梳理"
+
+#: ../../source/chapters/07-openharness.md:141
+#: 4b0c7fb83e6e40188825bc0f1a9a985f
+msgid ""
+"`plugins/loader.py` and `commands/registry.py` refresh in-process registries"
+" but living-doc grooming is ad-hoc."
+msgstr "`plugins/loader.py` 和 `commands/registry.py` 会刷新进程内注册表，但对\"活文档\"的梳理是临时性的。"
+
+#: ../../source/chapters/07-openharness.md:143
+#: 09fee2b044944b2b9f23a7a81748db64
+msgid "TDD × Bridle"
+msgstr "TDD × 缰绳"
+
+#: ../../source/chapters/07-openharness.md:145
+#: 3faa7d86c3d443c38d332a1957f67297
+msgid ""
+"Upstream test suite under `tests/` is substantial but not committed-red-"
+"first; agent context does not read tests by default."
+msgstr "`tests/` 下上游测试套件分量很足，但不是\"先 commit 为红\"那种模式；智能体的上下文默认不会读测试。"
+
+#: ../../source/chapters/07-openharness.md:147
+#: 483a0fa10475446badf21e5128e14529
+msgid "TDD × Fence"
+msgstr "TDD × 护栏"
+
+#: ../../source/chapters/07-openharness.md:149
+#: 678ff775908e4935aaa971b7bfca5458
+msgid ""
+"`sandbox/adapter.py` + `sandbox/docker_backend.py` refuse code execution "
+"outside Docker; `permissions/checker.py` refuses tool calls by policy."
+msgstr ""
+"`sandbox/adapter.py` ＋ `sandbox/docker_backend.py` 拒绝任何 Docker "
+"之外的代码执行；`permissions/checker.py` 按策略拒绝工具调用。"
+
+#: ../../source/chapters/07-openharness.md:152
+#: e83c3221b83d48679face83ad3e88c16
+msgid "TDD × Paddock"
+msgstr "TDD × 牧场"
+
+#: ../../source/chapters/07-openharness.md:154
+#: dcdd1b7f654a4bba84c92ae2624b7326
+msgid "CI runs `pytest` on PR; no fault-injection or adversarial suite."
+msgstr "CI 会在 PR 上跑 `pytest`；没有故障注入或敌意测试套件。"
+
+#: ../../source/chapters/07-openharness.md:155
+#: cc1889b18d9743c6a4aba179c5358eea
+msgid "TDD × Groom"
+msgstr "TDD × 梳理"
+
+#: ../../source/chapters/07-openharness.md:156
+#: ../../source/chapters/07-openharness.md:170
+#: 90045b3f6f14493e84d18419cd09d1c4 d13e5b44d4e24faa8550b825e894aa7f
+msgid "2"
+msgstr "2"
+
+#: ../../source/chapters/07-openharness.md:157
+#: 996764c759cf4f1c99e89ba2f494971e
+msgid "No published flaky-test quarantine; upstream triage is manual."
+msgstr "没有公开的 flaky 测试隔离区；上游的分诊是人工的。"
+
+#: ../../source/chapters/07-openharness.md:158
+#: 9b5808404c594e829f448fc2ef71dc31
+msgid "MDD × Bridle"
+msgstr "MDD × 缰绳"
+
+#: ../../source/chapters/07-openharness.md:160
+#: 7181fee2a93248379f39bdc066a4c549
+msgid ""
+"`engine/stream_events.py` and `services/__init__.py` expose event streams — "
+"a good *potential* north-star but not a declared one."
+msgstr ""
+"`engine/stream_events.py` 与 `services/__init__.py` 暴露了事件流——这是一个不错的 *潜在* "
+"北极星，但未被正式宣布。"
+
+#: ../../source/chapters/07-openharness.md:162
+#: e73693ef15b94041adb826fc06a4a5fe
+msgid "MDD × Fence"
+msgstr "MDD × 护栏"
+
+#: ../../source/chapters/07-openharness.md:164
+#: d224f6e440c7457a9e45bff02ef2b227
+msgid ""
+"`permissions/checker.py` + `sandbox/path_validator.py` are cost and blast-"
+"radius caps implemented as code."
+msgstr ""
+"`permissions/checker.py` ＋ `sandbox/path_validator.py` 作为代码实现的成本上限与爆炸半径上限。"
+
+#: ../../source/chapters/07-openharness.md:166
+#: 33ac0ea651cb4ef895d9d10f20393c69
+msgid "MDD × Paddock"
+msgstr "MDD × 牧场"
+
+#: ../../source/chapters/07-openharness.md:168
+#: ea94fee75fdd4c27936529ebca913724
+msgid "Release staging exists (tag + changelog); no public SLI gate."
+msgstr "有发布 staging（tag + changelog）；没有公开的 SLI 关卡。"
+
+#: ../../source/chapters/07-openharness.md:169
+#: edbe81749e854a1cb193b6bf74b2a0a3
+msgid "MDD × Groom"
+msgstr "MDD × 梳理"
+
+#: ../../source/chapters/07-openharness.md:171
+#: dc2335bf56444c2d89de3cbf2f790677
+msgid ""
+"No public weekly-audit script; dashboards are self-hosted by ops who deploy "
+"OpenHarness."
+msgstr "没有公开的每周审计脚本；dashboard 由部署 OpenHarness 的运维自行托管。"
+
+#: ../../source/chapters/07-openharness.md:175
+#: 51a54e008ae24e3081ca52b6b1e7bb85
+msgid ""
+"Strongest columns: **Fence** (mean 4) and **Bridle** (mean 3.3). Weakest "
+"column: **Groom** (mean 2.3). The pattern is consistent with a research-"
+"leaning open-source project: gates and context are excellent, recurring "
+"maintenance is left to the operator."
+msgstr ""
+"最强的两列：**护栏**（均值 4）与 **缰绳**（均值 3.3）。最弱的一列：**梳理**（均值 "
+"2.3）。这个分布与一个偏研究倾向的开源项目很一致——关卡和上下文做得出色，反复发生的维护则留给运维去做。"
+
+#: ../../source/chapters/07-openharness.md:180
+#: 5f4fc0fa56f14b9c8835860f8dd588f4
+msgid "§07.5 — What to copy, what to skip"
+msgstr "§07.5 —— 哪些值得拷贝，哪些应该跳过"
+
+#: ../../source/chapters/07-openharness.md:182
+#: 141e091632f24ff1a05a5f77e42c693d
+#, python-brace-format
+msgid ""
+"**Copy.** The 10-subsystem directory split, the Agent Loop shape "
+"({cite}`yao2022react`), the permissions-as-code in `permissions/`, and the "
+"sandbox isolation in `sandbox/`."
+msgstr ""
+"**值得拷。** 那种分成十个子系统的目录切法、Agent Loop 的形状（{cite}`yao2022react`）、`permissions/` "
+"下\"以代码表达的权限\"、以及 `sandbox/` 下的沙箱隔离。"
+
+#: ../../source/chapters/07-openharness.md:185
+#: 02d0407807104f5e9bf210533aeb6b7c
+msgid ""
+"**Skip** (or treat as scaffolding). The eleven channel adapters in "
+"`channels/impl/` — they are valuable in their own right but they are not "
+"part of the *harness core*; a reader trying to build a harness for a "
+"different product can delete the `channels/` directory on day one and lose "
+"nothing methodological."
+msgstr ""
+"**可以跳过**（或当作脚手架处理）。`channels/impl/` 里那十一个通道适配器——它们本身很有价值，但不是 *挽具核心* "
+"的一部分；想为另一个产品造挽具的读者，可以在第一天就删掉 `channels/` 目录，方法论上不会丢失任何东西。"
+
+#: ../../source/chapters/07-openharness.md:191
+#: 8c0e31ba77b94cb9ab2b0d3e359e3bf1
+msgid "What OpenHarness is *not* a model of"
+msgstr "OpenHarness *不* 适合被当作哪些事的范本"
+
+#: ../../source/chapters/07-openharness.md:193
+#: f2aad40e3de54bafbc01fad266156fb8
+msgid ""
+"A case study loses its teaching value the moment it becomes hagiography; "
+"three OpenHarness weaknesses deserve naming so the reader copies its "
+"strengths without the blind spots."
+msgstr "一个案例研究一旦变成圣人传记，它的教学价值就没了；OpenHarness 有三处短板值得点名，方便读者只拷它的优点、不把它的盲区一起拷走。"
+
+#: ../../source/chapters/07-openharness.md:197
+#: 62903c91d768426bac65545d2e79e0d0
+msgid ""
+"**Grooming is left to the operator.** The `Groom` column's 2.3 mean score in"
+" §07.4 is the honest signal: the project ships an engine and a sandbox, not "
+"a maintenance discipline. A team adopting OpenHarness wholesale without "
+"adding its own weekly audit, its own doc-sync check, and its own HarnessCard"
+" cadence will find the harness decays at the same rate as any other "
+"unattended repository — Ch.06's entropy concern is *not* supplied by the "
+"framework."
+msgstr ""
+"**梳理被留给了运维。** §07.4 里梳理列 2.3 的均值是诚实的信号：这个项目交付的是一台引擎和一台沙箱，而不是一套维护纪律。若一支团队把 "
+"OpenHarness 整套搬进来，不加上自己的每周审计、自己的 doc-sync 检查、自己的 HarnessCard "
+"节奏，那这具挽具的衰减速度会和任何一份没人照料的仓库一样——第 06 章的那份熵关切，*不会* 由这个框架替你提供。"
+
+#: ../../source/chapters/07-openharness.md:204
+#: 23a2ebb1dee24c99b102fc6f86c3969f
+msgid ""
+"**No north-star metric is declared.** §07.4 scores MDD × Bridle at 3 "
+"(*\"event streams exist, not a declared north-star\"*). The Chapter 04 "
+"warning applies: a harness without an owned, threshold-gated north- star "
+"will collect dashboards and steer by none of them. OpenHarness gives you the"
+" raw material; declaring the metric is your job."
+msgstr ""
+"**没有宣布过一条北极星度量。** §07.4 给 MDD × 缰绳 的打分是 3（*\"事件流存在，但没有一条被正式宣布的北极星\"*）。第 04 "
+"章的警告在这里适用：一具没有人持有、没有阈值看护的北极星的挽具，会收集一堆 dashboard，却哪一块都引导不了。OpenHarness "
+"给的是原料，宣布度量这件事是你的职责。"
+
+#: ../../source/chapters/07-openharness.md:209
+#: 70c8cea7dbca43f3b8b9f9bf6e6b1809
+msgid ""
+"**The 43-tool surface is a double-edged gift.** A rich tool surface lowers "
+"the cost of building an agent but raises the cost of *reasoning about what "
+"the agent can do*. A team that ships all 43 tools into production without "
+"pruning has implicitly accepted 43 attack surfaces, 43 cost centres, and 43 "
+"places where a schema drift would silently break something. The harness "
+"engineering move is to adopt a small subset first and widen it by demand."
+msgstr ""
+"**43 个工具的表面是把双刃剑。** 一个丰富的工具面，会降低造一个智能体的成本，但会提高 *推理\"这个智能体能做什么\"* "
+"的成本。若一支团队不做裁剪就把全部 43 个工具上到生产，等于默默接受了 43 个攻击面、43 个成本中心、以及 43 处 schema "
+"漂移可能会悄悄打断东西的位置。Harness Engineering 的打法是：先采用一个小子集，按需扩宽。"
+
+#: ../../source/chapters/07-openharness.md:217
+#: 404e640d78d441d2856b8d851fe21d42
+msgid "Pitfall — Cargo-culting the directory layout"
+msgstr "陷阱——把目录结构当作 cargo cult"
+
+#: ../../source/chapters/07-openharness.md:220
+#: 8678092966cc499d8aa20ede531acd5f
+#, python-brace-format
+msgid ""
+"A team reads §07.1, creates ten top-level directories in their own repo "
+"matching OpenHarness's names — `autopilot/`, `channels/`, `coordinator/`, "
+"etc. — and ships the skeleton. Six weeks later the directories contain "
+"either nothing (because the team's product does not need a coordinator) or "
+"convoluted glue code (because the team's coordinator does not map onto "
+"OpenHarness's abstraction). **Why**: the ten-subsystem layout is an "
+"*emergent* property of OpenHarness's problem space (multi-channel long-"
+"running agent service); imposing it on a different problem is Conway's law "
+"{cite}`conway1968law` applied in reverse. **Fix**: copy the *principles* "
+"(permissions as code, sandbox isolation, auditable agent loop) into whatever"
+" directory structure your product actually needs. A harness is a shape that "
+"fits a specific load; borrow the pattern of thought, not the filename list."
+msgstr ""
+"一支团队读了 §07.1，在自己仓库里照 OpenHarness "
+"的名字建了十个顶级目录——`autopilot/`、`channels/`、`coordinator/` "
+"等等——然后把这副骨架上线了。六周之后，这些目录要么是空的（因为这个团队的产品不需要 "
+"coordinator），要么塞了一堆弯弯绕的胶水代码（因为这个团队的 coordinator 映射不到 OpenHarness "
+"的那层抽象上）。**为什么**：十个子系统的布局，是 OpenHarness 所处问题域（多通道、长期运行的智能体服务）的 *涌现* "
+"属性；把它套到一个不同的问题上，等于把 Conway 律 {cite}`conway1968law` 反着用一次。**解法**：把 "
+"*原理*（以代码表达的权限、沙箱隔离、可审计的 agent loop）拷进你产品真正需要的那种目录结构里。挽具是一副契合特定负载的形状；借走那种 "
+"*思维模式*，而不是文件名清单。"
+
+#: ../../source/chapters/07-openharness.md:236
+#: a8778ff0e8414e8b92883174c6f5094f
+msgid "HarnessCard"
+msgstr "HarnessCard"
+
+#: ../../source/chapters/07-openharness.md:242
+#: 81c0b5e4dc604aa99b2fa0bb80632b63
+msgid "Field"
+msgstr "字段"
+
+#: ../../source/chapters/07-openharness.md:243
+#: 2d58fcac201b426199c20aaea9aa96d9
+msgid "Value"
+msgstr "值"
+
+#: ../../source/chapters/07-openharness.md:244
+#: 39466335b1f845708bb778b89e07676e
+msgid "HarnessCard schema version"
+msgstr "HarnessCard schema 版本"
+
+#: ../../source/chapters/07-openharness.md:245
+#: ae3d1cd59c4e4d42b707a9f59a71c6c4
+#, python-brace-format
+msgid "CAR-HarnessCard v0.2 {cite}`car2025decomposition`"
+msgstr "CAR-HarnessCard v0.2 {cite}`car2025decomposition`"
+
+#: ../../source/chapters/07-openharness.md:246
+#: bd82bd713b4748208f6cb4c6c87f7139
+msgid "Subject"
+msgstr "对象"
+
+#: ../../source/chapters/07-openharness.md:247
+#: c9f1e83b5d754f9488e966e01990482a
+#, python-brace-format
+msgid "OpenHarness, 2026-03 snapshot {cite}`hkuds2025openharness`"
+msgstr "OpenHarness，2026-03 快照 {cite}`hkuds2025openharness`"
+
+#: ../../source/chapters/07-openharness.md:248
+#: 20039d322117401aab7328692c3036a7
+msgid "License"
+msgstr "许可证"
+
+#: ../../source/chapters/07-openharness.md:249
+#: cfeff9be8c07462abd6659dc8cc7c9ff
+msgid "MIT (code), CC-BY-4.0 (docs)"
+msgstr "MIT（代码）、CC-BY-4.0（文档）"
+
+#: ../../source/chapters/07-openharness.md:250
+#: 0a283805d1064e34b9aea840b8f1107f
+msgid "Control layer (CAR)"
+msgstr "Control 层（CAR）"
+
+#: ../../source/chapters/07-openharness.md:251
+#: 9140ccb8410b455d9be0e53fa923da65
+msgid ""
+"Opinionated; `coordinator/agent_definitions.py` + `prompts/` set strong "
+"defaults."
+msgstr "有明显主张；`coordinator/agent_definitions.py` ＋ `prompts/` 设定了强默认值。"
+
+#: ../../source/chapters/07-openharness.md:252
+#: 935b6739fd1e4ee997581a2314bd23e4
+msgid "Agency layer (CAR)"
+msgstr "Agency 层（CAR）"
+
+#: ../../source/chapters/07-openharness.md:253
+#: 8b969ef59f314679a6abba07ffb50e78
+msgid "43 tools behind explicit permissions and a Docker sandbox."
+msgstr "43 个工具，后面由显式权限和一只 Docker 沙箱看着。"
+
+#: ../../source/chapters/07-openharness.md:254
+#: dcd6df9bc9174cd88d89adbb15a50283
+msgid "Runtime layer (CAR)"
+msgstr "Runtime 层（CAR）"
+
+#: ../../source/chapters/07-openharness.md:255
+#: f5b1a5cdc8e24b8182dd6a84abd2912e
+msgid "Python 3.11, Docker-backed sandbox, pluggable LLM backends."
+msgstr "Python 3.11，基于 Docker 的沙箱，可插拔的 LLM 后端。"
+
+#: ../../source/chapters/07-openharness.md:256
+#: 829174f63a2c40019d485476c42876f7
+msgid "SDD (0–5, mean of Bridle/Fence/Paddock/Groom)"
+msgstr "SDD（0–5，Bridle／Fence／Paddock／Groom 的均值）"
+
+#: ../../source/chapters/07-openharness.md:257
+#: 68c2f3f0c8e5469ebe5e47c6bcb05ecd
+msgid "3.5"
+msgstr "3.5"
+
+#: ../../source/chapters/07-openharness.md:258
+#: 69dd915c6b254191b4b1aecec16b90f7
+msgid "TDD (0–5)"
+msgstr "TDD（0–5）"
+
+#: ../../source/chapters/07-openharness.md:259
+#: ../../source/chapters/07-openharness.md:261
+#: 18aac91c7add43c88dfa6c9c9d9340bf
+msgid "3.0"
+msgstr "3.0"
+
+#: ../../source/chapters/07-openharness.md:260
+#: a37f9587ac0245c182035ac504059461
+msgid "MDD (0–5)"
+msgstr "MDD（0–5）"
+
+#: ../../source/chapters/07-openharness.md:262
+#: 08c98c87a8c84f5bab8198f8c0f262a5
+msgid "Primary citation"
+msgstr "主要引用"
+
+#: ../../source/chapters/07-openharness.md:263
+#: 4fc6913fd39e4d6491b8dcee571de543
+#, python-brace-format
+msgid "{cite}`hkuds2025openharness`"
+msgstr "{cite}`hkuds2025openharness`"
+
+#: ../../source/chapters/07-openharness.md:266
+#: cda70f1e96424ec9ab501d21ab99b62b
+msgid "Research Foundations"
+msgstr "研究脉络"
+
+#: ../../source/chapters/07-openharness.md:268
+#: 690a2604d88e46a4b2f7d54f10e6d7b9
+#, python-brace-format
+msgid ""
+"**ReAct** {cite}`yao2022react` — the academic lineage of the Agent Loop at "
+"the heart of OpenHarness."
+msgstr "**ReAct** {cite}`yao2022react` —— OpenHarness 核心那具 Agent Loop 的学术谱系。"
+
+#: ../../source/chapters/07-openharness.md:270
+#: 4c4d4be9bd5b4167b3740f1e78c30b83
+#, python-brace-format
+msgid ""
+"**Toolformer** {cite}`schick2023toolformer` — the academic lineage for "
+"first-class tool use as a primary action surface."
+msgstr ""
+"**Toolformer** {cite}`schick2023toolformer` —— "
+"\"把工具使用当作首要动作平面的一等事物\"这一思路的学术谱系。"
+
+#: ../../source/chapters/07-openharness.md:272
+#: bb32f83fbe624090b4282a52126dcb3d
+#, python-brace-format
+msgid ""
+"**MCP specification** {cite}`anthropic2024mcp` — the industry specification "
+"that lets OpenHarness plug into third-party tool ecosystems without bespoke "
+"glue."
+msgstr ""
+"**MCP 规范** {cite}`anthropic2024mcp` —— 让 OpenHarness "
+"不用自己写胶水就能接入第三方工具生态的那份行业规范。"
+
+#: ../../source/chapters/07-openharness.md:275
+#: da8b4fc59e40467cb6aab033f03e0625
+#, python-brace-format
+msgid ""
+"**Upstream OpenHarness README** {cite}`hkuds2025openharness` — the canonical"
+" record of what ships in the repository and under what license; cited as "
+"primary source throughout."
+msgstr ""
+"**上游 OpenHarness 的 README** {cite}`hkuds2025openharness` —— "
+"关于\"仓库里交付了什么、在什么许可证下\"的权威记录；全书作为一手来源引用。"
+
+#: ../../source/chapters/07-openharness.md:278
+#: 7491108fd9d744e291d3b66e4f35b667
+#, python-brace-format
+msgid ""
+"**Anthropic Claude Code launch post** {cite}`anthropic2024claudecode` — the "
+"industry context OpenHarness positions itself against."
+msgstr ""
+"**Anthropic 的 Claude Code 发布博客** {cite}`anthropic2024claudecode` —— "
+"OpenHarness 在与之对位时所处的行业语境。"
+
+#: ../../source/chapters/07-openharness.md:281
+#: b72496d29cc84ca697ccaa99f3d6369e
+msgid "Hands-On"
+msgstr "动手环节"
+
+#: ../../source/chapters/07-openharness.md:283
+#: 186a2f9f964a4e488b0241f393f41fd3
+msgid ""
+"Two copyable artefacts live under `book/source/_handson/07-openharness/`:"
+msgstr "在 `book/source/_handson/07-openharness/` 下，住着两份可直接拷走的制品："
+
+#: ../../source/chapters/07-openharness.md:286
+#: 4833063412954ee88e5410ac7c039f00
+msgid "`quickstart.sh` — clone → install → run one verification session."
+msgstr "`quickstart.sh` —— 克隆 → 安装 → 跑一轮验证会话。"
+
+#: ../../source/chapters/07-openharness.md:287
+#: c1551e7ab5a54f39b3b51947ec99ddb8
+msgid ""
+"`custom-tool.py` — a minimum-viable \"Add a Custom Tool\" example adapted "
+"from upstream docs with attribution."
+msgstr "`custom-tool.py` —— 一份最小可用的\"添加一个自定义工具\"示例，改编自上游文档，并附署名。"
+
+#~ msgid "Draft"
+#~ msgstr ""
+
+#~ msgid "Content for this chapter will be written in task 8.1."
+#~ msgstr ""

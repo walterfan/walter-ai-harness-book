@@ -1,0 +1,13 @@
+{
+  "$comment": "verified: 2026-04-17 · TDD x Fence · Claude Code hook blocks on red tests",
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": "Write|Edit|MultiEdit", "command": "pytest -q -m 'not slow'",
+       "stopOnFailure": true, "description": "refuse edits while tests are red"}
+    ],
+    "PostToolUse": [
+      {"matcher": "Write|Edit|MultiEdit", "command": "ruff check .",
+       "stopOnFailure": false}
+    ]
+  }
+}

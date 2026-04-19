@@ -1,0 +1,37 @@
+# Harnessing AI / 驾驭工程 — book build dependencies (pip fallback)
+#
+# PRIMARY toolchain is Poetry (see book/pyproject.toml + book/poetry.lock):
+#
+#   make book-install     # poetry install into the book's own venv
+#   make book-html        # sphinx-build en + zh_CN (strict)
+#
+# This file is the pip-compatible fallback for CI runners or contributors
+# who don't have Poetry installed. It is regenerated from the Poetry lock
+# by `make book-export-requirements` whenever poetry-plugin-export is
+# available, so the two stay in sync.
+#
+# Install via pip:
+#
+#   python3 -m venv book/.venv
+#   source book/.venv/bin/activate
+#   pip install -r book/requirements-docs.txt
+#
+# All pins use the compatible-release cap (~=) so a dependabot bump does
+# not silently move a major version.
+
+Sphinx~=8.1
+myst-parser~=4.0
+sphinx-intl~=2.3
+sphinx-rtd-theme~=3.0
+sphinx-copybutton~=0.5
+sphinx-design~=0.6
+sphinxcontrib-mermaid~=1.0
+sphinxcontrib-plantuml~=0.30
+sphinxcontrib-bibtex~=2.6
+
+# sphinx-autobuild powers `make book-livehtml` for fast local iteration.
+sphinx-autobuild~=2024.10
+
+# Babel is already a Sphinx transitive dep, but pin it explicitly so sphinx-intl
+# msgfmt behavior is reproducible across environments.
+Babel~=2.16

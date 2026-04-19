@@ -1,0 +1,11 @@
+# verified: 2026-04-17 · observability · Prometheus scrape-config for Claude Code /cost
+scrape_configs:
+  - job_name: claude_code_cost
+    metrics_path: /cost
+    scrape_interval: 60s
+    static_configs:
+      - targets: ["localhost:8911"]
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: "cc_(tokens|usd|cache_hits|turns)_total"
+        action: keep

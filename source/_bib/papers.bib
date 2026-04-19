@@ -1,0 +1,196 @@
+% ---------------------------------------------------------------------------
+%  papers.bib — peer-reviewed papers, arXiv preprints, and conference talks
+%
+%  Entry types and conventions (enforced by book-lint check (c) unique keys
+%  and (d) field completeness):
+%
+%    * article          peer-reviewed journal articles
+%    * inproceedings    conference proceedings (ICSE, NeurIPS, ...)
+%    * misc             arXiv preprints and technical reports
+%
+%  Citation-key schema: lowercasedauthorYEARshortword  (e.g. brown2020gpt3).
+%  Matches the bibtex_reference_style = "author_year" setting in conf.py.
+% ---------------------------------------------------------------------------
+
+% ---- LLM foundations -------------------------------------------------------
+
+@misc{brown2020gpt3,
+  author       = {Brown, Tom B. and Mann, Benjamin and Ryder, Nick and Subbiah, Melanie and Kaplan, Jared and Dhariwal, Prafulla and Neelakantan, Arvind and Shyam, Pranav and Sastry, Girish and Askell, Amanda and others},
+  title        = {Language Models are Few-Shot Learners},
+  year         = {2020},
+  eprint       = {2005.14165},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CL},
+  url          = {https://arxiv.org/abs/2005.14165},
+  note         = {GPT-3; foundational evidence for in-context learning.},
+}
+
+@misc{wei2022chainofthought,
+  author       = {Wei, Jason and Wang, Xuezhi and Schuurmans, Dale and Bosma, Maarten and Ichter, Brian and Xia, Fei and Chi, Ed H. and Le, Quoc V. and Zhou, Denny},
+  title        = {Chain-of-Thought Prompting Elicits Reasoning in Large Language Models},
+  year         = {2022},
+  eprint       = {2201.11903},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CL},
+  url          = {https://arxiv.org/abs/2201.11903},
+}
+
+@misc{yao2022react,
+  author       = {Yao, Shunyu and Zhao, Jeffrey and Yu, Dian and Du, Nan and Shafran, Izhak and Narasimhan, Karthik and Cao, Yuan},
+  title        = {{ReAct}: Synergizing Reasoning and Acting in Language Models},
+  year         = {2022},
+  eprint       = {2210.03629},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CL},
+  url          = {https://arxiv.org/abs/2210.03629},
+  note         = {Reason + Act loop; canonical citation for agent scaffolds.},
+}
+
+@misc{schick2023toolformer,
+  author       = {Schick, Timo and Dwivedi-Yu, Jane and Dess{\`i}, Roberto and Raileanu, Roberta and Lomeli, Maria and Zettlemoyer, Luke and Cancedda, Nicola and Scialom, Thomas},
+  title        = {Toolformer: Language Models Can Teach Themselves to Use Tools},
+  year         = {2023},
+  eprint       = {2302.04761},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CL},
+  url          = {https://arxiv.org/abs/2302.04761},
+}
+
+@inproceedings{lewis2020rag,
+  author    = {Lewis, Patrick and Perez, Ethan and Piktus, Aleksandra and Petroni, Fabio and Karpukhin, Vladimir and Goyal, Naman and K{\"u}ttler, Heinrich and Lewis, Mike and Yih, Wen-tau and Rockt{\"a}schel, Tim and Riedel, Sebastian and Kiela, Douwe},
+  title     = {Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks},
+  booktitle = {Advances in Neural Information Processing Systems 33 (NeurIPS 2020)},
+  year      = {2020},
+  url       = {https://arxiv.org/abs/2005.11401},
+}
+
+% ---- Harness / agent-environment co-design --------------------------------
+
+@misc{peng2023copilotstudy,
+  author       = {Peng, Sida and Kalliamvakou, Eirini and Cihon, Peter and Demirer, Mert},
+  title        = {The Impact of {AI} on Developer Productivity: Evidence from {GitHub} {Copilot}},
+  year         = {2023},
+  eprint       = {2302.06590},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.SE},
+  url          = {https://arxiv.org/abs/2302.06590},
+}
+
+@misc{ziegler2022productivity,
+  author       = {Ziegler, Albert and Kalliamvakou, Eirini and Li, X. Alice and Rice, Andrew and Rifkin, Devon and Simister, Shawn and Sittampalam, Ganesh and Aftandilian, Edward},
+  title        = {Productivity Assessment of Neural Code Completion},
+  year         = {2022},
+  eprint       = {2205.06537},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.SE},
+  url          = {https://arxiv.org/abs/2205.06537},
+  note         = {Companion quantitative study for Copilot's harness claims.},
+}
+
+@misc{car2025decomposition,
+  author       = {{CAR Research Collective}},
+  title        = {Control-Agency-Runtime: A Decomposition for AI Coding Agents and the HarnessCard Reporting Format},
+  year         = {2025},
+  howpublished = {Working paper},
+  note         = {Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.},
+}
+
+% ---- Software engineering foundations -------------------------------------
+
+@book{beck2002tdd,
+  author    = {Beck, Kent},
+  title     = {Test-Driven Development: By Example},
+  year      = {2002},
+  publisher = {Addison-Wesley Professional},
+  isbn      = {978-0321146533},
+}
+
+@book{martraire2019living,
+  author    = {Martraire, Cyrille},
+  title     = {Living Documentation: Continuous Knowledge Sharing by Design},
+  year      = {2019},
+  publisher = {Addison-Wesley Professional},
+  isbn      = {978-0134689326},
+}
+
+@book{adzic2011specbyexample,
+  author    = {Adzic, Gojko},
+  title     = {Specification by Example: How Successful Teams Deliver the Right Software},
+  year      = {2011},
+  publisher = {Manning Publications},
+  isbn      = {978-1617290084},
+}
+
+@article{meyer1992contracts,
+  author  = {Meyer, Bertrand},
+  title   = {Applying ``Design by Contract''},
+  journal = {Computer},
+  volume  = {25},
+  number  = {10},
+  pages   = {40--51},
+  year    = {1992},
+  doi     = {10.1109/2.161279},
+}
+
+@article{conway1968law,
+  author  = {Conway, Melvin E.},
+  title   = {How Do Committees Invent?},
+  journal = {Datamation},
+  volume  = {14},
+  number  = {4},
+  pages   = {28--31},
+  year    = {1968},
+}
+
+@inproceedings{bacchelli2013codereview,
+  author    = {Bacchelli, Alberto and Bird, Christian},
+  title     = {Expectations, Outcomes, and Challenges of Modern Code Review},
+  booktitle = {Proceedings of the 35th International Conference on Software Engineering ({ICSE})},
+  year      = {2013},
+  doi       = {10.1109/ICSE.2013.6606617},
+}
+
+@article{gousios2014pullbased,
+  author  = {Gousios, Georgios and Pinzger, Martin and Deursen, Arie van},
+  title   = {An Exploratory Study of the Pull-Based Software Development Model},
+  journal = {Proceedings of the 36th International Conference on Software Engineering ({ICSE})},
+  year    = {2014},
+  doi     = {10.1145/2568225.2568260},
+}
+
+@inproceedings{sculley2015mltechdebt,
+  author    = {Sculley, D. and Holt, Gary and Golovin, Daniel and Davydov, Eugene and Phillips, Todd and Ebner, Dietmar and Chaudhary, Vinay and Young, Michael and Crespo, Jean-Fran{\c c}ois and Dennison, Dan},
+  title     = {Hidden Technical Debt in Machine Learning Systems},
+  booktitle = {Advances in Neural Information Processing Systems 28 (NeurIPS 2015)},
+  year      = {2015},
+  url       = {https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html},
+}
+
+@article{lehman1980laws,
+  author  = {Lehman, Meir M.},
+  title   = {Programs, Life Cycles, and Laws of Software Evolution},
+  journal = {Proceedings of the IEEE},
+  volume  = {68},
+  number  = {9},
+  pages   = {1060--1076},
+  year    = {1980},
+  doi     = {10.1109/PROC.1980.11805},
+}
+
+@inproceedings{jung2018rustbelt,
+  author    = {Jung, Ralf and Jourdan, Jacques-Henri and Krebbers, Robbert and Dreyer, Derek},
+  title     = {{RustBelt}: Securing the Foundations of the {Rust} Programming Language},
+  booktitle = {Proc. 45th ACM SIGPLAN Symposium on Principles of Programming Languages (POPL)},
+  year      = {2018},
+  doi       = {10.1145/3158154},
+  note      = {Foundational result motivating Rust's ownership discipline as a harness-like constraint; cited in Ch.~06 Tauri-Todo arc.},
+}
+
+@inproceedings{cunningham1992debt,
+  author    = {Cunningham, Ward},
+  title     = {The {WyCash} Portfolio Management System},
+  booktitle = {Addendum to the Proceedings of the 1992 {OOPSLA}},
+  year      = {1992},
+  doi       = {10.1145/157709.157715},
+  note      = {The original ``technical debt'' metaphor.},
+}

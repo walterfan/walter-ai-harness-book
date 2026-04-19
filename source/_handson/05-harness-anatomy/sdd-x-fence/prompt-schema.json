@@ -1,0 +1,14 @@
+{
+  "$comment": "verified: 2026-04-17 · SDD x Fence · JSON Schema validated at commit time",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PromptTemplate",
+  "type": "object",
+  "required": ["name", "system_prompt", "user_prompt", "tags"],
+  "properties": {
+    "name":          {"type": "string", "pattern": "^[a-z][a-z0-9_]{2,63}$"},
+    "system_prompt": {"type": "string", "minLength": 16},
+    "user_prompt":   {"type": "string", "minLength": 16},
+    "tags":          {"type": "array", "items": {"type": "string"}, "minItems": 1}
+  },
+  "additionalProperties": false
+}

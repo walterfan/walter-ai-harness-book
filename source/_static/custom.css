@@ -1,0 +1,110 @@
+/*
+ * custom.css — Harnessing AI / 驾驭工程
+ *
+ * Scope: (a) sidebar language switcher styling, (b) translation-freshness
+ * banner, (c) small tweaks for MyST admonitions and 3×4 matrix tables.
+ * The visual goal is "quiet, readable, RTD-familiar" — no heavy theming.
+ */
+
+/* ---------- Sidebar language switcher ---------- */
+
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0.5em 1em 0.75em;
+    margin: 0;
+    font-size: 0.85rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #d9d9d9;
+}
+
+.lang-switcher__current {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.lang-switcher__sep {
+    color: #888;
+}
+
+.lang-switcher__other {
+    color: #9dd5ff;
+    text-decoration: none;
+}
+
+.lang-switcher__other:hover,
+.lang-switcher__other:focus {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* ---------- Translation-freshness banner ---------- */
+
+.translation-banner {
+    margin: 0 0 1.25em;
+    padding: 0.75em 1em;
+    border-left: 4px solid #d9a300;
+    background: #fff7e0;
+    color: #3d2a00;
+    border-radius: 3px;
+    font-size: 0.95rem;
+}
+
+.translation-banner a {
+    margin-left: 0.5em;
+    color: #0b5aa0;
+}
+
+.translation-banner--missing {
+    border-left-color: #b8860b;
+    background: #fff5d7;
+}
+
+.translation-banner--stale {
+    border-left-color: #c0392b;
+    background: #fde4df;
+    color: #4a1c15;
+}
+
+/* ---------- 3 × 4 matrix table tweaks ---------- */
+/* Chapter 05 renders the guardian × zone matrix as a compact table; give
+ * it a bit of breathing room and let the cells wrap on narrow screens. */
+
+table.harness-matrix th,
+table.harness-matrix td {
+    vertical-align: top;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+table.harness-matrix th {
+    background: #f3f6f8;
+}
+
+/* ---------- HarnessCard block ---------- */
+/* Appendix D template and Ch.11 Acts 1/4 use this class. */
+
+.harness-card {
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 1em 1.25em;
+    margin: 1em 0;
+    background: #fafbfc;
+}
+
+.harness-card h4 {
+    margin-top: 0;
+}
+
+/* ---------- Mobile polish ---------- */
+
+@media (max-width: 640px) {
+    .lang-switcher {
+        font-size: 0.8rem;
+    }
+    .translation-banner {
+        font-size: 0.9rem;
+    }
+}
