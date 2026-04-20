@@ -1,0 +1,39 @@
+# Read the Docs configuration file for lazy-code-kb-book
+# https://docs.readthedocs.io/en/stable/config-file/v2.html
+#
+# RTD can host both the English and the Simplified Chinese build from a
+# single project by treating each language as a separate "language" project
+# and linking them via the RTD dashboard (Translations feature). The build
+# commands below produce the English HTML; RTD's per-language build re-runs
+# with `language=zh_CN` automatically when the zh_CN project is configured
+# as a translation of the English one.
+
+version: 2
+
+build:
+  os: ubuntu-24.04
+  tools:
+    python: "3.12"
+  jobs:
+    post_create_environment:
+      # Use Poetry from pip for the RTD build environment. We disable the
+      # in-project virtualenv so RTD's own managed env is the target.
+      - pip install poetry==1.8.5
+      - poetry config virtualenvs.create false --local
+    post_install:
+      - poetry install --with dev --no-interaction
+    pre_build:
+      # Regenerate .mo catalogs before Sphinx runs. .mo files are gitignored,
+      # so they must be compiled fresh on every RTD build.
+      - sphinx-intl build -d source/locale
+
+sphinx:
+  configuration: source/conf.py
+  fail_on_warning: true
+
+# The Chinese catalog is already under source/locale/zh_CN/LC_MESSAGES/
+# so RTD's translation project will pick it up without a second config file.
+formats:
+  - htmlzip
+  - pdf
+  - epub

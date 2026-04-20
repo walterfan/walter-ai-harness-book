@@ -1,0 +1,72 @@
+name: book
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Read-only token is plenty for lint + build. The deploy job (if/when we
+# add a gh-pages target) will need its own explicit `permissions: contents: write`.
+permissions:
+  contents: read
+
+concurrency:
+  group: book-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-and-build:
+    name: book-lint + dual-language build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Poetry is installed via pipx so the Poetry env and the book env
+      # never share a site-packages directory.
+      - name: Install Poetry
+        run: |
+          pipx install poetry==1.8.5
+          poetry --version
+
+      # Cache the Poetry-managed virtualenv keyed on poetry.lock so CI is
+      # sub-second on cache hits. The venv lives at ./.venv
+      # (poetry.toml: virtualenvs.in-project = true).
+      - name: Cache .venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: book-venv-${{ runner.os }}-py312-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            book-venv-${{ runner.os }}-py312-
+
+      - name: Install book toolchain
+        run: make install
+
+      - name: Run book-lint
+        run: make lint
+
+      - name: Build both language HTML trees
+        run: make html
+
+      # Upload the built HTML as a workflow artefact. Pushed tags / future
+      # gh-pages deploys can reuse this artefact without rebuilding.
+      - name: Upload HTML artefact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: book-html
+          path: build/html/
+          retention-days: 14
+          if-no-files-found: error

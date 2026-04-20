@@ -1,0 +1,69 @@
+=============================================================================
+lazy-code-kb-book — Harnessing AI: The Craft of Shaping Agents
+Copyright (c) 2026 Walter Fan
+=============================================================================
+
+This project contains two kinds of material under two different licenses:
+
+  1. PROSE (the text of the book itself, including figures, diagrams, and
+     translations) is licensed under the
+     Creative Commons Attribution-ShareAlike 4.0 International License
+     (CC-BY-SA-4.0).
+
+     You may share — copy and redistribute the material in any medium
+     or format — and adapt — remix, transform, and build upon the
+     material — for any purpose, even commercially, under the following
+     terms:
+
+       * Attribution — You must give appropriate credit to Walter Fan,
+         provide a link to the license, and indicate if changes were
+         made.
+       * ShareAlike — If you remix, transform, or build upon the
+         material, you must distribute your contributions under the
+         same license as the original.
+
+     Full text: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+     SPDX-License-Identifier: CC-BY-SA-4.0
+     Applies to: book/source/**/*.md, book/source/**/*.rst,
+                 book/source/_diagrams/**,
+                 book/source/locale/**/*.po,
+                 and all figures/diagrams under book/source/.
+
+  2. CODE (runnable artefacts shipped with the book, lint scripts,
+     translation tooling, Sphinx configuration, and any source code
+     embedded in chapters) is licensed under the MIT License.
+
+     Permission is hereby granted, free of charge, to any person
+     obtaining a copy of this software and associated documentation
+     files (the "Software"), to deal in the Software without
+     restriction, including without limitation the rights to use,
+     copy, modify, merge, publish, distribute, sublicense, and/or
+     sell copies of the Software, and to permit persons to whom the
+     Software is furnished to do so, subject to the following
+     conditions:
+
+     The above copyright notice and this permission notice shall be
+     included in all copies or substantial portions of the Software.
+
+     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+     EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+     OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+     NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+     HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+     WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+     OTHER DEALINGS IN THE SOFTWARE.
+
+     SPDX-License-Identifier: MIT
+     Applies to: book/source/conf.py, book/Makefile, book/scripts/**,
+                 book/source/_handson/** (runnable code snippets),
+                 and any file that contains an SPDX-License-Identifier
+                 header overriding the default.
+
+-----------------------------------------------------------------------------
+When in doubt: narrative Markdown under book/source/chapters/ is CC-BY-SA-4.0;
+Python/shell/YAML files under book/scripts/ and book/source/_handson/ are MIT.
+If a specific file carries an `SPDX-License-Identifier:` header, that header
+overrides the defaults above.
+-----------------------------------------------------------------------------

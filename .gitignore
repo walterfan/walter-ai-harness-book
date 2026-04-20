@@ -1,0 +1,55 @@
+# ---------------------------------------------------------------------------
+# Sphinx / book build artefacts
+# ---------------------------------------------------------------------------
+build/
+source/.doctrees/
+source/_build/
+
+# Sphinx-autobuild scratch
+.autobuild/
+
+# ---------------------------------------------------------------------------
+# Python / Poetry
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Poetry-managed virtualenv (pinned to in-project via poetry.toml)
+book/.venv/
+.venv/
+venv/
+env/
+
+# ---------------------------------------------------------------------------
+# Compiled gettext catalogs
+# ---------------------------------------------------------------------------
+# The .po files ARE checked in (they are source). The .mo files are
+# compiled artefacts produced by `sphinx-intl build`. If you prefer to
+# check them in for offline reproducibility, remove the line below.
+book/source/locale/**/*.mo
+
+# ---------------------------------------------------------------------------
+# Editor / OS cruft
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# ---------------------------------------------------------------------------
+# Ad-hoc scratch files
+# ---------------------------------------------------------------------------
+book/scripts/_trans_*.py
+*.bak
+*.tmp
