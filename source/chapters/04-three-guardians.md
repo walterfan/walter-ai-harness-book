@@ -3,345 +3,129 @@ status: draft
 chapter-type: methodology
 ---
 
-# The Three Guardians: SDD, TDD, MDD
+# 三大护法：SDD、TDD、MDD
 
-> *Harness Engineering does not invent a new engineering discipline. It
-> recruits three existing ones, reorders them, and front-loads them into
-> the space where an agent operates.*
+> *Harness Engineering 并没有发明一门新的工程学科。它从三门既有学科里招兵买马，给它们重新排了顺序，再把它们前置到智能体运转的那片空间里。*
 
-Chapter 03 defined Harness Engineering as the practice of shaping the
-structures *around* an AI coding agent so the software it produces is
-**verifiable**, **observable**, and **understandable**. Those three
-adjectives are not rhetorical flourishes. Each one names a mature
-software-engineering discipline with a forty-year pedigree and a canonical
-literature. This chapter introduces the three and explains the single
-most important choice this book makes — **why they must be applied in the
-order SDD → TDD → MDD, not the traditional TDD → MDD → SDD**, once an AI
-agent enters the loop.
+第 03 章把 Harness Engineering 定义为：塑造 AI 编码智能体 *周围* 的那些结构，以使它所产出的软件具备 **可验证**、**可观测**、**可理解** 这三项属性。这三个形容词不是修辞上的点缀。它们每一个都指向一门成熟的软件工程学科，背后都有四十年左右的谱系和一份经典文献。本章把这三门学科一一引出来，并阐明本书做出的最关键的一个选择——**为什么一旦一个 AI 智能体进入回路之中，这三门学科就必须按 SDD → TDD → MDD 这个顺序施行，而不是传统上的 TDD → MDD → SDD**。
 
-## Why the causal order flips with an agent in the loop
+## 为什么一旦智能体进入回路，因果顺序就翻了
 
-In traditional software engineering, the writable unit is source code and
-the human is the author. Tests come first (TDD) because the test is the
-first executable specification and the human will spend hours pushing
-code at it until both agree. Documentation (SDD in its classical,
-*documentation*-centric framing) is often written last — if at all — and
-metrics (MDD) are monitored in production as a safety net. The causal
-chain looks like *test → implement → observe*, with the human-authored
-code at the centre.
+在传统软件工程里，可写的单元是源代码，人是作者。测试摆在最前（TDD），因为测试是第一份可执行的规约，人会花上几个小时把代码往它身上推，直到两边达成一致。文档（也就是经典的、以 *文档* 为中心的那种 SDD）常常是最后才写的——如果写了的话——而度量（MDD）则作为一张安全网，在生产环境里被监视着。这条因果链看起来是 *测试 → 实现 → 观察*，中心是由人亲手写下的代码。
 
-In AI-assisted engineering, the writable unit shifts upstream. What the
-human authors is the **prompt, skill file, `AGENTS.md`, and
-`CLAUDE.md`** — the agent authors the code. And the agent will *very
-confidently hallucinate behaviour* if the specification it reads is
-ambiguous, so any test written before the specification is pinned will
-encode the hallucination rather than catch it
-{cite}`peng2023copilotstudy,ziegler2022productivity`. The causal chain
-therefore inverts to *specify → test → observe*:
+在 AI 辅助的工程实践里，可写的单元整体上移。人所写下的是 **提示词、技能文件、`AGENTS.md`、`CLAUDE.md` 兼容层**——代码是由智能体写的。而一旦它读到的规约含糊，智能体会 *极其自信地* 把行为幻觉出来；于是任何一份在规约钉稳之前就被写出来的测试，都会把幻觉编码进去，而不是把幻觉捕住 {cite}`peng2023copilotstudy,ziegler2022productivity`。因果链于是翻转成 *规约 → 测试 → 观察*：
 
-- **SDD first** — because the specification is now the primary human-authored artefact; it shapes *what the agent tries to build*.
-- **TDD second** — because tests now *verify the agent's interpretation* of the spec, rather than serving as the first spec themselves.
-- **MDD third** — because metrics close the loop by *confirming the spec + tests keep matching production reality* over time, not as a late-stage safety net.
+- **SDD 优先**——因为规约现在是由人亲手写下的主要制品；它塑造的是 *智能体试图去建什么*。
+- **TDD 其次**——因为测试现在要 *核验智能体对规约的诠释*，而不再是它自己充当第一份规约。
+- **MDD 压阵**——因为度量闭合反馈回路的方式，是 *持续确认规约 + 测试仍与生产现实相符*，而不是在末端当作一张安全网。
 
-The rest of this chapter walks the three guardians in that causal order,
-gives each a classical definition, an AI-era interpretation, and one
-concrete harness example. The chapter ends with a forward pointer to
-Chapter 05, where the three guardians become the rows of the book's
-**3 × 4 matrix** against the four zones (Bridle / Fence / Paddock /
-Groom).
+本章接下来会按这一因果顺序逐一走过三大护法，为每一位给出一份经典定义、一份 AI 时代的诠释、以及一个具体的马具示例。章末会指向第 05 章，那里三大护法会化作本书 **3 × 4 矩阵** 的三行，与"四区域"（缰绳／护栏／牧场／梳理）相乘。
 
-## Guardian I — SDD (Specification-Driven Development)
+## 护法一 —— SDD（Specification-Driven Development，规约驱动开发）
 
-### Classical definition
+### 经典定义
 
-Specification-Driven Development is the practice of writing a
-machine-checkable description of a system's behaviour *before* the system
-is built, and treating that description as the primary artefact that
-evolves with the code. Its canonical lineage runs from Meyer's *Design
-by Contract* {cite}`meyer1992contracts` (preconditions, postconditions,
-invariants as first-class citizens), through Adzic's *Specification by
-Example* {cite}`adzic2011specbyexample` (executable examples as the
-living contract between product and engineering), to Martraire's *Living
-Documentation* {cite}`martraire2019living` (documentation that is
-generated from, and validated against, the code it describes). The
-unifying claim across forty years is that **ambiguous specifications
-produce ambiguous software**, and the cheapest place to fix ambiguity is
-the spec.
+Specification-Driven Development 的意思是：在系统被造出来 *之前*，先写下一份关于系统行为的、机器可核验的描述，并把这份描述当作一件和代码一起演进的主要制品。它的经典谱系从 Meyer 的 *Design by Contract* {cite}`meyer1992contracts`（把前置条件、后置条件、不变式当作一等公民）出发，途经 Adzic 的 *Specification by Example* {cite}`adzic2011specbyexample`（把可执行的例子当作产品与工程之间的活合同），一直走到 Martraire 的 *Living Documentation* {cite}`martraire2019living`（文档由代码生成，又对着代码做核验）。贯穿四十年、始终不变的论点是：**含糊的规约产出含糊的软件**，而修正这份含糊，最便宜的地方是规约本身。
 
-### AI-era interpretation
+### AI 时代的诠释
 
-When the agent is the author, the specification becomes the *input*
-rather than an afterthought. Three artefacts do most of the work:
+当作者变成智能体时，规约就成了 *输入*，而不是事后追加的附注。大部分工作由三类制品承担：
 
-- **`AGENTS.md` / `CLAUDE.md`** — house rules, file boundaries, invariants the agent must respect before editing {cite}`anthropic2024claudecode`.
-- **`SKILL.md` files** — step-by-step procedures the agent is expected to follow for recurring tasks {cite}`vincent2025superpowers`.
-- **MCP server manifests** — machine-readable tool contracts that say *what* the agent can do and *what each call costs* {cite}`anthropic2024mcp`.
+- **`AGENTS.md` ／ `CLAUDE.md` 兼容层**——家规、文件边界，以及智能体在动手改动之前必须尊重的不变式 {cite}`agenticai2025agentsmd,anthropic2024claudecode`。
+- **`SKILL.md` 文件**——针对反复出现的任务、期望智能体一步一步照做的过程 {cite}`vincent2025superpowers`。
+- **MCP 服务器 manifest**——机器可读的工具契约，说明智能体 *能做什么*，以及 *每一次调用要花多少* {cite}`anthropic2024mcp`。
 
-These are not documentation about the code. They are **input to the
-coding process itself** — read by the agent on every turn, not read once
-by a new hire and forgotten. That is why SDD moves to the head of the
-causal chain: an agent with a stale or ambiguous `AGENTS.md` will author
-stale or ambiguous code from turn one, and no amount of downstream
-testing can recover the intent the spec failed to pin.
+这些东西不是关于代码的文档。它们是 **编码过程本身的输入**——智能体每一轮都要读一遍的那种，而不是新员工入职那天看一次就忘的那种。这就是为什么 SDD 被推到了因果链的最前面：一个拿着过时或含糊的 `AGENTS.md` 的智能体，从第一轮起就会写下过时或含糊的代码；下游再多的测试，也找不回当初规约没钉住的那份意图。
 
-The causal mechanism worth naming is **ambiguity amplification**. A
-human reading an ambiguous spec will typically *notice* the ambiguity —
-they hesitate, re-read, ask a colleague, or guess conservatively. A
-language model does none of these things by default. Given "write an
-idiomatic error handler", it will emit *some* concrete handler with
-full confidence; the ambiguity in the prompt is laundered into
-false precision in the code. One ambiguous bullet in `AGENTS.md`
-therefore becomes a hundred confidently-written, subtly-different
-implementations over the next quarter. The cost of the ambiguity is
-multiplied by the agent's throughput — which is precisely why spec
-tightening is the highest-leverage investment the moment an agent
-enters the loop.
+这里值得命名的因果机制叫 **含糊放大（ambiguity amplification）**。一个人读一份含糊的规约，通常会 *察觉* 到这份含糊——他会迟疑、重读、找同事问、或保守地猜一版。语言模型默认不做这些事。给它一句"写一个地道的错误处理器"，它就会自信满满地吐出 *某一个* 具体的处理器版本；提示词里的含糊被洗成了代码里的"假精确"。于是 `AGENTS.md` 里一条含糊的 bullet，在接下来一个季度里会变成一百个写得自信却彼此微妙不同的实现。这份含糊的代价，被智能体的吞吐率乘了出去——这也正是为什么智能体一进回路，*收紧规约* 就成了杠杆最高的那项投入。
 
-```{admonition} Pitfall — Spec drift (the silent SDD failure)
+```{admonition} 陷阱——规约漂移（SDD 那种无声的失败）
 :class: warning
 
-`AGENTS.md` said *"all database writes go through `repo.Repository`"*.
-Six sprints later, three service files bypass the repository and
-write via `sqlx` directly — a pattern introduced during an incident
-and never rolled back. The `AGENTS.md` bullet still reads the same.
-The agent, reading `AGENTS.md` as authoritative, continues to generate
-code that *conforms to the spec* while the codebase *increasingly
-does not*. Every new file the agent writes widens the gap because it
-is correct-against-the-spec; every new file a human writes widens the
-gap because it is correct-against-the-codebase. **Symptom**: reviewers
-disagree about what the rule "really" means; new code is sometimes
-rejected and sometimes accepted for the same pattern; the agent's
-violations correlate with the spec, not with reviewer preference.
-**Fix**: a scheduled job (a Groom) compares `AGENTS.md`'s
-machine-checkable claims against the codebase weekly; when they
-diverge, *one* of them is wrong, and the review must pick which.
+`AGENTS.md` 上写着 *"所有数据库写入都走 `repo.Repository`"*。六个 sprint 之后，有三个服务文件绕过了 repository，直接走 `sqlx` 写——这是一次事故里引入的模式，后来没被回滚掉。`AGENTS.md` 上那条 bullet 一字未改。把 `AGENTS.md` 当作权威来读的智能体，继续产出 *与规约相符* 的代码，而代码库 *越来越不相符*。智能体每写一个新文件，这条裂缝就被拉宽一点——因为它是"对规约是对的"；人每写一个新文件，这条裂缝也被拉宽一点——因为它是"对当下代码库是对的"。**症状**：评审者对这条规则"到底"是什么意思意见不一；同一种模式的新代码有时被拒、有时被收；智能体的违规和规约相关，而非和评审人的个人偏好相关。**解法**：一个定时任务（即一位梳理 Groom），每周把 `AGENTS.md` 上那些机器可核验的主张拿来和代码库对一次；一旦它们不一致，那 *必有一方* 是错的，评审必须选出到底哪一方错了。
 ```
 
-### Harness example
+### 马具示例
 
-The SDD guardian ships as an `AGENTS.md` fragment that names (a) the
-entrypoint, (b) the file boundary rules, (c) the storage contract signed
-by a test, and (d) the invariant enforced by a checker script. The
-fragment lives under `_handson/04-three-guardians/AGENTS.md.fragment`
-(see §04.Hands-On). A developer who commits this file before a single
-prompt is sent has taken the first concrete Harness Engineering step in
-their repo.
+SDD 这位护法以一份 `AGENTS.md` 片段的形式交付，其中点名：（a）入口点；（b）文件边界规则；（c）由一条测试签字盖章的存储契约；（d）由一段检查脚本强制执行的不变式。这份片段放在 `_handson/04-three-guardians/AGENTS.md.fragment`（见 04 的动手环节）。一位开发者在发出第一条提示词之前就把这份文件提交进仓库，他就在自己的仓库里走出了第一步具体的 Harness Engineering。
 
-## Guardian II — TDD (Test-Driven Development)
+## 护法二 —— TDD（Test-Driven Development，测试驱动开发）
 
-### Classical definition
+### 经典定义
 
-Test-Driven Development, as articulated by Beck's *TDD by Example*
-{cite}`beck2002tdd`, follows a **red → green → refactor** loop: write a
-failing test, write the smallest change that makes it pass, then refactor
-under the safety of the now-passing test. Tests are both specification
-(executable, so unambiguous) and regression net (durable, so drift-catching).
-Four decades of industry practice have shown that teams that hold the
-loop tight ship fewer defects per change and tolerate refactors at
-higher velocity {cite}`forsgren2018accelerate`.
+Test-Driven Development 这门学科，正如 Beck 在 *TDD by Example* {cite}`beck2002tdd` 中所表述的，跟随一条 **红 → 绿 → 重构** 的循环：先写一条失败的测试，再写最小的改动把它变绿，然后在这条已经变绿的测试的安全网下做重构。测试既是规约（可执行，所以不含糊），又是回归网（有持久性，所以能捕捉漂移）。四十年的行业实践告诉我们：能把这条循环握得紧的团队，平均每一次变更的缺陷数更少，也能以更高的速度容忍重构 {cite}`forsgren2018accelerate`。
 
-### AI-era interpretation
+### AI 时代的诠释
 
-With an agent in the loop, the **red-first** half of the loop becomes
-more important and the **refactor** half becomes more automatable. More
-important because the human-authored test is now the *only* thing that
-verifies the agent understood the spec — skip it and the agent's
-confidently-hallucinated code passes into the repo unchallenged
-{cite}`peng2023copilotstudy`. More automatable because once the test is
-red, the agent is very good at producing *some* code that turns it
-green; the human's job is reduced to deciding whether the resulting code
-*also* deserves to pass a more adversarial test the human did not yet
-write {cite}`ziegler2022productivity`.
+一旦智能体进入回路，这条循环中 **红在前** 的半段变得更重要，**重构** 的那半段则变得更可自动化。更重要，是因为由人亲手写下的测试，如今是 *唯一一件* 能核验智能体是否听懂规约的东西——跳过这一步，智能体自信幻觉出来的代码就会毫无阻碍地溜进仓库 {cite}`peng2023copilotstudy`。更可自动化，是因为一旦测试是红的，智能体很擅长产出 *某一段* 让它变绿的代码；人要做的事被压缩成一件：决定这段产出，*是否也* 配得上通过一条人还没写、但对它更有敌意的测试 {cite}`ziegler2022productivity`。
 
-Operationally this reshapes the human workflow:
+落到具体操作上，这重塑了人这边的工作流：
 
-- The human writes the failing test and a one-paragraph spec delta.
-- The agent turns the test green.
-- The human reviews the diff for *silent* invariants the test did not cover, adds one more failing test, and repeats.
+- 人写下那条失败的测试，以及一段简短的规约 delta。
+- 智能体把测试变绿。
+- 人审阅这份 diff，找出测试没覆盖到的那些 *沉默* 的不变式，再补上一条失败的测试，然后循环继续。
 
-This is still TDD, but the human now spends most of their TDD time on
-the *test* side of the loop and almost none on the *implement* side. The
-harness must make that split cheap: hooks that block commits on red
-tests {cite}`humble2010continuousdelivery`, quarantine buckets for
-flaky tests, and a fast lane that reruns only the tests affected by a
-diff.
+它仍然是 TDD，只是人现在把 TDD 的大部分时间都花在循环的 *测试* 这一侧，而几乎不花在 *实现* 那一侧。马具必须让这种分工变便宜：在测试红时拦住 commit 的钩子 {cite}`humble2010continuousdelivery`、给 flaky 测试准备的隔离区、只重跑受本次 diff 影响的那些测试的快通道。
 
-The distinctive AI-era failure mechanism is **test-pinning of the
-wrong interpretation**. The human writes a test that is *technically*
-correct for the behaviour they had in mind, but leaves one interpretive
-degree of freedom the agent resolves opportunistically. The test goes
-green. The code encodes the agent's resolution, not the human's
-intent. Two months later, an incident reveals the divergence — and the
-test, now load-bearing, is cited as evidence that "the behaviour was
-specified". It was not; only one of many behaviours consistent with the
-test was specified. Every such test hardens the agent's original
-misunderstanding into the repository's memory. The cure is not "more
-tests" but *adversarial tests*: tests written specifically to falsify
-the cheapest path from prompt to green.
+AI 时代特有的失败机制叫 **把错误诠释钉进了测试里（test-pinning of the wrong interpretation）**。人写下的那条测试，对于他脑子里想的那个行为来说，在 *字面意义上* 是对的，但留下了一维诠释性的自由度，而智能体顺势把这个自由度按自己的便利解决了。测试变绿。代码里编码下来的是智能体的那个解，而不是人的那份意图。两个月后，一场事故暴露出这个分歧——而那条测试，如今成了承重墙，被引用为 *"这个行为是规约过的"* 的证据。它并不是；被规约下来的只是与这条测试相容的众多行为中的一种。每一条这样的测试，都把智能体最初的那个误解硬化进了仓库的记忆里。解药不是"加更多测试"，而是 *敌意测试（adversarial tests）*：专门写来证伪"从提示词到变绿的最省力路径"的那种测试。
 
-```{admonition} Pitfall — "It passed the test on the first try"
+```{admonition} 陷阱——"它第一把就把测试过了"
 :class: warning
 
-An agent turns a failing test green on its first turn. The reviewer,
-relieved, approves the PR. This is the single most common place TDD
-fails in the agent era. **Why**: a first-try pass usually means the
-test was easier to satisfy than the spec — either the test under-
-specified, or the agent happened to land on a corner of the
-solution space the test happened to cover. A human, pushed by the
-red-green-refactor rhythm, would iterate three or four times and
-leave shrapnel the reviewer could learn from; the agent leaves one
-clean diff that passes, which *feels* like quality. **Symptom**:
-first-try pass rate rises; silent-defect rate rises with it; the
-team's test-addition rate per feature falls because "the first test
-already covers it". **Fix**: on every first-try pass, the reviewer
-writes *one more test* — specifically, a test that attacks the
-cheapest shortcut the agent could have taken. If that test also
-passes, the confidence was earned; if it fails, you just averted a
-silent defect.
+智能体第一轮就把一条失败的测试变绿了。评审者松了口气，把 PR 批了。这是 AI 时代里 TDD 最常栽跟头的地方。**为什么**：第一把就过，通常意味着测试比规约更好满足——要么测试没定够，要么智能体恰好落到了测试正好覆盖的那一角解空间里。一个被"红—绿—重构"节律推着走的人，会迭代三四轮，留下一些评审者可以从中学到东西的碎片；智能体留下的是一份干净利落、能过的 diff，这 *感觉上像* 质量。**症状**：第一把通过率上升；沉默缺陷率也跟着上升；每个特性平均新加的测试数量下滑，因为"第一条测试已经覆盖了"。**解法**：每一次"第一把就过"，评审者都要再写 *一条测试*——而且专门写那种攻击"智能体本可以走的最省力的那条捷径"的测试。若这条测试也过了，那份信心就算挣到了；若它失败了，你刚好挡下了一个沉默缺陷。
 ```
 
-### Harness example
+### 马具示例
 
-The TDD guardian ships as a pytest skeleton at
-`_handson/04-three-guardians/test_skeleton.py`. It is **deliberately
-failing** when first committed — two tests that pin a behaviour the
-agent must then build (`add` appends exactly one item; `add` rejects an
-empty title). A `pre-commit` hook runs `pytest -q -m "not slow"` so the
-red test is a blocker from the very first prompt
-{cite}`humble2010continuousdelivery`, not an aspiration checked only in
-CI. The sibling `pre-commit-config.fragment.yaml` from Chapter 03's
-Hands-On is the matching fence, demonstrating how Ch.03's minimal triad
-instantiates the TDD guardian that §04 now names.
+TDD 这位护法以一份 pytest 骨架的形式交付，位置在 `_handson/04-three-guardians/test_skeleton.py`。它在第一次被提交时 **故意是失败的**——两条测试分别钉住智能体随后必须实现的两条行为（`add` 恰好追加一条；`add` 拒绝空标题）。一条 `pre-commit` 钩子会跑 `pytest -q -m "not slow"`，从第一条提示词起，红的测试就是一道拦路的闸 {cite}`humble2010continuousdelivery`，不是那种只在 CI 里碰一次的愿望。来自第 03 章动手环节的 `pre-commit-config.fragment.yaml` 就是与它配套的那道护栏，正好演示了第 03 章那组最小三件套如何把 04 现在命名的 TDD 护法具体化出来。
 
-## Guardian III — MDD (Metric-Driven Development)
+## 护法三 —— MDD（Metric-Driven Development，度量驱动开发）
 
-### Classical definition
+### 经典定义
 
-Metric-Driven Development is the discipline of treating production
-signals — not unit-test pass rates alone — as the authoritative feedback
-loop on whether a system still does what its spec and tests claimed.
-Its intellectual lineage includes Cunningham's technical-debt metaphor
-{cite}`cunningham1992debt` (invisible cost accrues until a metric makes
-it visible), Majors, Fong-Jones & Miranda's *Observability Engineering*
-{cite}`majors2022observability` (high-cardinality events as the
-primitive signal), and Lehman's laws of software evolution
-{cite}`lehman1980laws` (a useful system must be continually adapted or
-its fitness declines — a claim only measurable with metrics). MDD
-generalises observability one step further by insisting the metrics are
-chosen *before* production issues force them, so the first week of
-operation begins with a monitoring contract rather than a blank
-dashboard.
+Metric-Driven Development 这门学科的核心立场是：把生产环境里的信号——而不仅仅是单元测试的通过率——当作判定"系统是否仍在做它的规约与测试声称它在做的事"的权威反馈回路。它的思想谱系包括：Cunningham 的技术债比喻 {cite}`cunningham1992debt`（看不见的成本会不断累积，直到一个度量把它显出来）、Majors／Fong-Jones／Miranda 的 *Observability Engineering* {cite}`majors2022observability`（把高基数事件当作原生信号）、以及 Lehman 的软件演化律 {cite}`lehman1980laws`（一个有用的系统必须被持续适配，否则它的适应度会下降——而这一论点只有靠度量才量得出来）。MDD 比传统可观测性再往前一步：坚持让度量在 *生产事故把你逼出来之前* 就被选好，于是运营的第一周是从一份监控契约开始的，而不是从一块空仪表盘开始的。
 
-### AI-era interpretation
+### AI 时代的诠释
 
-With an agent authoring code, a mature harness monitors at least three
-kinds of signals: (a) classical production SLIs (error rate, p99
-latency, throughput); (b) harness-internal signals (agent
-turns-to-green, cost per turn, prompt cache hit rate)
-{cite}`langchain2026tbench`; (c) spec-observance signals (broken-link
-count on the docs site, stale `verified:` dates on hands-on artefacts,
-schema drift between `AGENTS.md` and the MCP manifest)
-{cite}`martraire2019living`. The agent-specific failures the third
-family catches — *spec drift* between `AGENTS.md` and the codebase,
-and *cost runaway* across agent turns — are treated in depth below
-and, for spec drift specifically, in the SDD section's pitfall
-callout above.
+当智能体作者上场后，一具成熟的马具至少要监视三类信号：（a）经典的生产 SLI（错误率、p99 延迟、吞吐量）；（b）马具内部信号（智能体 turns-to-green、每轮成本、提示词缓存命中率）{cite}`langchain2026tbench`；（c）规约遵守信号（文档站点上的坏链数、动手制品里过期的 `verified:` 日期、`AGENTS.md` 与 MCP manifest 之间的 schema 漂移）{cite}`martraire2019living`。第三类信号能捕捉的、智能体特有的失败——`AGENTS.md` 与代码库之间的 *规约漂移*、以及智能体轮次间的 *成本失控*——后面会深入讨论；其中规约漂移这一条，已经在上面 SDD 那一节的陷阱框里专门讲过了。
 
-The failure mechanism unique to the agent era is **cost runaway with
-no correlate**. A human engineer who introduces a 10× slower function
-is noticed because the human's next task also runs 10× slower. An
-agent that introduces a 10× more expensive prompt is not noticed: its
-*next* prompt runs just as fast from the team's perspective, and the
-cost accrues silently on the invoice. Without a per-turn cost signal
-wired into a fence, the first evidence of the regression is either
-a rate limit, a bill, or a quarterly review — all of which arrive too
-late to correlate to the commit that caused them. MDD's role is to
-make that correlation cheap: cost-per-turn tagged by skill, by
-repository, and by change-set, so that the incremental cost of any
-given harness change is visible the day after it lands, not the
-quarter after.
+智能体时代特有的失败机制叫 **没有对照物的成本失控（cost runaway with no correlate）**。人类工程师若引入一个慢 10 倍的函数，会被发现——因为他自己的下一个任务也跟着慢 10 倍。智能体若引入一个贵 10 倍的提示词，则没人察觉：从团队这一侧看，它 *下一个* 提示词跑得一样快，而成本就这么无声地记在了账单上。没有一个"每轮成本"的信号被接进某条护栏时，回归的第一份证据要么是限流、要么是账单、要么是季度复盘——每一个都来得太晚，晚到无法和"造成它的那次 commit"对应起来。MDD 的作用，就是让这种对应变便宜：每轮成本按技能、按仓库、按变更集打上标签，于是任何一次马具改动带来的增量成本，在它落地的第二天就可见，而不是下一个季度才可见。
 
-```{admonition} Pitfall — Dashboard theatre
+```{admonition} 陷阱——仪表盘剧场
 :class: warning
 
-A team builds a twelve-panel Grafana board tracking agent cost,
-turns-to-green, cache hit rate, and nine other signals. It is
-beautiful. Six weeks later, the question *"which signal moved this
-week, and what did we do about it?"* returns blank stares. **Why**:
-the dashboard has no owner, no alert thresholds, and no scheduled
-review; the signals exist but they do not *steer*. A metric that
-nobody is accountable to is diagnostic at best and decorative at
-worst. **Symptom**: the dashboard is shown proudly in demos but
-never referenced in PRs; incidents are explained by gut feel
-despite the data being right there. **Fix**: demote ten of the
-twelve panels to a second tab, promote *one* to a north-star with a
-named owner, a threshold that fires a page, and a Monday morning
-agenda slot. Chapter 05's MDD × Bridle treats the one-north-star
-discipline in detail.
+一个团队搭了一块十二面板的 Grafana 仪表盘，盯着智能体成本、turns-to-green、缓存命中率，以及其他九路信号。它很漂亮。六周之后，问一句 *"这一周哪一路信号动了，我们为此做了什么？"*，回来的是一片茫然的眼神。**为什么**：这块仪表盘没有 owner、没有告警阈值、没有固定的复盘节奏；信号在那里，但并 *不引导* 任何人。一个没有人对它负责的度量，最好的情况下只是诊断性的，最坏的情况下就是装饰。**症状**：仪表盘在 demo 上被骄傲地展示，却从不在 PR 讨论里被引用；事故复盘还是靠直觉解释，哪怕数据明明摆在那里。**解法**：把十二面板里的十个降级到第二个标签页，把 *一个* 提升为北极星指标，给它一位署名 owner、一个会触发告警的阈值，和每周一上午议程里的一格时间。第 05 章的"MDD × 缰绳"一格，会深入讲这种"独一北极星"的纪律。
 ```
 
-### Harness example
+### 马具示例
 
-The MDD guardian ships as a `metrics.yaml` at
-`_handson/04-three-guardians/metrics.yaml`. It is fifteen lines of YAML
-that names four signals (pytest pass rate, broken-link count, mean
-review time, agent turns-to-green), sets a target for each, and — the
-cultural move that makes it MDD rather than observability — commits the
-team to a **weekly review cadence**. A harness without a review cadence
-collects dashboards; a harness with one closes the feedback loop the
-two earlier guardians opened.
+MDD 这位护法以一份 `metrics.yaml` 的形式交付，位置在 `_handson/04-three-guardians/metrics.yaml`。十五行 YAML，点名四路信号（pytest 通过率、坏链数、平均评审时长、智能体 turns-to-green），给每一路设定一个目标，然后——真正把它从"可观测性"变成"MDD"的那一步文化动作——把团队按在一套 **每周复盘节奏** 上。没有复盘节奏的马具只是收藏仪表盘；有复盘节奏的马具，才真正闭合了前两位护法打开的反馈回路。
 
-## Why each guardian fails alone
+## 为什么每一位护法单独都撑不住
 
-The matrix interpretation in Chapter 05 depends on the argument that no
-single guardian is sufficient. The failure modes are distinct and
-self-reinforcing:
+第 05 章那张矩阵的解读，建立在一个论点之上：没有任何一位护法独自足够。三种失败模式彼此分明，又彼此自我加强：
 
-- **SDD alone** produces precise specs that no one verifies — the agent follows a well-written `AGENTS.md` into a silently broken implementation because no test ever tried to break it.
-- **TDD alone** produces green tests that pin the agent's first
-  misunderstanding of the spec — "the code does what the test says"
-  becomes true while "the code does what the user needed" quietly
-  diverges {cite}`ziegler2022productivity`.
-- **MDD alone** produces beautiful dashboards that *diagnose* drift
-  after it has happened but cannot *prevent* it, because neither the
-  spec nor the tests that would catch drift earlier were ever written.
+- **只有 SDD**，你得到的是一份没人核验的精确规约——智能体一路循着一份写得漂亮的 `AGENTS.md`，走进了一个沉默地坏掉的实现，因为从来没有一条测试试图把它打破。
+- **只有 TDD**，你得到的是一堆变绿的测试，它们把智能体对规约的 *第一份误解* 钉了进去——"代码做的是测试所说的事"成了真，而"代码做的是用户所需要的事"却悄悄发散开来 {cite}`ziegler2022productivity`。
+- **只有 MDD**，你得到的是一块漂亮的仪表盘，它能在漂移 *发生之后* 把它 *诊断* 出来，却 *阻止* 不了漂移——因为本该在更早的地方把漂移挡下的那份规约和那些测试，都没有被写出来。
 
-The three guardians are load-bearing only when they are all three
-present, and present in that causal order. Chapter 05 renders that claim
-as a 3 × 4 methodology matrix: three guardian rows crossed with four
-operational zones (Bridle / Fence / Paddock / Groom), producing twelve
-engineering cells that together constitute the book's analytical spine.
+三大护法只有在三位同时在场、并且按那个因果顺序在场时，才真正是承重的。第 05 章把这一论点落成一张 3 × 4 的方法论矩阵：三行护法与四列操作区域（缰绳／护栏／牧场／梳理）相乘，得到十二格工程单元，它们合在一起就是本书的分析骨架。
 
-## Research Foundations
+## 研究脉络
 
-The three guardians are selected not because they cohere aesthetically
-but because each rests on a distinct, citable lineage and each solves a
-failure mode the other two cannot.
+之所以选出这三位护法，不是因为它们在美学上凑成一套，而是因为每一位都靠在一条独立、可引用的谱系上，每一位都解决了另外两位解决不了的一种失败模式。
 
-- **SDD lineage.** Meyer's *Design by Contract* {cite}`meyer1992contracts` established machine-checkable pre/postconditions as first-class engineering artefacts; Adzic's *Specification by Example* {cite}`adzic2011specbyexample` extended that stance to executable business rules; Martraire's *Living Documentation* {cite}`martraire2019living` is the direct ancestor of `AGENTS.md` / `CLAUDE.md` as a continuously validated spec surface.
-- **TDD lineage.** Beck's *TDD by Example* {cite}`beck2002tdd` is the canonical text; Humble & Farley's *Continuous Delivery* {cite}`humble2010continuousdelivery` shows how the red-green-refactor loop scales to organisational cadence; the copilot productivity studies {cite}`peng2023copilotstudy,ziegler2022productivity` are the empirical evidence that *untested* agent output silently degrades code quality, which is the AI-era case for keeping the red-first discipline.
-- **MDD lineage.** Cunningham's debt metaphor {cite}`cunningham1992debt` motivated making invisible costs visible; Majors, Fong-Jones & Miranda's *Observability Engineering* {cite}`majors2022observability` reframed production signals as primary design concerns; Lehman's evolution laws {cite}`lehman1980laws` argue that a useful system must be continuously re-fit, which is only operationalisable with metrics.
-- **Harness-side synthesis.** The 2026-01-30 blog post introducing the Three Guardians {cite}`walterfan2026guardians` is this book's own prior synthesis; readers who want the short version should read it alongside the Thoughtworks radar entry {cite}`thoughtworks2026harness` and the LangChain anatomy post {cite}`langchain2026tbench`.
+- **SDD 的谱系。** Meyer 的 *Design by Contract* {cite}`meyer1992contracts` 把机器可核验的前置／后置条件确立为一等工程制品；Adzic 的 *Specification by Example* {cite}`adzic2011specbyexample` 把这一立场扩展到可执行的业务规则；Martraire 的 *Living Documentation* {cite}`martraire2019living` 则是 `AGENTS.md` 作为一份持续被核验的规约面的直系祖先。
+- **TDD 的谱系。** Beck 的 *TDD by Example* {cite}`beck2002tdd` 是经典文本；Humble 与 Farley 的 *Continuous Delivery* {cite}`humble2010continuousdelivery` 展示了红—绿—重构这条循环如何放大到组织节奏上；关于 Copilot 生产率的几项研究 {cite}`peng2023copilotstudy,ziegler2022productivity`，则提供了经验证据：*未经测试* 的智能体产出会沉默地拖低代码质量——这就是在 AI 时代仍然坚持"红在前"这条纪律的经验依据。
+- **MDD 的谱系。** Cunningham 的"债"之比喻 {cite}`cunningham1992debt` 激起了"把看不见的成本显出来"这一动机；Majors／Fong-Jones／Miranda 的 *Observability Engineering* {cite}`majors2022observability`，把生产信号重新框定为首要的设计关切；Lehman 的演化律 {cite}`lehman1980laws` 则论证了"一个有用的系统必须被持续再适配"，而这一主张只有通过度量才能落地为可操作的实践。
+- **马具一侧的综合。** 2026-01-30 那篇引入三大护法的博客 {cite}`walterfan2026guardians` 是本书自己的前置综合；想读短版的读者可以把它和 Thoughtworks 技术雷达的条目 {cite}`thoughtworks2026harness` 以及 LangChain 那篇"解剖"式博客 {cite}`langchain2026tbench` 放在一起读。
 
-## Hands-On
+## 动手环节
 
-Three artefacts ship under
-`book/source/_handson/04-three-guardians/`, one per guardian, in
-the causal order this chapter argues for:
+`source/_handson/04-three-guardians/` 下交付了三份制品，每位护法一份，顺序与本章所主张的因果顺序一致：
 
-- **SDD** — `AGENTS.md.fragment`: a machine-checkable spec block that
-  names entrypoint, file boundaries, storage contract, and agent rules.
-  Fourteen lines; copyable into any repo's `AGENTS.md`.
-- **TDD** — `test_skeleton.py`: a deliberately failing pytest module
-  that pins `todo add` behaviour *before* a prompt is sent. Run with
-  `pytest -q tests/test_skeleton.py`; the test is expected to be red on
-  commit and green after the agent's first successful turn.
-- **MDD** — `metrics.yaml`: a fifteen-line signal contract naming four
-  metrics (pytest pass rate, broken-link count, mean review time, agent
-  turns-to-green) and a weekly review cadence.
+- **SDD**——`AGENTS.md.fragment`：一段机器可核验的规约块，点名入口点、文件边界、存储契约，以及智能体的规则。十四行；可以原样拷进任何仓库的 `AGENTS.md`。
+- **TDD**——`test_skeleton.py`：一份故意失败的 pytest 模块，在任何提示词被发出 *之前* 就把 `todo add` 的行为钉住。用 `pytest -q tests/test_skeleton.py` 运行；commit 时它应该是红的，在智能体第一轮成功之后变绿。
+- **MDD**——`metrics.yaml`：一份十五行的信号契约，点名四项度量（pytest 通过率、坏链数、平均评审时长、智能体 turns-to-green），以及一套每周复盘节奏。
 
-The accompanying `README.md` names the reading order and the intent of
-each file. Committing all three files into any active repository —
-alongside the Chapter 03 triad — produces the smallest complete
-three-guardian harness this book will ask the reader to operate. The
-next chapter turns that harness into a matrix.
+配套的 `README.md` 给出阅读顺序，以及每一份文件的意图。把这三份文件提交进任何一个活跃的仓库——和第 03 章的那组三件套一起——就得到了本书要求读者运行的最小完整"三大护法马具"。下一章把这具马具变成一张矩阵。

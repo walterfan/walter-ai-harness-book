@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 · Ch.10 Claude Code hands-on -->
 
-# Hands-On · Ch.10 Claude Code
+# 动手环节 · 第 10 章 Claude Code
 
 One file:
 

@@ -1,6 +1,9 @@
 <!-- verified: 2026-04-17 · Tauri-Todo worked arc · Role contracts (Paddock + Groom) -->
 
-# AGENTS.md — role contracts for lazy-todo-app
+# AGENTS.md — canonical agent contract for lazy-todo-app
+
+This is the canonical agent-facing contract. `CLAUDE.md` mirrors the
+Claude-specific Bridle rules for clients that still look there first.
 
 ## Roles
 

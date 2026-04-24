@@ -1,8 +1,8 @@
 # 一小时分享 · 配套讲稿与幻灯片
 
-本目录是附录 F（*A One-Hour Internal Talk*）的配套 hands-on 材料。
-附录 F 本身是 **讲稿腹稿**；这里的 `SLIDES.md` 是可以直接投影或
-导出的 **幻灯片版本**，带 speaker notes。
+本目录是 Part 0（`source/chapters/00-presentation/`）的配套 hands-on 材料。
+Part 0 本身是 **讲稿腹稿**；这里的 `SLIDES.md` 是可以直接投影或
+导出的 **幻灯片版本**，带 speaker notes。附录 F 现在是工程师落地手册。
 
 ## 文件
 
@@ -47,16 +47,16 @@ npx @marp-team/marp-cli SLIDES.md --pptx -o talk.pptx
 
 ## 时长
 
-- 标准版（正文 1–17 页）：**约 60 分钟**
+- 标准版（F.0–F.8 主线页）：**约 60 分钟**
 - 压缩版（见附录幻灯的 "30 分钟压缩版"）：**约 30 分钟**
 - 工作坊版（见附录幻灯的 "90 分钟工作坊版"）：**约 90 分钟**，包含
   现场动手填一张 HarnessCard
 
-## 与附录 F 的对应关系
+## 与 Part 0 讲稿的对应关系
 
-`SLIDES.md` 的每一节标题都与附录 F 的小节一一对应（§F.0 / §F.1 /
-… / §F.8）。想查某一页背后的详细论证、回书锚、以及避免哪些 pitfall，
-翻附录 F 的对应小节即可。
+`SLIDES.md` 的每一节标题都与 Part 0 讲稿的小节一一对应（F.0 / F.1 /
+… / F.8）。想查某一页背后的详细论证、回书锚、以及避免哪些 pitfall，
+翻 `source/chapters/00-presentation/index.md` 的对应小节即可。
 
 ## 许可证
 

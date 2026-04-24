@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # verified: 2026-04-17 · Ch.11 hands-on · reproduce the HarnessCard delta
-# Run from a fresh clone of walterfan/lazy-ai-coder at the Act-4 SHA.
+# Run from a fresh clone of walterfan/async-harness-book at the Act-4 SHA.
 set -euo pipefail
 
 # 1. SDD × Fence — prompts-lint validates config/prompts.yaml

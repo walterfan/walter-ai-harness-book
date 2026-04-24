@@ -3,190 +3,57 @@ status: review
 chapter-type: narrative
 ---
 
-# Foreword
+# 前言
 
-In 2026, OpenAI's Codex team claimed that a single 8-week sprint
-produced roughly **one million lines** of shipped production code —
-and that **zero lines** were written by humans. In the same window,
-the LangChain team jumped from rank 30 to the Top 5 on Terminal Bench
-2.0 without upgrading their model; they changed only the scaffolding
-around it. Anthropic's research division spent more engineering hours
-on *permission dialogs, skill authoring conventions, and MCP server
-contracts* than on model weights. Something had shifted. The leverage
-point in AI coding had moved from the model to the environment that
-surrounds it.
+2026 年，OpenAI 的 Codex 团队宣称：在一次为期 8 周的冲刺中，上线的生产代码约有 **一百万行**，而人类写的是 **零行**。同一时期，LangChain 团队在 Terminal Bench 2.0 上从第 30 名跃升至前 5 名，模型并未升级，他们改动的只是模型外围的脚手架。Anthropic 的研究部门在 *权限对话框、技能编写规范、MCP 服务契约* 上投入的工程人时，甚至超过了花在模型权重上的时间。某种重心已经悄然移动：AI 编程的杠杆支点，正从模型本身，转向围绕它的那个环境。
 
-That environment — the set of prompts, skills, tools, approval gates,
-sandboxes, specifications, tests, and metrics an agent sees before it
-types a character — is the subject of this book. It has a name now:
-**Harness Engineering**. The name reaches backward to 1974, when the
-Bell Labs team called the first automated test driver "the test
-harness" because it *harnessed* the program under test the way a
-bridle and reins harness a horse. The metaphor has aged well. A
-harness is not restraint, not decoration; it is a careful assembly of
-affordances and constraints that lets a strong animal do useful work
-without bolting.
+这个环境——智能体在敲下第一个字符之前所看到的一整套提示词、技能、工具、审批关卡、沙箱、规约、测试与度量——正是本书的主题。它如今有了一个名字：**Harness Engineering（驾驭工程）**。这个名字可以追溯到 1974 年：贝尔实验室的工程师把第一个自动化测试驱动器称作 "test harness"（测试马具），因为它就像缰绳与辔头之于一匹马那样 *驾驭* 着被测程序。这个比喻经受住了时间的考验。所谓 harness，既不是束缚，也不是装饰；它是一套经过精心装配的支持与约束，让一匹壮马能够踏实做工、而不致脱缰狂奔。
 
-Three things follow from taking the metaphor seriously, and the whole
-book is a careful walk through each of them. First, a harness is
-*designed for a specific animal and a specific load*; a harness built
-for a dressage horse breaks on a Clydesdale and vice versa. The
-`CLAUDE.md` that worked for your solo side project will mis-steer a
-fifty-engineer platform team, and the approval gates a bank needs
-will suffocate a research prototype. Second, a harness *wears*. Every
-run of the agent leaves microscopic drift in the spec, the tests, the
-dashboards; a harness that is not tended after ninety days is
-ornamental at best and actively misleading at worst. Third, a harness
-*can be wrong without being broken*. A well-formed `AGENTS.md` that
-encodes last quarter's architecture lets the agent write smooth,
-confidently-wrong code against a world that no longer exists — and
-the tests all pass, because the tests drifted with it.
+把这个比喻认真对待，就会推出三件事，而本书正是对这三件事逐一细致展开。第一，马具是 *为特定的牲口、特定的负载而设计的*；给盛装舞步马配的马具，套到克莱兹代尔重挽马上会崩，反过来也一样。你在个人副业项目里用得顺手的 `AGENTS.md`，放到一支五十人规模的平台团队里只会把方向带偏；一家银行必需的审批关卡，搬到研究原型里只会把它闷死。第二，马具会 *磨损*。智能体每跑一次，就会在规约、测试、仪表盘里留下一点点肉眼难见的漂移；一具九十天没人伺候的马具，往好里说只是装饰，往坏里说会主动把人带偏。第三，马具 *可以没坏但已经错了*。一份编排漂亮、却编码着上个季度架构的 `AGENTS.md`，会让智能体面对一个早已不存在的世界，写出流畅而自信的错误代码——而且所有测试都通过，因为测试已经跟着一起漂移了。
 
-```{admonition} Pitfall — "Harness Engineering is just more process"
+```{admonition} 陷阱——"驾驭工程不过是又一套流程"
 :class: warning
 
-The seductive mis-reading is that a harness is a heavier checklist, a
-longer `CLAUDE.md`, or a stricter CI. It is not. A heavier checklist
-that no agent reads and no hook enforces is *pure entropy*: it
-signals compliance, generates review fatigue, and produces the same
-hallucinated code it would have without the checklist. A harness is
-the small set of artefacts that *mechanically refuse bad work* —
-everything else is decoration. If your harness grew this quarter but
-your agent's lint-violation rate did not fall, you added process,
-not harness. Chapter 06 treats this failure mode under the name
-*harness theatre*.
+一种颇具诱惑力的误读是：把马具当成更厚的检查清单、更长的 `AGENTS.md`、或者更严苛的 CI。它不是。一份没有智能体去读、也没有钩子去执行的更厚清单，是 *纯粹的熵*：它制造一种"合规"的幻觉、让评审者疲劳，然后产出和没有这份清单时一模一样的幻觉代码。马具是一小组 *能机械地拒绝坏工作* 的制品——除此之外的一切，都是装饰。如果本季度你的马具变厚了，但智能体的 lint 违规率却没有下降，那你加上去的是流程，不是马具。第 06 章把这种失败模式命名为 *harness theatre（马具剧场）*。
 ```
 
-## Who this book is for
+## 本书写给谁
 
-This book is for **working engineers who already write software**. If
-you are a team lead reviewing a tenth AI-generated pull request this
-week, a senior IC who keeps finding the same bug pattern from the
-same model, a platform engineer asked to stand up "AI infrastructure"
-without a clear specification of what that means, or a skeptic who
-wants to know whether the buzzword has a disciplined core — this is
-your book.
+本书写给 **正在一线写代码的工程师**。如果你是团队负责人，本周已经是第 10 次审阅 AI 生成的合并请求；如果你是资深个人贡献者，一次次在同一个模型身上看到同一种 bug 模式；如果你是平台工程师，被要求搭建"AI 基础设施"，却没人说清楚那到底是什么；又或者你只是一位怀疑论者，想知道这个流行词背后是否真有一门可以讲清楚的学科——那么，这本书就是写给你的。
 
-It is *not* a tutorial on how to write prompts, not a survey of model
-providers, not a frontier research paper. It does not teach you how to
-train an agent. It teaches you how to **shape the world around an
-agent** so the agent's output meets the three standards we already
-hold human engineers to: that a piece of software must be
-**verifiable** (we can prove it works), **observable** (we can see
-what it does in production), and **understandable** (we can explain
-why it is the way it is).
+它 *不是* 一本提示词写作教程，不是模型厂商的对比综述，也不是前沿研究论文。它不会教你如何训练一个智能体。它教你的，是如何 **塑造智能体所处的那个世界**，让智能体的产出满足我们早已对人类工程师提出的三条标准：一段软件必须是 **可验证的**（我们能证明它正确）、**可观测的**（我们能看见它在生产环境里的行为）、以及 **可理解的**（我们能说清楚它为什么长这样）。
 
-What this book asks of you is different from what the frontier-model
-books ask. A frontier-model book asks you to believe that the next
-release will dissolve this quarter's problems. This book asks the
-opposite — that you treat the problems as *structural* and solve them
-with the oldest tools in engineering: contracts, gates, observability,
-and a weekly review cadence. If you have ever replaced a
-"10× smarter model" with a "10× better spec and a pre-commit hook"
-and watched the same agent produce dramatically better code, you
-already know the bet this book is making.
+本书对你的期望，和那些以"前沿大模型"为卖点的书不一样。那类书希望你相信：下一个版本就会把这个季度的问题一笔勾销。本书恰恰相反——它希望你把这些问题视为 *结构性* 的，用工程里最老派的那套工具来解决它们：契约、关卡、可观测性，以及一套每周一次的复盘节奏。如果你曾经用"把规约写好 10 倍，再加一个 pre-commit 钩子"替换掉"换一个聪明 10 倍的模型"，然后亲眼看到同一个智能体产出显著更好的代码，那你已经懂了本书押的这个注。
 
-We call those three standards the **Three Guardians**, and we borrow
-them deliberately from traditional software engineering. Harness
-Engineering is not a new invention — it is the **deliberate
-front-loading** of three long-standing disciplines (SDD, TDD, MDD)
-from *after* the code is written to *before* the agent ever types a
-character. Chapter 04 gives each guardian its own treatment. Chapter
-05 explains how the three guardians combine with the four zones of a
-harness — Bridle, Fence, Paddock, Groom — to produce the book's
-analytical backbone, a 3 × 4 matrix of twelve engineering cells.
+这三条标准，我们称之为 **三大护法**，它们是我们有意从传统软件工程那里借过来的。Harness Engineering 并不是什么新发明——它是把三门由来已久的学科（SDD、TDD、MDD），从代码写完 *之后* 的被动补救，**主动前置** 到智能体敲下第一个字符 *之前*。第 04 章将对三大护法逐一展开。第 05 章则会说明：当三大护法与一个 harness 的四个区域——缰绳（Bridle）、护栏（Fence）、牧场（Paddock）、梳理（Groom）——纵横交织时，就得到了本书的分析骨架：一个由 12 个工程单元组成的 3 × 4 矩阵。
 
-## How to read the book
+## 如何阅读本书
 
-The book's 12 chapters follow a six-part arc:
+全书 12 章按六部分组织：
 
-* **Part I · Why** — motivation (Ch.01 Foreword) and the four-stage
-  evolution from Prompt → Context → Skill → Harness (Ch.02).
-* **Part II · What** — a dedicated definition of Harness Engineering
-  (Ch.03), including an operational boundary against DevOps, MLOps,
-  AI Engineering, and Platform Engineering. If you have fifteen
-  minutes and need a citable answer to "what is this?", read only
-  Chapter 03 and come back later.
-* **Part III · How** — the Three Guardians (Ch.04), the full 3 × 4
-  matrix (Ch.05), and the operating concerns — entropy, observability,
-  approval gates, meta-harness evolution — that keep a harness alive
-  (Ch.06, which also includes a Tauri-Todo hands-on arc).
-* **Part IV · Example** — five case studies: OpenHarness (Ch.07),
-  Superpowers (Ch.08), lazy-scrum-team (Ch.09), Claude Code via
-  Zhang Handong's 《马书》 (Ch.10), and the repository hosting this
-  book itself (Ch.11) — a four-act worked example that audits the
-  host repo, names its shortcomings, lands real harness fixes on
-  ``main``, and measures the delta.
-* **Part V · Conclusion** — a one-page thesis recap and a concrete
-  30/60/90-day action checklist you can adopt the week you close
-  the book (Ch.12).
-* **Part VI · Reference** — five lettered appendices (A FAQ, B
-  Glossary, C Reading List, D HarnessCard Template, E Sample
-  ``CLAUDE.md``), a central References page generated from the
-  book's BibTeX files, and a Colophon that documents how the book
-  was built.
+* **第一部分 · 为什么**——动机篇（第 01 章 前言），以及从 Prompt → Context → Skill → Harness 的四阶段演进（第 02 章）。
+* **第二部分 · 是什么**——先给 Harness Engineering 下定义（第 03 章），再拆开 AI Agent 与 AI 编程工具的 loop、memory、tools、context、skill 与 controller（插章）。如果你只有 15 分钟，又需要对"这到底是个什么东西？"给出一个可以引用的答案，那么只读第 03 章就够了；如果你要动手设计马具，请接着读这篇插章。
+* **第三部分 · 怎么做**——三大护法（第 04 章）、完整的 3 × 4 矩阵（第 05 章），以及让一个 harness 能够长期存活的日常运营议题——熵的治理、可观测性实践、审批关卡、元 harness 的演进（第 06 章，同时附带一条 Tauri-Todo 的动手演练线索）。
+* **第四部分 · 样本**——五则案例研究：OpenHarness（第 07 章）、Superpowers（第 08 章）、lazy-scrum-team（第 09 章）、借由张汉东 《马书》 的视角审视 Claude Code（第 10 章），以及托管本书的这个仓库本身（第 11 章）——一出四幕的完整演练：先审视本仓库，点出它的短板，再把真实的 harness 修复提交到 ``main`` 分支上，最后度量改进前后的差距。
+* **第五部分 · 结论**——一页纸的核心论点回顾，外加一份可以在合上本书的那一周就开始执行的 30/60/90 天行动清单（第 12 章）。
+* **第六部分 · 参考资料**——五篇字母编号的附录（A FAQ、B 术语表、C 推荐阅读、D HarnessCard 模板、E ``CLAUDE.md`` 兼容样板），一个由本书 BibTeX 源文件自动生成的集中参考文献页，以及一份记录本书构建方式的版权页（Colophon）。
 
-Every chapter from Ch.02 onward carries a **dual-track skeleton**:
-``## Research Foundations`` grounds the chapter's argument in prior
-work (three to seven cited bullets, each with a takeaway in the
-author's own words); ``## Hands-On`` ships at least one runnable
-artefact (a pre-commit hook, a ``CLAUDE.md`` fragment, a
-HarnessCard, a Mermaid diagram you can copy). We enforce this contract
-with ``make book-lint``. If a chapter's theory is thin, you will
-notice; if its practice is fake, the linter will notice.
+从第 02 章起，每一章都遵循 **双轨骨架**：``## 研究脉络`` 把本章的论点扎根于前人工作之上（3 到 7 条带引用的要点，每条都附上一句作者自己的总结）；``## 动手环节`` 则至少交付一件可以直接运行的工件（一个 pre-commit 钩子、一段 ``AGENTS.md`` 片段、一份 HarnessCard、或是一张可以直接拷走的 Mermaid 图）。这份双轨契约由 ``make book-lint`` 强制执行。如果某一章的理论太单薄，你会发现；如果它的实践是空架子，linter 也会发现。
 
-## A note on definition, and a note on frame
+## 关于定义的一则说明，以及关于分析框架的一则说明
 
-Two chapters deserve a pointer right here in the Foreword.
+有两章值得在前言里特别指出来，先提个醒。
 
-**Chapter 03 defines what Harness Engineering is.** If you are
-skeptical that this is a coherent field, start there. The chapter
-offers a one-sentence definition, an operational boundary that
-distinguishes a harness from a runtime inference stack, a comparison
-table against four adjacent practices, and a 30-line minimal example
-that a solo developer can ship in an afternoon. The point is to show
-that Harness Engineering is a *structural* concept, not a *scale*
-one — it does not require a large team or a cloud budget.
+**第 03 章负责回答"Harness Engineering 到底是什么"。** 如果你怀疑它根本算不上一门自洽的学科，那就从这一章开始读。该章给出一个一句话的定义、一条把 harness 与运行时推理栈区分开的操作性边界、一张把它与四个相邻实践并排对比的表格，以及一个 30 行、单人开发者一下午就能跑起来的最小示例。这一章要证明的，是 Harness Engineering 属于 *结构性* 概念，而不是 *规模性* 概念——它既不需要一支大团队，也不需要一笔云开销预算。
 
-**Chapter 05 is honest about its analytical frame.** The
-Bridle / Fence / Paddock / Groom vocabulary used throughout the book
-is a practitioner framework proposed by the author in a 2026-03-28
-blog post, not a peer-reviewed taxonomy. Chapter 05 opens with an
-explicit Provenance section that names three adjacent frameworks —
-the CAR (Control / Agency / Runtime) decomposition with HarnessCard
-reporting format from the *Harness Engineering for Language Agents*
-position paper, Thoughtworks' three-part framing, and LangChain's
-five-part harness anatomy — and explains why the book still adopts
-the three-guardian × four-zone matrix despite those alternatives.
-We think the choice has pedagogical merit; we think it is cheap to
-explain why.
+**第 05 章对自己采用的分析框架开诚布公。** 全书使用的 Bridle（缰绳）／Fence（护栏）／Paddock（牧场）／Groom（梳理）这套词汇，是作者在 2026-03-28 那篇博客里提出的从业者框架，并不是同行评议过的学术分类。第 05 章开头专门设了一节 Provenance（源流），点名三个相邻的同类框架：一是 *Harness Engineering for Language Agents* 立场论文里提出的 CAR（Control／Agency／Runtime）三层分解与配套的 HarnessCard 披露格式；二是 Thoughtworks 的三段式划分；三是 LangChain 的五段式 harness 解剖——并说明为什么在这些可选项之外，本书仍然选择三护法 × 四区域这个矩阵。我们认为这个选择有它的教学价值，同时也认为把理由说清楚的成本并不高。
 
-## On 《马书》
+## 关于《马书》
 
-Zhang Handong's *Harness Engineering: From Claude Code Source Code
-to AI Coding* — 《马书》 to its Chinese readers — arrived while the
-outline of this book was still stabilising. It is the canonical
-vertical deep-dive into one mature closed-source harness, and this
-book does not try to compete with it on that axis. This book is
-the horizontal, cross-harness methodology: the frame against which
-Claude Code is one case study among five, to be read alongside
-OpenHarness, Superpowers, lazy-scrum-team, and Lazy AI Coder. Chapter
-10 walks through Claude Code through the three-guardian lens,
-opening with a reverse-engineering disclaimer that names 《马书》 as
-its primary source and commits to retracting any claim contradicted
-by subsequent official disclosure. The two books are companions,
-not competitors.
+张汉东的 *《驾驭工程：从 Claude Code 源码到 AI 编程》*——中文读者习惯称之为《马书》——在本书大纲尚未定稿时就已经出版。它是对一个成熟闭源 harness 进行纵深式解剖的范本，本书并不打算在那个维度上与之竞争。本书走的是横向路线：跨 harness 的方法论。在这个框架里，Claude Code 只是五则案例之一，要与 OpenHarness、Superpowers、lazy-scrum-team 和 Lazy AI Coder 并排阅读。第 10 章从三大护法的视角穿越 Claude Code，开篇附有一份逆向工程免责声明，指明《马书》是其主要的一手材料，并承诺：如果日后任何官方披露与本书结论相冲突，相关论断立即撤回。这两本书是彼此的同伴，而不是对手。
 
-## Seed material
+## 两颗种子
 
-Two earlier blog posts seed the book's thesis. The first —
-*"从 Prompt Engineering 到 Harness Engineering"*, 2026-03-28 —
-introduced the four-zone metaphor we now call Bridle / Fence /
-Paddock / Groom. The second — *"AI 辅助编程的三大护法：可验证性、
-可观测性、可理解性"*, 2026-01-30 — introduced the Three Guardians.
-Neither post is a prerequisite. If you want a 30-minute warm-up
-instead of a 200-page commitment, read those two posts; if you
-want the formal treatment with citations, hands-on artefacts, and
-case studies, turn the page.
+本书的论点来自两篇早先的博客。第一篇是 *《从 Prompt Engineering 到 Harness Engineering》*（2026-03-28），它首次给出了我们今天所说的缰绳／护栏／牧场／梳理这个四区域比喻。第二篇是 *《AI 辅助编程的三大护法：可验证性、可观测性、可理解性》*（2026-01-30），它首次提出了三大护法这一说法。读者不必先读过这两篇博客。如果你只想要 30 分钟的热身，而不想投入 200 页的承诺，那就读这两篇；如果你想要的是一份带引用、带动手工件、带案例研究的正式论述，请翻到下一页。
 
-Let us begin.
+让我们开始吧。

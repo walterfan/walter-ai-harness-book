@@ -1,28 +1,20 @@
-"""Sphinx configuration for *Harnessing AI: The Craft of Shaping Agents*.
+"""Sphinx configuration for 《驾驭工程：给 AI 套上缰绳》.
 
-The authoritative source language is English. Simplified Chinese
-(``zh_CN``) is produced as a translation via ``sphinx-intl`` gettext
-catalogs under ``source/locale/zh_CN/LC_MESSAGES/``. The Chinese book
-title is therefore the localized translation of the English ``project``
-string below and lives only in the ``.po`` catalog — never hard-coded
-in this file. See the ``docs-tooling`` spec (``book-lint`` check ``(o)``
-and the "Book title drift" scenario) for the canonical rule; the
-``book-lint`` tool scans this file for the forbidden substrings to
-prevent accidental regressions.
+The authoritative source language is Simplified Chinese. English terms are
+kept inline where they are the idiomatic engineering vocabulary, and the book
+is built from one Markdown source tree.
 """
 
 from __future__ import annotations
 
 import os
-import sys
-from pathlib import Path
 
 # ---------------------------------------------------------------------------
 # Project metadata
 # ---------------------------------------------------------------------------
 
-# Canonical English book title. ``book-lint`` asserts this exact string.
-project = "Harnessing AI: The Craft of Shaping Agents"
+# Canonical book title. ``book-lint`` accepts this Chinese source title.
+project = "驾驭工程：给 AI 套上缰绳"
 # Author line — kept short for the HTML footer; full attribution lives in
 # the Colophon end-page.
 author = "Walter Fan"
@@ -33,23 +25,11 @@ copyright = "2026, Walter Fan"
 release = "0.1.0-draft"
 
 # ---------------------------------------------------------------------------
-# Core language / i18n settings
+# Core language settings
 # ---------------------------------------------------------------------------
 
-# Source language. Translations live under ``locale_dirs``.
-language = "en"
-# Where sphinx-intl writes and reads ``.po`` catalogs; mirrors the source
-# tree (one ``.po`` per source ``.md``).
-locale_dirs = ["locale/"]
-# Keep one ``.po`` per document so diffs stay small and PRs are reviewable;
-# ``True`` would collapse the whole book into a single catalog.
-gettext_compact = False
-# Extract figure captions, references, and image alt text so translators
-# see every user-facing string.
-gettext_additional_targets = ["literal-block", "image", "index"]
-# UUIDs help sphinx-intl preserve paragraph identity when the English
-# source is reordered — guards against fuzzy-match avalanches.
-gettext_uuid = True
+# Source language for search, generated labels, and theme chrome.
+language = "zh_CN"
 
 # ---------------------------------------------------------------------------
 # Extensions
@@ -73,8 +53,8 @@ extensions = [
 # ---------------------------------------------------------------------------
 # MyST settings
 # ---------------------------------------------------------------------------
-# Keep the directive surface small and predictable so gettext round-trips
-# stay stable. The ``book-structure`` spec codifies the whitelist.
+# Keep the directive surface small and predictable. The ``book-structure``
+# spec codifies the whitelist.
 myst_enable_extensions = [
     "colon_fence",
     "deflist",
@@ -102,22 +82,21 @@ bibtex_bibfiles = [
 # book than plain numeric labels.
 bibtex_default_style = "alpha"
 # The in-text citation renders as "Karpathy (2025)" rather than a bare
-# label; this matches the Research Foundations bullet style.
+# label; this matches the research-foundations bullet style.
 bibtex_reference_style = "author_year"
 
 # ---------------------------------------------------------------------------
 # HTML output
 # ---------------------------------------------------------------------------
 # Read-the-Docs-style theme; widely familiar and plays well with the
-# two-language sidebar switcher injected via ``_templates/layout.html``.
+# Chinese-first source tree.
 html_theme = "sphinx_rtd_theme"
 # Short string that surfaces in browser tabs and PDF-printed headers.
 # MUST contain the substring ``Harness Engineering`` (book-lint rule).
-html_title = "Harnessing AI — Harness Engineering"
-# Directory containing ``custom.css``, ``lang-redirect.js``, and other
-# static assets.
+html_title = "驾驭工程 — Harness Engineering"
+# Directory containing ``custom.css`` and other static assets.
 html_static_path = ["_static"]
-# Override-directory for theme templates (e.g. ``layout.html``).
+# Override-directory for theme templates.
 templates_path = ["_templates"]
 
 # Hands-on artefacts and bibliographic sources live next to the prose so
@@ -130,7 +109,7 @@ exclude_patterns = [
     "_diagrams/**",
 ]
 
-# Custom CSS loaded on every page; styles the language switcher.
+# Custom CSS loaded on every page.
 html_css_files = ["custom.css"]
 # Options tuned for a long-form narrative: collapse deep TOCs, show
 # sticky navigation, and hide the "View page source" link since readers
@@ -172,34 +151,12 @@ nitpick_ignore = [
 ]
 
 # ---------------------------------------------------------------------------
-# Sphinx build hooks (registered in a later task; 13.4 in tasks.md).
-# This section reserves the hookup point so future `make book-lint`
-# integration lands in a single, obvious location.
+# Sphinx build hooks.
 # ---------------------------------------------------------------------------
-
-# Make the ``scripts/`` directory importable so book_lint.py and
-# forthcoming dual-track-check hooks can be wired in via ``setup(app)``.
-_SCRIPTS_DIR = Path(__file__).resolve().parent.parent / "scripts"
-if _SCRIPTS_DIR.is_dir() and str(_SCRIPTS_DIR) not in sys.path:
-    sys.path.insert(0, str(_SCRIPTS_DIR))
-
 
 def setup(app):  # noqa: D401 — Sphinx extension convention
     """Register book-specific build hooks.
-
-    This is intentionally a thin shim so the heavy lifting can land in
-    ``scripts/book_lint.py`` (task 13.4) without churning ``conf.py``.
     """
-    # Translation-freshness banner context. A later task (§3.5) fills in
-    # the implementation; until then the hook is a no-op so the build
-    # stays green.
-    try:
-        from translation_banner import configure  # type: ignore
-    except ImportError:
-        pass
-    else:
-        configure(app)
-
     return {
         "version": release,
         "parallel_read_safe": True,

@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 · tool-versions: pytest 8.x · python 3.11 -->
 
-# Hands-On · Ch.04 Three Guardians
+# 动手环节 · 第 04 章 三大护法
 
 One artefact per guardian, in the causal order the chapter argues for:
 

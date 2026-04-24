@@ -1,4 +1,4 @@
-# Makefile for lazy-code-kb-book — *Harnessing AI: The Craft of Shaping Agents*
+# Makefile for async-harness-book — *Harnessing AI: The Craft of Shaping Agents*
 #
 # Flat layout: Sphinx sources in ./source, helper scripts in ./scripts,
 # Poetry metadata (pyproject.toml / poetry.lock / poetry.toml) at the root,
@@ -13,11 +13,10 @@
 # Quick start:
 #
 #   make install          # poetry install (one-time)
-#   make html             # sphinx-build en + zh_CN (strict)
+#   make html             # sphinx-build (strict)
 #   make serve            # serve build/html/ at http://localhost:8000
-#   make livehtml         # live-reload preview (English) via sphinx-autobuild
+#   make livehtml         # live-reload preview via sphinx-autobuild
 #   make lint             # structural + bibliography checks
-#   make intl             # regenerate .pot + merge zh_CN .po catalogs
 #   make clean            # remove build/
 #   make check            # lint + full html build (CI entry point)
 #
@@ -25,12 +24,14 @@
 # external callers / prior docs that used the delegator layout.
 
 SPHINXOPTS      ?= -W --keep-going -n
+# Bare commands here: `ifndef POETRY_ACTIVE` below prepends `poetry run` once.
+# If these defaults already included `poetry run`, the result would be
+# `poetry run poetry run sphinx-build`, which can leave extensions unresolved.
 SPHINXBUILD     ?= sphinx-build
 SPHINXAUTOBUILD ?= sphinx-autobuild
 SOURCEDIR       ?= source
 BUILDDIR        ?= build
-LANGUAGES       ?= en zh_CN
-PORT            ?= 8000
+PORT            ?= 7800
 HOST            ?= 127.0.0.1
 
 # Auto-wrap every tool invocation in `poetry run` unless we are already
@@ -40,10 +41,8 @@ ifndef POETRY_ACTIVE
 SPHINXBUILD     := $(POETRY) run $(SPHINXBUILD)
 SPHINXAUTOBUILD := $(POETRY) run $(SPHINXAUTOBUILD)
 PY              := $(POETRY) run python
-SPHINXINTL      := $(POETRY) run sphinx-intl
 else
 PY              := python
-SPHINXINTL      := sphinx-intl
 endif
 
 .DEFAULT_GOAL := help
@@ -51,19 +50,17 @@ endif
 .PHONY: help check \
         install export-requirements shell \
         clean \
-        html html-en html-zh \
-        gettext update-po build-i18n intl \
+        html \
         livehtml serve \
         lint linkcheck \
         book-install book-export-requirements book-shell \
         book-clean \
-        book-html book-html-en book-html-zh \
-        book-gettext book-update-po book-intl book-build-i18n \
+        book-html \
         book-livehtml book-serve \
         book-lint book-linkcheck
 
 help: ## Show available targets
-	@echo 'lazy-code-kb-book — Sphinx build targets (auto-wrapped in `poetry run`)'
+	@echo 'async-harness-book — Sphinx build targets (auto-wrapped in `poetry run`)'
 	@echo ''
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z][a-zA-Z0-9_-]*:.*?## / {printf "  %-26s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo ''
@@ -76,6 +73,7 @@ help: ## Show available targets
 install: ## Create/refresh the Poetry virtualenv (./.venv)
 	$(POETRY) install --with dev
 	@echo "  -> poetry env ready at $$($(POETRY) env info --path 2>/dev/null || echo .venv)"
+	@echo "  -> after renaming the repo directory: $(POETRY) env remove --all && $(POETRY) install --with dev  (fixes stale .venv shebangs)"
 
 export-requirements: ## Refresh requirements-docs.txt from poetry.lock (pip fallback)
 	@$(POETRY) self show plugins 2>/dev/null | grep -q poetry-plugin-export \
@@ -105,43 +103,15 @@ shell: ## Drop into a sub-shell with the venv activated
 clean: ## Remove build/ output
 	rm -rf "$(BUILDDIR)"
 
-html-en: ## Build the English HTML tree at build/html/en/
-	$(SPHINXBUILD) -b html -D language=en "$(SOURCEDIR)" "$(BUILDDIR)/html/en" $(SPHINXOPTS)
-
-# `sphinx-intl build` compiles .po -> .mo. .mo files are gitignored so we
-# always regenerate before a Chinese build. Idempotent and fast.
-html-zh: ## Build the Simplified Chinese HTML tree at build/html/zh_CN/ (recompiles .mo)
-	$(SPHINXINTL) build -d "$(SOURCEDIR)/locale"
-	$(SPHINXBUILD) -b html -D language=zh_CN "$(SOURCEDIR)" "$(BUILDDIR)/html/zh_CN" $(SPHINXOPTS)
-
-html: html-en html-zh ## Build both language HTML trees (strict, recompiles .mo)
-	@if [ -f "$(SOURCEDIR)/_static/root-index.html.template" ]; then \
-		cp "$(SOURCEDIR)/_static/root-index.html.template" "$(BUILDDIR)/html/index.html"; \
-		echo "  -> wrote $(BUILDDIR)/html/index.html (language chooser)"; \
-	fi
-
-# ---------------------------------------------------------------------------
-# Internationalisation
-# ---------------------------------------------------------------------------
-
-gettext: ## Extract translatable strings to build/gettext/*.pot
-	$(SPHINXBUILD) -b gettext "$(SOURCEDIR)" "$(BUILDDIR)/gettext" $(SPHINXOPTS)
-
-update-po: gettext ## Merge new strings into source/locale/zh_CN/LC_MESSAGES/*.po
-	$(SPHINXINTL) update -p "$(BUILDDIR)/gettext" -l zh_CN -d "$(SOURCEDIR)/locale"
-	@echo "  -> updated $(SOURCEDIR)/locale/zh_CN/LC_MESSAGES/"
-
-build-i18n: update-po ## Regenerate .pot + merge zh_CN .po and summarise coverage
-	$(PY) scripts/po_summary.py "$(SOURCEDIR)/locale/zh_CN/LC_MESSAGES"
-
-intl: build-i18n ## Alias: build-i18n
+html: ## Build the HTML tree at build/html/ (strict)
+	$(SPHINXBUILD) -b html "$(SOURCEDIR)" "$(BUILDDIR)/html" $(SPHINXOPTS)
 
 # ---------------------------------------------------------------------------
 # Preview & serve
 # ---------------------------------------------------------------------------
 
-livehtml: ## Serve the English build with auto-reload on change (sphinx-autobuild)
-	$(SPHINXAUTOBUILD) --host $(HOST) --port $(PORT) "$(SOURCEDIR)" "$(BUILDDIR)/html/en" $(SPHINXOPTS)
+livehtml: ## Serve the build with auto-reload on change (sphinx-autobuild)
+	$(SPHINXAUTOBUILD) --host $(HOST) --port $(PORT) "$(SOURCEDIR)" "$(BUILDDIR)/html" $(SPHINXOPTS)
 
 serve: ## Serve build/html/ statically at http://$(HOST):$(PORT)/
 	@if [ ! -d "$(BUILDDIR)/html" ]; then \
@@ -164,23 +134,13 @@ linkcheck: ## Report dead external links without failing the main build
 
 check: lint html ## Lint + full build (used by CI)
 
-# ---------------------------------------------------------------------------
-# `book-*` aliases — compatibility with prior docs / the (now removed)
-# top-level delegator layout. Each alias dispatches to its short target.
-# ---------------------------------------------------------------------------
-
-book-install:              install              ## Alias: install
-book-export-requirements:  export-requirements  ## Alias: export-requirements
-book-shell:                shell                ## Alias: shell
-book-clean:                clean                ## Alias: clean
-book-html:                 html                 ## Alias: html
-book-html-en:              html-en              ## Alias: html-en
-book-html-zh:              html-zh              ## Alias: html-zh
-book-gettext:              gettext              ## Alias: gettext
-book-update-po:            update-po            ## Alias: update-po
-book-build-i18n:           build-i18n           ## Alias: build-i18n
-book-intl:                 intl                 ## Alias: intl
-book-livehtml:             livehtml             ## Alias: livehtml
-book-serve:                serve                ## Alias: serve
-book-lint:                 lint                 ## Alias: lint
-book-linkcheck:            linkcheck            ## Alias: linkcheck
+# Compatibility aliases for callers that use the book-* target names.
+book-install: install
+book-export-requirements: export-requirements
+book-shell: shell
+book-clean: clean
+book-html: html
+book-livehtml: livehtml
+book-serve: serve
+book-lint: lint
+book-linkcheck: linkcheck

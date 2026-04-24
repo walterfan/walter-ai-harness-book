@@ -5,15 +5,14 @@
 # --------------------------------------------------------------------------
 # This is the book's Python toolchain. It is intentionally kept separate
 # from the repo-root pyproject.toml (which owns the lazy-ai-coder test
-# suite) so the book can be built, linted, and translated from a clean
-# environment with no Go/backend test deps.
+# suite) so the book can be built and linted from a clean environment
+# with no Go/backend test deps.
 #
 # Quick start from the repo root:
 #
 #     make book-install     # poetry install (uses the book/ pyproject)
-#     make book-html        # sphinx-build en + zh_CN (strict)
+#     make book-html        # sphinx-build (strict)
 #     make book-lint        # structural + bibliography checks
-#     make book-intl        # regenerate .pot and merge zh_CN .po
 #
 # Every target routes through `poetry run` so the book toolchain never
 # pollutes the user's global Python or the repo-root Poetry env.
@@ -34,23 +33,16 @@ python = ">=3.11,<4.0"
 # compatible-release cap prevents silent major-version jumps.
 Sphinx = "~=8.1"
 myst-parser = "~=4.0"
-sphinx-intl = "~=2.3"
 sphinx-rtd-theme = "~=3.0"
 sphinx-copybutton = "~=0.5"
 sphinx-design = "~=0.6"
 sphinxcontrib-mermaid = "~=1.0"
 sphinxcontrib-plantuml = "~=0.30"
 sphinxcontrib-bibtex = "~=2.6"
-# Babel is already a Sphinx transitive dep, but pin it explicitly so
-# sphinx-intl msgfmt behaviour is reproducible across environments.
-Babel = "~=2.16"
 
 [tool.poetry.group.dev.dependencies]
 # sphinx-autobuild powers the interactive live-preview target.
 sphinx-autobuild = "~=2024.10"
-# polib is used by scripts/ (po_summary.py, translation tooling) to edit
-# gettext .po files programmatically without round-tripping through msgfmt.
-polib = "~=1.2"
 
 [build-system]
 requires = ["poetry-core>=1.8.0"]

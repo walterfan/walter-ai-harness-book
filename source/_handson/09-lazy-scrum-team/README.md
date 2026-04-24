@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 · Ch.09 lazy-scrum-team hands-on -->
 
-# Hands-On · Ch.09 lazy-scrum-team
+# 动手环节 · 第 09 章 lazy-scrum-team
 
 Five files:
 

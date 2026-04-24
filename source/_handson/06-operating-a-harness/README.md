@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 -->
 
-# Hands-On · Ch.06 Operating a Harness
+# 动手环节 · 第 06 章 运行一具马具
 
 Two tracks:
 
@@ -19,9 +19,9 @@ artefact-state-model.yaml
 rework-matrix.md
 hard-vs-soft-gates.md
 tauri-todo/
+  AGENTS.md
   CLAUDE.md
   pre-commit-config.yaml
-  AGENTS.md
   README.md
 ```
 

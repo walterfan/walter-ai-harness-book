@@ -1,5 +1,5 @@
 # verified: 2026-04-17 · Ch.11 hands-on · symlink-safe copy of the final pre-commit config
-# To be landed on main as part of §14.4.
+# To be landed on main as the fourth Act-3 fix.
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0

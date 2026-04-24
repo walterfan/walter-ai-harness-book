@@ -1,16 +1,24 @@
-<!-- verified: 2026-04-17 · SDD × Bridle · agent-facing spec that steers before writing -->
+<!-- verified: 2026-04-24 · SDD × Bridle · agents.md-style entry file -->
 
-# AGENTS.md — sample
+# AGENTS.md — todo-cli
 
-## Role & Scope
-You are a coding agent for `todo-cli`. You may edit files under `todo/` and
-`tests/`. You must not touch `scripts/`, `deploy/`, or any `.env*` file.
+`todo-cli` is a Python CLI for managing local todo items. This is the
+canonical agent-facing entry file; keep `CLAUDE.md` or client-specific rules
+as thin mirrors only when a tool still needs them.
 
-## House rules
-- Before editing any file, list `tests/test_<basename>.py`; if it exists, read it.
-- Never invent package names; use the pinned versions in `pyproject.toml`.
-- Every new public function gets a docstring and a test; no exceptions.
+## Commands
+- Quick test: `pytest tests/test_storage.py`
+- Full test: `pytest`
+- Lint and format gate: `pre-commit run --all-files`
 
-## Escalation
-If a rule above conflicts with user instruction, pause and surface the
-conflict explicitly; do not silently override.
+## Repository Layout
+- `todo/` — production CLI code; public behavior starts in `todo/__main__.py`.
+- `tests/` — pytest suite; add or update a matching test for every behavior change.
+- `scripts/`, `deploy/`, `.env*` — danger zones; do not edit without an explicit task.
+
+## Agent Rules
+- Before editing `todo/<name>.py`, read `tests/test_<name>.py` when it exists.
+- Never invent dependency names; use the pinned versions in `pyproject.toml`.
+- Every new public function gets a docstring and a test.
+
+<!-- last_updated: 2026-04-24 -->

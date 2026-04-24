@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 · Ch.08 Superpowers hands-on -->
 
-# Hands-On · Ch.08 Superpowers
+# 动手环节 · 第 08 章 Superpowers
 
 Two files:
 

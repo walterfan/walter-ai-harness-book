@@ -1,15 +1,17 @@
 #!/usr/bin/env bash
-# verified: 2026-04-17 · SDD × Groom · weekly doc-sync job
+# verified: 2026-04-24 · SDD × Groom · weekly agent-spec refresh job
 # Refreshes living documentation so the spec surface the agent reads does
 # not silently drift from the code it describes.
 set -euo pipefail
 
 make book-linkcheck || echo "::warning::broken links surfaced"
 
-# regenerate AGENTS.md TOC from source chapters
-python scripts/gen_agents_toc.py > AGENTS.md.next
-diff -u AGENTS.md AGENTS.md.next && rm AGENTS.md.next \
-  || { mv AGENTS.md.next AGENTS.md; git add AGENTS.md; }
+# Keep AGENTS.md small, current, and connected to real repo facts.
+test -f AGENTS.md || { echo "::error::AGENTS.md missing"; exit 1; }
+grep -q "last_updated" AGENTS.md || echo "::warning::AGENTS.md missing last_updated"
+grep -Eq "pytest|npm test|go test|cargo test|make test" AGENTS.md \
+  || echo "::warning::AGENTS.md lists no recognizable test command"
 
-# re-stamp `verified:` headers in _handson/ artefacts modified this week
-python scripts/restamp_verified.py book/source/_handson
+# Re-run the agents-md-generate skill after layout or command changes; commit
+# the refreshed AGENTS.md only after reviewing the diff.
+make book-lint

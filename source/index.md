@@ -1,47 +1,32 @@
-# Harnessing AI: The Craft of Shaping Agents
+# 驾驭工程：给 AI 套上缰绳
 
-*A long-form, bilingual book about **Harness Engineering** — the deliberate
-practice of shaping the environment in which AI coding agents operate so
-the software they produce is verifiable, observable, and understandable.*
+*一本关于 **驾驭工程** 的长篇中文技术书 —— 一种刻意塑造 AI 编码智能体所处环境的实践，好让它们生产出来的软件是可验证、可观测、可理解的。*
 
 | | |
 |--|--|
-| **Author** | Walter Fan |
-| **License** | CC-BY-SA-4.0 (prose) · MIT (code samples) |
-| **Status** | Draft — scaffolding in place, chapters being written |
-| **Source** | [`book/source/`](https://github.com/walterfan/lazy-ai-coder/tree/main/book/source) |
+| **作者** | Walter Fan |
+| **许可证** | CC-BY-SA-4.0（正文）· MIT（代码样例） |
+| **状态** | 草稿 —— 骨架就位，章节正在撰写中 |
+| **源码** | [`source/`](https://github.com/walterfan/async-harness-book/tree/main/source) |
 
-## How to read this book
+## 本书怎么读
 
-The book follows a six-part argumentative arc — **Why → What → How →
-Example → Conclusion → Reference**. Most readers should read Parts I and
-II linearly, then dip into Part III for the methodology they need most,
-then pick one or two Part IV case studies close to their own stack.
-Part V is short and action-oriented; Part VI is a reference.
+本书循一条六段式的论证弧线 —— **为什么 → 是什么 → 怎么做 → 例子 → 结语 → 参考**。大多数读者应当把第一、第二部分顺着读下去，然后进第三部分挑自己最需要的那一份方法论，再从第四部分挑一两份贴近自身技术栈的案例研究。第五部分短小、偏行动；第六部分是参考。
 
-A **Part 0 · Presentation** sits in front of Part I for a different
-audience: anyone who has sixty minutes before a department meeting and
-needs to *give* the book as a talk. It distils the whole book into a
-single one-hour script with a minute-level speaker outline and a
-slide-by-slide deck outline. Readers who only want the argument should
-skip Part 0; readers who need to *re-transmit* the argument to
-colleagues should start there.
+本书最前头还有一份 **Part 0 · Presentation**（部门分享），它面向的是另一类读者：任何人若在一次部门例会前只剩六十分钟，又需要把整本书当成一场 *talk 讲出去* —— 那就从这一 Part 开始。它把全书压成一份一小时的讲稿，外加一份分钟级的 speaker outline 与一份每页一张 slide 的大纲。只想读论证的读者可以跳过 Part 0；需要把这套论证 *再次传递* 给同事的读者，应当从这里起步。
 
-Every substantive chapter (Chapters 02–12) follows the same two-section
-skeleton below its body: ``## Research Foundations`` grounds the
-argument in citable prior work, and ``## Hands-On`` ships at least one
-runnable artefact. The chapters deliberately pair theory with practice.
+每一份有实质内容的章（第 02 至第 12 章）都在正文下方遵循同一副双节骨架：``## 研究脉络`` 把论证钉在可引用的先前工作之上，``## 动手环节`` 则至少交付一件可跑起来的制品。这些章节是刻意把理论与实践配对的。
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part 0 · Presentation
+:caption: Part 0 · 部门分享
 
-part0-presentation/index
+chapters/00-presentation/index
 ```
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part I · Why
+:caption: 第一部分 · 为什么
 
 chapters/01-foreword
 chapters/02-four-stage-evolution
@@ -49,14 +34,15 @@ chapters/02-four-stage-evolution
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part II · What
+:caption: 第二部分 · 是什么
 
 chapters/03-what-is-harness-engineering
+chapters/03b-agent-loop-anatomy
 ```
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part III · How
+:caption: 第三部分 · 怎么做
 
 chapters/04-three-guardians
 chapters/05-harness-anatomy
@@ -65,7 +51,7 @@ chapters/06-operating-a-harness
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part IV · Example
+:caption: 第四部分 · 例子
 
 chapters/07-openharness
 chapters/08-superpowers
@@ -76,14 +62,14 @@ chapters/11-lazy-ai-coder
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part V · Conclusion
+:caption: 第五部分 · 结语
 
 chapters/12-where-we-go-from-here
 ```
 
 ```{toctree}
 :maxdepth: 2
-:caption: Part VI · Reference
+:caption: 第六部分 · 参考
 
 chapters/13-appendices/index
 references

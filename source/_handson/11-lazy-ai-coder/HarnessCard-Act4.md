@@ -1,17 +1,17 @@
-<!-- verified: 2026-04-17 · Ch.11 Act 4 · Measuring the Delta -->
+<!-- verified: 2026-04-24 · Ch.11 Act 4 · Measuring the Delta -->
 
 # HarnessCard — Act 4 (Post-fix)
 
-**Subject.** `walterfan/lazy-ai-coder`, end-of-Act-3 commit SHA:
-`<TBD — captured at §14 landing>`.
+**Subject.** `walterfan/async-harness-book`, end-of-Act-3 commit SHA:
+`<TBD — captured when Act-3 fixes land>`.
 
-**Date.** 2026-04-17 (post-fix, to be re-verified at §14 landing).
+**Date.** 2026-04-17 (post-fix, to be re-verified when Act-3 fixes land).
 
 **Schema version.** CAR-HarnessCard v0.2.
 
 | Cell            | Act 1 | Act 4 | Delta | Fix                                   |
 |-----------------|-------|-------|-------|---------------------------------------|
-| SDD × Bridle    | 3     | 3     | 0     | (unchanged in §14 scope)              |
+| SDD × Bridle    | 3     | 3     | 0     | (unchanged in 14 scope)              |
 | SDD × Fence     | 1     | 4     | +3    | `make prompts-lint` + schema validator |
 | SDD × Paddock   | 2     | 2     | 0     | (unchanged)                           |
 | SDD × Groom     | 1     | 3     | +2    | `openspec/docs/sources-of-truth.md` index |
@@ -19,7 +19,7 @@
 | TDD × Fence     | 1     | 4     | +3    | MCP schema check + gitleaks pre-commit |
 | TDD × Paddock   | 3     | 3     | 0     | (unchanged)                           |
 | TDD × Groom     | 2     | 2     | 0     | (unchanged)                           |
-| MDD × Bridle    | 1     | 1     | 0     | (out of §14 scope)                    |
+| MDD × Bridle    | 1     | 1     | 0     | (out of 14 scope)                    |
 | MDD × Fence     | 2     | 2     | 0     | (unchanged)                           |
 | MDD × Paddock   | 2     | 2     | 0     | (unchanged)                           |
 | MDD × Groom     | 1     | 1     | 0     | (unchanged)                           |

@@ -2,79 +2,40 @@
 status: draft
 ---
 
-# Colophon
+# 版记
 
-## How this book was built
+## 本书是怎样造出来的
 
-*Harnessing AI: The Craft of Shaping Agents* — rendered in Chinese as
-《驾驭工程：给 AI 套上缰绳》 — is produced from a single English
-Markdown source tree under ``book/source/``, translated into
-Simplified Chinese via ``sphinx-intl`` gettext catalogs, and rendered
-to HTML by **Sphinx** + **MyST** + **sphinxcontrib-bibtex** + the
-**Read the Docs** theme. Citations live in BibTeX files under
-``_bib/``; diagrams are authored as ``{mermaid}`` (inline) or
-``{plantuml}`` (separate ``.puml`` file) directives. A structural
-linter — ``make book-lint`` — enforces the three-guardian × four-zone
-matrix contract, the dual-track chapter skeleton, Chapter 03's
-definition sections, Chapter 05's provenance declaration, Chapter 11's
-four-act structure, and Chapter 12's 30/60/90 checklist discipline.
+《驾驭工程：给 AI 套上缰绳》（英文题名 *Harnessing AI: The Craft of Shaping Agents*）是从 ``source/`` 下一棵中文 Markdown 源码树生成的，再由 **Sphinx** ＋ **MyST** ＋ **sphinxcontrib-bibtex** ＋ **Read the Docs** 主题渲染成 HTML。引用住在 ``_bib/`` 下的 BibTeX 文件里；图则用 ``{mermaid}``（嵌入式）或 ``{plantuml}``（独立 ``.puml`` 文件）directive 编写。一把结构 linter —— ``make book-lint`` —— 负责强制执行那份"三护法 × 四区域"矩阵契约、双轨章骨架、第 03 章的定义小节、第 05 章的出处声明、第 11 章的四幕结构、以及第 12 章的 30／60／90 清单纪律。
 
-## The book is its own harness demonstration
+## 本书本身就是它自己的那套马具示范
 
-The book is written the way it preaches. We apply the 3×4 matrix to
-the book itself, and cross-reference each cell to the chapter that
-taught the concept:
+本书是按它自己宣讲的那套方式写出来的。我们把那张 3×4 矩阵施加在本书自身之上，并把每一格回指到教过该概念的那一章：
 
-* **Bridle (guidance)** — ``_bib/`` supplies the canonical citation
-  record; every chapter's Research Foundations section carries
-  ``{cite}`` roles resolving to entries here. See {ref}`sdd-x-bridle`
-  for the general pattern.
-* **Fence (constraints)** — ``make book-lint`` enforces every
-  structural contract; the ``book-structure`` spec, in turn,
-  enforces what ``book-lint`` must check. See {ref}`sdd-x-fence` for
-  the general pattern and {ref}`tdd-x-fence` for the hook-level twin.
-* **Paddock (boundaries / acceptance)** — a strict Sphinx build
-  (``-W --keep-going -n``) gates every PR touching ``book/**``.
-  See {ref}`tdd-x-paddock` for the general pattern.
-* **Groom (maintenance)** — ``make book-intl`` keeps the zh_CN ``.po``
-  catalogs fresh; the translation-freshness banner surfaces rot
-  automatically. See {ref}`sdd-x-groom` and {ref}`mdd-x-groom` for the
-  grooming patterns the book's own workflow instantiates.
+* **缰绳（引导）** —— ``_bib/`` 提供权威引用记录；每一章的"研究脉络"小节中的 ``{cite}`` 角色，都会解析到这里的条目。通用模式见 {ref}`sdd-x-bridle`。
+* **护栏（约束）** —— ``make book-lint`` 强制执行每一份结构契约；``book-structure`` 规约，反过来，又强制规定 ``book-lint`` 必须去检查哪些东西。通用模式见 {ref}`sdd-x-fence`，钩子层的孪生兄弟见 {ref}`tdd-x-fence`。
+* **牧场（边界 ／ 验收）** —— 一次严格的 Sphinx 构建（``-W --keep-going -n``）会为每一份触及 ``book/**`` 的 PR 把关。通用模式见 {ref}`tdd-x-paddock`。
+* **梳理（维护）** —— ``make html`` 与 ``make book-lint`` 让中文源文、引用、链接和结构约束保持新鲜；本书自身工作流所实例化的那些梳理模式，见 {ref}`sdd-x-groom` 与 {ref}`mdd-x-groom`。
 
-## License & attribution
+## 许可证与署名
 
-* Prose and diagrams authored for this book: **CC-BY-SA-4.0**.
-* Code samples authored for this book: **MIT**, matching the rest of
-  the host repository.
-* Quoted excerpts from third-party sources (OpenHarness, Superpowers,
-  《马书》, etc.) retain their upstream licenses; each excerpt carries
-  an inline attribution footer naming the source and license.
+* 为本书撰写的正文与图：**CC-BY-SA-4.0**。
+* 为本书写的代码样例：**MIT**，与宿主仓库的其余部分保持一致。
+* 引用自第三方来源（OpenHarness、Superpowers、《马书》等）的片段，保留各自上游的许可证；每一段引文都附一段嵌入式署名脚注，点名出处与许可证。
 
-See ``book/LICENSE`` for the definitive text.
+权威条款见 ``book/LICENSE``。
 
-## Author & acknowledgements
+## 作者与致谢
 
-Author: Walter Fan. Editorial review, translation, and harness-testing
-contributions are credited in the chapter where they land. A rolling
-acknowledgement index lives at the bottom of
-``book/CONTRIBUTING.md``.
+作者：Walter Fan。编辑评审、翻译、马具实测方面的贡献，在各自落地的那一章里单独署名。一份滚动更新的致谢索引住在 ``book/CONTRIBUTING.md`` 的末尾。
 
-## Credits and thanks
+## 鸣谢
 
-Specific projects, books, and individuals whose work is load-bearing in
-this book:
+那些作品在本书中起到承重作用的具体项目、书籍与个人：
 
-* **HKU Data Science Lab** for **OpenHarness** {cite}`hkuds2025openharness`
-  — the open-source reference implementation Chapter 07 treats.
-* **Joseph Vincent (David Vincent, `obra`)** for **Superpowers**
-  {cite}`vincent2025superpowers` — the skills library Chapter 08 treats.
-* **The `lazy-scrum-team` authors** {cite}`lazyscrumteam2026` — whose
-  workflow-encoded harness is Chapter 09's canonical treatment.
-* **Zhang Handong (张汉东)** for **《马书》** {cite}`zhangbook2026` — the
-  reverse-engineering study that makes Chapter 10 tractable.
-* **The authors of the CAR / HarnessCard position paper**
-  {cite}`car2025decomposition` — whose disclosure format Appendix D
-  serialises against.
-* **The `walkinglabs/awesome-harness-engineering` curators**
-  {cite}`walkinglabs2026awesome` — the ongoing curated list that
-  complements this long-form methodology.
+* **港大数据科学实验室** 之 **OpenHarness** {cite}`hkuds2025openharness` —— 第 07 章所处理的那份开源参考实现。
+* **Joseph Vincent（David Vincent，`obra`）** 之 **Superpowers** {cite}`vincent2025superpowers` —— 第 08 章所处理的那份技能库。
+* **`lazy-scrum-team` 的作者们** {cite}`lazyscrumteam2026` —— 他们那份以工作流编码的马具，是第 09 章的权威对象。
+* **张汉东** 之 **《马书》** {cite}`zhangbook2026` —— 正是那份逆向工程研究，让第 10 章得以成立。
+* **CAR ／ HarnessCard 立场论文的作者们** {cite}`car2025decomposition` —— 附录 D 所遵循序列化的那套披露格式。
+* **`walkinglabs/awesome-harness-engineering` 的维护者们** {cite}`walkinglabs2026awesome` —— 那份与本书这份长篇方法论互补的、持续更新的精选列表。

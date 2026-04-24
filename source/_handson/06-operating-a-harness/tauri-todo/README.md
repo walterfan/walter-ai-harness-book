@@ -1,13 +1,13 @@
 <!-- verified: 2026-04-17 · Tauri-Todo worked arc -->
 
-# Tauri-Todo Hands-On
+# Tauri-Todo 动手环节
 
 A minimal end-to-end harness for a real Tauri 2 + Rust + TypeScript
 desktop-todo project. The three files in this directory —
-`CLAUDE.md`, `pre-commit-config.yaml`, `AGENTS.md` — stitch the four
+`AGENTS.md`, `CLAUDE.md`, `pre-commit-config.yaml` — stitch the four
 operating concerns from Ch.06 into one working story:
 
-- Bridle — `CLAUDE.md` steers the agent before it writes.
+- Bridle — `AGENTS.md` is canonical; `CLAUDE.md` is a client-compatible mirror.
 - Fence — `pre-commit-config.yaml` refuses bad commits regardless of
   author.
 - Paddock + Groom — `AGENTS.md` names the role cast, the gate contract,

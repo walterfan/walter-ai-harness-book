@@ -1,0 +1,37 @@
+# verified: 2026-04-24 · Ch.03B hands-on · Agent Loop to harness map
+agent_loop_layers:
+  user_input:
+    bridle: ["issue template", "acceptance criteria", "task contract"]
+    fence: ["prompt schema", "required fields check"]
+    paddock: ["PO/reviewer acceptance table"]
+    groom: ["ambiguous requirement retro"]
+  context_window:
+    bridle: ["sources-of-truth index", "context pack"]
+    fence: ["deprecated-path denylist", "broken-link check"]
+    paddock: ["context package review"]
+    groom: ["weekly docs freshness scan"]
+  memory:
+    bridle: ["verified headers", "ADR status"]
+    fence: ["reject stale memory beyond max_age_days"]
+    paddock: ["architecture review"]
+    groom: ["memory prune schedule"]
+  tools:
+    bridle: ["tool examples", "MCP manifest"]
+    fence: ["schema check", "permission allowlist"]
+    paddock: ["sandbox", "approval for dangerous tools"]
+    groom: ["tool inventory audit"]
+  skills_and_rules:
+    bridle: ["AGENTS.md", "SKILL.md", ".cursor/rules"]
+    fence: ["skill precondition hook"]
+    paddock: ["role-scoped review"]
+    groom: ["skill drift review"]
+  controller:
+    bridle: ["plan", "turn budget", "cost budget"]
+    fence: ["turn cap", "cost cap", "diff size cap"]
+    paddock: ["phase gate"]
+    groom: ["failure-mode retro"]
+  output:
+    bridle: ["definition of done"]
+    fence: ["PR template check"]
+    paddock: ["Verification Table"]
+    groom: ["HarnessCard delta"]

@@ -3,314 +3,153 @@ status: draft
 chapter-type: narrative
 ---
 
-# What is Harness Engineering?
+# 什么是 Harness Engineering？
 
-> *If Chapter 01 is the motivation and Chapter 05 is the method, this chapter
-> is the dictionary entry a skeptic should be able to read in fifteen minutes.*
+> *如果说第 01 章是动机、第 05 章是方法，那么本章就是一位怀疑者应当能在十五分钟内读完的词条解释。*
 
-Most readers will not arrive at this book linearly. Some will land here from
-a search engine, a conference talk, or a colleague's Slack link. They need
-one thing first: a **definition** — concise enough to cite, defended enough
-to trust, and bordered enough to distinguish from the five disciplines the
-field most often collapses into. This chapter delivers that definition in
-five sections, followed by the Research Foundations and Hands-On tracks the
-rest of the book enforces on every chapter.
+大多数读者不会按顺序读到这一章。有的人会从搜索引擎落到这里，有的人从一场大会的演讲，有的人从同事在 Slack 里发来的一个链接。他们先需要的是一件事：一份 **定义**——简明到可以被引用、辩护到可以被信赖、边界清晰到能与这个领域最常被混淆的另外五门学科区分开。本章在五小节里交付这份定义，之后是本书其余章节都要遵循的"研究脉络"和"动手环节"。
 
-## §03.1 A One-Sentence Definition
+## 03.1 一句话定义
 
-> **Harness Engineering is the discipline of deliberately designing, operating,
-> and evolving the structures that surround an AI coding agent so that the
-> software it produces is verifiable, observable, and understandable.**
+> **Harness Engineering（驾驭工程）是这样一门学科：有意识地设计、运行并演进环绕在 AI 编码智能体周围的那些结构，以使它所产出的软件具备可验证、可观测、可理解这三项属性。**
 
-Unpack that sentence once. *Deliberately designing* rejects the default
-position — that whatever happens to be in the prompt window, the IDE, and
-the CI pipeline constitutes an adequate environment for an AI agent.
-*Operating and evolving* says a harness is not a one-time setup; entropy
-creeps in across runs, and a harness that is not tended drifts into a
-collection of stale instructions. *Verifiable, observable, and understandable*
-names the three guardians Chapter 04 unpacks — the properties the harness
-exists to guarantee. The agent is not the subject of the sentence; the
-*structures around it* are. That inversion is the whole of the field.
+把这句话拆开读一遍。*有意识地设计*，拒绝了那种默认立场——认为不管提示词窗口里、IDE 里、CI 流水线里正好有什么，就已经是智能体的足够环境了。*运行并演进*，则是在说马具不是一次性架起来就完事的东西；熵会在一次次运行之间悄悄爬进来，没人伺候的马具会漂移成一堆过时的指令。*可验证、可观测、可理解*，点出了第 04 章要展开的"三大护法"——马具存在的目的就是为了保证这三项属性。句子的主语不是智能体；*围绕在它周围的那些结构* 才是。这一主语的翻转，就是这整门学科的全部。
 
-## §03.2 Operational Boundary
+## 03.2 操作性边界
 
-A harness is a concrete, enumerable set of engineering artefacts. The field
-becomes tractable only when we say exactly what is in the set and what is
-not.
+马具是一组具体的、可以枚举出来的工程制品。只有当我们把这个集合里 *有什么* 和 *没有什么* 说清楚，这门学科才变得可操作。
 
-### A harness IS
+### 马具 *是* 什么
 
-- **Prompts, skills, and agent-facing specs** — `CLAUDE.md`, `AGENTS.md`,
-  `SKILL.md`, MCP server manifests, and system prompts treated as
-  versioned, reviewable code {cite}`anthropic2024claudecode,anthropic2024mcp`.
-- **Approval gates and fences** — pre-commit hooks, lint rules, PR
-  reviewers, required CI checks, and any automation that refuses a bad
-  artefact regardless of who (or what) authored it {cite}`humble2010continuousdelivery`.
-- **A sandbox** — container, VM, scoped filesystem, or ephemeral worktree
-  inside which the agent operates without touching production
-  {cite}`car2025decomposition`.
-- **Documentation addressed to the agent** — runbooks, architectural
-  decision records, and skill files the agent can read on its own to
-  reduce ambient hallucination {cite}`martraire2019living`.
-- **Metrics and a feedback surface** — observable signals (test pass rate,
-  cost per turn, lint violation count, time-to-green) written down somewhere
-  the team reviews weekly {cite}`majors2022observability`.
+- **提示词、技能，以及面向智能体的规约**——`AGENTS.md`（跨智能体的默认入口）、`CLAUDE.md`（兼容镜像或 symlink）、`SKILL.md`、MCP 服务器的 manifest，以及那些被当作纳入版本控制、可审阅的代码来对待的系统提示词 {cite}`agenticai2025agentsmd,anthropic2024claudecode,anthropic2024mcp`。
+- **审批关卡与护栏**——pre-commit 钩子、lint 规则、PR 评审人、必过的 CI 检查，以及任何不论作者是谁（或是什么）都会拒绝坏制品的自动化 {cite}`humble2010continuousdelivery`。
+- **一个沙箱**——容器、VM、受限文件系统，或临时 worktree——让智能体在其中操作，而不去碰生产环境 {cite}`car2025decomposition`。
+- **写给智能体看的文档**——运维手册（runbooks）、架构决策记录（ADR）、以及智能体能独自读取、用来减少环境性幻觉的技能文件 {cite}`martraire2019living`。
+- **度量与反馈面**——可观测的信号（测试通过率、每轮成本、lint 违规数、time-to-green）被写在一处、由团队每周复盘 {cite}`majors2022observability`。
 
-### A harness IS NOT
+### 马具 *不是* 什么
 
-- **A runtime inference stack.** How the model's tokens are scheduled on
-  which GPUs is infrastructure, not harness — that is the domain of *AI
-  Engineering* in Huyen's sense {cite}`huyen2025aieng`.
-- **An ML evaluation benchmark.** HELM, MMLU, Terminal-Bench and their
-  relatives measure an agent; they are *inputs* to harness design, not the
-  harness itself {cite}`langchain2026tbench`.
-- **An IDE plugin surface.** Cursor, Copilot, Windsurf and their siblings
-  are *clients* that consume a harness; the harness lives in the repository
-  and outlives any specific editor {cite}`peng2023copilotstudy`.
-- **An agent framework SDK.** LangChain, AutoGen, CrewAI, and LangGraph
-  expose building blocks for multi-step agents; the harness is what a team
-  writes *around* whatever framework it chooses {cite}`langchain2026tbench`.
-- **A deployment pipeline.** DevOps owns the path from merged commit to
-  production; harness ownership ends at the merged commit
-  {cite}`forsgren2018accelerate`.
+- **运行时推理栈。** 模型的 token 被如何调度到哪些 GPU 上，是基础设施的事，不是马具——那是 Huyen 意义上的 *AI Engineering* 的领地 {cite}`huyen2025aieng`。
+- **ML 评测基准。** HELM、MMLU、Terminal-Bench 这一族度量的是智能体本身；它们是马具设计的 *输入*，而不是马具 {cite}`langchain2026tbench`。
+- **IDE 插件面。** Cursor、Copilot、Windsurf 等等是消费马具的 *客户端*；马具住在仓库里，比任何一个具体的编辑器活得都长 {cite}`peng2023copilotstudy`。
+- **智能体框架 SDK。** LangChain、AutoGen、CrewAI、LangGraph 提供的是多步智能体的构件；马具是团队在它所选框架 *外围* 写出来的东西 {cite}`langchain2026tbench`。
+- **部署流水线。** 从已合并的 commit 到生产环境的那条路由 DevOps 负责；马具的职责边界，到"已合并的 commit"为止 {cite}`forsgren2018accelerate`。
 
-The membership test is simple: if the artefact shapes what the agent
-*tries to produce* before a commit lands, it is harness; if it shapes what
-happens *to* a commit afterwards, it is DevOps; if it shapes how the model
-itself is served, it is AI Engineering.
+归属判定很简单：一件制品塑造的是智能体在 commit 落地之前 *试图产出什么*，它就是马具；它塑造的是 commit 之后 *这个 commit 会被怎么对待*，它就是 DevOps；它塑造的是模型本身如何被服务化，它就是 AI Engineering。
 
-Three edge cases recur often enough to be worth walking explicitly; each
-is a case where the membership test is easy to misapply.
+有三种边界情形出现得足够频繁，值得明确走一遍；在这些情形下，上面这条归属判定很容易被误用。
 
-- **A flaky pre-commit hook**. Is it harness? Yes — it fires before
-  commit — but it is a *degraded* harness artefact because it has lost
-  the property the harness exists to supply. The fence that refuses
-  intermittently teaches the agent (and the humans) that the fence is
-  optional. A flaky fence is worse than no fence at all, because it
-  combines the cost of the fence with none of its leverage. Fix the
-  flakiness or delete the hook; do not leave it half-alive.
-- **A dashboard that no one reads**. Is it harness? No — it fails the
-  *operated-and-evolved* half of the definition. Instrumentation without
-  a review cadence is observability infrastructure, not MDD. Chapter 06's
-  Groom column exists specifically to prevent this demotion.
-- **A long `README.md` pinned to the top of the repo**. Is it harness?
-  Only if the agent reads it on every turn. A `README.md` addressed
-  primarily to human newcomers is documentation; a `README.md` whose
-  first fifty lines the agent loads into its context window on session
-  start (verify by inspecting the agent's context dump) is harness. The
-  file's filename does not determine the class; the consumer does.
+- **一个 flaky 的 pre-commit 钩子。** 算不算马具？算——它在 commit 之前触发——但它是一件 *退化* 的马具制品，因为它丢掉了马具存在所要提供的那份属性。一道时灵时不灵的护栏，教会智能体（和人）一件事：这道护栏是可选的。一道 flaky 的护栏比没有护栏还糟，因为它同时背上了护栏的成本，却交不出护栏的杠杆。修好它的不稳定性，要么就把这条钩子删掉；不要留它半死不活。
+- **一块没人看的仪表盘。** 算不算马具？不算——它在定义里 *"运行并演进"* 这半句上就过不了关。没有复盘节奏的埋点，属于可观测性基础设施，而不是 MDD。第 06 章的 *梳理（Groom）* 这一列，正是为了防止它落到这种退位状态。
+- **一份挂在仓库顶部的长 `README.md`。** 算不算马具？只有当智能体每一轮都读它，它才算。主要写给新来的人看的 `README.md` 是文档；而一份智能体在会话开始时把前五十行加载进上下文窗口的 `README.md`（可以通过检查智能体的上下文转储来验证）才是马具。文件的名字不决定它归哪一类，*消费者* 决定它归哪一类。
 
-Apply the membership test to your own repo for five minutes. Most teams
-discover that *some* of their harness is accidentally misclassified as
-documentation, and *some* of their documentation is accidentally treated
-as harness — with neither pool tended by the right discipline.
+花五分钟，把这条归属判定用在你自己的仓库上。大多数团队都会发现：他们马具里的 *某些* 东西被误归成了文档，而他们文档里的 *某些* 东西被当成马具来用——而这两坨，都没有被该管它们的那门学科好好伺候着。
 
-## §03.3 Adjacent Practices Compared
+## 03.3 相邻实践对照
 
-The field has four close neighbours. Confusing them is the single most
-common first-encounter error, which the comparison table below pre-empts.
+这个领域有四个邻居。把它们混起来，是初次接触时最常见的错误——下面这张对照表就是用来提前化解这种混淆的。
 
 ```{list-table}
 :header-rows: 1
 :widths: 18 22 22 22 16
 
-* - Discipline
-  - Scope
-  - Primary artefact
-  - Primary failure mode
-  - Overlap with Harness Engineering
+* - 学科
+  - 范围
+  - 主要制品
+  - 主要失败模式
+  - 与 Harness Engineering 的交叠
 * - **DevOps** {cite}`humble2010continuousdelivery,forsgren2018accelerate`
-  - From merged commit to production running
-  - Pipeline definitions, IaC, deployment manifests
-  - Fragile releases, long mean time to recovery
-  - Shares approval-gate mindset; pre-commit hooks and required CI checks
-    are harness artefacts *reused from* the DevOps toolkit
+  - 从已合并的 commit 到生产环境跑起来
+  - 流水线定义、IaC、部署 manifest
+  - 脆弱的发布、居高不下的平均恢复时间
+  - 共享"审批关卡"这一心智；pre-commit 钩子与必过的 CI 检查是马具 *从* DevOps 工具箱里 *借来* 的制品
 * - **MLOps** {cite}`sculley2015mltechdebt,huyen2025aieng`
-  - From dataset to served model
-  - Training pipelines, feature stores, model registries
-  - Hidden technical debt in feedback loops and data drift
-  - Shares versioning discipline; model-evaluation harnesses feed *signals*
-    into an agent harness but sit upstream of it
-* - **AI / Agent Engineering** {cite}`huyen2025aieng,langchain2026tbench,anthropic2024agents`
-  - Composing foundation models into working applications and multi-step
-    agents
-  - Prompt templates, chains, tool schemas, retrieval pipelines
-  - Prompt fragility, tool-call hallucination, unbounded agent loops
-  - Harness Engineering is the *environment-side* counterpart; agent
-    engineering builds the agent, harness engineering builds what the
-    agent operates inside
-* - **Platform Engineering** {cite}`cncf2024platformeng`
-  - Self-service developer platforms (IDPs) that abstract infra for
-    product teams
-  - Golden paths, platform APIs, internal dev portals
-  - Cognitive load on platform consumers; drift between platform and
-    reality
-  - Shares the "paved road" ideology; a mature Harness Engineering team
-    eventually exposes its harness as an internal platform product
+  - 从数据集到可被调用的模型
+  - 训练流水线、特征存储、模型注册表
+  - 反馈回路和数据漂移里隐藏着的技术债
+  - 共享"版本化"这一纪律；模型评估 harness 把 *信号* 喂给智能体马具，但它位于马具的上游
+* - **AI／Agent Engineering** {cite}`huyen2025aieng,langchain2026tbench,anthropic2024agents`
+  - 把基础模型组合成能用的应用，以及多步智能体
+  - 提示词模板、chain、工具 schema、检索管道
+  - 提示词脆弱、工具调用幻觉、无界的智能体循环
+  - Harness Engineering 是它 *环境侧* 的对偶；agent engineering 造智能体，harness engineering 造智能体在其中运转的那个场
+* - **Platform Engineering（平台工程）** {cite}`cncf2024platformeng`
+  - 为产品团队抽象出基础设施的自助开发者平台（IDP）
+  - 黄金路径、平台 API、内部开发者门户
+  - 平台使用者的认知负担；平台与现实之间的漂移
+  - 共享"铺好的路（paved road）"这种理念；一个成熟的 Harness Engineering 团队，最终会把自己的马具作为一款内部平台产品对外暴露
 ```
 
-Reading the table row by row clarifies the field's position: Harness
-Engineering sits **between** AI/Agent Engineering (which is about the agent)
-and DevOps (which is about deployment), and borrows artefact patterns from
-both while owning neither.
+一行一行读这张表，能把这个领域的位置看清楚：Harness Engineering 坐在 AI／Agent Engineering（关心的是智能体）和 DevOps（关心的是部署）**之间**，从两边都借来了制品的模式，却哪一边都不归它管。
 
-## §03.4 A Minimal Example
+## 03.4 一个最小示例
 
-A harness does not require a platform team or a budget. It requires three
-files, each under ten lines. The triad below is the smallest complete
-harness this book will ask the reader to ship — one specification for the
-agent to read, one fence the agent (and humans) cannot bypass, and one
-observability receipt the team publishes.
+搭一具马具不需要平台团队，也不需要预算。它需要的是三份文件，每份不到十行。下面这组三件套就是本书要求读者交付的最小完整马具——一份让智能体读的规约、一道智能体（和人）都绕不过去的护栏、一份由团队对外公开的可观测性回执。
 
-### Fragment 1 — The specification the agent reads (`CLAUDE.md`)
+### 片段 1 —— 让智能体读的那份规约（`AGENTS.md`）
 
-```{literalinclude} ../_handson/03-what-is-harness-engineering/claude-md.fragment.md
+```{literalinclude} ../_handson/03-what-is-harness-engineering/agents-md.fragment.md
 :language: markdown
 ```
 
-Three choices matter here. The rules are *few* (four bullets), because
-agents respect short, enumerable house rules more reliably than long
-essays {cite}`anthropic2024claudecode`. Each rule is *machine-checkable*
-(it names a file, a command, or a config), so the spec aligns with the
-gate. And it *points at its sibling artefacts* (pre-commit config,
-HarnessCard), so the agent reading it knows where to look next.
+这里有三处选择很关键。规则 *少*（只有几条），因为比起长篇大论，智能体更可靠地尊重短的、可枚举的"家规" {cite}`anthropic2024claudecode`。每条规则都是 *机器可核验* 的（它点名一个文件、一条命令、一份配置），于是规约和关卡能对得上。而它采用 `AGENTS.md` 这个固定入口，是为了让 Codex、Cursor、Claude Code、Aider、Gemini CLI 等客户端共享同一份 onboarding 文件；若某个客户端仍偏好 `CLAUDE.md`，让它作为 symlink 或薄镜像指回这里即可 {cite}`agenticai2025agentsmd`。
 
-### Fragment 2 — The fence humans and agents alike cannot bypass (`.pre-commit-config.yaml`)
+### 片段 2 —— 人和智能体都绕不过去的那道护栏（`.pre-commit-config.yaml`）
 
 ```{literalinclude} ../_handson/03-what-is-harness-engineering/pre-commit-config.fragment.yaml
 :language: yaml
 ```
 
-Pre-commit is the smallest possible TDD-style gate: it refuses bad code
-regardless of authorship {cite}`beck2002tdd`. The ruff hook enforces
-style (which the agent would otherwise hallucinate in five competing
-flavours) and a tiny `pytest -m "not slow"` hook ensures no commit lands
-without a fast-lane green. This is the *verifiability guardian* of
-Chapter 04 compressed into ten lines.
+pre-commit 是一道尽可能最小的 TDD 式关卡：它拒绝坏代码，不管作者是谁 {cite}`beck2002tdd`。ruff 钩子强制代码风格（否则智能体会在五种互相打架的风格之间幻觉出一种），而一个小小的 `pytest -m "not slow"` 钩子保证：没有一个 commit 可以在快通道还没跑绿的情况下落地。这就是第 04 章那条 *可验证性护法* 被压缩进十行里的样子。
 
-### Fragment 3 — The observability receipt (`harnesscard.yaml`)
+### 片段 3 —— 可观测性回执（`harnesscard.yaml`）
 
 ```{literalinclude} ../_handson/03-what-is-harness-engineering/harnesscard.fragment.yaml
 :language: yaml
 ```
 
-The HarnessCard is a standardised disclosure format proposed by the CAR
-decomposition paper {cite}`car2025decomposition`. It names — in one
-commit-reviewable file — which spec the harness uses, which gate enforces
-it, and which signals the team watches. It is the smallest possible MDD
-surface (Chapter 04's third guardian): three lines of signals is enough to
-start a weekly review habit.
+HarnessCard 是由 CAR 分解那篇论文提出的一种标准化披露格式 {cite}`car2025decomposition`。它在 *一份可作为 commit 被审阅的文件* 里点明：这具马具用的是哪份规约、由哪道关卡强制执行、团队在看哪几路信号。它是一个尽可能最小的 MDD 面（第 04 章那第三条护法）：三行信号，已经足够起一个每周复盘的习惯。
 
-Taken together, these thirty lines satisfy the one-sentence definition
-above. They are *deliberately designed* (not accidentally accumulated),
-*operated and evolved* (the HarnessCard dates itself), and they
-explicitly name the three guardians. Any team with an agent in the loop
-can ship this triad in an afternoon and have a harness — primitive, but
-real.
+把这三份加在一起的这三十行，已经满足了上面那句一句话的定义。它们是 *有意识设计* 的（不是偶然堆起来的）、是 *被运行和演进* 的（HarnessCard 自己就带着日期），并且明明白白点出了三大护法。任何一支有智能体参与的团队，都可以在一个下午把这一组三件套落地出来——它是一具马具，虽然初级，但真实。
 
-```{admonition} Pitfall — The three files that look like a harness but are not
+```{admonition} 陷阱——长得像马具、其实不是马具的三份文件
 :class: warning
 
-It is deceptively easy to produce a thirty-line triad that *looks* like
-the one above but fails the membership test. Three common degenerate
-forms:
+一组 *看起来* 和上面那一组一模一样、却过不了归属判定的三十行三件套，其实容易得惊人。常见的退化形态有三种：
 
-1. **The aspirational `CLAUDE.md`.** Rules written as wishes — "write
-   idiomatic Go", "prefer clear names" — that no hook can mechanically
-   falsify. The agent signals compliance and hallucinates adherence.
-   **Test**: every rule must name a file, a command, or a config. If
-   none do, it is a wish list.
-2. **The passing pre-commit.** A hook that runs `pytest` against a
-   suite of zero tests, or `ruff` against files in an excluded
-   directory. It always passes; the team loses the fence without ever
-   noticing. **Test**: on first install, the hook must *refuse* some
-   artefact the repository currently contains (even if you then fix
-   that artefact). A fence that has never said *no* is not a fence.
-3. **The undated HarnessCard.** A yaml file committed once and never
-   touched. The signals remain listed; none of them have moved in a
-   quarter. **Test**: the HarnessCard must carry a `last_reviewed:`
-   date no more than thirty days old, and the review must produce a
-   delta note. A static HarnessCard is ornament.
+1. **愿望型的 `AGENTS.md`。** 规则被写成愿望——"写地道的 Go"、"倾向于清晰的命名"——没有任何钩子能机械地证伪这些话。智能体于是打出合规的信号、幻觉出自己在遵守。**判定**：每一条规则都必须点名一个文件、一条命令、一份配置。若一条都没有，这就是一份愿望清单，不是规约。
+2. **永远能过的 pre-commit。** 一条钩子，拿 `pytest` 去跑一个测试数为零的套件，或者拿 `ruff` 去扫一个被排除掉的目录。它永远通过，而团队根本注意不到自己已经失去了这道护栏。**判定**：首次装上去时，这条钩子必须 *拒绝* 仓库里当前存在的某件制品（哪怕你接着就修掉了它）。从没说过一个 *不* 字的护栏，根本不是护栏。
+3. **没有日期的 HarnessCard。** 一份 yaml，提交过一次之后就再也没人动过。信号列表还在，但整整一个季度，没有一路信号变过。**判定**：HarnessCard 必须带一个 `last_reviewed:` 日期，且这个日期不超过三十天；而每一次复盘都必须产出一条 delta 笔记。一份静态的 HarnessCard 是装饰品。
 
-The distinction between a working harness and harness theatre is not
-file count — it is whether *on any given Tuesday* each of the three
-files can be shown to have refused, measured, or steered something.
-If the answer is no for a whole quarter, the triad has decayed into
-decoration even if its contents are unchanged.
+一具在工作的马具和"马具剧场"之间的分界，不在文件数——而在 *随便挑一个周二*，这三份文件中的每一份，能不能拿得出"它在最近拒绝过、量过、或引导过什么"的证据。如果一整个季度的答案都是"不能"，那即便它的内容一字未改，这组三件套也已经衰退成装饰了。
 ```
 
-## §03.5 When Not to Use Harness Engineering
+## 03.5 什么时候 *不* 用 Harness Engineering
 
-Harness Engineering, like any discipline, has a cost: three files to
-maintain, a weekly review cadence, a HarnessCard to update. Three
-situations do not pay that cost back:
+Harness Engineering 和任何一门学科一样，都是有成本的：三份文件要维护、一个每周复盘的节奏、一张 HarnessCard 要更新。有三种情形，这份成本收不回来：
 
-- **One-off throwaway scripts.** A 40-line script that parses a CSV and
-  exits is not a project; it has no second commit. The harness investment
-  does not amortise over a second commit that never arrives.
-- **Solo prototypes with zero AI usage.** If a developer neither uses nor
-  plans to use an AI coding agent, Chapters 04–06 still apply as
-  traditional SE hygiene, but the *harness* label is unhelpful — the
-  "agent" whose environment is being shaped does not exist.
-- **Legacy code no AI agent will ever touch.** A 2008 COBOL system under
-  change freeze gains nothing from a `CLAUDE.md`; effort is better spent
-  on Feathers' legacy-code playbook {cite}`feathers2004legacy` until the
-  code base re-enters active development with AI in the loop.
+- **一次性的一次就扔的脚本。** 一段 40 行、解析完 CSV 就退出的脚本不是一个项目；它没有第二次 commit。马具的那份投入，摊不到一个永远不会到来的"第二次 commit"上。
+- **完全不用 AI 的个人原型。** 如果一个开发者既没有、也不打算使用 AI 编码智能体，第 04–06 章依然可以作为传统软件工程卫生学来读，但 *马具* 这个标签在这里不帮任何忙——那个被"塑造环境"的"智能体"根本不存在。
+- **任何 AI 智能体都不会碰的遗留代码。** 一个 2008 年的 COBOL 系统，已经处在变更冻结下，给它加一份 `AGENTS.md` 毫无收益；把精力花在 Feathers 的那套遗留代码手册上更值得 {cite}`feathers2004legacy`，直到哪天这套代码库带着 AI 重新进入活跃开发。
 
-Anywhere else — from a solo side project with Copilot autocomplete to a
-fifty-engineer platform team running autonomous agents — the cost of the
-thirty-line triad in §03.4 is lower than the cost of its absence.
+除此以外的所有情形——从一位独自搞副业、只用 Copilot 做自动补全的开发者，到五十个人跑着自主智能体的平台团队——03.4 那三十行三件套的成本，都低于没有它的成本。
 
-## Research Foundations
+## 研究脉络
 
-The definition of Harness Engineering in §03.1 is deliberately constructed
-to sit between established disciplines rather than to invent a new one; its
-credibility therefore rests on the boundary citations rather than on a
-single primary source.
+03.1 里 Harness Engineering 的定义是 *有意* 构造得坐在几门已有学科之间，而不是另起炉灶；因此它的可信度靠的是一串边界引用，而不是哪一个"唯一源头"。
 
-- **DevOps baseline:** Humble & Farley's *Continuous Delivery*
-  {cite}`humble2010continuousdelivery` and Forsgren, Humble & Kim's
-  *Accelerate* {cite}`forsgren2018accelerate` establish that an approval-gate
-  discipline can be culturally normalised across an entire industry; the
-  harness borrows their gate-centric stance wholesale while redirecting it
-  upstream of the commit rather than downstream.
-- **MLOps baseline:** Sculley et al.'s *Hidden Technical Debt in Machine
-  Learning Systems* {cite}`sculley2015mltechdebt` is the canonical warning
-  about invisible glue code in ML pipelines; Huyen's *AI Engineering*
-  {cite}`huyen2025aieng` updates that critique for the foundation-model era
-  and is the reference behind the "AI is not harness" row in §03.3.
-- **Agent Engineering boundary:** Anthropic's *Building Effective Agents*
-  {cite}`anthropic2024agents` and LangChain's *Terminal-Bench 2.0*
-  {cite}`langchain2026tbench` are the two most-cited 2024–2026 sources on
-  what an agent is and how to evaluate one; both frame the agent as the
-  subject and the environment as an implementation detail, which is the
-  precise framing this book inverts.
-- **Platform Engineering boundary:** the CNCF Platforms Working Group's
-  *Platform Engineering Maturity Model* {cite}`cncf2024platformeng`
-  anchors the "paved road" vocabulary §03.3 borrows in its Platform
-  Engineering row.
-- **Harness-Engineering primary sources:** the CAR decomposition and
-  HarnessCard from the position paper {cite}`car2025decomposition`,
-  Fowler's bliki entry that first named the practice
-  {cite}`fowler2026harness`, OpenAI's vendor-side articulation
-  {cite}`openai2026harness`, and Thoughtworks' Technology Radar trial-ring
-  entry {cite}`thoughtworks2026harness` together constitute the four
-  primary-source references this book cross-cites when the label "Harness
-  Engineering" itself is at stake.
+- **DevOps 基线。** Humble 与 Farley 的 *Continuous Delivery* {cite}`humble2010continuousdelivery`、Forsgren／Humble／Kim 的 *Accelerate* {cite}`forsgren2018accelerate`，合起来建立了一件事：一套"审批关卡"纪律可以在整个行业里被文化化地标准化。马具几乎是原样借走了他们这种以关卡为中心的立场，只是把它从 commit 的 *下游* 重新指向了 *上游*。
+- **MLOps 基线。** Sculley 等人 *Hidden Technical Debt in Machine Learning Systems* {cite}`sculley2015mltechdebt`，是关于 ML 流水线里那些隐形粘合代码的经典警示；Huyen 的 *AI Engineering* {cite}`huyen2025aieng` 则把那份批评在"基础模型时代"里做了更新，也就是 03.3 里"AI 不等于马具"这一行背后真正的参考。
+- **Agent Engineering 边界。** Anthropic 的 *Building Effective Agents* {cite}`anthropic2024agents` 与 LangChain 的 *Terminal-Bench 2.0* {cite}`langchain2026tbench`，是 2024–2026 年间关于"智能体是什么、该如何评估它"这个问题最常被引用的两份资料；两份都把智能体当成主语，把环境当成实现细节——而本书要翻转的，恰恰就是这个主语／宾语关系。
+- **Platform Engineering 边界。** CNCF Platforms Working Group 的 *Platform Engineering Maturity Model* {cite}`cncf2024platformeng`，正是 03.3 里 Platform Engineering 那一行所借用的"铺好的路（paved road）"词汇背后的锚点。
+- **Harness Engineering 第一手来源。** 立场论文中提出的 CAR 分解与 HarnessCard {cite}`car2025decomposition`、Fowler 首次为这项实践命名的 bliki 条目 {cite}`fowler2026harness`、OpenAI 在厂商一侧的表述 {cite}`openai2026harness`，以及 Thoughtworks 技术雷达中 trial 环的那条条目 {cite}`thoughtworks2026harness`——每当"Harness Engineering"这个名字本身需要被交叉引用时，本书用的就是这四份第一手参考。
 
-## Hands-On
+## 动手环节
 
-The minimal example in §03.4 ships as three fragments under
-`book/source/_handson/03-what-is-harness-engineering/`:
+03.4 里那个最小示例，以三个片段的形式收在 `source/_handson/03-what-is-harness-engineering/` 目录下：
 
-- `claude-md.fragment.md` — the ten-line specification the agent reads.
-- `pre-commit-config.fragment.yaml` — the ten-line fence that refuses bad
-  commits.
-- `harnesscard.fragment.yaml` — the ten-line observability receipt the
-  team publishes.
+- `agents-md.fragment.md`——给智能体读的那份十行规约。
+- `pre-commit-config.fragment.yaml`——那条拒绝坏 commit 的十行护栏。
+- `harnesscard.fragment.yaml`——团队对外发布的那份十行可观测性回执。
 
-The accompanying `README.md` names the reading order and the intent of
-each file. A reader who only wants to *start* practising Harness
-Engineering today can copy these three fragments into any repo, adjust
-the file names, and begin the weekly HarnessCard review loop Chapter 06
-formalises.
+配套的 `README.md` 给出了阅读顺序，以及每一份文件的意图。如果一位读者今天就只想 *开始* 实践 Harness Engineering，他把这三个片段拷进任何一个仓库，把文件名改一下，就可以启动第 06 章要正式化的那套 HarnessCard 每周复盘循环。

@@ -1,6 +1,9 @@
 <!-- verified: 2026-04-17 · Tauri-Todo worked arc · Bridle -->
 
-# CLAUDE.md — lazy-todo-app (Tauri 2 + Rust + TypeScript)
+# CLAUDE.md — lazy-todo-app compatibility mirror
+
+This file is kept for Claude Code clients. Keep the canonical agent-facing
+contract in `AGENTS.md` and mirror only the Claude-specific Bridle rules here.
 
 ## Project shape
 

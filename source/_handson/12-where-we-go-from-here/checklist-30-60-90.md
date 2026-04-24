@@ -1,4 +1,4 @@
-<!-- verified: 2026-04-17 · Ch.12 hands-on · standalone checklist -->
+<!-- verified: 2026-04-24 · Ch.12 hands-on · standalone checklist -->
 
 # 30 / 60 / 90-Day Harness Checklist
 
@@ -7,7 +7,7 @@ Copy into your team wiki. Each bullet names a Ch.05 matrix cell and a
 
 ## Day 1–30 · One Cell
 
-- [ ] **SDD × Bridle.** Commit an `AGENTS.md` based on
+- [ ] **SDD × Bridle.** Run the `agents-md-generate` skill, then commit an `AGENTS.md` based on
       `_handson/05-harness-anatomy/sdd-x-bridle/AGENTS.md.sample`.
 - [ ] **TDD × Fence.** Install a `PreToolUse` hook based on
       `_handson/05-harness-anatomy/tdd-x-fence/hooks.json`.
@@ -19,7 +19,9 @@ Copy into your team wiki. Each bullet names a Ch.05 matrix cell and a
 - [ ] **Full SDD row.** Ship Bridle (`AGENTS.md.sample`), Fence
       (`prompt-schema.json`), Paddock (`acceptance-gate.md`), Groom
       (`update-docs.sh`). Artefacts under
-      `_handson/05-harness-anatomy/sdd-x-*/`.
+      `_handson/05-harness-anatomy/sdd-x-*/`. In a monorepo, keep the
+      root `AGENTS.md` global and add package-level files only where local
+      commands or danger zones differ.
 - [ ] **Full Fence column.** Ship SDD (`prompt-schema.json`), TDD
       (`hooks.json` + `ci-gate.yml`), MDD (`cost-cap.yaml`). Artefacts
       under `_handson/05-harness-anatomy/*-x-fence/`.

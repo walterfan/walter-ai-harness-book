@@ -1,5 +1,5 @@
 =============================================================================
-lazy-code-kb-book — Harnessing AI: The Craft of Shaping Agents
+async-harness-book — Harnessing AI: The Craft of Shaping Agents
 Copyright (c) 2026 Walter Fan
 =============================================================================
 
@@ -25,10 +25,10 @@ This project contains two kinds of material under two different licenses:
      Full text: https://creativecommons.org/licenses/by-sa/4.0/legalcode
 
      SPDX-License-Identifier: CC-BY-SA-4.0
-     Applies to: book/source/**/*.md, book/source/**/*.rst,
-                 book/source/_diagrams/**,
-                 book/source/locale/**/*.po,
-                 and all figures/diagrams under book/source/.
+     Applies to: source/**/*.md, source/**/*.rst,
+                 source/_diagrams/**,
+                 source/locale/**/*.po,
+                 and all figures/diagrams under source/.
 
   2. CODE (runnable artefacts shipped with the book, lint scripts,
      translation tooling, Sphinx configuration, and any source code
@@ -56,14 +56,14 @@ This project contains two kinds of material under two different licenses:
      OTHER DEALINGS IN THE SOFTWARE.
 
      SPDX-License-Identifier: MIT
-     Applies to: book/source/conf.py, book/Makefile, book/scripts/**,
-                 book/source/_handson/** (runnable code snippets),
+     Applies to: source/conf.py, Makefile, scripts/**,
+                 source/_handson/** (runnable code snippets),
                  and any file that contains an SPDX-License-Identifier
                  header overriding the default.
 
 -----------------------------------------------------------------------------
-When in doubt: narrative Markdown under book/source/chapters/ is CC-BY-SA-4.0;
-Python/shell/YAML files under book/scripts/ and book/source/_handson/ are MIT.
+When in doubt: narrative Markdown under source/chapters/ is CC-BY-SA-4.0;
+Python/shell/YAML files under scripts/ and source/_handson/ are MIT.
 If a specific file carries an `SPDX-License-Identifier:` header, that header
 overrides the defaults above.
 -----------------------------------------------------------------------------

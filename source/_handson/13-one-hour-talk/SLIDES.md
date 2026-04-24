@@ -29,7 +29,7 @@ style: |
 
 <!--
 ============================================================
-SLIDES.md —— 给《Harnessing AI》附录 F 的一小时分享配套幻灯片
+SLIDES.md —— 给《Harnessing AI》Part 0 一小时分享配套幻灯片
 ============================================================
 
 双轨使用方式：
@@ -52,7 +52,7 @@ SLIDES.md —— 给《Harnessing AI》附录 F 的一小时分享配套幻灯�
 
 Walter Fan · 2026
 
-<small>本讲稿压缩自 *Harnessing AI: The Craft of Shaping Agents* 全书 · 详见原书附录 F</small>
+<small>本讲稿压缩自 *Harnessing AI: The Craft of Shaping Agents* 全书 · 详见 Part 0 讲稿与附录 F 落地手册</small>
 
 <!--
 讲者备注（开场 30 秒）：
@@ -69,14 +69,14 @@ Walter Fan · 2026
 | # | 节次 | 主题 |
 |---|------|------|
 | 0 | 开场 | 为什么今天要聊这件事（2′） |
-| 1 | §F.1 | 四阶段演化：Prompt → Context → Skill → Harness |
-| 2 | §F.2 | 定义：Harness Engineering 是什么 |
-| 3 | §F.3 | 三护法：SDD → TDD → MDD |
-| 4 | §F.4 | 骨架：3 × 4 矩阵 |
-| 5 | §F.5 | 四个案例研究的教训 |
-| 6 | §F.6 | 自证：Lazy AI Coder 四幕 |
-| 7 | §F.7 | 周一上班清单：30 / 60 / 90 天 |
-| 8 | §F.8 | 三句带走话 + Q&A |
+| 1 | F.1 | 四阶段演化：Prompt → Context → Skill → Harness |
+| 2 | F.2 | 定义：Harness Engineering 是什么 |
+| 3 | F.3 | 三护法：SDD → TDD → MDD |
+| 4 | F.4 | 骨架：3 × 4 矩阵 |
+| 5 | F.5 | 四个案例研究的教训 |
+| 6 | F.6 | 自证：Lazy AI Coder 四幕 |
+| 7 | F.7 | 周一上班清单：30 / 60 / 90 天 |
+| 8 | F.8 | 三句带走话 + Q&A |
 
 <!--
 讲者备注（15 秒）：
@@ -86,7 +86,7 @@ Walter Fan · 2026
 
 ---
 
-# §F.0 · 开场
+# F.0 · 开场
 
 ## 2026 年，三件事让我站在这里
 
@@ -104,14 +104,14 @@ Walter Fan · 2026
   报率。"
 - 然后转身指白板上那个 M → E 的箭头：
   "今天这一小时，讲的就是 E 这边到底长什么样、怎么建、谁来维护。"
-- 回书锚：《Foreword》与第 02 章开头。
+- 回书锚：第 01 章《前言》与第 02 章《四阶段演进》。
 -->
 
 ---
 
 <!-- _class: whiteboard -->
 
-# §F.0 · 白板时刻
+# F.0 · 白板时刻
 
 ```text
              2022–2024
@@ -134,7 +134,7 @@ Walter Fan · 2026
 
 ---
 
-# §F.1 · 四阶段演化
+# F.1 · 四阶段演化
 
 ## 从 Prompt 到 Harness，每一步都卡在下一步面前
 
@@ -149,7 +149,7 @@ Prompt   →  Context  →  Skill     →  Harness
 | Prompt | 怎么问？ | 一条巧妙的提示字符串 |
 | Context | 给看什么？ | 一张检索 / 上下文图 |
 | Skill | 工作流怎么写下来？ | 一份 `SKILL.md` |
-| Harness | 造什么环境？ | **仓库本身**（CLAUDE.md + 钩子 + 护栏 + 巡检） |
+| Harness | 造什么环境？ | **仓库本身**（AGENTS.md + 钩子 + 护栏 + 巡检） |
 
 <!--
 讲者备注（2 分钟）：
@@ -166,7 +166,7 @@ Prompt   →  Context  →  Skill     →  Harness
 
 <!-- _class: pitfall -->
 
-# §F.1 · 一个要提防的误读
+# F.1 · 一个要提防的误读
 
 > "Harness 就是 Prompt 长一点而已。"
 
@@ -188,7 +188,7 @@ Prompt   →  Context  →  Skill     →  Harness
 
 ---
 
-# §F.2 · 定义 · 一句话
+# F.2 · 定义 · 一句话
 
 > **Harness Engineering** 是一门 **刻意设计、运行、演化**
 > AI 编码智能体 **周围的结构** 的工程学科，目的是让它产出的软件：
@@ -209,14 +209,14 @@ Prompt   →  Context  →  Skill     →  Harness
 - 把一句话定义读完整一遍。
 - 指出句子的主语反转："agent 不是主语，环境才是主语。这个倒装就是
   整个学科的全部。"
-- 回书锚：第 03 章 §03.1。
+- 回书锚：第 03 章 03.1。
 -->
 
 ---
 
-# §F.2 · 五条「是」
+# F.2 · 五条「是」
 
-1. **面向智能体的规约** —— `CLAUDE.md` / `AGENTS.md` / `SKILL.md` / MCP manifest，**当代码 review**
+1. **面向智能体的规约** —— `AGENTS.md` / `CLAUDE.md` 兼容层 / `SKILL.md` / MCP manifest，**当代码 review**
 2. **审批门与护栏** —— pre-commit 钩子、lint 规则、PR 强制评审、CI 必过项
 3. **沙箱** —— 容器 / VM / 只读挂载 / 临时 worktree；智能体碰不到生产
 4. **面向智能体的文档** —— runbook / ADR / skill 文件；**智能体自己能读懂**
@@ -231,7 +231,7 @@ Prompt   →  Context  →  Skill     →  Harness
 
 ---
 
-# §F.2 · 五条「不是」
+# F.2 · 五条「不是」
 
 - **不是** 推理运行栈 → 那是 *AI Engineering*
 - **不是** ML 评测基准 → 那是 *输入*，不是本体
@@ -243,7 +243,7 @@ Prompt   →  Context  →  Skill     →  Harness
 
 <!--
 讲者备注（60 秒）：
-- 归属检验那句话是整页最重要的。写在白板最上面，后面 §F.7 还会回来指。
+- 归属检验那句话是整页最重要的。写在白板最上面，后面 F.7 还会回来指。
 - 如果有人问 "那我们 CI 算不算 harness？"：
   "CI 是 harness 的 **牧场（Paddock）** —— TDD/MDD 的那一面；它只是
   整张 3×4 矩阵里的 2 格。完整 harness 要的是 4 列 × 3 行 = 12 格。"
@@ -251,7 +251,32 @@ Prompt   →  Context  →  Skill     →  Harness
 
 ---
 
-# §F.3 · 三护法 · 因果顺序反了
+# F.2 · Agent Loop · 跑偏定位图
+
+```text
+用户输入 → context → decision → tools → observation
+              ↑          memory / skill / controller          ↓
+              └────────────────── output ─────────────────────┘
+```
+
+- **输入 / context** 含糊，agent 会很快跑到错误方向
+- **tools / sandbox** 太宽，agent 会把小问题扩大成大改动
+- **observation** 不进 loop，agent 就只是在自说自话
+- **harness** 定义它可以自己跑多远、何时停下、失败后如何恢复
+- **少即是多**：收敛方向、立规矩、progressive disclosure
+
+<!--
+讲者备注（60 秒）：
+- 这页只讲一圈，不讲完整架构。真正细节指向第 03B 章。
+- 金句："跑偏时看 trace，不看态度。"
+- 补一句："不要把整座图书馆塞进 context。LLM 已经知道很多，
+  你要给它边界、判据和总分总结构。"
+- 回书锚：第 03B 章 + 附录 F 的工程师落地手册。
+-->
+
+---
+
+# F.3 · 三护法 · 因果顺序反了
 
 ## 传统：test → implement → observe
 
@@ -269,10 +294,14 @@ Prompt   →  Context  →  Skill     →  Harness
 
 > **人写的主要制品上移了** —— 从 "代码" 到 "`AGENTS.md` / 规约 / skill"
 
+**不是推翻传统工程，而是让老原则重新发光。**
+
 <!--
 讲者备注（2 分钟）：
 - 为什么翻转？核心：智能体会非常自信地对含糊规约幻觉出一种行为；
   此时测试写得再早，也只是把幻觉钉死。
+- 这里要保护传统软件工程：小步提交、清楚 done、测试先行、可回滚、
+  可追踪，在 agent 时代更值钱，因为 agent 会把模糊和债务放大得更快。
 - 三护法各一句：
   - SDD —— 可理解性 —— 意图 → 智能体能读的规约
   - TDD —— 可验证性 —— 先写那条还红的测试，作为 agent 解释的证伪面
@@ -284,7 +313,7 @@ Prompt   →  Context  →  Skill     →  Harness
 
 <!-- _class: pitfall -->
 
-# §F.3 · 常见误读：CI 就够了
+# F.3 · 常见误读：CI 就够了
 
 > "我们已经有 CI 了啊。"
 
@@ -293,7 +322,7 @@ Prompt   →  Context  →  Skill     →  Harness
 - **Bridle（缰绳）** —— 智能体敲第一个键 **之前** 就发声
 - **Fence（护栏）** —— 键盘按下那一刻就拒绝
 - **Paddock（牧场）** —— *CI 就在这里* · 合入那一刻才抓
-- **Groom（梳理）** —— 维护挽具本身的节律
+- **Groom（梳理）** —— 维护马具本身的节律
 
 > 你家 CI 周五晚上抓到的 bug，Fence 在周二早上就该拒绝。
 
@@ -305,7 +334,7 @@ Prompt   →  Context  →  Skill     →  Harness
 
 ---
 
-# §F.4 · 3 × 4 矩阵 · 整个框架装进一张表
+# F.4 · 3 × 4 矩阵 · 整个框架装进一张表
 
 |  | **缰绳 Bridle**<br/>(写前引导) | **护栏 Fence**<br/>(写时拒绝) | **牧场 Paddock**<br/>(写后边界) | **梳理 Groom**<br/>(维持本身) |
 |---|---|---|---|---|
@@ -322,16 +351,16 @@ Prompt   →  Context  →  Skill     →  Harness
   - Bridle：agent 敲第一个键之前看什么听什么
   - Fence：无论作者是人是 AI，一律拒绝坏制品
   - Paddock：agent 可以撒欢的那块地的边界
-  - Groom：维持挽具本身的那些重复性工作
+  - Groom：维持马具本身的那些重复性工作
 - 强调 "每一格都对应一件 **可落地** 的制品"：回书锚是第 05 章，
   每一格都有一份 `_handson/05-harness-anatomy/…` 的样本文件。
 - 可以问一下台下："咱们仓库里，这 12 格你能指出哪几格？" —— 不用等
-  答案，这是为后面 §F.6 自证环节做铺垫的。
+  答案，这是为后面 F.6 自证环节做铺垫的。
 -->
 
 ---
 
-# §F.5 · 四个案例 · 同一把尺子，四种形态
+# F.5 · 四个案例 · 同一把尺子，四种形态
 
 ```text
 OpenHarness   Superpowers   lazy-scrum-team   Claude Code
@@ -343,8 +372,8 @@ OpenHarness   Superpowers   lazy-scrum-team   Claude Code
 |------|----------|---------------------|
 | **OpenHarness** | 给你 Runtime + Paddock | Runtime 层 Paddock |
 | **Superpowers** | **只出 skills**，不出 runtime | SDD × Bridle |
-| **lazy-scrum-team** | 把 **工作流本身** 当挽具 | 跨格的 State Model / Rework Matrix |
-| **Claude Code** | 闭源产品；挽具散在 bundled prompt + hooks + skills | 跨格但不可复用 |
+| **lazy-scrum-team** | 把 **工作流本身** 当马具 | 跨格的 State Model / Rework Matrix |
+| **Claude Code** | 闭源产品；马具散在 bundled prompt + hooks + skills | 跨格但不可复用 |
 
 <!--
 讲者备注（2 分钟）：
@@ -363,20 +392,20 @@ OpenHarness   Superpowers   lazy-scrum-team   Claude Code
 
 ---
 
-# §F.6 · 自证 · Lazy AI Coder 四幕
+# F.6 · 自证 · Lazy AI Coder 四幕
 
 ## 如果这套框架连本书自己的仓库都救不了，它就是错的
 
 ```text
 Act 1          Act 2            Act 3          Act 4
 审计            短板             实盘修复        度量 delta
-HarnessCard    5 个、各带证据    5 笔 commit    重新打分
+HarnessCard    5 个、各带证据    4 笔 commit    重新打分
 (初始)
 ```
 
 - **Act 1**：初始 HarnessCard 落在矩阵 **左下角**（SDD×Fence / SDD×Groom / TDD×Fence / MDD×Bridle / MDD×Groom 五格最弱）
 - **Act 2**：5 个短板，每个都有 **严重度 · 证据指针 · 矩阵坐标**
-- **Act 3**：5 笔 **真实 commit** 进 `main`；`reproduce.sh` 可复现
+- **Act 3**：4 笔 **真实 commit** 进 `main`；`reproduce.sh` 可复现
 - **Act 4**：重新打分（下一页）
 
 <!--
@@ -391,7 +420,7 @@ HarnessCard    5 个、各带证据    5 笔 commit    重新打分
 
 ---
 
-# §F.6 · Act 4 · 度量 delta
+# F.6 · Act 4 · 度量 delta
 
 | 护法 | Act 1 均值 | Act 4 均值 | Δ |
 |------|:---:|:---:|:---:|
@@ -414,7 +443,7 @@ HarnessCard    5 个、各带证据    5 笔 commit    重新打分
 
 <!-- _class: pitfall -->
 
-# §F.6 · HarnessCard vanity delta
+# F.6 · HarnessCard vanity delta
 
 > "我们的 HarnessCard 分数从 1.75 涨到 2.42 了！"
 
@@ -435,7 +464,7 @@ HarnessCard    5 个、各带证据    5 笔 commit    重新打分
 
 ---
 
-# §F.7 · 30 / 60 / 90 天清单
+# F.7 · 30 / 60 / 90 天清单
 
 ```text
 Day 1–30          Day 31–60              Day 61–90
@@ -457,20 +486,20 @@ one cell          one row or column      full review
   - 单兵 / 个人工程师：TDD × Fence（立即受益）
   - 团队起步：SDD × Bridle（一次写好，大家都受益）
   - 已经花很多 LLM 费用的团队：MDD × Fence（老板一眼看得到价值）
-- 回书锚：第 12 章 §12.2 + `_handson/12-where-we-go-from-here/checklist-30-60-90.md`
+- 回书锚：第 12 章 12.2 + `_handson/12-where-we-go-from-here/checklist-30-60-90.md`
 -->
 
 ---
 
 <!-- _class: pitfall -->
 
-# §F.7 · 三个要提防的陷阱
+# F.7 · 三个要提防的陷阱
 
 - **"Day 30 我们就搞定了" 陷阱**
   → 没排 Groom 维护班；90 天后分数从 +1 掉回 +0.3
 
 - **"Groom 以后再说" 陷阱**
-  → 一开始就没把梳理列入范围；没有 Groom 的挽具 **不是挽具，是装饰**
+  → 一开始就没把梳理列入范围；没有 Groom 的马具 **不是马具，是装饰**
 
 - **"凑齐了再发布" 陷阱**
   → 等 12 格都 ≥ 3 分才上线；错。要的是 **"一格上线 + 公开其余 11 格分数"**，不是神话
@@ -484,7 +513,7 @@ one cell          one row or column      full review
 
 ---
 
-# §F.8 · 三句要被记住的话
+# F.8 · 三句要被记住的话
 
 1. **Harness Engineering 不是给流程再加一层**
    → 是在一组过载的清单中，**提取那一小撮会机械拒绝坏工作的制品**，其余皆为装饰
@@ -504,7 +533,7 @@ one cell          one row or column      full review
 
 ---
 
-# §F.8 · Q&A · 三个我猜你们会问
+# F.8 · Q&A · 三个我猜你们会问
 
 **Q1. 这跟我们现有的 CI 流水线有什么区别？**
 A：CI = TDD/MDD 的 **牧场**；合入那一刻才发声。Harness 在键盘按下那一刻就发声。
@@ -539,7 +568,7 @@ A：不是。归属检验：塑造 commit **之前** = harness；塑造 commit *
 
 <br/>
 
-<small>回书索引：附录 A（FAQ）· 附录 B（术语表）· 附录 D（HarnessCard 模板）· 附录 E（CLAUDE.md 样板）· 附录 F（讲稿全文）</small>
+<small>回书索引：第 03B 章（Agent Loop）· 附录 A（FAQ）· 附录 D（HarnessCard 模板）· 附录 E（CLAUDE.md 兼容样板）· 附录 F（工程师落地手册）</small>
 
 <!--
 讲者备注（60 秒）：
@@ -555,44 +584,44 @@ A：不是。归属检验：塑造 commit **之前** = harness；塑造 commit *
 ## 时间表（实战校准用）
 
 ```
-00:00–00:02   §F.0 开场
-00:02–00:09   §F.1 四阶段演化
-00:09–00:16   §F.2 定义
-00:16–00:23   §F.3 三护法
-00:23–00:30   §F.4 3×4 矩阵
-00:30–00:37   §F.5 四个案例
-00:37–00:44   §F.6 Lazy AI Coder 四幕
-00:44–00:51   §F.7 30/60/90 清单
-00:51–00:55   §F.8 Q&A 收尾
+00:00–00:02   F.0 开场
+00:02–00:09   F.1 四阶段演化
+00:09–00:16   F.2 定义
+00:16–00:23   F.3 三护法
+00:23–00:30   F.4 3×4 矩阵
+00:30–00:37   F.5 四个案例
+00:37–00:44   F.6 Lazy AI Coder 四幕
+00:44–00:51   F.7 30/60/90 清单
+00:51–00:55   F.8 Q&A 收尾
 00:55–01:00   缓冲 / 追问
 ```
 
 <!--
 讲者备注：
 - 这一页只讲者自己看，演讲时跳过。
-- 实际控场：如果讲到 §F.4 才 00:20，说明节奏偏快，可以在 §F.5 每个
+- 实际控场：如果讲到 F.4 才 00:20，说明节奏偏快，可以在 F.5 每个
   案例多补一两句。
-- 如果讲到 §F.4 已经 00:30，说明节奏偏慢，§F.5 压成 5 分钟、
-  §F.6 的 "五个短板" 只念两个。
+- 如果讲到 F.4 已经 00:30，说明节奏偏慢，F.5 压成 5 分钟、
+  F.6 的 "五个短板" 只念两个。
 -->
 
 ---
 
 # 附录幻灯 · 30 分钟压缩版
 
-**砍掉**：§F.4 后半段三份学术框架对照、§F.5、§F.6、§F.7 的陷阱页
+**砍掉**：F.4 后半段三份学术框架对照、F.5、F.6、F.7 的陷阱页
 
 **保留骨架**：
 
 | 节次 | 原长 | 压缩后 | 一句话中心论点 |
 |------|:---:|:---:|---|
-| §F.0 | 2′ | 2′ | 杠杆点移到环境 |
-| §F.1 | 7′ | 4′ | 四阶段演化 |
-| §F.2 | 7′ | 5′ | 定义 + 归属检验 |
-| §F.3 | 7′ | 5′ | 三护法 + 顺序翻转 |
-| §F.4 | 7′ | 5′ | 3×4 矩阵 |
-| §F.7 | 7′ | 5′ | 30/60/90 清单 |
-| §F.8 | 4′ | 4′ | 收尾 + Q&A |
+| F.0 | 2′ | 2′ | 杠杆点移到环境 |
+| F.1 | 7′ | 4′ | 四阶段演化 |
+| F.2 | 7′ | 5′ | 定义 + 归属检验 |
+| F.3 | 7′ | 5′ | 三护法 + 顺序翻转 |
+| F.4 | 7′ | 5′ | 3×4 矩阵 |
+| F.7 | 7′ | 5′ | 30/60/90 清单 |
+| F.8 | 4′ | 4′ | 收尾 + Q&A |
 
 <!--
 讲者备注：
@@ -606,12 +635,12 @@ A：不是。归属检验：塑造 commit **之前** = harness；塑造 commit *
 
 **加入**：**现场动手填一格 HarnessCard**
 
-- §F.4 矩阵讲完之后（00:30），每人发一张 HarnessCard 模板（附录 D）
+- F.4 矩阵讲完之后（00:30），每人发一张 HarnessCard 模板（附录 D）
 - 第一步（5 分钟）：每人挑 1 格，就你家仓库现状打 0–5 分
 - 第二步（10 分钟）：两两 pair，交换卡片互评，理由必须落到 **证据文件路径**
 - 第三步（10 分钟）：全员投票 "如果 Day 30 只能做一格，应该是哪一格"，得票最高的那格做 next-step owner 分配
 
-**收尾**：原 §F.8 三句带走话
+**收尾**：原 F.8 三句带走话
 
 <!--
 讲者备注：
@@ -629,12 +658,12 @@ A：不是。归属检验：塑造 commit **之前** = harness；塑造 commit *
 
 ## 本讲稿源码
 
-`book/source/_handson/13-one-hour-talk/SLIDES.md`
+`source/_handson/13-one-hour-talk/SLIDES.md`
 
 ## 配套阅读
 
-《Harnessing AI: The Craft of Shaping Agents》· 附录 F
+《Harnessing AI: The Craft of Shaping Agents》· Part 0 讲稿 + 附录 F
 
 ## 仓库
 
-<https://github.com/walterfan/lazy-ai-coder>
+<https://github.com/walterfan/async-harness-book>

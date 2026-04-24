@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 -->
 
-# Hands-On · Ch.05 Harness Anatomy
+# 动手环节 · 第 05 章 马具解剖
 
 Twelve artefacts, one per cell of the 3×4 matrix. The directory layout
 mirrors the matrix: `<guardian>-x-<zone>/<filename>`. Each file is

@@ -1,23 +1,16 @@
-# References
+# 参考文献
 
-This page lists every work referenced in the book. The first section shows
-the works actually cited in the prose; the second section shows the
-complete curated reading list maintained in ``_bib/*.bib`` (including works
-not yet cited, kept for Appendix&nbsp;C's use).
+本页列出本书引用到的每一件作品。第一小节展示正文中实际被引用到的那些作品；第二小节展示维护在 ``_bib/*.bib`` 中的完整精选阅读单（包括尚未被引用、但留给附录 C 使用的作品）。
 
-## Cited in this book
+## 本书实际引用的作品
 
 ```{bibliography}
 :style: alpha
 ```
 
-## Full curated reading list
+## 完整精选阅读单
 
-This section uses ``:all:`` to force rendering of every entry, so Appendix C
-can point at a comprehensive reading list even before every entry is cited.
-Per the ``sphinxcontrib-bibtex`` convention, entries shown only here (and
-not in the section above) are **not** resolvable via ``{cite}`` — they
-appear as orphan bibliography entries by design.
+本小节使用 ``:all:`` 强制渲染每一条条目，这样附录 C 就可以指向一份完整的阅读单 —— 哪怕此时还并非每一条都已被引用。按 ``sphinxcontrib-bibtex`` 的惯例，仅在本小节出现（而未在上面那个小节出现）的条目，是 **不可** 经由 ``{cite}`` 解析的 —— 它们按设计以"孤儿"书目条目的身份出现。
 
 ```{bibliography}
 :all:

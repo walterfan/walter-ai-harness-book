@@ -1,5 +1,5 @@
 @ECHO OFF
-REM Windows helper for lazy-code-kb-book — Harnessing AI Sphinx book.
+REM Windows helper for async-harness-book — Harnessing AI Sphinx book.
 REM
 REM Flat layout: source/ scripts/ pyproject.toml poetry.lock poetry.toml at
 REM the repo root; build output at build/. Every command is routed through
@@ -134,7 +134,7 @@ call :html
 goto end
 
 :help
-echo lazy-code-kb-book - Sphinx build helper (poetry run)
+echo async-harness-book - Sphinx build helper (poetry run)
 echo.
 echo Targets:
 echo   install             - poetry install (one-time)

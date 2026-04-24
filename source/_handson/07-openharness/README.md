@@ -1,6 +1,6 @@
 <!-- verified: 2026-04-17 · Ch.07 OpenHarness hands-on -->
 
-# Hands-On · Ch.07 OpenHarness
+# 动手环节 · 第 07 章 OpenHarness
 
 Two files:
 

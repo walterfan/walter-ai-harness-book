@@ -3,165 +3,150 @@ status: draft
 chapter-type: appendix
 ---
 
-# Appendix D — HarnessCard Template
+# 附录 D —— HarnessCard 模板
 
-The HarnessCard format is a standardised disclosure proposed by the CAR
-decomposition paper {cite}`car2025decomposition`. This appendix carries
-three pieces: a **blank template** (copy into your repo), two **filled
-instances** from Chapter 11 shown side-by-side for delta reading, and a
-**rubric** defining what each 0–5 score means.
+HarnessCard 格式是一份由 CAR 分解论文 {cite}`car2025decomposition` 所提出的标准化披露。本附录承载三块内容：一份 **空白模板**（拷进你自己的仓库）、两份取自第 11 章的 **已填样本**（并排展示以便读 delta）、以及一份 **评分尺**（定义 0–5 每一档的含义）。
 
 (apd-harnesscard-template)=
-## Blank template
+## 空白模板
 
-Copy the block below into a `HarnessCard.md` at your repo root. Replace
-every `…` with evidence specific to your harness.
+把下面这一整段拷进你仓库根目录的 `HarnessCard.md`。把每一个 `…` 替换成你自己马具的具体证据。
 
 ```markdown
-# HarnessCard — <project name>
+# HarnessCard —— <项目名>
 
-**Schema version.** CAR-HarnessCard v0.2.
-**Subject.** <repo URL> at commit <SHA>.
-**Observation window.** <YYYY-MM-DD> – <YYYY-MM-DD>.
-**License.** <SPDX identifier>.
+**Schema 版本。** CAR-HarnessCard v0.2。
+**对象。** <仓库 URL>，commit <SHA>。
+**观察窗口。** <YYYY-MM-DD> – <YYYY-MM-DD>。
+**许可证。** <SPDX 标识符>。
 
-## Layer notes (CAR)
+## 层级注释（CAR）
 
-| Layer    | Notes                                                    |
-|----------|----------------------------------------------------------|
-| Control  | …                                                        |
-| Agency   | …                                                        |
-| Runtime  | …                                                        |
+| 层级     | 注释                                                       |
+|----------|------------------------------------------------------------|
+| Control  | …                                                          |
+| Agency   | …                                                          |
+| Runtime  | …                                                          |
 
-## Zone notes (Bridle / Fence / Paddock / Groom)
+## 区域注释（缰绳 ／ 护栏 ／ 牧场 ／ 梳理）
 
-| Zone    | Notes                                                     |
-|---------|-----------------------------------------------------------|
-| Bridle  | …                                                         |
-| Fence   | …                                                         |
-| Paddock | …                                                         |
-| Groom   | …                                                         |
+| 区域    | 注释                                                        |
+|---------|-------------------------------------------------------------|
+| 缰绳    | …                                                           |
+| 护栏    | …                                                           |
+| 牧场    | …                                                           |
+| 梳理    | …                                                           |
 
-## 3 × 4 scorecard
+## 3 × 4 打分表
 
-| Cell            | Score (0–5) | Evidence (file / URL)           |
+| 格子            | 得分（0–5） | 证据（文件 ／ URL）             |
 |-----------------|-------------|----------------------------------|
-| SDD × Bridle    | …           | …                                |
-| SDD × Fence     | …           | …                                |
-| SDD × Paddock   | …           | …                                |
-| SDD × Groom     | …           | …                                |
-| TDD × Bridle    | …           | …                                |
-| TDD × Fence     | …           | …                                |
-| TDD × Paddock   | …           | …                                |
-| TDD × Groom     | …           | …                                |
-| MDD × Bridle    | …           | …                                |
-| MDD × Fence     | …           | …                                |
-| MDD × Paddock   | …           | …                                |
-| MDD × Groom     | …           | …                                |
+| SDD × 缰绳      | …           | …                                |
+| SDD × 护栏      | …           | …                                |
+| SDD × 牧场      | …           | …                                |
+| SDD × 梳理      | …           | …                                |
+| TDD × 缰绳      | …           | …                                |
+| TDD × 护栏      | …           | …                                |
+| TDD × 牧场      | …           | …                                |
+| TDD × 梳理      | …           | …                                |
+| MDD × 缰绳      | …           | …                                |
+| MDD × 护栏      | …           | …                                |
+| MDD × 牧场      | …           | …                                |
+| MDD × 梳理      | …           | …                                |
 
-**Means.** SDD = …, TDD = …, MDD = …, Overall = …
+**均值。** SDD ＝ …，TDD ＝ …，MDD ＝ …，总分 ＝ …
 
-**Primary citation.** ``<BibTeX key>``.
+**主要引用。** ``<BibTeX key>``。
 ```
 
-## Two filled instances — Chapter 11 Act 1 vs Act 4
+## 两份已填样本 —— 第 11 章 第一幕 vs 第四幕
 
-The two HarnessCards below are the Chapter 11 worked example's
-before-and-after pair, shown side-by-side with a delta column. The full
-cards live at `_handson/11-lazy-ai-coder/HarnessCard-Act1.md` and
-`_handson/11-lazy-ai-coder/HarnessCard-Act4.md`.
+下面这两份 HarnessCard，是第 11 章那份实例的"前后对"，并排展示，并附一列 delta。完整卡片住在 `_handson/11-lazy-ai-coder/HarnessCard-Act1.md` 与 `_handson/11-lazy-ai-coder/HarnessCard-Act4.md`。
 
 ```{list-table}
 :header-rows: 1
 :widths: 24 14 14 12 36
 
-* - Cell
-  - Act 1
-  - Act 4
+* - 格子
+  - 第一幕
+  - 第四幕
   - Delta
-  - Fix (from §14)
-* - SDD × Bridle
+  - 修复（来自 14）
+* - SDD × 缰绳
   - 3
   - 3
   - 0
-  - unchanged
-* - SDD × Fence
+  - 未变
+* - SDD × 护栏
   - 1
   - 4
   - +3
-  - `make prompts-lint` + schema validator (§14.1)
-* - SDD × Paddock
+  - `make prompts-lint` ＋ schema validator（修复 1）
+* - SDD × 牧场
   - 2
   - 2
   - 0
-  - unchanged
-* - SDD × Groom
+  - 未变
+* - SDD × 梳理
   - 1
   - 3
   - +2
-  - `sources-of-truth.md` index (§14.3)
-* - TDD × Bridle
+  - `sources-of-truth.md` 索引（修复 3）
+* - TDD × 缰绳
   - 2
   - 2
   - 0
-  - unchanged
-* - TDD × Fence
+  - 未变
+* - TDD × 护栏
   - 1
   - 4
   - +3
-  - MCP schema check + gitleaks (§14.2 + §14.4)
-* - TDD × Paddock
+  - MCP schema 检查 ＋ gitleaks（修复 2 ＋ 修复 4）
+* - TDD × 牧场
   - 3
   - 3
   - 0
-  - unchanged
-* - TDD × Groom
+  - 未变
+* - TDD × 梳理
   - 2
   - 2
   - 0
-  - unchanged
-* - MDD × Bridle
+  - 未变
+* - MDD × 缰绳
   - 1
   - 1
   - 0
-  - out of §14 scope
-* - MDD × Fence
+  - 不在 14 范围内
+* - MDD × 护栏
   - 2
   - 2
   - 0
-  - unchanged
-* - MDD × Paddock
+  - 未变
+* - MDD × 牧场
   - 2
   - 2
   - 0
-  - unchanged
-* - MDD × Groom
+  - 未变
+* - MDD × 梳理
   - 1
   - 1
   - 0
-  - unchanged
+  - 未变
 ```
 
-**SDD mean.** 1.75 → 3.00 (+1.25).
-**TDD mean.** 2.00 → 2.75 (+0.75).
-**MDD mean.** 1.50 → 1.50 (+0.00).
-**Overall.** 1.75 → 2.42 (+0.67).
+**SDD 均值。** 1.75 → 3.00（+1.25）。**TDD 均值。** 2.00 → 2.75（+0.75）。**MDD 均值。** 1.50 → 1.50（+0.00）。**总分。** 1.75 → 2.42（+0.67）。
 
-## Rubric — what each score means
+## 评分尺 —— 每一档分数的含义
 
-Every cell score is a 0–5 integer. The rubric is pinned to CAR-HarnessCard
-v0.2 {cite}`car2025decomposition` and applies uniformly across all
-twelve cells.
+每一格的得分都是 0–5 的整数。这把评分尺钉在 CAR-HarnessCard v0.2 {cite}`car2025decomposition` 上，十二格通用。
 
-| Score | Meaning                                                                                  |
+| 得分 | 含义 |
 |-------|-------------------------------------------------------------------------------------------|
-| **0** | No artefact of any kind for this cell. The guardian × zone intersection is absent.        |
-| **1** | An ad-hoc artefact exists but is not invoked on a cadence and carries no owner.           |
-| **2** | A committed artefact exists; a named role owns it; review cadence is irregular.           |
-| **3** | Artefact, owner, and cadence all present; the artefact is read by agents (SDD/TDD rows) or scraped (MDD row). |
-| **4** | Artefact is *enforced* — failure blocks commits, merges, or releases as appropriate.      |
-| **5** | Enforced **and** machine-verifiable **and** the artefact itself is revised on a declared cadence (quarterly or faster). |
+| **0** | 这一格没有任何形式的制品。这个"护法 × 区域"交点是空缺的。        |
+| **1** | 存在一件临时凑的制品，但并未按节奏被调用，也无人署名持有。           |
+| **2** | 存在一件已提交的制品；有一位署名角色持有它；评审节奏不规律。           |
+| **3** | 制品、所有者、节奏三者俱全；该制品被智能体读取（SDD／TDD 行）或被抓取（MDD 行）。 |
+| **4** | 该制品是 *被强制执行* 的 —— 不合格会按情况挡住 commit、合并或发布。      |
+| **5** | 被强制执行，**而且** 可被机器验证，**而且** 制品本身按一份声明过的节奏（季度或更快）被修订。 |
 
-A score of 4 requires an enforcement mechanism; a score of 5 additionally
-requires a meta-review schedule. Teams that cannot point to an
-enforcement artefact should score a 3, not a 4.
+拿到 4 分需要一个强制执行机制；拿到 5 分则在此之上还需要一份元评审时间表。指不出"强制执行制品"的团队，应该打 3 分，不是 4 分。

@@ -1,8 +1,8 @@
-<!-- verified: 2026-04-17 · Ch.11 Act 1 · Audit HarnessCard -->
+<!-- verified: 2026-04-24 · Ch.11 Act 1 · Audit HarnessCard -->
 
 # HarnessCard — Act 1 (Audit)
 
-**Subject.** `walterfan/lazy-ai-coder`, starting commit SHA: `<TBD — captured at §14 landing>`.
+**Subject.** `walterfan/async-harness-book`, starting commit SHA: `<TBD — captured when Act-3 fixes land>`.
 
 **Date.** 2026-04-17 (pre-fix baseline).
 
@@ -26,4 +26,4 @@
 **SDD mean.** 1.75.  **TDD mean.** 2.0.  **MDD mean.** 1.5.
 
 **Overall.** 1.75. This is the pre-fix baseline; Act 4 re-scores after
-the §14 fixes land.
+the 14 fixes land.

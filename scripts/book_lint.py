@@ -16,7 +16,7 @@ Design principles
     "exits non-zero" produces an error; anything it says "emits a warning"
     or "warning-only" produces a warning and does not fail the run.
 2.  **Status-aware enforcement.**  Structural checks that require full
-    content (Research Foundations, Hands-On, matrix cells, HarnessCards,
+    content (research foundations / 研究脉络, hands-on / 动手环节, matrix cells, HarnessCards,
     etc.) only hard-fail on files whose front-matter declares
     ``status: complete``.  ``status: draft`` / ``status: review`` files
     still get scanned, but missing sections downgrade to warnings so the
@@ -34,9 +34,9 @@ Usage
 
 ::
 
-    python3 book/scripts/book_lint.py book/source
+    python3 scripts/book_lint.py source
 
-The path argument defaults to ``book/source`` relative to the
+The path argument defaults to ``source`` relative to the
 repository root when invoked through the Makefile.
 """
 
@@ -55,7 +55,8 @@ from typing import Dict, Iterable, List, Optional, Set, Tuple
 
 CANONICAL_EN_TITLE = "Harnessing AI: The Craft of Shaping Agents"
 CANONICAL_ZH_TITLE = "《驾驭工程：给 AI 套上缰绳》"
-FORBIDDEN_ZH_FRAGMENTS_IN_CONF = ("驾驭工程", "套上缰绳")
+CANONICAL_ZH_H1 = "驾驭工程：给 AI 套上缰绳"
+CANONICAL_SOURCE_TITLES = (CANONICAL_EN_TITLE, CANONICAL_ZH_H1)
 
 # Chapters that are exempt from dual-track enforcement (see check (d)).
 DUAL_TRACK_EXEMPT = {
@@ -63,8 +64,8 @@ DUAL_TRACK_EXEMPT = {
     "colophon.md",
 }
 DUAL_TRACK_EXEMPT_PREFIXES = (
+    "chapters/00-presentation/",
     "chapters/13-appendices/",
-    "part0-presentation/",
 )
 
 # Expected appendix filenames in alphabetical order (check (m)).
@@ -74,6 +75,7 @@ EXPECTED_APPENDICES = [
     "c-reading-list.md",
     "d-harnesscard.md",
     "e-claude-md.md",
+    "f-engineer-playbook.md",
 ]
 
 # Citation-key convention for check (e).  Accepts:
@@ -84,6 +86,9 @@ EXPECTED_APPENDICES = [
 # characters for the slug.  Case-insensitive on the year suffix side is
 # intentionally *not* allowed; BibTeX conventionally uses all-lowercase keys.
 BIBKEY_CONVENTION = re.compile(r"^[a-z][a-z0-9]{2,}_?\d{4}_?[a-z0-9]{2,}$")
+
+RESEARCH_FOUNDATIONS_H2 = ("research foundations", "研究脉络")
+HANDS_ON_H2 = ("hands-on", "hands on", "动手环节")
 
 
 # ---------------------------------------------------------------------------
@@ -335,13 +340,13 @@ def check_bibkey_convention(run: LintRun, bib_files: List[Path]) -> None:
                     bib,
                     f"BibTeX key '{key}' does not match convention "
                     f"`lastauthor_year_shortslug` (downgraded to warning while the "
-                    f"key namespace is being seeded; will promote to error after §13.1 lands)",
+                    f"key namespace is being seeded; will promote to error after 13.1 lands)",
                     line,
                 )
 
 
 def check_dual_track(run: LintRun, chapters: List[ChapterInfo]) -> None:
-    """Check (d): Research Foundations + Hands-On presence.
+    """Check (d): research foundations + hands-on presence.
 
     Exempts the Foreword, Appendices, and Colophon.  Missing sections hard-fail
     only on ``status: complete`` chapters; ``status: draft`` / ``status: review``
@@ -355,10 +360,18 @@ def check_dual_track(run: LintRun, chapters: List[ChapterInfo]) -> None:
             continue
         headings_lower = {h.lower() for h in ch.h2_headings}
         missing: List[str] = []
-        if not any("research foundations" in h for h in headings_lower):
-            missing.append("## Research Foundations")
-        if not any("hands-on" in h or "hands on" in h for h in headings_lower):
-            missing.append("## Hands-On")
+        if not any(
+            needle in h
+            for h in headings_lower
+            for needle in RESEARCH_FOUNDATIONS_H2
+        ):
+            missing.append("## 研究脉络")
+        if not any(
+            needle in h
+            for h in headings_lower
+            for needle in HANDS_ON_H2
+        ):
+            missing.append("## 动手环节")
         for sect in missing:
             msg = f"dual-track chapter is missing required section '{sect}'"
             if ch.status == "complete":
@@ -445,33 +458,27 @@ def check_book_title_drift(run: LintRun) -> None:
     conf_py = src / "conf.py"
     if conf_py.is_file():
         text = conf_py.read_text(encoding="utf-8")
-        if f'project = "{CANONICAL_EN_TITLE}"' not in text and \
-           f"project = '{CANONICAL_EN_TITLE}'" not in text:
+        project_ok = any(
+            f'project = "{title}"' in text or f"project = '{title}'" in text
+            for title in CANONICAL_SOURCE_TITLES
+        )
+        if not project_ok:
             run.error(
                 "o",
                 conf_py,
-                f'conf.py must set `project = "{CANONICAL_EN_TITLE}"` exactly',
+                "conf.py must set `project` to the canonical English or "
+                "Chinese book title",
             )
-        for frag in FORBIDDEN_ZH_FRAGMENTS_IN_CONF:
-            if frag in text:
-                line_no = _first_line_containing(text, frag)
-                run.error(
-                    "o",
-                    conf_py,
-                    f"Chinese title fragment '{frag}' must not appear in conf.py "
-                    f"— the Chinese title belongs in "
-                    f"locale/zh_CN/LC_MESSAGES/index.po only",
-                    line_no,
-                )
 
     index_md = src / "index.md"
     if index_md.is_file():
         first_h1 = _first_h1(index_md.read_text(encoding="utf-8"))
-        if first_h1 != CANONICAL_EN_TITLE:
+        if first_h1 not in CANONICAL_SOURCE_TITLES:
             run.error(
                 "o",
                 index_md,
-                f"H1 must be exactly '# {CANONICAL_EN_TITLE}' "
+                f"H1 must be either '# {CANONICAL_EN_TITLE}' or "
+                f"'# {CANONICAL_ZH_H1}' "
                 f"(found: '# {first_h1 or '<none>'}')",
             )
 
@@ -503,7 +510,7 @@ def check_tauri_chapter_misplacement(run: LintRun, chapters_dir: Path) -> None:
             "dedicated Tauri chapter detected — the Tauri-Todo hands-on was "
             "merged into Ch.06; move this content under "
             "_handson/06-operating-a-harness/tauri-todo/ and reference it from "
-            "Chapter 06's ## Hands-On section",
+            "Chapter 06's ## 动手环节 section",
         )
 
 
@@ -545,8 +552,8 @@ def check_closed_source_disclaimer(run: LintRun, chapters: List[ChapterInfo]) ->
 # ---------------------------------------------------------------------------
 
 # Order-sensitive prefixes of the mandatory H2s in Chapter 03.
-_CH03_REQUIRED_H2_PREFIXES: List[str] = ["§03.1", "§03.2", "§03.3", "§03.4"]
-_CH03_OPTIONAL_H2_PREFIX: str = "§03.5"
+_CH03_REQUIRED_H2_PREFIXES: List[str] = ["03.1", "03.2", "03.3", "03.4"]
+_CH03_OPTIONAL_H2_PREFIX: str = "03.5"
 
 
 def _word_count(text: str) -> int:
@@ -559,15 +566,15 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
     Rules (all gated on ``status: complete``; downgraded to warnings for draft):
 
     1. Four mandatory H2 sections present and appearing in the order
-       §03.1 → §03.2 → §03.3 → §03.4.
-    2. §03.1 contains a single ``> ...`` blockquote of ≤ 40 words (the
+       03.1 → 03.2 → 03.3 → 03.4.
+    2. 03.1 contains a single ``> ...`` blockquote of ≤ 40 words (the
        one-sentence field definition) followed by elaboration prose whose first
        paragraph is ≤ 150 words.
-    3. §03.3 contains a comparison table — either a MyST ``{list-table}``
+    3. 03.3 contains a comparison table — either a MyST ``{list-table}``
        directive or a pipe table — and each non-header row carries ≥ 1
        ``{cite}`` role.
-    4. §03.4's minimal example, taken as the total non-blank lines of embedded
-       fenced code / ``{literalinclude}`` blocks within §03.4, is ≤ 40 lines
+    4. 03.4's minimal example, taken as the total non-blank lines of embedded
+       fenced code / ``{literalinclude}`` blocks within 03.4, is ≤ 40 lines
        (the three 10-line fragments plus headroom).
     """
 
@@ -622,8 +629,8 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
             if current_key is not None:
                 sections[current_key] = "".join(buf)
             title = hm.group(1).strip()
-            # Key sections by the §XX.Y prefix when present so lookup is stable.
-            prefix_match = re.match(r"(§0?3\.\d)", title)
+            # Key sections by the XX.Y prefix when present so lookup is stable.
+            prefix_match = re.match(r"(0?3\.\d)", title)
             current_key = prefix_match.group(1) if prefix_match else title
             buf = []
         else:
@@ -632,20 +639,20 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
     if current_key is not None:
         sections[current_key] = "".join(buf)
 
-    # ---- 2. §03.1 length bounds --------------------------------------------
-    s1 = sections.get("§03.1")
+    # ---- 2. 03.1 length bounds --------------------------------------------
+    s1 = sections.get("03.1")
     if s1 is not None:
         quote_match = re.search(
             r"(?:^|\n)\s*>\s*(.+?)(?=\n\s*\n|\Z)", s1, re.DOTALL
         )
         if not quote_match:
-            fail("§03.1 must open with a '> ...' blockquote one-sentence definition")
+            fail("03.1 must open with a '> ...' blockquote one-sentence definition")
         else:
             quote_text = re.sub(r"\s+", " ", quote_match.group(1)).strip(" *")
             wc = _word_count(quote_text)
             if wc > 40:
                 fail(
-                    f"§03.1 blockquote definition is {wc} words "
+                    f"03.1 blockquote definition is {wc} words "
                     f"(must be ≤ 40)"
                 )
             rest = s1[quote_match.end():].lstrip()
@@ -653,12 +660,12 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
             fp_wc = _word_count(first_para)
             if fp_wc > 150:
                 fail(
-                    f"§03.1 first elaboration paragraph is {fp_wc} words "
+                    f"03.1 first elaboration paragraph is {fp_wc} words "
                     f"(must be ≤ 150)"
                 )
 
-    # ---- 3. §03.3 comparison table + per-row citations ---------------------
-    s3 = sections.get("§03.3")
+    # ---- 3. 03.3 comparison table + per-row citations ---------------------
+    s3 = sections.get("03.3")
     if s3 is not None:
         has_list_table = "```{list-table}" in s3 or "```{csv-table}" in s3
         pipe_rows = [
@@ -667,7 +674,7 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
         ]
         has_pipe_table = len(pipe_rows) >= 3  # header + separator + ≥1 data
         if not (has_list_table or has_pipe_table):
-            fail("§03.3 must contain a comparison table (list-table or pipe table)")
+            fail("03.3 must contain a comparison table (list-table or pipe table)")
         else:
             # For list-tables, a data row starts with '* - ' at column 0 and
             # subsequent '  - ' continuation rows belong to the same row.
@@ -680,17 +687,17 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
                 block = m.group(1) if m else ""
                 row_chunks = re.split(r"(?m)^\s*\*\s*-\s*", block)[1:]
                 if len(row_chunks) <= 1:
-                    fail("§03.3 comparison table must have ≥ 1 data row under its header")
+                    fail("03.3 comparison table must have ≥ 1 data row under its header")
                 else:
                     for idx, chunk in enumerate(row_chunks[1:], start=1):
                         if "{cite" not in chunk:
                             fail(
-                                f"§03.3 comparison-table data row #{idx} "
+                                f"03.3 comparison-table data row #{idx} "
                                 f"must carry ≥ 1 `{{cite}}` role"
                             )
 
-    # ---- 4. §03.4 artefact line budget -------------------------------------
-    s4 = sections.get("§03.4")
+    # ---- 4. 03.4 artefact line budget -------------------------------------
+    s4 = sections.get("03.4")
     if s4 is not None:
         total_code_lines = 0
         # Count fenced code blocks.
@@ -709,7 +716,7 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
                 )
         if total_code_lines > 40:
             fail(
-                f"§03.4 minimal example totals {total_code_lines} non-blank "
+                f"03.4 minimal example totals {total_code_lines} non-blank "
                 f"code lines (must be ≤ 40 — three 10-line fragments plus headroom)"
             )
 
@@ -721,7 +728,7 @@ def check_chapter_03_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
 # ---------------------------------------------------------------------------
 
 # ---------------------------------------------------------------------------
-# §13.3.g/h — Chapter 05 structural checks (live)
+# 13.3.g/h — Chapter 05 structural checks (live)
 # ---------------------------------------------------------------------------
 
 _CH05_EXPECTED_CELLS: List[str] = [
@@ -729,6 +736,21 @@ _CH05_EXPECTED_CELLS: List[str] = [
     "TDD × Bridle", "TDD × Fence", "TDD × Paddock", "TDD × Groom",
     "MDD × Bridle", "MDD × Fence", "MDD × Paddock", "MDD × Groom",
 ]
+
+_ZONE_ZH_TO_EN = {
+    "缰绳": "Bridle",
+    "护栏": "Fence",
+    "牧场": "Paddock",
+    "梳理": "Groom",
+}
+
+
+def _canonical_cell_key(title: str) -> str:
+    """Return the canonical English Guardian × Zone key from an H3 title."""
+    key = re.split(r"\s+[—-]+\s+", title, maxsplit=1)[0].strip()
+    for zh, en in _ZONE_ZH_TO_EN.items():
+        key = key.replace(zh, en)
+    return key
 
 
 def check_chapter_05_structure(run: LintRun, chapters: List[ChapterInfo]) -> None:
@@ -753,7 +775,7 @@ def check_chapter_05_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
             run.warn(cid, target.path, f"{msg} (downgraded: status={target.status})")
 
     # (g) Provenance section presence + ≥3 distinct cite keys inside it.
-    prov_re = re.compile(r"^##\s+Provenance\b.*?$(.*?)(?=^##\s|\Z)",
+    prov_re = re.compile(r"^##\s+(?:Provenance\b|出处\b).*?$(.*?)(?=^##\s|\Z)",
                          re.MULTILINE | re.DOTALL)
     m = prov_re.search(target.body)
     if not m:
@@ -796,11 +818,7 @@ def check_chapter_05_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
             next_boundary = min(next_boundary, nh2.start())
         found_cells.append((title, start, next_boundary))
 
-    # Extract just the "Guardian × Zone" prefix (everything before " — ").
-    def cell_key(title: str) -> str:
-        return re.split(r"\s+[—-]\s+", title, maxsplit=1)[0].strip()
-
-    found_keys = [cell_key(t) for (t, _, _) in found_cells]
+    found_keys = [_canonical_cell_key(t) for (t, _, _) in found_cells]
     missing = [c for c in _CH05_EXPECTED_CELLS if c not in found_keys]
     if missing:
         report(
@@ -823,7 +841,7 @@ def check_chapter_05_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
 
     # Per-cell: ≥1 {cite} + ≥1 {literalinclude}.
     for title, start, end in found_cells:
-        key = cell_key(title)
+        key = _canonical_cell_key(title)
         if key not in _CH05_EXPECTED_CELLS:
             continue
         body = cell_body(start, end)
@@ -837,7 +855,7 @@ def check_chapter_05_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
 
 
 # ---------------------------------------------------------------------------
-# §13.3.j — Case-study 12-cell highlight map
+# 13.3.j — Case-study 12-cell highlight map
 # ---------------------------------------------------------------------------
 
 def check_case_study_highlight_map(
@@ -867,7 +885,8 @@ def check_case_study_highlight_map(
         for m in h2_re.finditer(ch.body):
             title_lower = m.group(1).lower()
             if ("highlight map" in title_lower) or ("12-cell" in title_lower) \
-                    or ("twelve-cell" in title_lower):
+                    or ("twelve-cell" in title_lower) \
+                    or ("十二格" in title_lower and "亮点" in title_lower):
                 map_h2 = m
                 break
         if map_h2 is None:
@@ -879,7 +898,10 @@ def check_case_study_highlight_map(
         nxt = re.search(r"^##\s+", ch.body[start:], re.MULTILINE)
         section = ch.body[start:start + nxt.start()] if nxt else ch.body[start:]
         # Count distinct "Guardian × Zone" labels in the map.
-        covered = [c for c in _CH05_EXPECTED_CELLS if c in section]
+        canonical_section = section
+        for zh, en in _ZONE_ZH_TO_EN.items():
+            canonical_section = canonical_section.replace(zh, en)
+        covered = [c for c in _CH05_EXPECTED_CELLS if c in canonical_section]
         if len(covered) < 12:
             missing = [c for c in _CH05_EXPECTED_CELLS if c not in covered]
             report(
@@ -889,12 +911,18 @@ def check_case_study_highlight_map(
 
 
 # ---------------------------------------------------------------------------
-# §13.3.k — Chapter 11 four-act structure + commit SHA resolution
+# 13.3.k — Chapter 11 four-act structure + commit SHA resolution
 # ---------------------------------------------------------------------------
 
 _CH11_EXPECTED_ACTS: List[str] = [
     "Act 1", "Act 2", "Act 3", "Act 4",
 ]
+_CH11_EXPECTED_ACT_ALIASES: Dict[str, Tuple[str, ...]] = {
+    "Act 1": ("Act 1", "第一幕"),
+    "Act 2": ("Act 2", "第二幕"),
+    "Act 3": ("Act 3", "第三幕"),
+    "Act 4": ("Act 4", "第四幕"),
+}
 
 _SHA_RE = re.compile(r"\b([0-9a-f]{7,40})\b")
 
@@ -920,8 +948,12 @@ def check_chapter_11_structure(run: LintRun, chapters: List[ChapterInfo],
     # Four-act order.
     act_indices: List[int] = []
     for act in _CH11_EXPECTED_ACTS:
+        aliases = _CH11_EXPECTED_ACT_ALIASES[act]
         found = next(
-            (i for i, h in enumerate(target.h2_headings) if h.startswith(act)),
+            (
+                i for i, h in enumerate(target.h2_headings)
+                if any(h.startswith(alias) for alias in aliases)
+            ),
             None,
         )
         if found is None:
@@ -934,7 +966,14 @@ def check_chapter_11_structure(run: LintRun, chapters: List[ChapterInfo],
     # Act 3 commit SHA resolution (only when book status is complete).
     # In draft/review, we warn on TBD / placeholder SHAs but don't fail.
     sections = _split_by_h2(target.body)
-    act3 = next((sec for title, sec in sections if title.startswith("Act 3")), "")
+    act3_aliases = _CH11_EXPECTED_ACT_ALIASES["Act 3"]
+    act3 = next(
+        (
+            sec for title, sec in sections
+            if any(title.startswith(alias) for alias in act3_aliases)
+        ),
+        "",
+    )
     placeholder_markers = ("TBD", "tbd", "xxxxxxx", "TODO", "<commit>")
     has_placeholder = any(p in act3 for p in placeholder_markers)
 
@@ -995,19 +1034,19 @@ def _split_by_h2(body: str) -> List[Tuple[str, str]]:
 
 
 # ---------------------------------------------------------------------------
-# §13.3.l — Chapter 12 conclusion structure
+# 13.3.l — Chapter 12 conclusion structure
 # ---------------------------------------------------------------------------
 
-_CH12_REQUIRED_H2_PREFIXES = ["§12.1", "§12.2", "§12.3"]
+_CH12_REQUIRED_H2_PREFIXES = ["12.1", "12.2", "12.3"]
 
 
 def check_chapter_12_structure(run: LintRun, chapters: List[ChapterInfo]) -> None:
     """Check (l): Chapter 12 conclusion mandatory sections + refs.
 
-    • §12.1 contains ≥ 12 ``{ref}`` roles pointing into Ch.05 (cell labels).
-    • §12.2 every bullet carries a matrix-cell ``{ref}`` + a ``_handson/``
+    • 12.1 contains ≥ 12 ``{ref}`` roles pointing into Ch.05 (cell labels).
+    • 12.2 every bullet carries a matrix-cell ``{ref}`` + a ``_handson/``
       pointer; Day 61–90 sub-section references Appendix D.
-    • §12.3 per-bullet ≥ 1 ``{cite}``; ≤ 7 bullets total.
+    • 12.3 per-bullet ≥ 1 ``{cite}``; ≤ 7 bullets total.
     """
     target = next(
         (ch for ch in chapters if ch.path.name == "12-where-we-go-from-here.md"),
@@ -1053,18 +1092,18 @@ def check_chapter_12_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
                 return body
         return None
 
-    # §12.1 ≥ 12 {ref} roles.
-    s1 = section_starting_with("§12.1")
+    # 12.1 ≥ 12 {ref} roles.
+    s1 = section_starting_with("12.1")
     if s1 is not None:
         ref_count = len(re.findall(r"\{ref\}`[^`]+`", s1))
         if ref_count < 12:
             report(
-                f"§12.1 carries only {ref_count} `{{ref}}` roles; "
+                f"12.1 carries only {ref_count} `{{ref}}` roles; "
                 "must reference all 12 Ch.05 matrix cells"
             )
 
-    # §12.2 bullets: each bullet ≥ 1 {ref} and a `_handson/` pointer.
-    s2 = section_starting_with("§12.2")
+    # 12.2 bullets: each bullet ≥ 1 {ref} and a `_handson/` pointer.
+    s2 = section_starting_with("12.2")
     if s2 is not None:
         # A "bullet" is any line starting with "- " or "* " at col 0-3.
         bullet_re = re.compile(r"^\s{0,3}[-*]\s+(.+?)(?=\n(?:\s{0,3}[-*]\s|\s*\n|##|\Z))",
@@ -1079,14 +1118,14 @@ def check_chapter_12_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
                 missing_handson.append(i)
         if missing_ref:
             report(
-                f"§12.2 has {len(missing_ref)} bullet(s) without a "
+                f"12.2 has {len(missing_ref)} bullet(s) without a "
                 f"`{{ref}}` to a Ch.05 matrix cell (bullet #s: "
                 + ", ".join(str(i) for i in missing_ref[:8])
                 + ")"
             )
         if missing_handson:
             report(
-                f"§12.2 has {len(missing_handson)} bullet(s) without a "
+                f"12.2 has {len(missing_handson)} bullet(s) without a "
                 f"`_handson/` pointer (bullet #s: "
                 + ", ".join(str(i) for i in missing_handson[:8])
                 + ")"
@@ -1096,30 +1135,30 @@ def check_chapter_12_structure(run: LintRun, chapters: List[ChapterInfo]) -> Non
             r"(###\s+Day\s*61[–\-].*?)(?=\n###|\Z)", s2, re.DOTALL | re.IGNORECASE,
         )
         if day_61_90 is None:
-            report("§12.2 is missing a 'Day 61–90' sub-section")
+            report("12.2 is missing a 'Day 61–90' sub-section")
         else:
             sub = day_61_90.group(1)
             if "apd-harnesscard-template" not in sub \
                     and "Appendix D" not in sub \
                     and "harnesscard" not in sub.lower():
                 report(
-                    "§12.2 Day 61–90 sub-section must reference Appendix D "
+                    "12.2 Day 61–90 sub-section must reference Appendix D "
                     "(HarnessCard template)"
                 )
 
-    # §12.3 bullets: ≤ 7, each ≥ 1 {cite}.
-    s3 = section_starting_with("§12.3")
+    # 12.3 bullets: ≤ 7, each ≥ 1 {cite}.
+    s3 = section_starting_with("12.3")
     if s3 is not None:
         bullets = re.findall(r"^\s{0,3}[-*]\s+(.+?)(?=\n(?:\s{0,3}[-*]\s|\s*\n##|\s*\n\Z))",
                              s3, re.MULTILINE | re.DOTALL)
         if len(bullets) > 7:
             report(
-                f"§12.3 has {len(bullets)} bullets (maximum allowed is 7)"
+                f"12.3 has {len(bullets)} bullets (maximum allowed is 7)"
             )
         for i, b in enumerate(bullets, start=1):
             if "{cite" not in b:
                 report(
-                    f"§12.3 bullet #{i} has no `{{cite}}` role "
+                    f"12.3 bullet #{i} has no `{{cite}}` role "
                     "(every open question must cite prior art)"
                 )
 
@@ -1166,9 +1205,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument(
         "source",
         nargs="?",
-        default="book/source",
+        default="source",
         type=Path,
-        help="Path to book/source (default: %(default)s)",
+        help="Path to source (default: %(default)s)",
     )
     args = parser.parse_args(argv)
 

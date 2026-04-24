@@ -1,6 +1,6 @@
 # Stage 4 · Harness Engineering
 ```markdown
-# CLAUDE.md  (fragment)
+# AGENTS.md  (fragment)
 ## Skills
 - `add-cli-subcommand` — for any CLI extension
 ## Fences (pre-commit)
