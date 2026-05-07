@@ -1,0 +1,73 @@
+memory_system:
+  goal: "Make agent experience durable, bounded, reviewable, and recallable."
+  rule_of_thumb: "Store rules in reviewable artifacts first; let memory index them, not replace them."
+
+layers:
+  temp:
+    purpose: "Session-scoped working state."
+    examples:
+      - "unfinished tool parameters"
+      - "temporary session notes"
+      - "mid-turn observations"
+    recall: "SystemContextForSession(session_id) only"
+    eviction: "session end or TTL"
+    embedding: "disabled"
+    guardrail: "Never include temp memories in global prompt context."
+
+  short:
+    purpose: "Recent facts that help continuity but should decay."
+    examples:
+      - "recent user preference"
+      - "current task summary"
+      - "recent incident note"
+    recall: "keyword, metadata, and optional semantic recall"
+    eviction: "retention age, row budget, low importance, low access count"
+    embedding: "async, best effort"
+    guardrail: "Do not let short-term memories outrank long-term rules."
+
+  long:
+    purpose: "Stable rules, best practices, pitfalls, preferences, and decisions."
+    examples:
+      - "repo rule from AGENTS.md"
+      - "workflow from SKILL.md"
+      - "architecture decision from ADR"
+      - "common pitfall from postmortem"
+    recall: "highest priority; dedupe by memory_key"
+    eviction: "explicit overwrite or protected historical pruning only"
+    embedding: "async, optional"
+    required_fields:
+      - memory_key
+      - summary
+      - source
+      - verified_at
+      - importance
+      - tags
+    guardrail: "Long-term summaries are sacred by default; embeddings are expendable."
+
+  archive:
+    purpose: "Cold memory for old low-frequency summaries."
+    examples:
+      - "old short-term task summaries"
+      - "closed incident notes"
+      - "expired project context"
+    recall: "explicit query only"
+    eviction: "age, row count, and store-size budget"
+    embedding: "drop before deleting summaries"
+    guardrail: "Archive is not permanent storage."
+
+  meta:
+    purpose: "Configuration and maintenance state."
+    examples:
+      - "schema version"
+      - "import markers"
+      - "vector availability"
+      - "last groom run"
+    recall: "never shown directly to the model"
+    eviction: "system lifecycle"
+    guardrail: "Use meta data to make drift observable."
+
+storage_budget:
+  active_db_size: "roll over before unbounded growth"
+  total_store_size: "prune archive, short-term rows, and embeddings before protected long-term summaries"
+  raw_content: "truncate or omit; keep summary as the durable recall unit"
+  logs: "never log raw memory bodies or embedding blobs"

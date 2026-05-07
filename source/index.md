@@ -37,6 +37,7 @@ chapters/02-four-stage-evolution
 :caption: 第二部分 · 是什么
 
 chapters/03-what-is-harness-engineering
+chapters/03a-agent-memory-anatomy
 chapters/03b-agent-loop-anatomy
 ```
 
