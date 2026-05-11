@@ -21,7 +21,7 @@ name = "harnessing-ai-book"
 version = "0.1.0"
 description = "Sphinx build toolchain for 'Harnessing AI: The Craft of Shaping Agents' / 《驾驭工程：给 AI 套上缰绳》"
 authors = ["Walter Fan"]
-license = "CC-BY-SA-4.0"
+license = "CC-BY-NC-ND-4.0"
 readme = "README.md"
 # Not a distributable package — prevents poetry from trying to build a wheel
 # and keeps install fast.
@@ -33,7 +33,7 @@ python = ">=3.11,<4.0"
 # compatible-release cap prevents silent major-version jumps.
 Sphinx = "~=8.1"
 myst-parser = "~=4.0"
-sphinx-rtd-theme = "~=3.0"
+sphinx-book-theme = "~=1.1"
 sphinx-copybutton = "~=0.5"
 sphinx-design = "~=0.6"
 sphinxcontrib-mermaid = "~=1.0"

@@ -88,9 +88,10 @@ bibtex_reference_style = "author_year"
 # ---------------------------------------------------------------------------
 # HTML output
 # ---------------------------------------------------------------------------
-# Read-the-Docs-style theme; widely familiar and plays well with the
-# Chinese-first source tree.
-html_theme = "sphinx_rtd_theme"
+# Long-form book theme from the Executable Books project; native sidebar
+# TOC, right-side page-level TOC, and a repository button suitable for
+# the published GitHub Pages site.
+html_theme = "sphinx_book_theme"
 # Short string that surfaces in browser tabs and PDF-printed headers.
 # MUST contain the substring ``Harness Engineering`` (book-lint rule).
 html_title = "驾驭工程 — Harness Engineering"
@@ -111,19 +112,26 @@ exclude_patterns = [
 
 # Custom CSS loaded on every page.
 html_css_files = ["custom.css"]
-# Options tuned for a long-form narrative: collapse deep TOCs, show
-# sticky navigation, and hide the "View page source" link since readers
-# are pointed to the repo via the Colophon instead.
+# Options tuned for a long-form narrative: keep the left sidebar TOC
+# shallow, expose a right-side in-page TOC at heading level 2, and wire
+# the "repository" button to the published GitHub mirror so readers can
+# jump straight to source.
 html_theme_options = {
-    "navigation_depth": 2,
-    "collapse_navigation": True,
-    "sticky_navigation": True,
-    # `display_version` was removed in sphinx_rtd_theme 3.x; the release
-    # is now surfaced via `html_context` if desired.
-    "prev_next_buttons_location": "bottom",
+    "show_navbar_depth": 2,
+    "show_toc_level": 2,
+    "repository_url": "https://github.com/walterfan/walter-ai-harness-book",
+    "repository_branch": "master",
+    "path_to_docs": "source",
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "use_edit_page_button": False,
+    "home_page_in_toc": True,
+    # Replaces RTD's "prev_next_buttons_location"; book theme renders
+    # them at the bottom by default, this is explicit for clarity.
+    "show_prev_next": True,
 }
 # Turn off the default "View source" link; we point readers at the repo
-# instead via the Colophon end-page.
+# instead via the Colophon end-page and the theme's repository button.
 html_show_sourcelink = False
 
 # ---------------------------------------------------------------------------

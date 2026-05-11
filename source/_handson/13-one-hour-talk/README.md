@@ -60,5 +60,5 @@ npx @marp-team/marp-cli SLIDES.md --pptx -o talk.pptx
 
 ## 许可证
 
-同宿主仓库：**CC-BY-SA-4.0**（正文 / 幻灯内容）· **MIT**（若你把某
+同宿主仓库：**CC-BY-NC-ND-4.0**（正文 / 幻灯内容）· **MIT**（若你把某
 一页当代码样例引用）。

@@ -3,7 +3,7 @@ status: draft
 chapter-type: presentation
 ---
 
-# Part 0 · 部门分享：给 AI 套上缰绳（60 分钟）
+# Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）
 
 > *把整本《Harnessing AI》压成一小时，让部门同事一次听懂
 > Harness Engineering 在讲什么、为什么非做不可、以及周一上班
@@ -13,7 +13,7 @@ chapter-type: presentation
 :class: tip
 
 这一部分**不是**一章独立的技术内容，而是整本书的 **60 分钟分享版**。
-面向的是 *部门内部同事* —— 前后端工程师，大多数人用过 Cursor /
+面向的是 *同行* —— 前后端工程师，大多数人用过 Cursor /
 Codex / Claude Code，但没专门做过 harness 系统设计。节奏是
 **8 段 × 约 7 分钟 + Q&A 4 分钟**。
 

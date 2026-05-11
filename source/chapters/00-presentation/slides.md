@@ -31,7 +31,7 @@ Bridle / Fence / Paddock / Groom / SDD / TDD / MDD / HarnessCard`
 ## Slide 1 —— 标题页
 
 - Harnessing AI —— 给 AI 套上缰绳
-- 一小时部门内部分享
+- 一小时公开分享
 - Walter Fan · 2026
 
 > 开场不要急着讲话。让标题停 10 秒。报家门 1 句。

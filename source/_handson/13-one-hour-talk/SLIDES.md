@@ -3,8 +3,8 @@ marp: true
 theme: default
 paginate: true
 size: 16:9
-header: 'Harnessing AI · 一小时部门内部分享'
-footer: '© Walter Fan · CC-BY-SA-4.0'
+header: 'Harnessing AI · 一小时公开分享'
+footer: '© Walter Fan · CC-BY-NC-ND-4.0'
 style: |
   section {
     font-family: "PingFang SC", "Source Han Sans SC", "Hiragino Sans GB", sans-serif;
@@ -48,7 +48,7 @@ SLIDES.md —— 给《Harnessing AI》Part 0 一小时分享配套幻灯片
 
 # Harnessing AI —— 给 AI 套上缰绳
 
-## 一小时部门内部分享
+## 一小时公开分享
 
 Walter Fan · 2026
 
@@ -180,7 +180,7 @@ Prompt   →  Context  →  Skill     →  Harness
 <!--
 讲者备注（45 秒）：
 - 这个误读是同事最常见的一个，专门拎一页讲。
-- 举一个部门内部的例子："小李昨天调通的那条 prompt，今天小王一
+- 举一个团队内部的例子："小李昨天调通的那条 prompt，今天小王一
   上手，又得重新调一次 —— 这就是 prompt 工程的天花板。harness
   要做的是：小李调通之后，把结论写成 `AGENTS.md` 里的一条规则，
   从此仓库里所有人 + 所有 agent 免费继承。"
