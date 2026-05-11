@@ -7,7 +7,7 @@ chapter-type: appendix
 
 本附录把第 03、04、05、06 章（含 Tauri-Todo 那条弧线）中的 hands-on 片段，合并成一份 `CLAUDE.md`，供仍以 Claude Code 为主的仓库直接使用。若仓库有多个智能体客户端，优先把这些内容放进 `AGENTS.md`；`CLAUDE.md` 应作为 symlink 或薄镜像存在。每一块都带一条 `<!-- origin: ..., zone: ..., guardian: ... -->` 头注，这样生成出来的文件，仍然可以对照十二格矩阵审计。
 
-**许可证。** 下面这份模板以 MIT 协议发布；拷贝、修改、再分发皆不需要额外致谢。引用记录住在 `_bib/*.bib` 里，不会随模板一起旅行；CAR HarnessCard schema {cite}`car2025decomposition` 是它被设计去对接的上游披露格式。
+**许可证。** 下面这份模板以 Apache-2.0 协议发布；拷贝、修改、再分发时，请保留宿主仓库的 `LICENSE` 与 `NOTICE`（或在你自己的仓库里附等价说明），并在修改处留下变更标记，这是 Apache-2.0 的署名要求。引用记录住在 `_bib/*.bib` 里，不会随模板一起旅行；CAR HarnessCard schema {cite}`car2025decomposition` 是它被设计去对接的上游披露格式。
 
 ## 合并后的兼容模板
 
@@ -107,7 +107,7 @@ naming which cell's score moved and by how much.
 
 ## 粘贴使用说明
 
-上面这段以 MIT 协议发布，且刻意全为文本——没有图片、没有外部抓取、
+上面这段以 Apache-2.0 协议发布，且刻意全为文本——没有图片、没有外部抓取、
 没有密钥。若你只用 Claude Code，可以把它命名为 `CLAUDE.md`；若你有
 多个智能体客户端，应先把它并入 `AGENTS.md`，再把 `CLAUDE.md` 做成
 symlink 或薄镜像。除了把 `<project-name>` 与 `<allowed paths>` 替换掉

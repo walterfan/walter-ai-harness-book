@@ -4,7 +4,7 @@ theme: default
 paginate: true
 size: 16:9
 header: 'Harnessing AI · 一小时公开分享'
-footer: '© Walter Fan · CC-BY-NC-ND-4.0'
+footer: '© Walter Fan · CC-BY-NC-SA-4.0'
 style: |
   section {
     font-family: "PingFang SC", "Source Han Sans SC", "Hiragino Sans GB", sans-serif;

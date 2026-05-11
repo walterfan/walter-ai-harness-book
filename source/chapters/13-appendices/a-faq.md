@@ -111,4 +111,4 @@ Prompt engineering 只是一格（SDD × 缰绳）。其余十一格——护栏
 
 ### 本书采用什么许可证？
 
-散文部分 CC-BY-NC-ND-4.0（署名 · 非商用 · 禁止演绎），代码示例 MIT，被引用的片段保留其上游许可证。完整文本见 `book/LICENSE`。
+散文部分 CC-BY-NC-SA-4.0（署名 · 非商用 · 相同方式共享），代码示例 Apache-2.0，被引用的片段保留其上游许可证。完整文本见 `book/LICENSE`，Apache-2.0 的署名要求见 `book/NOTICE`。

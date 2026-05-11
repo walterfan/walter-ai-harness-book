@@ -153,7 +153,7 @@ hands-on 制品是 *基于公开文档合成* ——明确不是任何内部文�
 * - 对象
   - Claude Code，2026-03 到 2026-04 观察窗口 {cite}`anthropic2024claudecode`
 * - 许可证
-  - 对象本身为闭源；合成示例以 MIT 协议发布
+  - 对象本身为闭源；合成示例以 Apache-2.0 协议发布
 * - Control 层（CAR）
   - 主张极强；内置提示长达数 KB。
 * - Agency 层（CAR）

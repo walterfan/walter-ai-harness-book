@@ -5,7 +5,7 @@
 | | |
 |--|--|
 | **作者** | Walter Fan |
-| **许可证** | CC-BY-NC-ND-4.0（正文）· MIT（代码样例） |
+| **许可证** | CC-BY-NC-SA-4.0（正文）· Apache-2.0（代码样例） |
 | **状态** | 草稿 —— 骨架就位，章节正在撰写中 |
 | **源码** | [`source/`](https://github.com/walterfan/async-harness-book/tree/main/source) |
 

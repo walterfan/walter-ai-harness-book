@@ -1,0 +1,15 @@
+async-harness-book — Harnessing AI: The Craft of Shaping Agents
+Copyright (c) 2026 Walter Fan
+
+This product includes software developed by Walter Fan, licensed under
+the Apache License, Version 2.0 (see LICENSE for the full terms and the
+file globs the code license applies to).
+
+The narrative prose of the book is licensed separately under
+CC-BY-NC-SA-4.0; see LICENSE for the prose terms.
+
+Third-party material included as quoted examples — notably excerpts
+from OpenHarness (HKUDS), Superpowers (vincent), the lazy-scrum-team
+skill, and the synthetic Claude Code mirror examples — retains its
+upstream license; each quotation is attributed inline next to the
+excerpt and in source/colophon.md.
