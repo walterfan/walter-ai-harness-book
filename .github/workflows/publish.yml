@@ -1,0 +1,80 @@
+name: publish
+
+# Build the Sphinx HTML and deploy to GitHub Pages.
+#
+# Setup checklist (one-time, in the GitHub repo settings):
+#   1. Settings -> Pages -> Build and deployment -> Source: "GitHub Actions"
+#   2. Make sure the default branch is one of those listed below, OR push to it
+#      manually / trigger via the Actions tab.
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment; queue up the latest push and cancel
+# in-progress runs of the same group so a fast-follow push wins.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Poetry
+        run: |
+          pipx install poetry==1.8.5
+          poetry --version
+
+      - name: Cache .venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          key: book-venv-${{ runner.os }}-py312-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            book-venv-${{ runner.os }}-py312-
+
+      - name: Install book toolchain
+        run: make install
+
+      - name: Build HTML
+        run: make html
+
+      # GitHub Pages needs the artefact uploaded with a specific action so the
+      # deploy job can pick it up.
+      - name: Upload Pages artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/html
+
+  deploy:
+    name: deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

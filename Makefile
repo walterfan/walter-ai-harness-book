@@ -53,11 +53,13 @@ endif
         html \
         livehtml serve \
         lint linkcheck \
+        publish publish-status \
         book-install book-export-requirements book-shell \
         book-clean \
         book-html \
         book-livehtml book-serve \
-        book-lint book-linkcheck
+        book-lint book-linkcheck \
+        book-publish book-publish-status
 
 help: ## Show available targets
 	@echo 'async-harness-book — Sphinx build targets (auto-wrapped in `poetry run`)'
@@ -134,6 +136,60 @@ linkcheck: ## Report dead external links without failing the main build
 
 check: lint html ## Lint + full build (used by CI)
 
+# ---------------------------------------------------------------------------
+# Publish to GitHub Pages
+# ---------------------------------------------------------------------------
+#
+# The actual build + deploy happens in .github/workflows/publish.yml on the
+# GitHub runner, triggered by a push to one of the watched branches.
+# `make publish` runs the same checks locally (lint + html) to fail fast on
+# broken sources, then pushes the current branch so CI deploys it.
+#
+# Prerequisites (one-time):
+#   - GitHub Pages enabled in repo Settings -> Pages -> Source: "GitHub Actions"
+#   - The active branch is one of the branches in publish.yml (main/master)
+#   - `origin` points at the GitHub remote and you can push to it
+
+PUBLISH_REMOTE   ?= origin
+PUBLISH_BRANCH   ?= $(shell git rev-parse --abbrev-ref HEAD 2>/dev/null)
+# Pull the github.com slug (owner/repo) out of the remote URL — supports
+# both git@github.com:owner/repo.git and https://github.com/owner/repo(.git).
+# Use '|' as sed separator because '#' would start a Make comment inside
+# $(shell ...). The $$ is correctly passed as $ to the shell.
+PUBLISH_SLUG     ?= $(shell git remote get-url $(PUBLISH_REMOTE) 2>/dev/null | sed -E -e 's|^git@github\.com:||' -e 's|^https?://github\.com/||' -e 's|\.git$$||')
+PUBLISH_OWNER    ?= $(firstword $(subst /, ,$(PUBLISH_SLUG)))
+PUBLISH_REPO     ?= $(lastword $(subst /, ,$(PUBLISH_SLUG)))
+
+publish: check ## Lint + build, then push current branch so CI deploys to GitHub Pages
+	@if [ -z "$(PUBLISH_BRANCH)" ]; then \
+		echo "  !! could not detect current git branch"; exit 1; \
+	fi
+	@case " main master " in *" $(PUBLISH_BRANCH) "*) ;; *) \
+		echo "  !! current branch '$(PUBLISH_BRANCH)' is not in publish.yml triggers (main, master)."; \
+		echo "     Either switch branch or update .github/workflows/publish.yml."; \
+		exit 1; \
+	esac
+	@if ! git diff --quiet || ! git diff --cached --quiet; then \
+		echo "  !! working tree has uncommitted changes. Commit them first:"; \
+		echo "       git add -A && git commit -m '...'"; \
+		echo "     Then re-run 'make publish'."; \
+		exit 1; \
+	fi
+	@echo "  -> pushing $(PUBLISH_BRANCH) to $(PUBLISH_REMOTE) (this triggers .github/workflows/publish.yml)"
+	git push "$(PUBLISH_REMOTE)" "$(PUBLISH_BRANCH)"
+	@echo ""
+	@echo "  -> workflow runs:  https://github.com/$(PUBLISH_SLUG)/actions/workflows/publish.yml"
+	@echo "  -> deployed site:  https://$(PUBLISH_OWNER).github.io/$(PUBLISH_REPO)/"
+
+publish-status: ## Print URLs to view publish workflow runs and deployed site
+	@if [ -z "$(PUBLISH_SLUG)" ]; then \
+		echo "  !! could not detect github.com slug from remote '$(PUBLISH_REMOTE)'"; \
+		exit 1; \
+	fi
+	@echo "  Workflow runs:  https://github.com/$(PUBLISH_SLUG)/actions/workflows/publish.yml"
+	@echo "  Pages settings: https://github.com/$(PUBLISH_SLUG)/settings/pages"
+	@echo "  Deployed site:  https://$(PUBLISH_OWNER).github.io/$(PUBLISH_REPO)/"
+
 # Compatibility aliases for callers that use the book-* target names.
 book-install: install
 book-export-requirements: export-requirements
@@ -144,3 +200,5 @@ book-livehtml: livehtml
 book-serve: serve
 book-lint: lint
 book-linkcheck: linkcheck
+book-publish: publish
+book-publish-status: publish-status
