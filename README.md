@@ -1,25 +1,25 @@
 # Harnessing AI: The Craft of Shaping Agents
 ## 《驾驭工程：给 AI 套上缰绳》
 
-A long-form, bilingual (English source + Simplified Chinese translation) technical book about **Harness Engineering** — the deliberate practice of shaping the environment in which AI coding agents operate so the software they produce is verifiable, observable, and understandable.
+A long-form technical book (Simplified Chinese source) about **Harness Engineering** — the deliberate practice of shaping the environment in which AI coding agents operate so the software they produce is verifiable, observable, and understandable.
 
-This repository holds the Sphinx + MyST + `sphinx-intl` + `sphinxcontrib-bibtex` source. Once built, the site is published at `build/html/{en,zh_CN}/`; run `make html` to produce it locally.
+**Read online:** <https://walterfan.github.io/walter-ai-harness-book/>
+
+This repository holds the Sphinx + MyST + `sphinxcontrib-bibtex` source. Built HTML lands at `build/html/`; run `make html` to produce it locally.
 
 ## Quick build
 
 ```bash
 make install       # one-time: poetry install into ./.venv
-make html          # build en/ and zh_CN/ HTML trees (strict, recompiles .mo)
+make html          # build the HTML tree at build/html/ (strict)
 make serve         # serve build/html/ at http://localhost:8000
-make livehtml      # live-reload preview (English) via sphinx-autobuild
+make livehtml      # live-reload preview via sphinx-autobuild
 make lint          # structural + bibliography checks
-make intl          # regenerate .pot + merge zh_CN .po catalogs
 make check         # lint + full html build (CI entry point)
 make clean         # remove build/
 ```
 
-Run `make help` for the full target list, including single-language
-builds (`html-en`, `html-zh`), `gettext`, `update-po`, `linkcheck`, and
+Run `make help` for the full target list, including `linkcheck` and
 `export-requirements`.
 
 All `book-*` aliases (e.g. `make book-html`, `make book-serve`) remain
