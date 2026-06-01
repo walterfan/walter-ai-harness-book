@@ -1,0 +1,1153 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/06-fowler-harness-vocabulary';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="三大护法：SDD、TDD、MDD" href="07-three-guardians.html" />
+    <link rel="prev" title="插章：AI Agent 与编程工具的结构" href="05-agent-loop-anatomy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/06-fowler-harness-vocabulary.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/06-fowler-harness-vocabulary.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langchain-agent-model-harness">06.1 LangChain 公式：Agent = Model + Harness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feedforward-feedback">06.2 第一条轴：Feedforward × Feedback</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-inferential">06.3 第二条轴：Computational × Inferential</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">06.4 两条轴一起看：一张 2 × 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harness-maintainabilityarchitecture-fitnessbehaviour">06.5 三类 Harness：Maintainability、Architecture Fitness、Behaviour</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnessability">06.6 Harnessability：不是所有代码库都一样好"拴"</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harness">06.7 一张最小可用 Harness 清单</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#java-web-harness">06.8 一个 Java Web 项目的最小 harness</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feedforward-agent">Feedforward：把规则写给 agent 看</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feedback-agent">Feedback：给 agent 一个能跑的检查脚本</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture-fitness-archunit">Architecture Fitness：用 ArchUnit 防止分层漂移</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#behaviour-harness-approved-fixture">Behaviour Harness：用 approved fixture 固化关键行为</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pr-mr-harness-gate">PR/MR 前的 Harness Gate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">06.9 一条调试法：问 harness 链路</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="fowler-harness-java">
+<h1>插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例<a class="headerlink" href="#fowler-harness-java" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>别再追问&quot;agent 用哪个模型&quot;。先问一句：你给它修好回家的路了吗？</em></p>
+</div></blockquote>
+<p>第 03 章给出了驾驭工程的定义；第 07 章拆了记忆系统；第 08 章拆了 agent loop。本插章夹在第 08 章与第 10 章 SDD → TDD → MDD 三大护法之间，专门补一件事：<strong>把 Martin Fowler 在 <em>Harness engineering for coding agent users</em> 里给这门学科留下的词汇，正式接进本书的术语表，并配一份能直接抄进 Java Web 项目的最小马具示例</strong><span id="id1">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span>。</p>
+<p>Fowler 这篇文章的贡献，不在于发明了什么新工具，而在于给&quot;模型外面那一圈结构&quot;凑齐了两条非常实用的正交轴：</p>
+<ul class="simple">
+<li><p><strong>Feedforward × Feedback</strong>：按时间方向分，是 <em>事前引导</em> 还是 <em>事后反馈</em>。</p></li>
+<li><p><strong>Computational × Inferential</strong>：按执行方式分，是 <em>机器能确定算出来</em> 还是 <em>要靠模型语义判断</em>。</p></li>
+</ul>
+<p>外加一个用来评估&quot;这份代码库到底好不好拴&quot;的形容词：<strong>Harnessability</strong>。</p>
+<p>这三个词在本书前两章已被默默使用，但没有正式登台。本插章把它们摆上桌面，并指出本书三大护法 × 四区域矩阵和 Fowler 这套词汇之间的精确对应。</p>
+<section id="langchain-agent-model-harness">
+<h2>06.1 LangChain 公式：Agent = Model + Harness<a class="headerlink" href="#langchain-agent-model-harness" title="Link to this heading">#</a></h2>
+<p>LangChain 在 <em>The Anatomy of an Agent Harness</em> 里把这件事压成一行公式：<strong>Agent = Model + Harness</strong><span id="id2">[<a class="reference internal" href="../references.html#id32" title="LangChain. The anatomy of an agent harness. LangChain Engineering Blog, 2026. Source of the “Agent = Model + Harness” formula cited in Ch. 03C. URL: https://blog.langchain.com/the-anatomy-of-an-agent-harness/.">LangChain, 2026</a>]</span>。</p>
+<p>公式很简短，但它一次性回答了两个常被混为一谈的问题：</p>
+<ul class="simple">
+<li><p>&quot;我用什么模型？&quot; —— 那是 Model 那一侧的事。</p></li>
+<li><p>&quot;我用模型来干什么、它能看到什么、它做错了我怎么知道？&quot; —— 那是 Harness 那一侧的事，也是本书唯一关心的那一侧。</p></li>
+</ul>
+<p>这个公式把&quot;换更强的模型&quot;和&quot;搭更好的马具&quot;区分开。前者是供应链问题，后者是工程问题。一个能干的工程团队不该把所有希望都押在前者上 —— LangChain 自己在 Terminal-Bench 2.0 上的那次实验给出了一份单项最强的经验证据：只换马具、不换模型，他们的智能体从 52.8 % 抬到了 66.5 %，从 Top-30 层一路冲进 Top-5<span id="id3">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p>
+<p>裸模型像一个聪明却没读过你们代码的新人。它能写代码，可它不知道哪几个目录碰不得、哪条接口背着历史包袱、哪条慢测试其实是上次事故留下的疤。Harness 做的事，就是把这些隐性约束写出来、摆到智能体伸手可及的地方，并在它走偏时及时把它叫停。</p>
+</section>
+<section id="feedforward-feedback">
+<h2>06.2 第一条轴：Feedforward × Feedback<a class="headerlink" href="#feedforward-feedback" title="Link to this heading">#</a></h2>
+<p>把控制手段按 <em>时间方向</em> 分成两类，是 Fowler 这篇文章里最朴素也最好用的一刀。</p>
+<ul class="simple">
+<li><p><strong>Feedforward —— 事前引导</strong>。agent 动手 <em>之前</em>，先告诉它该往哪走、什么风格是对的、哪些边界不能碰。
+典型制品：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、项目规则、<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>、架构原则、安全开发要求、&quot;怎么启动、怎么跑测试、怎么提交&quot;的 skill。</p></li>
+<li><p><strong>Feedback —— 事后反馈</strong>。agent 动手 <em>之后</em>，观察结果，让它自我修正。
+典型制品：单元测试失败、lint 报错、类型检查失败、架构边界测试失败、AI reviewer 指出&quot;这里的修复只是掩盖症状&quot;。</p></li>
+</ul>
+<p>两者缺一不可，理由是对称的。</p>
+<p>只有 feedback、没有 feedforward，agent 像一个总被老师批改作业、却从不听课的学生 —— 它能改错，但同样的错会反复出现。只有 feedforward、没有 feedback，则像把规章制度贴满墙、却没人检查执行情况 —— 看起来很严谨，落地全靠运气。工程上真正有用的是一个小循环：<strong>先引导，再检查；检查出问题，再改进引导</strong>。别让同一个坑反复绊倒同一个 agent。</p>
+<p>这条轴和本书第 10 章的三大护法是直接对应的：</p>
+<ul class="simple">
+<li><p><strong>SDD（规约驱动开发）天然属于 Feedforward</strong> —— 它在 agent 动手前钉稳&quot;该建什么&quot;。</p></li>
+<li><p><strong>TDD（测试驱动开发）天然属于 Feedback</strong> —— 测试在 agent 动手后判定&quot;建成的是不是想要的&quot;。</p></li>
+<li><p><strong>MDD（度量驱动开发）兼具两面</strong> —— 度量本身是 Feedback，但 <em>根据度量调整规约与测试</em> 是下一轮的 Feedforward。</p></li>
+</ul>
+</section>
+<section id="computational-inferential">
+<h2>06.3 第二条轴：Computational × Inferential<a class="headerlink" href="#computational-inferential" title="Link to this heading">#</a></h2>
+<p>Fowler 的第二条轴按 <em>执行方式</em> 分类，回答的是另一个问题：这道检查是 <em>算</em> 出来的，还是 <em>猜</em> 出来的？</p>
+<ul class="simple">
+<li><p><strong>Computational —— 确定性、机器能快速算出来</strong>：测试、lint、type checker、静态分析、架构规则检查、依赖扫描、SAST、secret scan。</p></li>
+<li><p><strong>Inferential —— 需要语义判断</strong>：AI code review、&quot;这是不是过度设计&quot;、&quot;这个测试是不是只测了实现没测行为&quot;、&quot;这段代码虽然能跑但是否符合团队习惯&quot;。</p></li>
+</ul>
+<p>老工程师都知道一条朴素经验：<strong>能用确定性工具解决的问题，不要轻易交给玄学</strong>。</p>
+<p>不是说 LLM 不好，而是 <em>成本与可靠性</em> 不同。一个 type checker 几秒就能告诉你类型不对，且不会今天说错、明天说对；AI reviewer 能看出更高层次的问题，但它慢、贵，偶尔还会一本正经地胡说八道。请专家会诊很有价值，但你不能让专家每天帮你量体温。</p>
+<p>健康的做法因此是：</p>
+<ul class="simple">
+<li><p>快、便宜、确定的检查，尽量前置到 <em>本地、pre-commit、agent 工作循环</em> 里；</p></li>
+<li><p>慢、贵、需要语义判断的检查，放到更合适的位置 —— MR review、nightly job 或关键变更前；</p></li>
+<li><p>不要让 agent 只靠自己&quot;感觉良好&quot;，要给它能 <em>读懂、能执行、能修正</em> 的信号。</p></li>
+</ul>
+<p>这其实是传统软件工程 <em>shift left</em> 的老道理 <span id="id4">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span>，只是现在多了一个新角色：coding agent。</p>
+</section>
+<section id="id5">
+<h2>06.4 两条轴一起看：一张 2 × 2<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>把这两条轴正交起来，就得到一张能直接拿去和团队对照的 2 × 2：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><strong>Computational（机器算）</strong></p></th>
+<th class="head"><p><strong>Inferential（模型判）</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Feedforward（事前）</strong></p></td>
+<td><p>schema、JSON schema、OpenAPI、<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> lint、prompt schema 校验</p></td>
+<td><p>规则审阅、skill 设计评审、约束自然语言化、产品验收样例</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Feedback（事后）</strong></p></td>
+<td><p>测试、lint、type check、ArchUnit、SAST、secret scan、mutation testing</p></td>
+<td><p>AI code review、PR 评审、&quot;是否解决根因&quot;判断、产品验收</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这张表的实用价值，在于它能立刻暴露团队的 <em>偏科</em>。</p>
+<p>绝大多数团队的左下格（Computational × Feedback）发育得最好 —— 那是 CI/CD 时代的遗产。右下格（Inferential × Feedback）是过去两年 AI reviewer 类工具发力的地方。左上格（Computational × Feedforward）经常被忽视：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 没有 lint、prompt 没有 schema、skill 没有 precondition hook。右上格（Inferential × Feedforward）最难也最值钱，需要团队把 <em>老工程师脑子里的隐性约束</em> 显性化成自然语言并写进规约 —— 这正是第 10 章 SDD 那一节要展开的话题。</p>
+</section>
+<section id="harness-maintainabilityarchitecture-fitnessbehaviour">
+<h2>06.5 三类 Harness：Maintainability、Architecture Fitness、Behaviour<a class="headerlink" href="#harness-maintainabilityarchitecture-fitnessbehaviour" title="Link to this heading">#</a></h2>
+<p>Fowler 还按 <em>约束对象</em> 把 harness 分成三类，这组分法可以直接对应到本书第 11 章马具矩阵的三行。</p>
+<ul class="simple">
+<li><p><strong>Maintainability Harness</strong>：关注代码可维护性 —— 重复、复杂度、覆盖率、风格一致性、死代码、依赖风险。起步最容易，工具最成熟，agent 反馈循环也最直接。它的边界是：能告诉你 <em>&quot;这个函数太复杂&quot;</em>，却不一定能告诉你 <em>&quot;你修错了问题&quot;</em>。</p></li>
+<li><p><strong>Architecture Fitness Harness</strong>：关注系统是否还保持在我们想要的架构方向上 —— 模块边界有没有被穿透、API 层有没有偷调数据库、日志是否符合可观测性要求、性能预算有没有被破坏、安全规则有没有被绕开。Thoughtworks 早年提出的 <strong>Architectural Fitness Function</strong> 在 agent 时代反而更值钱 <span id="id6">[<a class="reference internal" href="../references.html#id34" title="Thoughtworks Technology Radar. Architectural fitness function. Technology Radar, Techniques, 2026. Origin of the “architectural fitness function” vocabulary used in Ch. 03C.5 and Ch. 08. URL: https://www.thoughtworks.com/radar/techniques/architectural-fitness-function.">Thoughtworks Technology Radar, 2026</a>]</span>，因为 agent 写代码很快，<strong>漂移也可能更快</strong> —— 以前是人慢慢把系统写歪，现在是 agent 可以很勤快地帮你写歪。</p></li>
+<li><p><strong>Behaviour Harness</strong>：最难。代码能编译、测试也绿，并不代表它真的满足业务需求 —— 尤其当测试本身也是 agent 写的时候。它可能写一组&quot;自证清白&quot;的测试，看起来覆盖率很漂亮，实际上只是证明它自己的实现符合它自己的想象。当前比较现实的做法是：人类给清晰功能规格、用 approved fixtures 把关键输入输出固化、用端到端测试验证用户可见行为、对 AI 生成测试再做 mutation testing、保留必要的人工验收。</p></li>
+</ul>
+<p>一句话：<strong>行为 harness 还远没成熟。谁说 &quot;agent 已经可以完全替代工程师做需求实现&quot;，多半是还没被线上 bug 结结实实教育过</strong>。</p>
+</section>
+<section id="harnessability">
+<h2>06.6 Harnessability：不是所有代码库都一样好&quot;拴&quot;<a class="headerlink" href="#harnessability" title="Link to this heading">#</a></h2>
+<p>Fowler 还给出一个评估代码库底子的形容词：<strong>Harnessability</strong>。</p>
+<p>不是每个代码库都同样适合被 harness 管起来：</p>
+<ul class="simple">
+<li><p>强类型语言天然有 type checker；</p></li>
+<li><p>清晰模块边界更容易写架构测试；</p></li>
+<li><p>成熟框架能减少 agent 需要操心的细节。</p></li>
+</ul>
+<p>反过来，一个 <em>历史包袱很多、结构松散、测试稀薄</em> 的老系统，<strong>最需要 harness，也最难搭 harness</strong>。这听起来有点残酷，但很真实。</p>
+<p>新项目可以从第一天就把 harnessability 当作设计目标：语言、框架、目录结构、测试策略、服务模板，都围绕&quot;未来如何让人和 agent 都不容易犯错&quot;来设计。</p>
+<p>老项目则要务实一点。别一上来就想着&quot;全自动智能体开发平台&quot;，先找最疼、最常见、最容易自动化的几个点下手：</p>
+<ul class="simple">
+<li><p>agent 总改错目录？补项目结构说明。</p></li>
+<li><p>agent 总忘记跑测试？加本地检查脚本。</p></li>
+<li><p>agent 总违反分层？加架构测试。</p></li>
+<li><p>agent 总写不合规日志？加 lint 或 review skill。</p></li>
+<li><p>agent 总误解任务？改需求模板和验收用例。</p></li>
+</ul>
+<p><strong>先把重复踩的坑填上</strong>，再谈 platform 化。</p>
+</section>
+<section id="harness">
+<h2>06.7 一张最小可用 Harness 清单<a class="headerlink" href="#harness" title="Link to this heading">#</a></h2>
+<p>如果明天就想给团队的 coding agent 加一点约束，这张表足够开工。它不高级，胜在能抄。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 39.0%" />
+<col style="width: 39.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>场景</p></th>
+<th class="head"><p>Feedforward：先告诉它</p></th>
+<th class="head"><p>Feedback：做完后检查</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>新人式迷路</p></td>
+<td><p>项目结构、启动方式、常用命令</p></td>
+<td><p>smoke test、构建脚本</p></td>
+</tr>
+<tr class="row-odd"><td><p>风格不一致</p></td>
+<td><p>编码规范、命名习惯、日志规则</p></td>
+<td><p>lint、format、review skill</p></td>
+</tr>
+<tr class="row-even"><td><p>分层被破坏</p></td>
+<td><p>架构边界说明、允许依赖列表</p></td>
+<td><p>ArchUnit、import boundary check</p></td>
+</tr>
+<tr class="row-odd"><td><p>测试偷懒</p></td>
+<td><p>测试策略、验收标准、fixture 规则</p></td>
+<td><p>coverage、mutation testing、人工抽查</p></td>
+</tr>
+<tr class="row-even"><td><p>安全问题</p></td>
+<td><p>安全基线、敏感字段规则、权限模型</p></td>
+<td><p>SAST、secret scan、日志隐私检查</p></td>
+</tr>
+<tr class="row-odd"><td><p>任务误解</p></td>
+<td><p>清晰需求模板、反例、验收样例</p></td>
+<td><p>E2E test、QA review、产品验收</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>工程上很多事都是这样：<strong>先别追求&quot;智能&quot;，先追求&quot;不犯傻&quot;</strong>。</p>
+</section>
+<section id="java-web-harness">
+<h2>06.8 一个 Java Web 项目的最小 harness<a class="headerlink" href="#java-web-harness" title="Link to this heading">#</a></h2>
+<p>光说概念容易飘。下面以一个常见的 Java Web 后台为例 —— Spring Boot + Maven + Controller / Service / Mapper 分层，入口是 HTTP API，后面连数据库和外部服务 —— 把上面四节具体化。</p>
+<p>这个项目的风险边界大致如下：外部请求从 Controller 进来，参数可能不可信；Service 承担业务规则和事务边界；Mapper 访问数据库，不能拼接 SQL；日志里不能泄露 token、手机号、邮箱、订单明细等敏感信息；权限检查不能只靠前端&quot;自觉&quot;。这些话如果只在老工程师脑子里，<strong>agent 不会自动知道</strong>。</p>
+<p>一个最小可用的 harness 看起来是这样：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>my-order-service/
+├── AGENTS.md
+├── docs/ai/index.md
+├── docs/ai/architecture.md
+├── docs/ai/api-contracts.md
+├── scripts/agent-check.sh
+├── src/main/java/com/example/order/
+│   ├── controller/
+│   ├── service/
+│   └── mapper/
+├── src/test/java/com/example/order/architecture/LayeringTest.java
+└── src/test/resources/fixtures/order-create-success.json
+</pre></div>
+</div>
+<p>这套结构在 Fowler 的四象限里站位非常清晰：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> —— Inferential × Feedforward（自然语言规约 + 安全开发要求）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scripts/agent-check.sh</span></code> —— Computational × Feedback（让 agent 每次改完都有一条确定可执行的验证路径）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LayeringTest.java</span></code>（ArchUnit）—— Computational × Feedback，专门约束 <em>架构漂移</em>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">order-create-success.json</span></code>（approved fixture）—— Inferential × Feedforward（人类确认过的验收样例）+ Computational × Feedback（自动化测试运行它）。</p></li>
+</ul>
+<p>下一章（第 10 章）会把这四件制品按 SDD / TDD / MDD 重新归位；本插章的目的只是先把它们 <em>摆到桌上</em> 让人看到。</p>
+<section id="feedforward-agent">
+<h3>Feedforward：把规则写给 agent 看<a class="headerlink" href="#feedforward-agent" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 不必写成公司制度汇编，太长了 agent 也容易抓不住重点。完整可抄的模板在 hands-on 制品里，下面只贴最关键的三段：</p>
+<ul class="simple">
+<li><p><strong>Architecture</strong> —— 钉死 Controller → Service → Mapper 的方向，DTO 不能暴露 entity，SQL 一律 <code class="docutils literal notranslate"><span class="pre">#{}</span></code> 绑定不得 <code class="docutils literal notranslate"><span class="pre">${}</span></code> 拼接。</p></li>
+<li><p><strong>Security</strong> —— 全部参数校验、授权检查留在 service / controller 边界、日志禁止泄露敏感字段。</p></li>
+<li><p><strong>Before Finishing</strong> —— 一行命令 <code class="docutils literal notranslate"><span class="pre">./scripts/agent-check.sh</span></code>，把&quot;请自行验证&quot;翻译成 <em>一条确定可执行的路径</em>。</p></li>
+</ul>
+<p>这段文字的作用不是&quot;教育 AI 要做个好人&quot;，而是 <em>把团队最在意的约束前置</em>。分层、SQL、安全、日志一旦错了，review 时再骂 agent 也没用。</p>
+</section>
+<section id="feedback-agent">
+<h3>Feedback：给 agent 一个能跑的检查脚本<a class="headerlink" href="#feedback-agent" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">scripts/agent-check.sh</span></code> 把&quot;agent 改完后该跑什么&quot;写成一条命令。重点不是工具名字，而是 <strong>把&quot;请自行验证&quot;变成一条确定可执行的路径</strong> —— 否则 agent 很容易写一句 <em>&quot;建议运行测试&quot;</em> 然后心安理得地收工。</p>
+</section>
+<section id="architecture-fitness-archunit">
+<h3>Architecture Fitness：用 ArchUnit 防止分层漂移<a class="headerlink" href="#architecture-fitness-archunit" title="Link to this heading">#</a></h3>
+<p>分层规则不能只写在文档里，最好变成测试。ArchUnit 一条 layered architecture 断言，就能让 agent 在 Controller 里偷懒调用 Mapper 时立刻见红，<strong>不必等到人工 review</strong><span id="id7">[<a class="reference internal" href="../references.html#id34" title="Thoughtworks Technology Radar. Architectural fitness function. Technology Radar, Techniques, 2026. Origin of the “architectural fitness function” vocabulary used in Ch. 03C.5 and Ch. 08. URL: https://www.thoughtworks.com/radar/techniques/architectural-fitness-function.">Thoughtworks Technology Radar, 2026</a>]</span>。完整测试源码在 hands-on 制品里。</p>
+</section>
+<section id="behaviour-harness-approved-fixture">
+<h3>Behaviour Harness：用 approved fixture 固化关键行为<a class="headerlink" href="#behaviour-harness-approved-fixture" title="Link to this heading">#</a></h3>
+<p>行为正确性最难，尤其不能完全相信 agent 自己写的测试。一个实用办法是：<em>关键输入输出由人先给 approved fixture，agent 可以写实现和补测试，但不能随便改 fixture</em>。配套规则写进 PR 模板：</p>
+<ul class="simple">
+<li><p>fixture 是人类确认过的验收样例，agent 不得为了让测试通过而修改它；</p></li>
+<li><p>新增行为可以新增 fixture，但要说明业务含义；</p></li>
+<li><p>修改 fixture 必须在 PR 描述里单独解释。</p></li>
+</ul>
+<p>否则 agent 有时会走一条很&quot;聪明&quot;的捷径：<strong>实现不对，就改测试；测试还不对，就改期望值。代码绿了，需求黄了</strong>。</p>
+</section>
+<section id="pr-mr-harness-gate">
+<h3>PR/MR 前的 Harness Gate<a class="headerlink" href="#pr-mr-harness-gate" title="Link to this heading">#</a></h3>
+<p>最后，把这些检查放进流水线：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 26.0%" />
+<col style="width: 44.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Gate</p></th>
+<th class="head"><p>目的</p></th>
+<th class="head"><p>失败后谁处理</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">mvn</span> <span class="pre">test</span></code></p></td>
+<td><p>验证单元测试和架构测试</p></td>
+<td><p>agent 先修</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">checkstyle</span></code> / <code class="docutils literal notranslate"><span class="pre">spotbugs</span></code></p></td>
+<td><p>抓风格、空指针、资源释放等问题</p></td>
+<td><p>agent 先修</p></td>
+</tr>
+<tr class="row-even"><td><p>dependency / secret scan</p></td>
+<td><p>抓依赖漏洞和误提交密钥</p></td>
+<td><p>人和 agent 一起看</p></td>
+</tr>
+<tr class="row-odd"><td><p>AI Review</p></td>
+<td><p>看是否过度设计、误解需求、测试自嗨</p></td>
+<td><p>人类 reviewer 复核</p></td>
+</tr>
+<tr class="row-even"><td><p>人工 Review</p></td>
+<td><p>做最终语义判断和业务取舍</p></td>
+<td><p>人负责</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这就是一个 Java Web 项目的小型 harness：事前有规则、事后有检查、中间有测试、最后有人把关。一句话：<strong>让 agent 写代码之前，先给它修一条能回家的路</strong>。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——把 Fowler 词汇用歪的七种姿势</p>
+<ol class="arabic simple">
+<li><p><strong>只做 Feedback，不做 Feedforward。</strong> 规则全靠 review 现场口头传，agent 永远第一次犯。</p></li>
+<li><p><strong>只做 Feedforward，不做 Feedback。</strong> 规则贴满 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>，但没人检查 agent 是否真的遵守。</p></li>
+<li><p><strong>把所有判断都交给 Inferential。</strong> 能用 type checker 几秒搞定的事，非要让 AI reviewer 慢慢猜。</p></li>
+<li><p><strong>把所有判断都交给 Computational。</strong> 拒绝引入语义判断，于是&quot;过度设计&quot;&quot;测试自嗨&quot;永远漏过。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 写成公司制度汇编。</strong> 几千字、十几个章节，agent 抓不住重点，人也懒得维护。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">scripts/agent-check.sh</span></code> 不存在或时灵时不灵。</strong> agent 学会的第一件事是 <em>这道检查可以绕过</em>。</p></li>
+<li><p><strong>approved fixture 让 agent 自己写。</strong> 验收样例变成 agent 自我证明的工具，行为 harness 当场失效。</p></li>
+</ol>
+<p>行级自测：随便挑一道你最近加给 agent 的约束，能不能立刻说出它落在 2×2 的哪一格？如果不能，这条约束多半还停留在&quot;愿望&quot;，没成为马具。</p>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2>06.9 一条调试法：问 harness 链路<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>当 agent &quot;怎么又改错了&quot;或&quot;怎么还在踩同一个坑&quot;时，不要先责怪模型。沿着 harness 链路问七个问题：</p>
+<ol class="arabic simple">
+<li><p>这条约束有没有进入 Feedforward 制品（<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>、ADR、PKB、prompt schema）？</p></li>
+<li><p>agent 真的会在动手前读到它吗（context window、skill 触发条件、<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 入口）？</p></li>
+<li><p>这条约束有没有 Computational Feedback 对应物（测试、lint、type check、ArchUnit）？</p></li>
+<li><p>该 Feedback 是否被前置到 <em>agent 工作循环</em> 而不是 <em>MR review</em>？</p></li>
+<li><p>这条约束的 Inferential Feedback（AI review、人工 review）是否触发？</p></li>
+<li><p>如果以上都触发了 agent 还是错，问题是否在 <em>规约本身含糊</em>（即第 10 章 SDD 的责任）？</p></li>
+<li><p>是否需要把这条约束从 Inferential 升格为 Computational（写成 schema、lint、测试）？</p></li>
+</ol>
+<p>这七个问题把&quot;agent 又出错了&quot;从神秘事件拆回工程流水线：<em>Feedforward 是否到位、Feedback 是否触发、Computational 是否优先于 Inferential</em>。<strong>能被拆开的东西，才配被驾驭</strong>。</p>
+</section>
+<section id="id9">
+<h2>研究脉络<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Fowler 给这门学科命名。</strong> <em>Harness engineering for coding agent users</em> 是把 Feedforward × Feedback 与 Computational × Inferential 这两条轴系统化提出的来源 <span id="id10">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span>。本书第 02 章已经用它做过 2026 年的坐标桩；本插章则把这套词汇正式接进 Part 2 的术语表。</p></li>
+<li><p><strong>LangChain 的公式与单项证据。</strong> <em>Anatomy of an Agent Harness</em> 给出 <code class="docutils literal notranslate"><span class="pre">Agent</span> <span class="pre">=</span> <span class="pre">Model</span> <span class="pre">+</span> <span class="pre">Harness</span></code> 的公式 <span id="id11">[<a class="reference internal" href="../references.html#id32" title="LangChain. The anatomy of an agent harness. LangChain Engineering Blog, 2026. Source of the “Agent = Model + Harness” formula cited in Ch. 03C. URL: https://blog.langchain.com/the-anatomy-of-an-agent-harness/.">LangChain, 2026</a>]</span>；Terminal-Bench 2.0 的&quot;只换马具&quot;实验则提供了目前最强的一份单项经验证据 <span id="id12">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p></li>
+<li><p><strong>Anthropic 与 OpenAI 的厂方实践。</strong> 两家厂商各自给出 <em>长任务 agent harness</em> 与 <em>Codex 在 agent-first world 的 harness 工程</em> 的工程报告 <span id="id13">[<a class="reference internal" href="../references.html#id33" title="Anthropic. Effective harnesses for long-running agents. Anthropic Engineering Blog, 2026. Vendor-side report on long-task agent harness engineering; cited in Ch. 03C's Provenance. URL: https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents.">Anthropic, 2026</a>, <a class="reference internal" href="../references.html#id54" title="OpenAI. Agentic coding: harness design for ChatGPT agents. OpenAI Engineering Blog, 2026. Vendor-side articulation of harness-as-product; cited for triangulation in Ch. 08 Provenance. URL: https://openai.com/index/agentic-coding-harness/.">OpenAI, 2026</a>]</span>，是把本插章 2 × 2 落到生产强度的两份外部参考。</p></li>
+<li><p><strong>Architectural Fitness Function。</strong> Thoughtworks 雷达把架构约束自动化的实践 <span id="id14">[<a class="reference internal" href="../references.html#id34" title="Thoughtworks Technology Radar. Architectural fitness function. Technology Radar, Techniques, 2026. Origin of the “architectural fitness function” vocabulary used in Ch. 03C.5 and Ch. 08. URL: https://www.thoughtworks.com/radar/techniques/architectural-fitness-function.">Thoughtworks Technology Radar, 2026</a>]</span>，给本插章 06.5 节的 Architecture Fitness Harness 行提供了原始词汇。</p></li>
+<li><p><strong>Continuous Delivery 与 shift left。</strong> Humble 与 Farley 关于&quot;越便宜越确定的检查越要前置&quot;的论证 <span id="id15">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span>，是本插章 06.3 节那条 Computational &gt; Inferential 原则的工程史背景。</p></li>
+</ul>
+</section>
+<section id="id16">
+<h2>动手环节<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<p>本插章的四件 hands-on 制品住在 <code class="docutils literal notranslate"><span class="pre">source/_handson/06-fowler-harness-vocabulary/</span></code>，分别对应 06.8 节四象限里的四件马具：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md.template</span></code> —— Inferential × Feedforward 的入口文件模板，可直接拷进项目改 <code class="docutils literal notranslate"><span class="pre">{{...}}</span></code> 占位符。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agent-check.sh</span></code> —— Computational × Feedback 的最小检查脚本，可换成项目实际命令。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LayeringTest.java</span></code> —— Computational × Feedback 的 Architecture Fitness Function，钉死 Controller → Service → Mapper 边界。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">order-create-success.json</span></code> —— Inferential × Feedforward + Computational × Feedback 的 approved fixture 样例。</p></li>
+</ul>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-05-21 · Ch.03C hands-on · AGENTS.md template (Java Web example) --&gt;
+
+<span class="gh"># AGENTS.md — {{PROJECT_NAME}}</span>
+
+&lt;!-- First stop for coding agents and new contributors. Keep it short. --&gt;
+
+{{ONE_SENTENCE_PURPOSE}}
+
+<span class="gu">## 1. Project Snapshot</span>
+
+<span class="k">-</span><span class="w"> </span>Language / runtime: {{LANGUAGE_AND_VERSION}}
+<span class="k">-</span><span class="w"> </span>Package manager: {{PACKAGE_MANAGER}}
+<span class="k">-</span><span class="w"> </span>Task runner: {{TASK_RUNNER}}
+<span class="k">-</span><span class="w"> </span>Entry point: {{ENTRY_POINT}}
+<span class="k">-</span><span class="w"> </span>Knowledge base: {{KB_OR_README}}
+<span class="k">-</span><span class="w"> </span>Owner / help: {{OWNER_OR_CHANNEL}}
+
+<span class="gu">## 2. Read First</span>
+
+<span class="k">1.</span> {{ARCHITECTURE_DOC}}
+<span class="k">2.</span> {{CONVENTIONS_DOC}}
+<span class="k">3.</span> {{WORKFLOW_DOC}}
+
+If time is short, read {{AI_SINGLE_FILE}} first.
+
+<span class="gu">## 3. Repo Layout</span>
+
+<span class="sb">```text</span>
+{{REPO_TREE}}
+<span class="sb">```</span>
+
+Boundaries:
+
+<span class="k">-</span><span class="w"> </span>Public surface: {{PUBLIC_SURFACE}}
+<span class="k">-</span><span class="w"> </span>Internal modules: {{INTERNAL_SURFACE}}
+<span class="k">-</span><span class="w"> </span>Danger zones: {{DANGER_ZONES}}
+
+<span class="gu">## 4. Commands</span>
+
+Use the task runner. Do not bypass wrappers unless asked.
+
+<span class="sb">```bash</span>
+<span class="o">{{</span>SETUP_COMMAND<span class="o">}}</span><span class="w">   </span><span class="c1"># install deps</span>
+<span class="o">{{</span>LINT_COMMAND<span class="o">}}</span><span class="w">    </span><span class="c1"># static checks</span>
+<span class="o">{{</span>FORMAT_COMMAND<span class="o">}}</span><span class="w">  </span><span class="c1"># format code</span>
+<span class="o">{{</span>TEST_COMMAND<span class="o">}}</span><span class="w">    </span><span class="c1"># test suite</span>
+<span class="o">{{</span>BUILD_COMMAND<span class="o">}}</span><span class="w">   </span><span class="c1"># build artifact</span>
+<span class="sb">```</span>
+
+Focused runs:
+
+<span class="sb">```bash</span>
+<span class="o">{{</span>FOCUSED_TEST_EXAMPLES<span class="o">}}</span>
+<span class="sb">```</span>
+
+<span class="gu">## 5. Architecture (Feedforward, Inferential)</span>
+
+<span class="k">-</span><span class="w"> </span>Follow Controller -&gt; Service -&gt; Mapper. Controller must not call Mapper directly.
+<span class="k">-</span><span class="w"> </span>Keep transaction boundaries in Service methods.
+<span class="k">-</span><span class="w"> </span>DTOs are API contracts. Do not expose database entities from Controller.
+<span class="k">-</span><span class="w"> </span>SQL lives in MyBatis XML mappers. Use <span class="sb">`#{}`</span> binding, never <span class="sb">`${}`</span> for user input.
+<span class="k">-</span><span class="w"> </span>{{EXTRA_ARCHITECTURE_RULE}}
+
+<span class="gu">## 6. Security (Feedforward, Inferential)</span>
+
+<span class="k">-</span><span class="w"> </span>Validate all request body, path, and query parameters.
+<span class="k">-</span><span class="w"> </span>Keep authorization checks on service APIs or controller endpoints.
+<span class="k">-</span><span class="w"> </span>Do not log secrets, tokens, full request bodies, phone numbers, emails,
+  or payment data. Production logs are long-lived and searchable.
+<span class="k">-</span><span class="w"> </span>User-facing errors should be generic; detailed errors go to safe
+  structured logs.
+
+<span class="gu">## 7. Change Workflow</span>
+
+{{CHANGE_WORKFLOW_SHORT}}
+
+For design-heavy changes, create <span class="sb">`docs/changes/{{CHANGE_ID}}/`</span> with:
+
+<span class="k">-</span><span class="w"> </span><span class="sb">`proposal.md`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`design.md`</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`tasks.md`</span>
+
+Update docs when architecture, API, dependencies, workflow, or conventions
+change.
+
+<span class="gu">## 8. AI Working Protocol</span>
+
+Input expected:
+
+<span class="sb">```yaml</span>
+<span class="nt">goal</span><span class="p">:</span>
+<span class="nt">context</span><span class="p">:</span>
+<span class="nt">constraints</span><span class="p">:</span>
+<span class="nt">definition_of_done</span><span class="p">:</span>
+<span class="nt">verification</span><span class="p">:</span>
+<span class="sb">```</span>
+
+Output required:
+
+<span class="sb">```yaml</span>
+<span class="nt">summary</span><span class="p">:</span>
+<span class="nt">assumptions</span><span class="p">:</span>
+<span class="nt">changes</span><span class="p">:</span>
+<span class="nt">risks</span><span class="p">:</span>
+<span class="nt">verification</span><span class="p">:</span>
+<span class="nt">next_step</span><span class="p">:</span>
+<span class="sb">```</span>
+
+Hard rules:
+
+<span class="k">-</span><span class="w"> </span>No &quot;done&quot; without evidence.
+<span class="k">-</span><span class="w"> </span>Ask when scope or compatibility is unclear.
+<span class="k">-</span><span class="w"> </span>Keep the diff small.
+<span class="k">-</span><span class="w"> </span>Do not touch danger zones without a design note.
+<span class="k">-</span><span class="w"> </span>Never add logs that expose secrets, tokens, request bodies, or PII.
+<span class="k">-</span><span class="w"> </span>Never modify an approved fixture under
+  <span class="sb">`src/test/resources/fixtures/`</span> without explicitly explaining why in the PR.
+
+<span class="gu">## 9. Before Finishing (Feedback gate)</span>
+
+Run:
+
+<span class="sb">```bash</span>
+./scripts/agent-check.sh
+<span class="sb">```</span>
+
+If any check fails, fix the issue before asking for human review.
+&quot;Suggested to run tests&quot; is not acceptable; run them.
+
+<span class="gu">## 10. Gotchas</span>
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| {{SYMPTOM_1}} | {{CAUSE_1}} | {{FIX_1}} |
+| {{SYMPTOM_2}} | {{CAUSE_2}} | {{FIX_2}} |
+
+<span class="gu">## 11. Keep This File Useful</span>
+
+Update this file when commands, top-level directories, KB layout, agent
+clients, or danger zones change.
+
+&lt;!-- last_updated: {{DATE}} --&gt;
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># verified: 2026-05-21 · Ch.03C hands-on · minimal Computational x Feedback gate</span>
+<span class="c1">#</span>
+<span class="c1"># Purpose</span>
+<span class="c1"># -------</span>
+<span class="c1"># Turn &quot;please verify your changes&quot; into one deterministic command path that</span>
+<span class="c1"># a coding agent (or a human) MUST run before declaring a task done. Fowler</span>
+<span class="c1"># calls this the Computational x Feedback corner: cheap, fast, deterministic</span>
+<span class="c1"># checks that fail fast and refuse to be hand-waved past.</span>
+<span class="c1">#</span>
+<span class="c1"># Conventions</span>
+<span class="c1"># -----------</span>
+<span class="c1"># - `set -euo pipefail` so the first failing check stops the script.</span>
+<span class="c1"># - Every check prints a short banner so logs are scannable.</span>
+<span class="c1"># - Replace ./mvnw lines with the project&#39;s actual task runner; the shape</span>
+<span class="c1">#   matters more than the tooling.</span>
+<span class="c1"># - Keep this script SHORT. If it grows beyond ~30 lines, split into</span>
+<span class="c1">#   scripts/agent-check.d/*.sh and have this file run them in order.</span>
+
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+banner<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">printf</span><span class="w"> </span><span class="s2">&quot;\n=== %s ===\n&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+
+banner<span class="w"> </span><span class="s2">&quot;tests (unit + architecture)&quot;</span>
+./mvnw<span class="w"> </span>-q<span class="w"> </span><span class="nb">test</span>
+
+banner<span class="w"> </span><span class="s2">&quot;style (checkstyle)&quot;</span>
+./mvnw<span class="w"> </span>-q<span class="w"> </span>checkstyle:check
+
+banner<span class="w"> </span><span class="s2">&quot;static analysis (spotbugs)&quot;</span>
+./mvnw<span class="w"> </span>-q<span class="w"> </span>spotbugs:check
+
+<span class="c1"># Optional but recommended once the basics are green:</span>
+<span class="c1">#</span>
+<span class="c1"># banner &quot;secret scan&quot;</span>
+<span class="c1"># gitleaks detect --no-banner --redact</span>
+<span class="c1">#</span>
+<span class="c1"># banner &quot;dependency scan&quot;</span>
+<span class="c1"># ./mvnw -q org.owasp:dependency-check-maven:check</span>
+<span class="c1">#</span>
+<span class="c1"># banner &quot;openapi contract lint&quot;</span>
+<span class="c1"># spectral lint docs/ai/api-contracts.yaml</span>
+
+banner<span class="w"> </span><span class="s2">&quot;agent-check.sh OK&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// verified: 2026-05-21 · Ch.03C hands-on · ArchUnit architecture fitness function</span>
+<span class="c1">//</span>
+<span class="c1">// Purpose</span>
+<span class="c1">// -------</span>
+<span class="c1">// Make the Controller -&gt; Service -&gt; Mapper boundary stated in AGENTS.md</span>
+<span class="c1">// machine-checkable. Fowler&#39;s Architecture Fitness Harness lives exactly</span>
+<span class="c1">// here: an automated, deterministic check that catches layering drift the</span>
+<span class="c1">// moment an agent (or a human) violates it -- without waiting for human</span>
+<span class="c1">// code review.</span>
+<span class="c1">//</span>
+<span class="c1">// This is intentionally minimal. A real project should add rules for:</span>
+<span class="c1">//   - controllers MUST live under ..controller..</span>
+<span class="c1">//   - services MUST be transactional at the service-method boundary</span>
+<span class="c1">//   - DTOs MAY NOT depend on JPA entities</span>
+<span class="c1">//   - mappers MAY NOT depend on services</span>
+<span class="c1">//</span>
+<span class="c1">// Add them one by one; do not try to encode the entire architecture in a</span>
+<span class="c1">// single mega-test. Each rule should be small, named, and easy to delete</span>
+<span class="c1">// when the architecture genuinely changes.</span>
+
+<span class="kn">package</span><span class="w"> </span><span class="nn">com.example.order.architecture</span><span class="p">;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.tngtech.archunit.core.domain.JavaClasses</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">com.tngtech.archunit.core.importer.ClassFileImporter</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
+
+<span class="kn">import static</span><span class="w"> </span><span class="nn">com.tngtech.archunit.library.Architectures.layeredArchitecture</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nc">LayeringTest</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Test</span>
+<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">controller_service_mapper_layering_is_respected</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">JavaClasses</span><span class="w"> </span><span class="n">classes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ClassFileImporter</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">importPackages</span><span class="p">(</span><span class="s">&quot;com.example.order&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="n">layeredArchitecture</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">consideringAllDependencies</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">layer</span><span class="p">(</span><span class="s">&quot;Controller&quot;</span><span class="p">).</span><span class="na">definedBy</span><span class="p">(</span><span class="s">&quot;..controller..&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">layer</span><span class="p">(</span><span class="s">&quot;Service&quot;</span><span class="p">).</span><span class="na">definedBy</span><span class="p">(</span><span class="s">&quot;..service..&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">layer</span><span class="p">(</span><span class="s">&quot;Mapper&quot;</span><span class="p">).</span><span class="na">definedBy</span><span class="p">(</span><span class="s">&quot;..mapper..&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">whereLayer</span><span class="p">(</span><span class="s">&quot;Controller&quot;</span><span class="p">).</span><span class="na">mayNotBeAccessedByAnyLayer</span><span class="p">()</span>
+<span class="w">                </span><span class="p">.</span><span class="na">whereLayer</span><span class="p">(</span><span class="s">&quot;Service&quot;</span><span class="p">).</span><span class="na">mayOnlyBeAccessedByLayers</span><span class="p">(</span><span class="s">&quot;Controller&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">whereLayer</span><span class="p">(</span><span class="s">&quot;Mapper&quot;</span><span class="p">).</span><span class="na">mayOnlyBeAccessedByLayers</span><span class="p">(</span><span class="s">&quot;Service&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="p">.</span><span class="na">check</span><span class="p">(</span><span class="n">classes</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;_comment_verified&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-21 · Ch.03C hands-on · approved fixture (human-signed acceptance sample)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;_comment_rules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;This fixture is a human-confirmed acceptance sample (Inferential x Feedforward).&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Agents MAY add new fixtures to cover new behaviour, but MUST explain the business meaning in the PR.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Agents MUST NOT modify this fixture to make a failing test pass.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Modifying this fixture requires an explicit human note in the PR description and is reviewed separately.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Tests load this file as bytes and assert on it (Computational x Feedback).&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;scenario&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;order.create.success&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;method&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/api/v1/orders&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;headers&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;Authorization&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Bearer &lt;REDACTED&gt;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;Content-Type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;customerId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CUST-10001&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;sku&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;BOOK-001&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;quantity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;unitPriceCents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1999</span><span class="w"> </span><span class="p">}</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;USD&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;expectedResponse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">201</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;body&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;orderId&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&lt;assigned-by-server&gt;&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CREATED&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;totalQuantity&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;totalAmountCents&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3998</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;currency&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;USD&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;expectedSideEffects&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;persisted&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;table&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orders&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;rowCount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;table&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;order_items&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;rowCount&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;events&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;topic&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;order.created.v1&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;count&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;forbidden&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;log_must_not_contain&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;Bearer &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;CUST-10001&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;customerId&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;unitPriceCents&quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05-agent-loop-anatomy.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">插章：AI Agent 与编程工具的结构</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="07-three-guardians.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">三大护法：SDD、TDD、MDD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#langchain-agent-model-harness">06.1 LangChain 公式：Agent = Model + Harness</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feedforward-feedback">06.2 第一条轴：Feedforward × Feedback</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computational-inferential">06.3 第二条轴：Computational × Inferential</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">06.4 两条轴一起看：一张 2 × 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harness-maintainabilityarchitecture-fitnessbehaviour">06.5 三类 Harness：Maintainability、Architecture Fitness、Behaviour</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnessability">06.6 Harnessability：不是所有代码库都一样好"拴"</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harness">06.7 一张最小可用 Harness 清单</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#java-web-harness">06.8 一个 Java Web 项目的最小 harness</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feedforward-agent">Feedforward：把规则写给 agent 看</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feedback-agent">Feedback：给 agent 一个能跑的检查脚本</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architecture-fitness-archunit">Architecture Fitness：用 ArchUnit 防止分层漂移</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#behaviour-harness-approved-fixture">Behaviour Harness：用 approved fixture 固化关键行为</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pr-mr-harness-gate">PR/MR 前的 Harness Gate</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">06.9 一条调试法：问 harness 链路</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

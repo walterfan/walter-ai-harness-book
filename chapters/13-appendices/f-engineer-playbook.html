@@ -1,0 +1,854 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>附录 F —— 工程师落地手册 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/13-appendices/f-engineer-playbook';</script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="参考文献" href="../../references.html" />
+    <link rel="prev" title="附录 E —— CLAUDE.md 兼容模板" href="e-claude-md.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../04-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-lazy-ai-coder.html">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../12-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/13-appendices/f-engineer-playbook.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/13-appendices/f-engineer-playbook.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>附录 F —— 工程师落地手册</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-1-todo-cli">F.1 贯穿样例：<code class="docutils literal notranslate"><span class="pre">todo-cli</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-0">Day 0 · 没有马具</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-1">Day 1 · 最小三件套</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-7">Day 7 · 第一条可证伪规则</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-30-sdd">Day 30 · 交付完整 SDD 行</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-60">Day 60 · 一行或一列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-90-harnesscard">Day 90 · 第一次生产级 HarnessCard 评审</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-2">F.2 每章行动页</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-3">F.3 五条迁移路径</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#claude-md">已有 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cursor-rules">已有 <code class="docutils literal notranslate"><span class="pre">.cursor/rules</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ci">已有 CI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">已有文档站</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard">已有 dashboard</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-4">F.4 四组好坏例子</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md"><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit">pre-commit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">dashboard</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pr">PR 验收</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-5">F.5 按角色落地</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-6">F.6 第一次落地会议议程</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="f">
+<span id="apf-engineer-playbook"></span><h1>附录 F —— 工程师落地手册<a class="headerlink" href="#f" title="Link to this heading">#</a></h1>
+<p>本附录回答一个很实际的问题：读完这本书之后，工程师明天该改哪一个文件？它不是新理论，而是把前面章节压成一份可执行 playbook：一个贯穿样例、一张每章行动表、五条迁移路径、四组好坏例子，以及一套按角色分工的落地节奏。</p>
+<section id="f-1-todo-cli">
+<h2>F.1 贯穿样例：<code class="docutils literal notranslate"><span class="pre">todo-cli</span></code><a class="headerlink" href="#f-1-todo-cli" title="Link to this heading">#</a></h2>
+<p>假设你维护一份很小的 Python CLI：<code class="docutils literal notranslate"><span class="pre">todo-cli</span></code>。它有 <code class="docutils literal notranslate"><span class="pre">todo/</span></code>、<code class="docutils literal notranslate"><span class="pre">tests/</span></code>、<code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code>，也许还有一份普通的 <code class="docutils literal notranslate"><span class="pre">README.md</span></code>。它不是平台工程项目，也没有宏大的 AI strategy；它只是一个会被人和智能体反复修改的小仓库。正因为小，它适合展示 Harness Engineering 的最小闭环。</p>
+<section id="day-0">
+<h3>Day 0 · 没有马具<a class="headerlink" href="#day-0" title="Link to this heading">#</a></h3>
+<p>仓库里通常只有这些东西：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code> 解释怎么运行项目。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tests/</span></code> 里有一些 pytest。</p></li>
+<li><p>CI 会在 PR 上跑测试。</p></li>
+<li><p>智能体靠当前 prompt、README 和上下文猜团队习惯。</p></li>
+</ul>
+<p>这不是坏仓库，只是 <em>未被驾驭</em> 的仓库。它的问题不是没有文档，而是没有任何东西能在智能体下笔之前明确告诉它&quot;本仓库的边界在哪里&quot;，也没有任何东西在它越界时立刻拒绝。</p>
+</section>
+<section id="day-1">
+<h3>Day 1 · 最小三件套<a class="headerlink" href="#day-1" title="Link to this heading">#</a></h3>
+<p>第一天只交付三份文件：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>：说明项目是什么、能改哪里、必须跑哪些命令。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>：在 commit 前跑 <code class="docutils literal notranslate"><span class="pre">ruff</span></code> 与快速 pytest。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HarnessCard.md</span></code>：记录这具马具由哪份规约、哪道护栏、哪些信号构成。</p></li>
+</ul>
+<p>这一步对应第 03 章的最小示例。它的价值不在于文件多，而在于三件事第一次对齐：智能体读到的规约、机器执行的护栏、团队复盘的信号。</p>
+</section>
+<section id="day-7">
+<h3>Day 7 · 第一条可证伪规则<a class="headerlink" href="#day-7" title="Link to this heading">#</a></h3>
+<p>一周内挑一条最容易被智能体弄错的规则，让它变成可证伪的规则。例如：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>坏规则：写代码时保持风格一致。
+好规则：修改 `todo/storage.py` 前必须先跑 `pytest tests/test_storage.py`。
+</pre></div>
+</div>
+<p>前者无法被机器拒绝，后者可以被 hook、CI 或 reviewer checklist 检查。第一个星期的目标不是写完所有规则，而是让团队亲眼看到一条规则从散文变成关卡。</p>
+</section>
+<section id="day-30-sdd">
+<h3>Day 30 · 交付完整 SDD 行<a class="headerlink" href="#day-30-sdd" title="Link to this heading">#</a></h3>
+<p>到第 30 天，<code class="docutils literal notranslate"><span class="pre">todo-cli</span></code> 至少应该有完整 SDD 行：</p>
+<ul class="simple">
+<li><p><strong>SDD × 缰绳</strong>：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是 canonical 入口。</p></li>
+<li><p><strong>SDD × 护栏</strong>：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 中列出的命令必须存在；坏链接、坏 schema 会失败。</p></li>
+<li><p><strong>SDD × 牧场</strong>：PR 模板或验收表逐项确认&quot;交付是否符合规约&quot;。</p></li>
+<li><p><strong>SDD × 梳理</strong>：每周检查 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是否仍与代码和命令相符。</p></li>
+</ul>
+<p>这时团队已经不再只是&quot;写了一份 agent 文档&quot;，而是让规约具备了入口、约束、验收和维护节奏。</p>
+</section>
+<section id="day-60">
+<h3>Day 60 · 一行或一列<a class="headerlink" href="#day-60" title="Link to this heading">#</a></h3>
+<p>第 60 天不要争论&quot;先补哪一格最优&quot;。用尴尬测试：把当前 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、CI、仪表盘或评审流程拿给同事看，哪一项最让你不好意思，就补哪一行或哪一列。</p>
+<p>常见选择：</p>
+<ul class="simple">
+<li><p>智能体总是乱改架构：补完整 SDD 行。</p></li>
+<li><p>测试经常被跳过：补完整护栏列。</p></li>
+<li><p>账单、性能、返工没人看：补完整 MDD 行。</p></li>
+</ul>
+</section>
+<section id="day-90-harnesscard">
+<h3>Day 90 · 第一次生产级 HarnessCard 评审<a class="headerlink" href="#day-90-harnesscard" title="Link to this heading">#</a></h3>
+<p>第 90 天不要只问&quot;我们多了哪些文件&quot;。问三句话：</p>
+<ul class="simple">
+<li><p>上季度马具拒绝了什么？</p></li>
+<li><p>上季度马具度量了什么？</p></li>
+<li><p>上季度马具让哪一次工程决策改变了方向？</p></li>
+</ul>
+<p>三问都答得出，才说明这具马具在工作。答不出，就说明它还只是制品集合，不是运行中的工程系统。</p>
+</section>
+</section>
+<section id="f-2">
+<h2>F.2 每章行动页<a class="headerlink" href="#f-2" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>章节</p></th>
+<th class="head"><p>今天能做什么</p></th>
+<th class="head"><p>本周能做什么</p></th>
+<th class="head"><p>做成的信号</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>第 02 章 · 四阶段演进</p></td>
+<td><p>给当前仓库标注它主要停在哪一阶段：Prompt、Context、Skill 还是 Harness。</p></td>
+<td><p>找一个阶段跃迁：把一条 prompt 变成 skill，或把一条 skill 变成 hook。</p></td>
+<td><p>同一类任务的返工次数下降。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 03 章 · 定义</p></td>
+<td><p>写下本仓库的最小三件套草稿：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、pre-commit、HarnessCard。</p></td>
+<td><p>把其中一条规则接到真实命令。</p></td>
+<td><p>至少一次 commit 被正确拒绝。</p></td>
+</tr>
+<tr class="row-even"><td><p>第 04 章 · 三大护法</p></td>
+<td><p>选一个最弱护法：SDD、TDD、MDD。</p></td>
+<td><p>给该护法交付一件最小制品。</p></td>
+<td><p>团队能说清这件制品保证了什么属性。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 05 章 · 矩阵</p></td>
+<td><p>给 12 格各打 0–5 分，不争论，先填证据。</p></td>
+<td><p>挑最低一格，合入一件制品。</p></td>
+<td><p>HarnessCard 有一格提升，且有文件证据。</p></td>
+</tr>
+<tr class="row-even"><td><p>第 06 章 · 运行</p></td>
+<td><p>指定一位 Groom owner。</p></td>
+<td><p>安排一次 30 分钟熵审计。</p></td>
+<td><p>有一条过期规则、坏链接或无主仪表盘被处理。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 07 章 · OpenHarness</p></td>
+<td><p>对照 OpenHarness 的工具边界，列出本仓库智能体可用工具。</p></td>
+<td><p>给高风险工具加审批或沙箱边界。</p></td>
+<td><p>高风险工具调用有日志和 owner。</p></td>
+</tr>
+<tr class="row-even"><td><p>第 08 章 · Superpowers</p></td>
+<td><p>找一条重复三次以上的工作流。</p></td>
+<td><p>把它写成 skill 或命令清单。</p></td>
+<td><p>智能体不再靠口头 prompt 记流程。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 09 章 · lazy-scrum-team</p></td>
+<td><p>给关键制品加状态：draft、review、approved、archived。</p></td>
+<td><p>定义谁能批准、谁能退回、退回时附带什么证据。</p></td>
+<td><p>返工不再沉默发生。</p></td>
+</tr>
+<tr class="row-even"><td><p>第 10 章 · Claude Code</p></td>
+<td><p>清点 hooks、skills、MCP、权限弹窗。</p></td>
+<td><p>把客户端特有配置指回 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> canonical 入口。</p></td>
+<td><p>客户端配置不再互相复制散文。</p></td>
+</tr>
+<tr class="row-odd"><td><p>第 11 章 · 自审计</p></td>
+<td><p>用附录 D 给自己的仓库打一张 HarnessCard。</p></td>
+<td><p>合入一个能复现的修复。</p></td>
+<td><p>修复前后有 delta，而不是只有叙述。</p></td>
+</tr>
+<tr class="row-even"><td><p>第 12 章 · 30/60/90</p></td>
+<td><p>选一格。</p></td>
+<td><p>给这格安排 owner 和复盘节奏。</p></td>
+<td><p>30 天后它仍然活着。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="f-3">
+<h2>F.3 五条迁移路径<a class="headerlink" href="#f-3" title="Link to this heading">#</a></h2>
+<section id="claude-md">
+<h3>已有 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code><a class="headerlink" href="#claude-md" title="Link to this heading">#</a></h3>
+<p>不要把 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 和 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 维护成两份长文。把项目事实、命令、边界、danger zones 收进 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>；<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 只保留 Claude Code 特有说明，或作为 symlink / 薄镜像指回 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>。</p>
+<p>完成标准：两份文件没有互相矛盾的规则；修改命令或目录边界时，只需要更新一处。</p>
+</section>
+<section id="cursor-rules">
+<h3>已有 <code class="docutils literal notranslate"><span class="pre">.cursor/rules</span></code><a class="headerlink" href="#cursor-rules" title="Link to this heading">#</a></h3>
+<p>把 <code class="docutils literal notranslate"><span class="pre">.cursor/rules</span></code> 看作客户端窄规则，而不是项目总规约。项目级规则进 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>；Cursor 专属的 UI、索引、编辑器行为留在 <code class="docutils literal notranslate"><span class="pre">.cursor/rules</span></code>。</p>
+<p>完成标准：换成 Codex、Claude Code 或其他 agent client 时，仍能从 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 读到项目主规则。</p>
+</section>
+<section id="ci">
+<h3>已有 CI<a class="headerlink" href="#ci" title="Link to this heading">#</a></h3>
+<p>CI 是牧场，不等于护栏。把最常见、最便宜、最应该提前失败的检查前移到 pre-commit 或 tool hook：格式、快速单测、schema、密钥扫描。</p>
+<p>完成标准：至少一种错误不再等到 PR 才被发现。</p>
+</section>
+<section id="id1">
+<h3>已有文档站<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>不是所有文档都该进马具。新员工 onboarding、长篇背景说明仍然是文档；智能体每轮必须遵守的边界、命令和 danger zones 才属于 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>。</p>
+<p>完成标准：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 像机场标识，只指路和设边界；深文档用链接引用，不复制。</p>
+</section>
+<section id="dashboard">
+<h3>已有 dashboard<a class="headerlink" href="#dashboard" title="Link to this heading">#</a></h3>
+<p>先不要新增第十三块面板。挑一条会改变工程决策的北极星指标，例如 turns-to-green、每周被拒绝次数、成本上限触发次数、规约漂移数。</p>
+<p>完成标准：周会里有人根据这条指标改变了下一步行动。</p>
+</section>
+</section>
+<section id="f-4">
+<h2>F.4 四组好坏例子<a class="headerlink" href="#f-4" title="Link to this heading">#</a></h2>
+<section id="agents-md">
+<h3><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code><a class="headerlink" href="#agents-md" title="Link to this heading">#</a></h3>
+<p>坏：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>请写高质量代码，遵循最佳实践，保持简洁。
+</pre></div>
+</div>
+<p>好：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Before editing <span class="sb">`todo/storage.py`</span>, run <span class="sb">`pytest tests/test_storage.py`</span>.
+Do not edit <span class="sb">`deploy/`</span> or <span class="sb">`.env*`</span> unless the task explicitly asks for it.
+Every new CLI command gets a <span class="sb">`--help`</span> string and <span class="sb">`tests/test_&lt;cmd&gt;.py`</span>.
+</pre></div>
+</div>
+<p>差别：坏例子要求态度，好例子声明边界和命令。</p>
+</section>
+<section id="pre-commit">
+<h3>pre-commit<a class="headerlink" href="#pre-commit" title="Link to this heading">#</a></h3>
+<p>坏：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest</span>
+<span class="w">  </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest</span>
+<span class="w">  </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;tests/&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>如果 <code class="docutils literal notranslate"><span class="pre">tests/</span></code> 为空，它会永远通过。</p>
+<p>好：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fast-tests</span>
+<span class="w">  </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest -q -m &quot;not slow&quot;</span>
+<span class="w">  </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">  </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>再配一条初始化检查：安装当天必须证明它能拒绝一个真实坏例子。</p>
+</section>
+<section id="id2">
+<h3>dashboard<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>坏：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Agent Dashboard: token count, request count, latency, cache hit, errors, cost...
+</pre></div>
+</div>
+<p>好：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>North Star: mean agent turns-to-green on the fixed benchmark.
+Owner: MDD owner.
+Review cadence: Mondays, 10:00.
+Action threshold: +20% week over week opens a Groom ticket.
+</pre></div>
+</div>
+<p>差别：坏例子展示数据，好例子改变行为。</p>
+</section>
+<section id="pr">
+<h3>PR 验收<a class="headerlink" href="#pr" title="Link to this heading">#</a></h3>
+<p>坏：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>LGTM. Tests pass.
+</pre></div>
+</div>
+<p>好：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>| Check | Evidence | Owner |
+|---|---|---|
+| <span class="sb">`AGENTS.md`</span> unchanged or versioned | diff link | Architect |
+| Fast tests pass | CI link | Developer |
+| New behavior has acceptance case | test path | Reviewer |
+</pre></div>
+</div>
+<p>差别：坏例子给感觉，好例子给证据和角色。</p>
+</section>
+</section>
+<section id="f-5">
+<h2>F.5 按角色落地<a class="headerlink" href="#f-5" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>角色</p></th>
+<th class="head"><p>应该拥有的东西</p></th>
+<th class="head"><p>每周要问的问题</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>一线工程师</p></td>
+<td><p>一条本地可跑的护栏。</p></td>
+<td><p>我今天有没有把一个反复出现的问题变成命令或测试？</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tech Lead</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 和架构 danger zones。</p></td>
+<td><p>智能体最近一次越界，是规约没写清，还是护栏没接上？</p></td>
+</tr>
+<tr class="row-even"><td><p>Reviewer</p></td>
+<td><p>验收表和 hard / soft gate 分类。</p></td>
+<td><p>这次 review 是靠记忆，还是靠可复用制品？</p></td>
+</tr>
+<tr class="row-odd"><td><p>EM / TL</p></td>
+<td><p>HarnessCard 与季度节奏。</p></td>
+<td><p>分数提升有没有对应产出指标？</p></td>
+</tr>
+<tr class="row-even"><td><p>Oncall</p></td>
+<td><p>事故回灌到 Groom 的路径。</p></td>
+<td><p>这次事故有没有产生一条新规则、新测试或新信号？</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="f-6">
+<h2>F.6 第一次落地会议议程<a class="headerlink" href="#f-6" title="Link to this heading">#</a></h2>
+<p>时间盒：45 分钟。</p>
+<ol class="arabic simple">
+<li><p>5 分钟：读第 03 章一句话定义。</p></li>
+<li><p>10 分钟：给当前仓库 12 格打初分，只填证据，不辩论。</p></li>
+<li><p>10 分钟：找最低分的两格，选更尴尬的一格。</p></li>
+<li><p>10 分钟：定义一件 30 天内能合入的制品。</p></li>
+<li><p>5 分钟：指定 owner。</p></li>
+<li><p>5 分钟：写下成功信号，必须是&quot;被拒绝、被度量、或改变决策&quot;中的一种。</p></li>
+</ol>
+<p>会议结束时只需要产出一张卡片：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Cell: SDD × Bridle
+Artefact: AGENTS.md
+Owner: &lt;name&gt;
+First gate: listed test command must exist
+Success signal: one incorrect edit is prevented or redirected within 30 days
+Review date: &lt;date&gt;
+</pre></div>
+</div>
+<p>这张卡片比十页战略文档更有用。它小、可合并、可复盘，也会迫使团队把 Harness Engineering 从概念变成工作。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="e-claude-md.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../references.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">参考文献</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-1-todo-cli">F.1 贯穿样例：<code class="docutils literal notranslate"><span class="pre">todo-cli</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-0">Day 0 · 没有马具</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-1">Day 1 · 最小三件套</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-7">Day 7 · 第一条可证伪规则</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-30-sdd">Day 30 · 交付完整 SDD 行</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-60">Day 60 · 一行或一列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-90-harnesscard">Day 90 · 第一次生产级 HarnessCard 评审</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-2">F.2 每章行动页</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-3">F.3 五条迁移路径</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#claude-md">已有 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cursor-rules">已有 <code class="docutils literal notranslate"><span class="pre">.cursor/rules</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ci">已有 CI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">已有文档站</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dashboard">已有 dashboard</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-4">F.4 四组好坏例子</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md"><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit">pre-commit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">dashboard</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pr">PR 验收</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-5">F.5 按角色落地</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#f-6">F.6 第一次落地会议议程</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

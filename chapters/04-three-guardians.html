@@ -1,0 +1,675 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>三大护法：SDD、TDD、MDD &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04-three-guardians';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="马具解剖：三大护法 × 四区域" href="05-harness-anatomy.html" />
+    <link rel="prev" title="插章：AI Agent 与编程工具的结构" href="03b-agent-loop-anatomy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-lazy-ai-coder.html">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="13-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/04-three-guardians.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/04-three-guardians.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>三大护法：SDD、TDD、MDD</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">为什么一旦智能体进入回路，因果顺序就翻了</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-specification-driven-development">护法一 —— SDD（Specification-Driven Development，规约驱动开发）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">经典定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ai">AI 时代的诠释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">马具示例</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-test-driven-development">护法二 —— TDD（Test-Driven Development，测试驱动开发）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">经典定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">AI 时代的诠释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">马具示例</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-metric-driven-development">护法三 —— MDD（Metric-Driven Development，度量驱动开发）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">经典定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">AI 时代的诠释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">马具示例</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">为什么每一位护法单独都撑不住</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="sddtddmdd">
+<h1>三大护法：SDD、TDD、MDD<a class="headerlink" href="#sddtddmdd" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>Harness Engineering 并没有发明一门新的工程学科。它从三门既有学科里招兵买马，给它们重新排了顺序，再把它们前置到智能体运转的那片空间里。</em></p>
+</div></blockquote>
+<p>第 03 章把 Harness Engineering 定义为：塑造 AI 编码智能体 <em>周围</em> 的那些结构，以使它所产出的软件具备 <strong>可验证</strong>、<strong>可观测</strong>、<strong>可理解</strong> 这三项属性。这三个形容词不是修辞上的点缀。它们每一个都指向一门成熟的软件工程学科，背后都有四十年左右的谱系和一份经典文献。本章把这三门学科一一引出来，并阐明本书做出的最关键的一个选择——<strong>为什么一旦一个 AI 智能体进入回路之中，这三门学科就必须按 SDD → TDD → MDD 这个顺序施行，而不是传统上的 TDD → MDD → SDD</strong>。</p>
+<section id="id1">
+<h2>为什么一旦智能体进入回路，因果顺序就翻了<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>在传统软件工程里，可写的单元是源代码，人是作者。测试摆在最前（TDD），因为测试是第一份可执行的规约，人会花上几个小时把代码往它身上推，直到两边达成一致。文档（也就是经典的、以 <em>文档</em> 为中心的那种 SDD）常常是最后才写的——如果写了的话——而度量（MDD）则作为一张安全网，在生产环境里被监视着。这条因果链看起来是 <em>测试 → 实现 → 观察</em>，中心是由人亲手写下的代码。</p>
+<p>在 AI 辅助的工程实践里，可写的单元整体上移。人所写下的是 <strong>提示词、技能文件、<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容层</strong>——代码是由智能体写的。而一旦它读到的规约含糊，智能体会 <em>极其自信地</em> 把行为幻觉出来；于是任何一份在规约钉稳之前就被写出来的测试，都会把幻觉编码进去，而不是把幻觉捕住 <span id="id2">[<a class="reference internal" href="../references.html#id9" title="Sida Peng, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. The impact of AI on developer productivity: evidence from GitHub Copilot. 2023. URL: https://arxiv.org/abs/2302.06590, arXiv:2302.06590.">Peng <em>et al.</em>, 2023</a>, <a class="reference internal" href="../references.html#id10" title="Albert Ziegler, Eirini Kalliamvakou, X. Alice Li, Andrew Rice, Devon Rifkin, Shawn Simister, Ganesh Sittampalam, and Edward Aftandilian. Productivity assessment of neural code completion. 2022. Companion quantitative study for Copilot's harness claims. URL: https://arxiv.org/abs/2205.06537, arXiv:2205.06537.">Ziegler <em>et al.</em>, 2022</a>]</span>。因果链于是翻转成 <em>规约 → 测试 → 观察</em>：</p>
+<ul class="simple">
+<li><p><strong>SDD 优先</strong>——因为规约现在是由人亲手写下的主要制品；它塑造的是 <em>智能体试图去建什么</em>。</p></li>
+<li><p><strong>TDD 其次</strong>——因为测试现在要 <em>核验智能体对规约的诠释</em>，而不再是它自己充当第一份规约。</p></li>
+<li><p><strong>MDD 压阵</strong>——因为度量闭合反馈回路的方式，是 <em>持续确认规约 + 测试仍与生产现实相符</em>，而不是在末端当作一张安全网。</p></li>
+</ul>
+<p>本章接下来会按这一因果顺序逐一走过三大护法，为每一位给出一份经典定义、一份 AI 时代的诠释、以及一个具体的马具示例。章末会指向第 05 章，那里三大护法会化作本书 <strong>3 × 4 矩阵</strong> 的三行，与&quot;四区域&quot;（缰绳／护栏／牧场／梳理）相乘。</p>
+</section>
+<section id="sdd-specification-driven-development">
+<h2>护法一 —— SDD（Specification-Driven Development，规约驱动开发）<a class="headerlink" href="#sdd-specification-driven-development" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>经典定义<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Specification-Driven Development 的意思是：在系统被造出来 <em>之前</em>，先写下一份关于系统行为的、机器可核验的描述，并把这份描述当作一件和代码一起演进的主要制品。它的经典谱系从 Meyer 的 <em>Design by Contract</em> <span id="id4">[<a class="reference internal" href="../references.html#id15" title="Bertrand Meyer. Applying “design by contract”. Computer, 25(10):40–51, 1992. doi:10.1109/2.161279.">Meyer, 1992</a>]</span>（把前置条件、后置条件、不变式当作一等公民）出发，途经 Adzic 的 <em>Specification by Example</em> <span id="id5">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 978-1617290084.">Adzic, 2011</a>]</span>（把可执行的例子当作产品与工程之间的活合同），一直走到 Martraire 的 <em>Living Documentation</em> <span id="id6">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 978-0134689326.">Martraire, 2019</a>]</span>（文档由代码生成，又对着代码做核验）。贯穿四十年、始终不变的论点是：<strong>含糊的规约产出含糊的软件</strong>，而修正这份含糊，最便宜的地方是规约本身。</p>
+</section>
+<section id="ai">
+<h3>AI 时代的诠释<a class="headerlink" href="#ai" title="Link to this heading">#</a></h3>
+<p>当作者变成智能体时，规约就成了 <em>输入</em>，而不是事后追加的附注。大部分工作由三类制品承担：</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> ／ <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容层</strong>——家规、文件边界，以及智能体在动手改动之前必须尊重的不变式 <span id="id7">[<a class="reference internal" href="../references.html#id50" title="Agentic AI Foundation. agents.md: open format for coding agent instructions. Open standard website, 2025. Vendor-neutral entry-file standard cited in Ch. 03 and Ch. 05 as the canonical SDD x Bridle file. URL: https://agents.md.">Agentic AI Foundation, 2025</a>, <a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span>。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 文件</strong>——针对反复出现的任务、期望智能体一步一步照做的过程 <span id="id8">[<a class="reference internal" href="../references.html#id42" title="Joseph Vincent. Superpowers: a prompt scaffolding library for claude code. GitHub &amp; personal blog, 2025. Walkthrough essay accompanying the Superpowers release used as the Ch. 08 case study. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>]</span>。</p></li>
+<li><p><strong>MCP 服务器 manifest</strong>——机器可读的工具契约，说明智能体 <em>能做什么</em>，以及 <em>每一次调用要花多少</em> <span id="id9">[<a class="reference internal" href="../references.html#id49" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 11 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span>。</p></li>
+</ul>
+<p>这些东西不是关于代码的文档。它们是 <strong>编码过程本身的输入</strong>——智能体每一轮都要读一遍的那种，而不是新员工入职那天看一次就忘的那种。这就是为什么 SDD 被推到了因果链的最前面：一个拿着过时或含糊的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 的智能体，从第一轮起就会写下过时或含糊的代码；下游再多的测试，也找不回当初规约没钉住的那份意图。</p>
+<p>这里值得命名的因果机制叫 <strong>含糊放大（ambiguity amplification）</strong>。一个人读一份含糊的规约，通常会 <em>察觉</em> 到这份含糊——他会迟疑、重读、找同事问、或保守地猜一版。语言模型默认不做这些事。给它一句&quot;写一个地道的错误处理器&quot;，它就会自信满满地吐出 <em>某一个</em> 具体的处理器版本；提示词里的含糊被洗成了代码里的&quot;假精确&quot;。于是 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 里一条含糊的 bullet，在接下来一个季度里会变成一百个写得自信却彼此微妙不同的实现。这份含糊的代价，被智能体的吞吐率乘了出去——这也正是为什么智能体一进回路，<em>收紧规约</em> 就成了杠杆最高的那项投入。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——规约漂移（SDD 那种无声的失败）</p>
+<p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 上写着 <em>&quot;所有数据库写入都走 <code class="docutils literal notranslate"><span class="pre">repo.Repository</span></code>&quot;</em>。六个 sprint 之后，有三个服务文件绕过了 repository，直接走 <code class="docutils literal notranslate"><span class="pre">sqlx</span></code> 写——这是一次事故里引入的模式，后来没被回滚掉。<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 上那条 bullet 一字未改。把 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 当作权威来读的智能体，继续产出 <em>与规约相符</em> 的代码，而代码库 <em>越来越不相符</em>。智能体每写一个新文件，这条裂缝就被拉宽一点——因为它是&quot;对规约是对的&quot;；人每写一个新文件，这条裂缝也被拉宽一点——因为它是&quot;对当下代码库是对的&quot;。<strong>症状</strong>：评审者对这条规则&quot;到底&quot;是什么意思意见不一；同一种模式的新代码有时被拒、有时被收；智能体的违规和规约相关，而非和评审人的个人偏好相关。<strong>解法</strong>：一个定时任务（即一位梳理 Groom），每周把 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 上那些机器可核验的主张拿来和代码库对一次；一旦它们不一致，那 <em>必有一方</em> 是错的，评审必须选出到底哪一方错了。</p>
+</div>
+</section>
+<section id="id10">
+<h3>马具示例<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>SDD 这位护法以一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 片段的形式交付，其中点名：（a）入口点；（b）文件边界规则；（c）由一条测试签字盖章的存储契约；（d）由一段检查脚本强制执行的不变式。这份片段放在 <code class="docutils literal notranslate"><span class="pre">_handson/04-three-guardians/AGENTS.md.fragment</span></code>（见 04 的动手环节）。一位开发者在发出第一条提示词之前就把这份文件提交进仓库，他就在自己的仓库里走出了第一步具体的 Harness Engineering。</p>
+</section>
+</section>
+<section id="tdd-test-driven-development">
+<h2>护法二 —— TDD（Test-Driven Development，测试驱动开发）<a class="headerlink" href="#tdd-test-driven-development" title="Link to this heading">#</a></h2>
+<section id="id11">
+<h3>经典定义<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>Test-Driven Development 这门学科，正如 Beck 在 <em>TDD by Example</em> <span id="id12">[<a class="reference internal" href="../references.html#id12" title="Kent Beck. Test-Driven Development: By Example. Addison-Wesley Professional, 2002. ISBN 978-0321146533.">Beck, 2002</a>]</span> 中所表述的，跟随一条 <strong>红 → 绿 → 重构</strong> 的循环：先写一条失败的测试，再写最小的改动把它变绿，然后在这条已经变绿的测试的安全网下做重构。测试既是规约（可执行，所以不含糊），又是回归网（有持久性，所以能捕捉漂移）。四十年的行业实践告诉我们：能把这条循环握得紧的团队，平均每一次变更的缺陷数更少，也能以更高的速度容忍重构 <span id="id13">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 978-1942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>。</p>
+</section>
+<section id="id14">
+<h3>AI 时代的诠释<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
+<p>一旦智能体进入回路，这条循环中 <strong>红在前</strong> 的半段变得更重要，<strong>重构</strong> 的那半段则变得更可自动化。更重要，是因为由人亲手写下的测试，如今是 <em>唯一一件</em> 能核验智能体是否听懂规约的东西——跳过这一步，智能体自信幻觉出来的代码就会毫无阻碍地溜进仓库 <span id="id15">[<a class="reference internal" href="../references.html#id9" title="Sida Peng, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. The impact of AI on developer productivity: evidence from GitHub Copilot. 2023. URL: https://arxiv.org/abs/2302.06590, arXiv:2302.06590.">Peng <em>et al.</em>, 2023</a>]</span>。更可自动化，是因为一旦测试是红的，智能体很擅长产出 <em>某一段</em> 让它变绿的代码；人要做的事被压缩成一件：决定这段产出，<em>是否也</em> 配得上通过一条人还没写、但对它更有敌意的测试 <span id="id16">[<a class="reference internal" href="../references.html#id10" title="Albert Ziegler, Eirini Kalliamvakou, X. Alice Li, Andrew Rice, Devon Rifkin, Shawn Simister, Ganesh Sittampalam, and Edward Aftandilian. Productivity assessment of neural code completion. 2022. Companion quantitative study for Copilot's harness claims. URL: https://arxiv.org/abs/2205.06537, arXiv:2205.06537.">Ziegler <em>et al.</em>, 2022</a>]</span>。</p>
+<p>落到具体操作上，这重塑了人这边的工作流：</p>
+<ul class="simple">
+<li><p>人写下那条失败的测试，以及一段简短的规约 delta。</p></li>
+<li><p>智能体把测试变绿。</p></li>
+<li><p>人审阅这份 diff，找出测试没覆盖到的那些 <em>沉默</em> 的不变式，再补上一条失败的测试，然后循环继续。</p></li>
+</ul>
+<p>它仍然是 TDD，只是人现在把 TDD 的大部分时间都花在循环的 <em>测试</em> 这一侧，而几乎不花在 <em>实现</em> 那一侧。马具必须让这种分工变便宜：在测试红时拦住 commit 的钩子 <span id="id17">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 978-0321601919.">Humble and Farley, 2010</a>]</span>、给 flaky 测试准备的隔离区、只重跑受本次 diff 影响的那些测试的快通道。</p>
+<p>AI 时代特有的失败机制叫 <strong>把错误诠释钉进了测试里（test-pinning of the wrong interpretation）</strong>。人写下的那条测试，对于他脑子里想的那个行为来说，在 <em>字面意义上</em> 是对的，但留下了一维诠释性的自由度，而智能体顺势把这个自由度按自己的便利解决了。测试变绿。代码里编码下来的是智能体的那个解，而不是人的那份意图。两个月后，一场事故暴露出这个分歧——而那条测试，如今成了承重墙，被引用为 <em>&quot;这个行为是规约过的&quot;</em> 的证据。它并不是；被规约下来的只是与这条测试相容的众多行为中的一种。每一条这样的测试，都把智能体最初的那个误解硬化进了仓库的记忆里。解药不是&quot;加更多测试&quot;，而是 <em>敌意测试（adversarial tests）</em>：专门写来证伪&quot;从提示词到变绿的最省力路径&quot;的那种测试。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;它第一把就把测试过了&quot;</p>
+<p>智能体第一轮就把一条失败的测试变绿了。评审者松了口气，把 PR 批了。这是 AI 时代里 TDD 最常栽跟头的地方。<strong>为什么</strong>：第一把就过，通常意味着测试比规约更好满足——要么测试没定够，要么智能体恰好落到了测试正好覆盖的那一角解空间里。一个被&quot;红—绿—重构&quot;节律推着走的人，会迭代三四轮，留下一些评审者可以从中学到东西的碎片；智能体留下的是一份干净利落、能过的 diff，这 <em>感觉上像</em> 质量。<strong>症状</strong>：第一把通过率上升；沉默缺陷率也跟着上升；每个特性平均新加的测试数量下滑，因为&quot;第一条测试已经覆盖了&quot;。<strong>解法</strong>：每一次&quot;第一把就过&quot;，评审者都要再写 <em>一条测试</em>——而且专门写那种攻击&quot;智能体本可以走的最省力的那条捷径&quot;的测试。若这条测试也过了，那份信心就算挣到了；若它失败了，你刚好挡下了一个沉默缺陷。</p>
+</div>
+</section>
+<section id="id18">
+<h3>马具示例<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
+<p>TDD 这位护法以一份 pytest 骨架的形式交付，位置在 <code class="docutils literal notranslate"><span class="pre">_handson/04-three-guardians/test_skeleton.py</span></code>。它在第一次被提交时 <strong>故意是失败的</strong>——两条测试分别钉住智能体随后必须实现的两条行为（<code class="docutils literal notranslate"><span class="pre">add</span></code> 恰好追加一条；<code class="docutils literal notranslate"><span class="pre">add</span></code> 拒绝空标题）。一条 <code class="docutils literal notranslate"><span class="pre">pre-commit</span></code> 钩子会跑 <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-q</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code>，从第一条提示词起，红的测试就是一道拦路的闸 <span id="id19">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 978-0321601919.">Humble and Farley, 2010</a>]</span>，不是那种只在 CI 里碰一次的愿望。来自第 03 章动手环节的 <code class="docutils literal notranslate"><span class="pre">pre-commit-config.fragment.yaml</span></code> 就是与它配套的那道护栏，正好演示了第 03 章那组最小三件套如何把 04 现在命名的 TDD 护法具体化出来。</p>
+</section>
+</section>
+<section id="mdd-metric-driven-development">
+<h2>护法三 —— MDD（Metric-Driven Development，度量驱动开发）<a class="headerlink" href="#mdd-metric-driven-development" title="Link to this heading">#</a></h2>
+<section id="id20">
+<h3>经典定义<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<p>Metric-Driven Development 这门学科的核心立场是：把生产环境里的信号——而不仅仅是单元测试的通过率——当作判定&quot;系统是否仍在做它的规约与测试声称它在做的事&quot;的权威反馈回路。它的思想谱系包括：Cunningham 的技术债比喻 <span id="id21">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span>（看不见的成本会不断累积，直到一个度量把它显出来）、Majors／Fong-Jones／Miranda 的 <em>Observability Engineering</em> <span id="id22">[<a class="reference internal" href="../references.html#id26" title="Charity Majors, Liz Fong-Jones, and George Miranda. Observability Engineering: Achieving Production Excellence. O'Reilly Media, 2022. ISBN 978-1492076445.">Majors <em>et al.</em>, 2022</a>]</span>（把高基数事件当作原生信号）、以及 Lehman 的软件演化律 <span id="id23">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span>（一个有用的系统必须被持续适配，否则它的适应度会下降——而这一论点只有靠度量才量得出来）。MDD 比传统可观测性再往前一步：坚持让度量在 <em>生产事故把你逼出来之前</em> 就被选好，于是运营的第一周是从一份监控契约开始的，而不是从一块空仪表盘开始的。</p>
+</section>
+<section id="id24">
+<h3>AI 时代的诠释<a class="headerlink" href="#id24" title="Link to this heading">#</a></h3>
+<p>当智能体作者上场后，一具成熟的马具至少要监视三类信号：（a）经典的生产 SLI（错误率、p99 延迟、吞吐量）；（b）马具内部信号（智能体 turns-to-green、每轮成本、提示词缓存命中率）<span id="id25">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>；（c）规约遵守信号（文档站点上的坏链数、动手制品里过期的 <code class="docutils literal notranslate"><span class="pre">verified:</span></code> 日期、<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 与 MCP manifest 之间的 schema 漂移）<span id="id26">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 978-0134689326.">Martraire, 2019</a>]</span>。第三类信号能捕捉的、智能体特有的失败——<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 与代码库之间的 <em>规约漂移</em>、以及智能体轮次间的 <em>成本失控</em>——后面会深入讨论；其中规约漂移这一条，已经在上面 SDD 那一节的陷阱框里专门讲过了。</p>
+<p>智能体时代特有的失败机制叫 <strong>没有对照物的成本失控（cost runaway with no correlate）</strong>。人类工程师若引入一个慢 10 倍的函数，会被发现——因为他自己的下一个任务也跟着慢 10 倍。智能体若引入一个贵 10 倍的提示词，则没人察觉：从团队这一侧看，它 <em>下一个</em> 提示词跑得一样快，而成本就这么无声地记在了账单上。没有一个&quot;每轮成本&quot;的信号被接进某条护栏时，回归的第一份证据要么是限流、要么是账单、要么是季度复盘——每一个都来得太晚，晚到无法和&quot;造成它的那次 commit&quot;对应起来。MDD 的作用，就是让这种对应变便宜：每轮成本按技能、按仓库、按变更集打上标签，于是任何一次马具改动带来的增量成本，在它落地的第二天就可见，而不是下一个季度才可见。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——仪表盘剧场</p>
+<p>一个团队搭了一块十二面板的 Grafana 仪表盘，盯着智能体成本、turns-to-green、缓存命中率，以及其他九路信号。它很漂亮。六周之后，问一句 <em>&quot;这一周哪一路信号动了，我们为此做了什么？&quot;</em>，回来的是一片茫然的眼神。<strong>为什么</strong>：这块仪表盘没有 owner、没有告警阈值、没有固定的复盘节奏；信号在那里，但并 <em>不引导</em> 任何人。一个没有人对它负责的度量，最好的情况下只是诊断性的，最坏的情况下就是装饰。<strong>症状</strong>：仪表盘在 demo 上被骄傲地展示，却从不在 PR 讨论里被引用；事故复盘还是靠直觉解释，哪怕数据明明摆在那里。<strong>解法</strong>：把十二面板里的十个降级到第二个标签页，把 <em>一个</em> 提升为北极星指标，给它一位署名 owner、一个会触发告警的阈值，和每周一上午议程里的一格时间。第 05 章的&quot;MDD × 缰绳&quot;一格，会深入讲这种&quot;独一北极星&quot;的纪律。</p>
+</div>
+</section>
+<section id="id27">
+<h3>马具示例<a class="headerlink" href="#id27" title="Link to this heading">#</a></h3>
+<p>MDD 这位护法以一份 <code class="docutils literal notranslate"><span class="pre">metrics.yaml</span></code> 的形式交付，位置在 <code class="docutils literal notranslate"><span class="pre">_handson/04-three-guardians/metrics.yaml</span></code>。十五行 YAML，点名四路信号（pytest 通过率、坏链数、平均评审时长、智能体 turns-to-green），给每一路设定一个目标，然后——真正把它从&quot;可观测性&quot;变成&quot;MDD&quot;的那一步文化动作——把团队按在一套 <strong>每周复盘节奏</strong> 上。没有复盘节奏的马具只是收藏仪表盘；有复盘节奏的马具，才真正闭合了前两位护法打开的反馈回路。</p>
+</section>
+</section>
+<section id="id28">
+<h2>为什么每一位护法单独都撑不住<a class="headerlink" href="#id28" title="Link to this heading">#</a></h2>
+<p>第 05 章那张矩阵的解读，建立在一个论点之上：没有任何一位护法独自足够。三种失败模式彼此分明，又彼此自我加强：</p>
+<ul class="simple">
+<li><p><strong>只有 SDD</strong>，你得到的是一份没人核验的精确规约——智能体一路循着一份写得漂亮的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>，走进了一个沉默地坏掉的实现，因为从来没有一条测试试图把它打破。</p></li>
+<li><p><strong>只有 TDD</strong>，你得到的是一堆变绿的测试，它们把智能体对规约的 <em>第一份误解</em> 钉了进去——&quot;代码做的是测试所说的事&quot;成了真，而&quot;代码做的是用户所需要的事&quot;却悄悄发散开来 <span id="id29">[<a class="reference internal" href="../references.html#id10" title="Albert Ziegler, Eirini Kalliamvakou, X. Alice Li, Andrew Rice, Devon Rifkin, Shawn Simister, Ganesh Sittampalam, and Edward Aftandilian. Productivity assessment of neural code completion. 2022. Companion quantitative study for Copilot's harness claims. URL: https://arxiv.org/abs/2205.06537, arXiv:2205.06537.">Ziegler <em>et al.</em>, 2022</a>]</span>。</p></li>
+<li><p><strong>只有 MDD</strong>，你得到的是一块漂亮的仪表盘，它能在漂移 <em>发生之后</em> 把它 <em>诊断</em> 出来，却 <em>阻止</em> 不了漂移——因为本该在更早的地方把漂移挡下的那份规约和那些测试，都没有被写出来。</p></li>
+</ul>
+<p>三大护法只有在三位同时在场、并且按那个因果顺序在场时，才真正是承重的。第 05 章把这一论点落成一张 3 × 4 的方法论矩阵：三行护法与四列操作区域（缰绳／护栏／牧场／梳理）相乘，得到十二格工程单元，它们合在一起就是本书的分析骨架。</p>
+</section>
+<section id="id30">
+<h2>研究脉络<a class="headerlink" href="#id30" title="Link to this heading">#</a></h2>
+<p>之所以选出这三位护法，不是因为它们在美学上凑成一套，而是因为每一位都靠在一条独立、可引用的谱系上，每一位都解决了另外两位解决不了的一种失败模式。</p>
+<ul class="simple">
+<li><p><strong>SDD 的谱系。</strong> Meyer 的 <em>Design by Contract</em> <span id="id31">[<a class="reference internal" href="../references.html#id15" title="Bertrand Meyer. Applying “design by contract”. Computer, 25(10):40–51, 1992. doi:10.1109/2.161279.">Meyer, 1992</a>]</span> 把机器可核验的前置／后置条件确立为一等工程制品；Adzic 的 <em>Specification by Example</em> <span id="id32">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 978-1617290084.">Adzic, 2011</a>]</span> 把这一立场扩展到可执行的业务规则；Martraire 的 <em>Living Documentation</em> <span id="id33">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 978-0134689326.">Martraire, 2019</a>]</span> 则是 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 作为一份持续被核验的规约面的直系祖先。</p></li>
+<li><p><strong>TDD 的谱系。</strong> Beck 的 <em>TDD by Example</em> <span id="id34">[<a class="reference internal" href="../references.html#id12" title="Kent Beck. Test-Driven Development: By Example. Addison-Wesley Professional, 2002. ISBN 978-0321146533.">Beck, 2002</a>]</span> 是经典文本；Humble 与 Farley 的 <em>Continuous Delivery</em> <span id="id35">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 978-0321601919.">Humble and Farley, 2010</a>]</span> 展示了红—绿—重构这条循环如何放大到组织节奏上；关于 Copilot 生产率的几项研究 <span id="id36">[<a class="reference internal" href="../references.html#id9" title="Sida Peng, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. The impact of AI on developer productivity: evidence from GitHub Copilot. 2023. URL: https://arxiv.org/abs/2302.06590, arXiv:2302.06590.">Peng <em>et al.</em>, 2023</a>, <a class="reference internal" href="../references.html#id10" title="Albert Ziegler, Eirini Kalliamvakou, X. Alice Li, Andrew Rice, Devon Rifkin, Shawn Simister, Ganesh Sittampalam, and Edward Aftandilian. Productivity assessment of neural code completion. 2022. Companion quantitative study for Copilot's harness claims. URL: https://arxiv.org/abs/2205.06537, arXiv:2205.06537.">Ziegler <em>et al.</em>, 2022</a>]</span>，则提供了经验证据：<em>未经测试</em> 的智能体产出会沉默地拖低代码质量——这就是在 AI 时代仍然坚持&quot;红在前&quot;这条纪律的经验依据。</p></li>
+<li><p><strong>MDD 的谱系。</strong> Cunningham 的&quot;债&quot;之比喻 <span id="id37">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span> 激起了&quot;把看不见的成本显出来&quot;这一动机；Majors／Fong-Jones／Miranda 的 <em>Observability Engineering</em> <span id="id38">[<a class="reference internal" href="../references.html#id26" title="Charity Majors, Liz Fong-Jones, and George Miranda. Observability Engineering: Achieving Production Excellence. O'Reilly Media, 2022. ISBN 978-1492076445.">Majors <em>et al.</em>, 2022</a>]</span>，把生产信号重新框定为首要的设计关切；Lehman 的演化律 <span id="id39">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> 则论证了&quot;一个有用的系统必须被持续再适配&quot;，而这一主张只有通过度量才能落地为可操作的实践。</p></li>
+<li><p><strong>马具一侧的综合。</strong> 2026-01-30 那篇引入三大护法的博客 <span id="id40">[<a class="reference internal" href="../references.html#id43" title="Walter Fan. Ai coding 的三大护法：可验证、可观察、可理解. Walter Fan's Journal, 2026. Original source for the “Three Guardians” (SDD/TDD/MDD) thesis; forms the backbone of Chapter 04. URL: https://walterfan.com/journal/ai_coding_3_protector.">Fan, 2026</a>]</span> 是本书自己的前置综合；想读短版的读者可以把它和 Thoughtworks 技术雷达的条目 <span id="id41">[<a class="reference internal" href="../references.html#id30" title="Thoughtworks Technology Radar. Harnesses for AI coding agents. Technology Radar Vol. 32, “Trial” ring, 2026. Industry validation of the harness-engineering idea; referenced in Ch. 03 and Ch. 05 Provenance. URL: https://www.thoughtworks.com/radar.">Thoughtworks Technology Radar, 2026</a>]</span> 以及 LangChain 那篇&quot;解剖&quot;式博客 <span id="id42">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span> 放在一起读。</p></li>
+</ul>
+</section>
+<section id="id43">
+<h2>动手环节<a class="headerlink" href="#id43" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">source/_handson/04-three-guardians/</span></code> 下交付了三份制品，每位护法一份，顺序与本章所主张的因果顺序一致：</p>
+<ul class="simple">
+<li><p><strong>SDD</strong>——<code class="docutils literal notranslate"><span class="pre">AGENTS.md.fragment</span></code>：一段机器可核验的规约块，点名入口点、文件边界、存储契约，以及智能体的规则。十四行；可以原样拷进任何仓库的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>。</p></li>
+<li><p><strong>TDD</strong>——<code class="docutils literal notranslate"><span class="pre">test_skeleton.py</span></code>：一份故意失败的 pytest 模块，在任何提示词被发出 <em>之前</em> 就把 <code class="docutils literal notranslate"><span class="pre">todo</span> <span class="pre">add</span></code> 的行为钉住。用 <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-q</span> <span class="pre">tests/test_skeleton.py</span></code> 运行；commit 时它应该是红的，在智能体第一轮成功之后变绿。</p></li>
+<li><p><strong>MDD</strong>——<code class="docutils literal notranslate"><span class="pre">metrics.yaml</span></code>：一份十五行的信号契约，点名四项度量（pytest 通过率、坏链数、平均评审时长、智能体 turns-to-green），以及一套每周复盘节奏。</p></li>
+</ul>
+<p>配套的 <code class="docutils literal notranslate"><span class="pre">README.md</span></code> 给出阅读顺序，以及每一份文件的意图。把这三份文件提交进任何一个活跃的仓库——和第 03 章的那组三件套一起——就得到了本书要求读者运行的最小完整&quot;三大护法马具&quot;。下一章把这具马具变成一张矩阵。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03b-agent-loop-anatomy.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">插章：AI Agent 与编程工具的结构</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05-harness-anatomy.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">马具解剖：三大护法 × 四区域</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">为什么一旦智能体进入回路，因果顺序就翻了</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-specification-driven-development">护法一 —— SDD（Specification-Driven Development，规约驱动开发）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">经典定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ai">AI 时代的诠释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">马具示例</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-test-driven-development">护法二 —— TDD（Test-Driven Development，测试驱动开发）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">经典定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">AI 时代的诠释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">马具示例</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-metric-driven-development">护法三 —— MDD（Metric-Driven Development，度量驱动开发）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">经典定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">AI 时代的诠释</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">马具示例</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">为什么每一位护法单独都撑不住</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id30">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id43">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

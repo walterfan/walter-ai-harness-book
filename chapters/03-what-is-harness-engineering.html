@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>什么是 Harness Engineering？ &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/03-what-is-harness-engineering';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="插章：Agent Memory 系统的结构" href="04-agent-memory-anatomy.html" />
+    <link rel="prev" title="四阶段演进：Prompt → Context → Skill → Harness" href="02-four-stage-evolution.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/03-what-is-harness-engineering.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/03-what-is-harness-engineering.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>什么是 Harness Engineering？</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">03.1 一句话定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">03.2 操作性边界</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">马具 <em>是</em> 什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">马具 <em>不是</em> 什么</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">03.3 相邻实践对照</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">03.4 一个最小示例</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md">片段 1 —— 让智能体读的那份规约（<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit-config-yaml">片段 2 —— 人和智能体都绕不过去的那道护栏（<code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard-yaml">片段 3 —— 可观测性回执（<code class="docutils literal notranslate"><span class="pre">harnesscard.yaml</span></code>）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">03.5 什么时候 <em>不</em> 用 Harness Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="harness-engineering">
+<h1>什么是 Harness Engineering？<a class="headerlink" href="#harness-engineering" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>如果说第 01 章是动机、第 08 章是方法，那么本章就是一位怀疑者应当能在十五分钟内读完的词条解释。</em></p>
+</div></blockquote>
+<p>大多数读者不会按顺序读到这一章。有的人会从搜索引擎落到这里，有的人从一场大会的演讲，有的人从同事在 Slack 里发来的一个链接。他们先需要的是一件事：一份 <strong>定义</strong>——简明到可以被引用、辩护到可以被信赖、边界清晰到能与这个领域最常被混淆的另外五门学科区分开。本章在五小节里交付这份定义，之后是本书其余章节都要遵循的&quot;研究脉络&quot;和&quot;动手环节&quot;。</p>
+<section id="id1">
+<h2>03.1 一句话定义<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Harness Engineering（驾驭工程）是这样一门学科：有意识地设计、运行并演进环绕在 AI 编码智能体周围的那些结构，以使它所产出的软件具备可验证、可观测、可理解这三项属性。</strong></p>
+</div></blockquote>
+<p>把这句话拆开读一遍。<em>有意识地设计</em>，拒绝了那种默认立场——认为不管提示词窗口里、IDE 里、CI 流水线里正好有什么，就已经是智能体的足够环境了。<em>运行并演进</em>，则是在说马具不是一次性架起来就完事的东西；熵会在一次次运行之间悄悄爬进来，没人伺候的马具会漂移成一堆过时的指令。<em>可验证、可观测、可理解</em>，点出了第 07 章要展开的&quot;三大护法&quot;——马具存在的目的就是为了保证这三项属性。句子的主语不是智能体；<em>围绕在它周围的那些结构</em> 才是。这一主语的翻转，就是这整门学科的全部。</p>
+</section>
+<section id="id2">
+<h2>03.2 操作性边界<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>马具是一组具体的、可以枚举出来的工程制品。只有当我们把这个集合里 <em>有什么</em> 和 <em>没有什么</em> 说清楚，这门学科才变得可操作。</p>
+<section id="id3">
+<h3>马具 <em>是</em> 什么<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>提示词、技能，以及面向智能体的规约</strong>——<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>（跨智能体的默认入口）、<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>（兼容镜像或 symlink）、<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>、MCP 服务器的 manifest，以及那些被当作纳入版本控制、可审阅的代码来对待的系统提示词 <span id="id4">[<a class="reference internal" href="../references.html#id53" title="Agentic AI Foundation. agents.md: open format for coding agent instructions. Open standard website, 2025. Vendor-neutral entry-file standard cited in Ch. 03 and Ch. 08 as the canonical SDD x Bridle file. URL: https://agents.md.">Agentic AI Foundation, 2025</a>, <a class="reference internal" href="../references.html#id51" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>, <a class="reference internal" href="../references.html#id52" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 15 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span>。</p></li>
+<li><p><strong>审批关卡与护栏</strong>——pre-commit 钩子、lint 规则、PR 评审人、必过的 CI 检查，以及任何不论作者是谁（或是什么）都会拒绝坏制品的自动化 <span id="id5">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span>。</p></li>
+<li><p><strong>一个沙箱</strong>——容器、VM、受限文件系统，或临时 worktree——让智能体在其中操作，而不去碰生产环境 <span id="id6">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span>。</p></li>
+<li><p><strong>写给智能体看的文档</strong>——运维手册（runbooks）、架构决策记录（ADR）、以及智能体能独自读取、用来减少环境性幻觉的技能文件 <span id="id7">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 9780134689326.">Martraire, 2019</a>]</span>。</p></li>
+<li><p><strong>度量与反馈面</strong>——可观测的信号（测试通过率、每轮成本、lint 违规数、time-to-green）被写在一处、由团队每周复盘 <span id="id8">[<a class="reference internal" href="../references.html#id26" title="Charity Majors, Liz Fong-Jones, and George Miranda. Observability Engineering: Achieving Production Excellence. O'Reilly Media, 2022. ISBN 9781492076445.">Majors <em>et al.</em>, 2022</a>]</span>。</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>马具 <em>不是</em> 什么<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>运行时推理栈。</strong> 模型的 token 被如何调度到哪些 GPU 上，是基础设施的事，不是马具——那是 Huyen 意义上的 <em>AI Engineering</em> 的领地 <span id="id10">[<a class="reference internal" href="../references.html#id29" title="Chip Huyen. AI Engineering: Building Applications with Foundation Models. O'Reilly Media, 2025. ISBN 9781098166304. Systems-level view of building with LLMs; Chapter 3 &quot;Evaluation&quot; motivates the TDD guardian in 4.">Huyen, 2025</a>]</span>。</p></li>
+<li><p><strong>ML 评测基准。</strong> HELM、MMLU、Terminal-Bench 这一族度量的是智能体本身；它们是马具设计的 <em>输入</em>，而不是马具 <span id="id11">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p></li>
+<li><p><strong>IDE 插件面。</strong> Cursor、Copilot、Windsurf 等等是消费马具的 <em>客户端</em>；马具住在仓库里，比任何一个具体的编辑器活得都长 <span id="id12">[<a class="reference internal" href="../references.html#id9" title="Sida Peng, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. The impact of AI on developer productivity: evidence from GitHub Copilot. 2023. URL: https://arxiv.org/abs/2302.06590, arXiv:2302.06590.">Peng <em>et al.</em>, 2023</a>]</span>。</p></li>
+<li><p><strong>智能体框架 SDK。</strong> LangChain、AutoGen、CrewAI、LangGraph 提供的是多步智能体的构件；马具是团队在它所选框架 <em>外围</em> 写出来的东西 <span id="id13">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p></li>
+<li><p><strong>部署流水线。</strong> 从已合并的 commit 到生产环境的那条路由 DevOps 负责；马具的职责边界，到&quot;已合并的 commit&quot;为止 <span id="id14">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 9781942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>。</p></li>
+</ul>
+<p>归属判定很简单：一件制品塑造的是智能体在 commit 落地之前 <em>试图产出什么</em>，它就是马具；它塑造的是 commit 之后 <em>这个 commit 会被怎么对待</em>，它就是 DevOps；它塑造的是模型本身如何被服务化，它就是 AI Engineering。</p>
+<p>有三种边界情形出现得足够频繁，值得明确走一遍；在这些情形下，上面这条归属判定很容易被误用。</p>
+<ul class="simple">
+<li><p><strong>一个 flaky 的 pre-commit 钩子。</strong> 算不算马具？算——它在 commit 之前触发——但它是一件 <em>退化</em> 的马具制品，因为它丢掉了马具存在所要提供的那份属性。一道时灵时不灵的护栏，教会智能体（和人）一件事：这道护栏是可选的。一道 flaky 的护栏比没有护栏还糟，因为它同时背上了护栏的成本，却交不出护栏的杠杆。修好它的不稳定性，要么就把这条钩子删掉；不要留它半死不活。</p></li>
+<li><p><strong>一块没人看的仪表盘。</strong> 算不算马具？不算——它在定义里 <em>&quot;运行并演进&quot;</em> 这半句上就过不了关。没有复盘节奏的埋点，属于可观测性基础设施，而不是 MDD。第 09 章的 <em>梳理（Groom）</em> 这一列，正是为了防止它落到这种退位状态。</p></li>
+<li><p><strong>一份挂在仓库顶部的长 <code class="docutils literal notranslate"><span class="pre">README.md</span></code>。</strong> 算不算马具？只有当智能体每一轮都读它，它才算。主要写给新来的人看的 <code class="docutils literal notranslate"><span class="pre">README.md</span></code> 是文档；而一份智能体在会话开始时把前五十行加载进上下文窗口的 <code class="docutils literal notranslate"><span class="pre">README.md</span></code>（可以通过检查智能体的上下文转储来验证）才是马具。文件的名字不决定它归哪一类，<em>消费者</em> 决定它归哪一类。</p></li>
+</ul>
+<p>花五分钟，把这条归属判定用在你自己的仓库上。大多数团队都会发现：他们马具里的 <em>某些</em> 东西被误归成了文档，而他们文档里的 <em>某些</em> 东西被当成马具来用——而这两坨，都没有被该管它们的那门学科好好伺候着。</p>
+</section>
+</section>
+<section id="id15">
+<h2>03.3 相邻实践对照<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<p>这个领域有四个邻居。把它们混起来，是初次接触时最常见的错误——下面这张对照表就是用来提前化解这种混淆的。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 22.0%" />
+<col style="width: 22.0%" />
+<col style="width: 22.0%" />
+<col style="width: 16.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>学科</p></th>
+<th class="head"><p>范围</p></th>
+<th class="head"><p>主要制品</p></th>
+<th class="head"><p>主要失败模式</p></th>
+<th class="head"><p>与 Harness Engineering 的交叠</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>DevOps</strong> <span id="id16">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 9781942788331.">Forsgren <em>et al.</em>, 2018</a>, <a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span></p></td>
+<td><p>从已合并的 commit 到生产环境跑起来</p></td>
+<td><p>流水线定义、IaC、部署 manifest</p></td>
+<td><p>脆弱的发布、居高不下的平均恢复时间</p></td>
+<td><p>共享&quot;审批关卡&quot;这一心智；pre-commit 钩子与必过的 CI 检查是马具 <em>从</em> DevOps 工具箱里 <em>借来</em> 的制品</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>MLOps</strong> <span id="id17">[<a class="reference internal" href="../references.html#id29" title="Chip Huyen. AI Engineering: Building Applications with Foundation Models. O'Reilly Media, 2025. ISBN 9781098166304. Systems-level view of building with LLMs; Chapter 3 &quot;Evaluation&quot; motivates the TDD guardian in 4.">Huyen, 2025</a>, <a class="reference internal" href="../references.html#id19" title="D. Sculley, Gary Holt, Daniel Golovin, Eugene Davydov, Todd Phillips, Dietmar Ebner, Vinay Chaudhary, Michael Young, Jean-François Crespo, and Dan Dennison. Hidden technical debt in machine learning systems. In Advances in Neural Information Processing Systems 28 (NeurIPS 2015). 2015. URL: https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html.">Sculley <em>et al.</em>, 2015</a>]</span></p></td>
+<td><p>从数据集到可被调用的模型</p></td>
+<td><p>训练流水线、特征存储、模型注册表</p></td>
+<td><p>反馈回路和数据漂移里隐藏着的技术债</p></td>
+<td><p>共享&quot;版本化&quot;这一纪律；模型评估 harness 把 <em>信号</em> 喂给智能体马具，但它位于马具的上游</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>AI／Agent Engineering</strong> <span id="id18">[<a class="reference internal" href="../references.html#id29" title="Chip Huyen. AI Engineering: Building Applications with Foundation Models. O'Reilly Media, 2025. ISBN 9781098166304. Systems-level view of building with LLMs; Chapter 3 &quot;Evaluation&quot; motivates the TDD guardian in 4.">Huyen, 2025</a>, <a class="reference internal" href="../references.html#id35" title="Anthropic. Building effective agents. Anthropic Engineering Blog, 2024. Canonical vendor articulation of the agent-engineering boundary cited in Ch. 03's comparison table. URL: https://www.anthropic.com/engineering/building-effective-agents.">Anthropic, 2024</a>, <a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span></p></td>
+<td><p>把基础模型组合成能用的应用，以及多步智能体</p></td>
+<td><p>提示词模板、chain、工具 schema、检索管道</p></td>
+<td><p>提示词脆弱、工具调用幻觉、无界的智能体循环</p></td>
+<td><p>Harness Engineering 是它 <em>环境侧</em> 的对偶；agent engineering 造智能体，harness engineering 造智能体在其中运转的那个场</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Platform Engineering（平台工程）</strong> <span id="id19">[<a class="reference internal" href="../references.html#id38" title="CNCF Platforms Working Group. CNCF platform engineering maturity model v1.1. Cloud Native Computing Foundation White Paper, 2024. Boundary reference for Platform Engineering in Ch. 03's comparison table. URL: https://tag-app-delivery.cncf.io/whitepapers/platform-eng-maturity-model/.">CNCF Platforms Working Group, 2024</a>]</span></p></td>
+<td><p>为产品团队抽象出基础设施的自助开发者平台（IDP）</p></td>
+<td><p>黄金路径、平台 API、内部开发者门户</p></td>
+<td><p>平台使用者的认知负担；平台与现实之间的漂移</p></td>
+<td><p>共享&quot;铺好的路（paved road）&quot;这种理念；一个成熟的 Harness Engineering 团队，最终会把自己的马具作为一款内部平台产品对外暴露</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>一行一行读这张表，能把这个领域的位置看清楚：Harness Engineering 坐在 AI／Agent Engineering（关心的是智能体）和 DevOps（关心的是部署）<strong>之间</strong>，从两边都借来了制品的模式，却哪一边都不归它管。</p>
+</section>
+<section id="id20">
+<h2>03.4 一个最小示例<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<p>搭一具马具不需要平台团队，也不需要预算。它需要的是三份文件，每份不到十行。下面这组三件套就是本书要求读者交付的最小完整马具——一份让智能体读的规约、一道智能体（和人）都绕不过去的护栏、一份由团队对外公开的可观测性回执。</p>
+<section id="agents-md">
+<h3>片段 1 —— 让智能体读的那份规约（<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>）<a class="headerlink" href="#agents-md" title="Link to this heading">#</a></h3>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-24 · AGENTS.md fragment · minimal SDD Bridle --&gt;
+
+<span class="gh"># AGENTS.md — todo-cli</span>
+
+<span class="sb">`todo-cli`</span> is a Python CLI for managing local todo items. This file is the
+agent-facing entry point; client-specific files such as <span class="sb">`CLAUDE.md`</span> may link
+back here for compatibility.
+
+<span class="gu">## Commands</span>
+<span class="k">-</span><span class="w"> </span>Before editing <span class="sb">`todo/storage.py`</span>, run <span class="sb">`pytest tests/test_storage.py`</span>.
+<span class="k">-</span><span class="w"> </span>Before committing, run <span class="sb">`pre-commit run --all-files`</span>.
+
+<span class="gu">## Agent rules</span>
+<span class="k">-</span><span class="w"> </span>Edit only <span class="sb">`todo/`</span> and <span class="sb">`tests/`</span> unless the task explicitly expands scope.
+<span class="k">-</span><span class="w"> </span>Every new subcommand gets a <span class="sb">`--help`</span> string and <span class="sb">`tests/test_&lt;cmd&gt;.py`</span>.
+<span class="k">-</span><span class="w"> </span>Update <span class="sb">`harnesscard.fragment.yaml`</span> when adding or changing a guardian.
+
+&lt;!-- last_updated: 2026-04-24 --&gt;
+</pre></div>
+</div>
+<p>这里有三处选择很关键。规则 <em>少</em>（只有几条），因为比起长篇大论，智能体更可靠地尊重短的、可枚举的&quot;家规&quot; <span id="id21">[<a class="reference internal" href="../references.html#id51" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span>。每条规则都是 <em>机器可核验</em> 的（它点名一个文件、一条命令、一份配置），于是规约和关卡能对得上。而它采用 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 这个固定入口，是为了让 Codex、Cursor、Claude Code、Aider、Gemini CLI 等客户端共享同一份 onboarding 文件；若某个客户端仍偏好 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>，让它作为 symlink 或薄镜像指回这里即可 <span id="id22">[<a class="reference internal" href="../references.html#id53" title="Agentic AI Foundation. agents.md: open format for coding agent instructions. Open standard website, 2025. Vendor-neutral entry-file standard cited in Ch. 03 and Ch. 08 as the canonical SDD x Bridle file. URL: https://agents.md.">Agentic AI Foundation, 2025</a>]</span>。</p>
+</section>
+<section id="pre-commit-config-yaml">
+<h3>片段 2 —— 人和智能体都绕不过去的那道护栏（<code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>）<a class="headerlink" href="#pre-commit-config-yaml" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · .pre-commit-config.yaml fragment · 10 lines</span>
+<span class="nt">repos</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/astral-sh/ruff-pre-commit</span>
+<span class="w">    </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v0.6.9</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">ruff</span><span class="p p-Indicator">,</span><span class="nt"> args</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">--fix</span><span class="p p-Indicator">]},</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">ruff-format</span><span class="p p-Indicator">}]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest-fast</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest (fast lane)</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest -q -m &quot;not slow&quot;</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>pre-commit 是一道尽可能最小的 TDD 式关卡：它拒绝坏代码，不管作者是谁 <span id="id23">[<a class="reference internal" href="../references.html#id12" title="Kent Beck. Test-Driven Development: By Example. Addison-Wesley Professional, 2002. ISBN 9780321146533.">Beck, 2002</a>]</span>。ruff 钩子强制代码风格（否则智能体会在五种互相打架的风格之间幻觉出一种），而一个小小的 <code class="docutils literal notranslate"><span class="pre">pytest</span> <span class="pre">-m</span> <span class="pre">&quot;not</span> <span class="pre">slow&quot;</span></code> 钩子保证：没有一个 commit 可以在快通道还没跑绿的情况下落地。这就是第 07 章那条 <em>可验证性护法</em> 被压缩进十行里的样子。</p>
+</section>
+<section id="harnesscard-yaml">
+<h3>片段 3 —— 可观测性回执（<code class="docutils literal notranslate"><span class="pre">harnesscard.yaml</span></code>）<a class="headerlink" href="#harnesscard-yaml" title="Link to this heading">#</a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-24 · HarnessCard fragment · 10 lines</span>
+<span class="nt">harnesscard_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.2&quot;</span>
+<span class="nt">project</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">todo-cli</span>
+<span class="nt">sdd</span><span class="p">:</span><span class="w">   </span><span class="p p-Indicator">{</span><span class="nt">spec</span><span class="p">:</span><span class="w"> </span><span class="nv">AGENTS.md</span><span class="p p-Indicator">,</span><span class="nt"> owner</span><span class="p">:</span><span class="w"> </span><span class="nv">walter</span><span class="p p-Indicator">,</span><span class="nt"> last_reviewed</span><span class="p">:</span><span class="w"> </span><span class="nv">2026-04-24</span><span class="p p-Indicator">}</span>
+<span class="nt">tdd</span><span class="p">:</span><span class="w">   </span><span class="p p-Indicator">{</span><span class="nt">gate</span><span class="p">:</span><span class="w"> </span><span class="nv">pre-commit-config.fragment.yaml</span><span class="p p-Indicator">,</span><span class="nt"> coverage_floor</span><span class="p">:</span><span class="w"> </span><span class="nv">0.80</span><span class="p p-Indicator">}</span>
+<span class="nt">mdd</span><span class="p">:</span><span class="w">   </span><span class="p p-Indicator">{</span><span class="nt">signals</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">pytest_pass_rate</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">ruff_violations</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">mean_agent_turns_to_green</span><span class="p p-Indicator">]}</span>
+<span class="nt">approval_gate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pre-commit</span>
+<span class="nt">evolution_log</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CHANGELOG.md</span>
+</pre></div>
+</div>
+<p>HarnessCard 是由 CAR 分解那篇论文提出的一种标准化披露格式 <span id="id24">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span>。它在 <em>一份可作为 commit 被审阅的文件</em> 里点明：这具马具用的是哪份规约、由哪道关卡强制执行、团队在看哪几路信号。它是一个尽可能最小的 MDD 面（第 07 章那第三条护法）：三行信号，已经足够起一个每周复盘的习惯。</p>
+<p>把这三份加在一起的这三十行，已经满足了上面那句一句话的定义。它们是 <em>有意识设计</em> 的（不是偶然堆起来的）、是 <em>被运行和演进</em> 的（HarnessCard 自己就带着日期），并且明明白白点出了三大护法。任何一支有智能体参与的团队，都可以在一个下午把这一组三件套落地出来——它是一具马具，虽然初级，但真实。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——长得像马具、其实不是马具的三份文件</p>
+<p>一组 <em>看起来</em> 和上面那一组一模一样、却过不了归属判定的三十行三件套，其实容易得惊人。常见的退化形态有三种：</p>
+<ol class="arabic simple">
+<li><p><strong>愿望型的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>。</strong> 规则被写成愿望——&quot;写地道的 Go&quot;、&quot;倾向于清晰的命名&quot;——没有任何钩子能机械地证伪这些话。智能体于是打出合规的信号、幻觉出自己在遵守。<strong>判定</strong>：每一条规则都必须点名一个文件、一条命令、一份配置。若一条都没有，这就是一份愿望清单，不是规约。</p></li>
+<li><p><strong>永远能过的 pre-commit。</strong> 一条钩子，拿 <code class="docutils literal notranslate"><span class="pre">pytest</span></code> 去跑一个测试数为零的套件，或者拿 <code class="docutils literal notranslate"><span class="pre">ruff</span></code> 去扫一个被排除掉的目录。它永远通过，而团队根本注意不到自己已经失去了这道护栏。<strong>判定</strong>：首次装上去时，这条钩子必须 <em>拒绝</em> 仓库里当前存在的某件制品（哪怕你接着就修掉了它）。从没说过一个 <em>不</em> 字的护栏，根本不是护栏。</p></li>
+<li><p><strong>没有日期的 HarnessCard。</strong> 一份 yaml，提交过一次之后就再也没人动过。信号列表还在，但整整一个季度，没有一路信号变过。<strong>判定</strong>：HarnessCard 必须带一个 <code class="docutils literal notranslate"><span class="pre">last_reviewed:</span></code> 日期，且这个日期不超过三十天；而每一次复盘都必须产出一条 delta 笔记。一份静态的 HarnessCard 是装饰品。</p></li>
+</ol>
+<p>一具在工作的马具和&quot;马具剧场&quot;之间的分界，不在文件数——而在 <em>随便挑一个周二</em>，这三份文件中的每一份，能不能拿得出&quot;它在最近拒绝过、量过、或引导过什么&quot;的证据。如果一整个季度的答案都是&quot;不能&quot;，那即便它的内容一字未改，这组三件套也已经衰退成装饰了。</p>
+</div>
+</section>
+</section>
+<section id="id25">
+<h2>03.5 什么时候 <em>不</em> 用 Harness Engineering<a class="headerlink" href="#id25" title="Link to this heading">#</a></h2>
+<p>Harness Engineering 和任何一门学科一样，都是有成本的：三份文件要维护、一个每周复盘的节奏、一张 HarnessCard 要更新。有三种情形，这份成本收不回来：</p>
+<ul class="simple">
+<li><p><strong>一次性的一次就扔的脚本。</strong> 一段 40 行、解析完 CSV 就退出的脚本不是一个项目；它没有第二次 commit。马具的那份投入，摊不到一个永远不会到来的&quot;第二次 commit&quot;上。</p></li>
+<li><p><strong>完全不用 AI 的个人原型。</strong> 如果一个开发者既没有、也不打算使用 AI 编码智能体，第 04–06 章依然可以作为传统软件工程卫生学来读，但 <em>马具</em> 这个标签在这里不帮任何忙——那个被&quot;塑造环境&quot;的&quot;智能体&quot;根本不存在。</p></li>
+<li><p><strong>任何 AI 智能体都不会碰的遗留代码。</strong> 一个 2008 年的 COBOL 系统，已经处在变更冻结下，给它加一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 毫无收益；把精力花在 Feathers 的那套遗留代码手册上更值得 <span id="id26">[<a class="reference internal" href="../references.html#id27" title="Michael C. Feathers. Working Effectively with Legacy Code. Prentice Hall, 2004. ISBN 9780131177055.">Feathers, 2004</a>]</span>，直到哪天这套代码库带着 AI 重新进入活跃开发。</p></li>
+</ul>
+<p>除此以外的所有情形——从一位独自搞副业、只用 Copilot 做自动补全的开发者，到五十个人跑着自主智能体的平台团队——03.4 那三十行三件套的成本，都低于没有它的成本。</p>
+</section>
+<section id="id27">
+<h2>研究脉络<a class="headerlink" href="#id27" title="Link to this heading">#</a></h2>
+<p>03.1 里 Harness Engineering 的定义是 <em>有意</em> 构造得坐在几门已有学科之间，而不是另起炉灶；因此它的可信度靠的是一串边界引用，而不是哪一个&quot;唯一源头&quot;。</p>
+<ul class="simple">
+<li><p><strong>DevOps 基线。</strong> Humble 与 Farley 的 <em>Continuous Delivery</em> <span id="id28">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span>、Forsgren／Humble／Kim 的 <em>Accelerate</em> <span id="id29">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 9781942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>，合起来建立了一件事：一套&quot;审批关卡&quot;纪律可以在整个行业里被文化化地标准化。马具几乎是原样借走了他们这种以关卡为中心的立场，只是把它从 commit 的 <em>下游</em> 重新指向了 <em>上游</em>。</p></li>
+<li><p><strong>MLOps 基线。</strong> Sculley 等人 <em>Hidden Technical Debt in Machine Learning Systems</em> <span id="id30">[<a class="reference internal" href="../references.html#id19" title="D. Sculley, Gary Holt, Daniel Golovin, Eugene Davydov, Todd Phillips, Dietmar Ebner, Vinay Chaudhary, Michael Young, Jean-François Crespo, and Dan Dennison. Hidden technical debt in machine learning systems. In Advances in Neural Information Processing Systems 28 (NeurIPS 2015). 2015. URL: https://papers.nips.cc/paper_files/paper/2015/hash/86df7dcfd896fcaf2674f757a2463eba-Abstract.html.">Sculley <em>et al.</em>, 2015</a>]</span>，是关于 ML 流水线里那些隐形粘合代码的经典警示；Huyen 的 <em>AI Engineering</em> <span id="id31">[<a class="reference internal" href="../references.html#id29" title="Chip Huyen. AI Engineering: Building Applications with Foundation Models. O'Reilly Media, 2025. ISBN 9781098166304. Systems-level view of building with LLMs; Chapter 3 &quot;Evaluation&quot; motivates the TDD guardian in 4.">Huyen, 2025</a>]</span> 则把那份批评在&quot;基础模型时代&quot;里做了更新，也就是 03.3 里&quot;AI 不等于马具&quot;这一行背后真正的参考。</p></li>
+<li><p><strong>Agent Engineering 边界。</strong> Anthropic 的 <em>Building Effective Agents</em> <span id="id32">[<a class="reference internal" href="../references.html#id35" title="Anthropic. Building effective agents. Anthropic Engineering Blog, 2024. Canonical vendor articulation of the agent-engineering boundary cited in Ch. 03's comparison table. URL: https://www.anthropic.com/engineering/building-effective-agents.">Anthropic, 2024</a>]</span> 与 LangChain 的 <em>Terminal-Bench 2.0</em> <span id="id33">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>，是 2024–2026 年间关于&quot;智能体是什么、该如何评估它&quot;这个问题最常被引用的两份资料；两份都把智能体当成主语，把环境当成实现细节——而本书要翻转的，恰恰就是这个主语／宾语关系。</p></li>
+<li><p><strong>Platform Engineering 边界。</strong> CNCF Platforms Working Group 的 <em>Platform Engineering Maturity Model</em> <span id="id34">[<a class="reference internal" href="../references.html#id38" title="CNCF Platforms Working Group. CNCF platform engineering maturity model v1.1. Cloud Native Computing Foundation White Paper, 2024. Boundary reference for Platform Engineering in Ch. 03's comparison table. URL: https://tag-app-delivery.cncf.io/whitepapers/platform-eng-maturity-model/.">CNCF Platforms Working Group, 2024</a>]</span>，正是 03.3 里 Platform Engineering 那一行所借用的&quot;铺好的路（paved road）&quot;词汇背后的锚点。</p></li>
+<li><p><strong>Harness Engineering 第一手来源。</strong> 立场论文中提出的 CAR 分解与 HarnessCard <span id="id35">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span>、Fowler 首次为这项实践命名的 bliki 条目 <span id="id36">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span>、OpenAI 在厂商一侧的表述 <span id="id37">[<a class="reference internal" href="../references.html#id54" title="OpenAI. Agentic coding: harness design for ChatGPT agents. OpenAI Engineering Blog, 2026. Vendor-side articulation of harness-as-product; cited for triangulation in Ch. 08 Provenance. URL: https://openai.com/index/agentic-coding-harness/.">OpenAI, 2026</a>]</span>，以及 Thoughtworks 技术雷达中 trial 环的那条条目 <span id="id38">[<a class="reference internal" href="../references.html#id30" title="Thoughtworks Technology Radar. Harnesses for AI coding agents. Technology Radar Vol. 32, “Trial” ring, 2026. Industry validation of the harness-engineering idea; referenced in Ch. 03 and Ch. 08 Provenance. URL: https://www.thoughtworks.com/radar.">Thoughtworks Technology Radar, 2026</a>]</span>——每当&quot;Harness Engineering&quot;这个名字本身需要被交叉引用时，本书用的就是这四份第一手参考。</p></li>
+</ul>
+</section>
+<section id="id39">
+<h2>动手环节<a class="headerlink" href="#id39" title="Link to this heading">#</a></h2>
+<p>03.4 里那个最小示例，以三个片段的形式收在 <code class="docutils literal notranslate"><span class="pre">source/_handson/03-what-is-harness-engineering/</span></code> 目录下：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">agents-md.fragment.md</span></code>——给智能体读的那份十行规约。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pre-commit-config.fragment.yaml</span></code>——那条拒绝坏 commit 的十行护栏。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">harnesscard.fragment.yaml</span></code>——团队对外发布的那份十行可观测性回执。</p></li>
+</ul>
+<p>配套的 <code class="docutils literal notranslate"><span class="pre">README.md</span></code> 给出了阅读顺序，以及每一份文件的意图。如果一位读者今天就只想 <em>开始</em> 实践 Harness Engineering，他把这三个片段拷进任何一个仓库，把文件名改一下，就可以启动第 09 章要正式化的那套 HarnessCard 每周复盘循环。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02-four-stage-evolution.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">四阶段演进：Prompt → Context → Skill → Harness</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04-agent-memory-anatomy.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">插章：Agent Memory 系统的结构</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">03.1 一句话定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">03.2 操作性边界</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">马具 <em>是</em> 什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">马具 <em>不是</em> 什么</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">03.3 相邻实践对照</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">03.4 一个最小示例</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md">片段 1 —— 让智能体读的那份规约（<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit-config-yaml">片段 2 —— 人和智能体都绕不过去的那道护栏（<code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard-yaml">片段 3 —— 可观测性回执（<code class="docutils literal notranslate"><span class="pre">harnesscard.yaml</span></code>）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">03.5 什么时候 <em>不</em> 用 Harness Engineering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id39">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

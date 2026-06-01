@@ -1,0 +1,934 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>马具解剖：三大护法 × 四区域 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/05-harness-anatomy';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="运行一具马具：熵、可观测性、审批关卡与元马具演进" href="06-operating-a-harness.html" />
+    <link rel="prev" title="三大护法：SDD、TDD、MDD" href="04-three-guardians.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-lazy-ai-coder.html">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="13-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/05-harness-anatomy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/05-harness-anatomy.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>马具解剖：三大护法 × 四区域</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">出处</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">05.全景 —— 3 × 4 矩阵</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd">SDD × 缰绳 —— 引导智能体的规约</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-x-fence">SDD × 护栏 —— 在关卡处强制规约合法性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-x-paddock">SDD × 牧场 —— 与规约相符的验收</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-x-groom">SDD × 梳理 —— 让规约面持续鲜活</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd">TDD × 缰绳 —— 先失败的测试作为给智能体的输入</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-commit">TDD × 护栏 —— 拒绝红树 commit 的钩子</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-ci">TDD × 牧场 —— CI 关卡与环境对等</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-flake">TDD × 梳理 —— flake 维护与测试面演进</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd">MDD × 缰绳 —— 真正在引导的那一个度量</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-x-fence">MDD × 护栏 —— 成本上限与熔断器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-sli-staging">MDD × 牧场 —— 发布 SLI 与 staging 浸泡</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-x-groom">MDD × 梳理 —— 每周度量审计与仪表盘卫生</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>马具解剖：三大护法 × 四区域<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>一个画不成表格的框架，是口号，不是分析工具。</em></p>
+</div></blockquote>
+<p>第 04 章论证了：任何一具能工作的马具，都必须按那个因果顺序扛住三位承重的护法——SDD、TDD、MDD。本章把这三位护法放到四条操作性的 <strong>区域（zones）</strong>——<em>缰绳（Bridle）</em>、<em>护栏（Fence）</em>、<em>牧场（Paddock）</em>、<em>梳理（Groom）</em>——上，得到一张 3 行 × 4 列的矩阵。这十二格，就是本书后续每一章都会回头指的那条分析脊梁。</p>
+<p>在切入矩阵本身之前，05.<em>出处</em> 先把&quot;四区域&quot;这套词汇的来路讲清楚，也说清本书为什么仍然用它。想先看定义的读者，可以直接跳到 05.<em>全景</em>。</p>
+<section id="id2">
+<h2>出处<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>&quot;四区域&quot;这个比喻——<strong>缰绳（Bridle）</strong>（在智能体动手写代码之前引导它的东西）、<strong>护栏（Fence）</strong>（不论作者是谁都会拒绝坏活的东西）、<strong>牧场（Paddock）</strong>（智能体可以自由走动的那片有界空间）、<strong>梳理（Groom）</strong>（让马具自身保持活着的那类反复发生的维护）——由本书作者在 2026-03-28 那篇博客《Harness Engineering: 给 AI 套上缰绳》中提出 <span id="id3">[<a class="reference internal" href="../references.html#id43" title="Walter Fan. Ai coding 的三大护法：可验证、可观察、可理解. Walter Fan's Journal, 2026. Original source for the “Three Guardians” (SDD/TDD/MDD) thesis; forms the backbone of Chapter 04. URL: https://walterfan.com/journal/ai_coding_3_protector.">Fan, 2026</a>]</span>。它是一份 <strong>实践者框架</strong>，不是一份经过同行评议的分类学。有研究背景的读者应当把它当作教学脚手架来用，而不是当作这个领域已经尘埃落定的分解来用。</p>
+<p>有三个相邻框架大致覆盖着同一片地图，值得拿来显式地做一次三点定位：</p>
+<ul class="simple">
+<li><p><strong>CAR 分解 ＋ HarnessCard 报告格式</strong>——由立场论文 <em>Harness Engineering for Language Agents</em> 提出 <span id="id4">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span>，把一具马具切分成 <strong>Control（谁来决定运行什么）</strong>、<strong>Agency（智能体自行可以做什么）</strong>、<strong>Runtime（智能体代码所运行其上的那层底座）</strong> 三部分，并把这份分解与一套标准化的 HarnessCard 披露格式配套。CAR 是本书首选的 <em>学术</em> 参考；第 07–11 章那几份案例研究 HarnessCard，最终都是以它为目标来序列化的。</p></li>
+<li><p><strong>Thoughtworks 的三段式框架</strong> <span id="id5">[<a class="reference internal" href="../references.html#id30" title="Thoughtworks Technology Radar. Harnesses for AI coding agents. Technology Radar Vol. 32, “Trial” ring, 2026. Industry validation of the harness-engineering idea; referenced in Ch. 03 and Ch. 05 Provenance. URL: https://www.thoughtworks.com/radar.">Thoughtworks Technology Radar, 2026</a>]</span> 把马具工作看作 <em>context engineering</em> ＋ <em>architectural constraints</em> ＋ <em>garbage collection</em>。这种框法在精神上更接近 DevOps，也是 05.<em>梳理</em> 背后&quot;garbage collection&quot;那股直觉最早的来路。</p></li>
+<li><p><strong>LangChain 的五段式智能体解剖</strong> <span id="id6">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span> 在 Terminal-Bench 2.0 那篇博客里，列出 <em>prompts / tools / middleware / orchestration / runtime</em> 作为构件。LangChain 的框法以产品为中心（面向的是框架使用者），而本书的四区域以工作流为中心（面向的是下周要决定&quot;把钱往哪投&quot;的团队负责人）。</p></li>
+</ul>
+<p>既然有了这三个相邻框架，为什么还保留 Bridle／Fence／Paddock／Groom？两个原因。第一，这四个区域 <strong>能与任何一支工程团队已经在跑的工作流 1:1 对应</strong>——我们本来就有代码评审人、CI 关卡、staging 环境、每周杂务清单；四区域只是把它们重新命名成一套把它们视为 <em>一等马具制品</em> 的词汇，而不是 DevOps 的附属品。第二，把四区域与 SDD／TDD／MDD 相乘，得到一个 <strong>3 × 4 笛卡尔积</strong>，十二个小格——每格都小到读者可以花一个下午为它交付一件制品。三分法（CAR）适合用来写一篇立场论文；十二格矩阵，则是周一早上被问到 <em>&quot;下一步往哪投？&quot;</em> 时你真正想要的那种东西。</p>
+<p>比起 Bridle／Fence／Paddock／Groom 更愿意用 CAR 的读者，可以这样对一下：缰绳大致对应 CAR 的 Control；护栏和牧场合起来大致对应 CAR 的 Agency；梳理覆盖的则是 CAR 作为 Runtime 演进来处理的那类横切关切。本书全程使用四区域的命名，但从不声称它比 CAR 更优先；这份对照是一等公民，不是事后补做的。</p>
+</section>
+<section id="id7">
+<h2>05.全景 —— 3 × 4 矩阵<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 10.2%" />
+<col style="width: 22.4%" />
+<col style="width: 22.4%" />
+<col style="width: 22.4%" />
+<col style="width: 22.4%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><strong>缰绳（Bridle）</strong>——在动笔之前引导</p></th>
+<th class="head"><p><strong>护栏（Fence）</strong>——拒绝坏活</p></th>
+<th class="head"><p><strong>牧场（Paddock）</strong>——划定智能体可以走动的范围</p></th>
+<th class="head"><p><strong>梳理（Groom）</strong>——伺候马具自身</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>SDD</strong></p></td>
+<td><p><a class="reference internal" href="#sdd-x-bridle"><span class="std std-ref">SDD × 缰绳</span></a></p></td>
+<td><p><a class="reference internal" href="#sdd-x-fence"><span class="std std-ref">SDD × 护栏</span></a></p></td>
+<td><p><a class="reference internal" href="#sdd-x-paddock"><span class="std std-ref">SDD × 牧场</span></a></p></td>
+<td><p><a class="reference internal" href="#sdd-x-groom"><span class="std std-ref">SDD × 梳理</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>TDD</strong></p></td>
+<td><p><a class="reference internal" href="#tdd-x-bridle"><span class="std std-ref">TDD × 缰绳</span></a></p></td>
+<td><p><a class="reference internal" href="#tdd-x-fence"><span class="std std-ref">TDD × 护栏</span></a></p></td>
+<td><p><a class="reference internal" href="#tdd-x-paddock"><span class="std std-ref">TDD × 牧场</span></a></p></td>
+<td><p><a class="reference internal" href="#tdd-x-groom"><span class="std std-ref">TDD × 梳理</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>MDD</strong></p></td>
+<td><p><a class="reference internal" href="#mdd-x-bridle"><span class="std std-ref">MDD × 缰绳</span></a></p></td>
+<td><p><a class="reference internal" href="#mdd-x-fence"><span class="std std-ref">MDD × 护栏</span></a></p></td>
+<td><p><a class="reference internal" href="#mdd-x-paddock"><span class="std std-ref">MDD × 牧场</span></a></p></td>
+<td><p><a class="reference internal" href="#mdd-x-groom"><span class="std std-ref">MDD × 梳理</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>下面十二个 H3 小节——每格一节，按 <strong>先 SDD 行、再 TDD 行、最后 MDD 行</strong> 的固定顺序排列——是本章的主干。每一章案例研究（07–11）都以同样的十二格为坐标，给一具真实的马具打分。</p>
+<p>关于这张矩阵 <em>应该怎么读</em>，先说一句。这十二格在分析上彼此独立（一个强壮的 TDD × 护栏并不意味着也会有一个强壮的 SDD × 梳理），但在 <em>操作</em> 上彼此耦合——强的格子会替弱的格子顶住一阵，弱的格子也会无声地拖垮强的格子。在读任何一行之前，有三种耦合值得先注意：</p>
+<ul class="simple">
+<li><p><strong>缰绳的弱，会被护栏的强放大出来。</strong> 一份含糊的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>（SDD × 缰绳弱）搭配一条严苛的 pre-commit 钩子（TDD × 护栏强），会产出那种 <em>干净而错</em> 的代码：lint 过了、测试过了，而架构违反着规约从未钉住的那份意图。强壮的护栏让虚弱的缰绳看起来像没事——直到架构债在一场事故里浮出水面。</p></li>
+<li><p><strong>牧场的强，会掩盖缰绳的弱。</strong> 一套扎实的 PR 评审仪式（SDD × 牧场强），在一份平庸的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 下也能把团队扛上一年，因为每一次合并都靠评审人顶上来。一旦团队&quot;扩评审人能力&quot;的速度慢于&quot;扩智能体产出&quot;的速度，这份弱就暴露出来——而这永远会发生。</p></li>
+<li><p><strong>梳理是其他三列衰减的归宿。</strong> 缰绳、护栏、牧场这三列上的每一格，默认都在贬值；梳理这一列存在的意义，就是把这份折旧偿还下去。一具梳理列为零的马具，不管开始时投入了多少，都会在两个季度内把其他三列的分数都拖回零。</p></li>
+</ul>
+<p>读下面每一格时，把这种耦合放在心里：一个高分若没有兄弟格子陪着，并不耐用；没有哪一格能独自承重。</p>
+<section id="sdd">
+<span id="sdd-x-bridle"></span><h3>SDD × 缰绳 —— 引导智能体的规约<a class="headerlink" href="#sdd" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的缰绳，指的是智能体 <em>在动笔之前会先读</em> 的任何一份文件，它的首要目的是塑造&quot;智能体试图去建什么&quot;。<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>、顶层的 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 都住在这里；在多智能体团队里，<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 应当作为 vendor-neutral 的 canonical 入口，<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 则作为兼容镜像或 symlink <span id="id8">[<a class="reference internal" href="../references.html#id50" title="Agentic AI Foundation. agents.md: open format for coding agent instructions. Open standard website, 2025. Vendor-neutral entry-file standard cited in Ch. 03 and Ch. 05 as the canonical SDD x Bridle file. URL: https://agents.md.">Agentic AI Foundation, 2025</a>, <a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span>。一份没人读或已经过时的缰绳，什么也引导不了；因此这位护法的职责不止是让文件在场，更要让它保持新鲜。</p>
+<p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 的好版本像机场标识，不像整座城市：一两句项目定位、真实存在的 setup/test/lint/build 命令、关键目录、不能随手碰的 danger zones、以及通往更深知识库的链接。<code class="docutils literal notranslate"><span class="pre">agents-md-generate</span></code> 这个 skill 把这件事做成了可重复工作流：先发现仓库事实，再合并已有 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>／<code class="docutils literal notranslate"><span class="pre">.cursor/rules</span></code>／Copilot instructions，最后只生成一份能被验证的入口文件。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-24 · SDD × Bridle · agents.md-style entry file --&gt;
+
+<span class="gh"># AGENTS.md — todo-cli</span>
+
+<span class="sb">`todo-cli`</span> is a Python CLI for managing local todo items. This is the
+canonical agent-facing entry file; keep <span class="sb">`CLAUDE.md`</span> or client-specific rules
+as thin mirrors only when a tool still needs them.
+
+<span class="gu">## Commands</span>
+<span class="k">-</span><span class="w"> </span>Quick test: <span class="sb">`pytest tests/test_storage.py`</span>
+<span class="k">-</span><span class="w"> </span>Full test: <span class="sb">`pytest`</span>
+<span class="k">-</span><span class="w"> </span>Lint and format gate: <span class="sb">`pre-commit run --all-files`</span>
+
+<span class="gu">## Repository Layout</span>
+<span class="k">-</span><span class="w"> </span><span class="sb">`todo/`</span> — production CLI code; public behavior starts in <span class="sb">`todo/__main__.py`</span>.
+<span class="k">-</span><span class="w"> </span><span class="sb">`tests/`</span> — pytest suite; add or update a matching test for every behavior change.
+<span class="k">-</span><span class="w"> </span><span class="sb">`scripts/`</span>, <span class="sb">`deploy/`</span>, <span class="sb">`.env*`</span> — danger zones; do not edit without an explicit task.
+
+<span class="gu">## Agent Rules</span>
+<span class="k">-</span><span class="w"> </span>Before editing <span class="sb">`todo/&lt;name&gt;.py`</span>, read <span class="sb">`tests/test_&lt;name&gt;.py`</span> when it exists.
+<span class="k">-</span><span class="w"> </span>Never invent dependency names; use the pinned versions in <span class="sb">`pyproject.toml`</span>.
+<span class="k">-</span><span class="w"> </span>Every new public function gets a docstring and a test.
+
+&lt;!-- last_updated: 2026-04-24 --&gt;
+</pre></div>
+</div>
+</section>
+<section id="sdd-x-fence">
+<span id="id9"></span><h3>SDD × 护栏 —— 在关卡处强制规约合法性<a class="headerlink" href="#sdd-x-fence" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的护栏，强制每一件形如&quot;规约&quot;的制品，<em>在它变成权威之前</em> 就必须格式良好。例如：提示词模板在 commit 时被 JSON-Schema 校验、MCP manifest 的 schema 检查、CI 阶段拒绝包含未解析 <code class="docutils literal notranslate"><span class="pre">{ref}</span></code> 链接的文档构建 <span id="id10">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 978-0134689326.">Martraire, 2019</a>]</span>。没有这道护栏，规约的腐烂会无声累积，SDD × 缰绳就会沦为一句谎话。</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;verified: 2026-04-17 · SDD x Fence · JSON Schema validated at commit time&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;$schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PromptTemplate&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;system_prompt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;user_prompt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;tags&quot;</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w">          </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;pattern&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;^[a-z][a-z0-9_]{2,63}$&quot;</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;system_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;minLength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;user_prompt&quot;</span><span class="p">:</span><span class="w">   </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;minLength&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;tags&quot;</span><span class="p">:</span><span class="w">          </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;array&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;items&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">},</span><span class="w"> </span><span class="nt">&quot;minItems&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">}</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;additionalProperties&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="sdd-x-paddock">
+<span id="id11"></span><h3>SDD × 牧场 —— 与规约相符的验收<a class="headerlink" href="#sdd-x-paddock" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的牧场，是一场有边界的 <em>评审仪式</em>，逐角色、逐行地确认&quot;交付的工作与规约相符&quot;。可执行规约 <span id="id12">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 978-1617290084.">Adzic, 2011</a>]</span> 是它的经典形态；lazy-scrum-team 的 <em>验证表（Verification Table）</em> 模式 <span id="id13">[<a class="reference internal" href="../references.html#id53" title="Walter Fan. lazy-scrum-team: a multi-role scrum skill for AI coding agents. Zoom Dev Skills repository, internal, 2026. Source of the Artefact State Model, Rework Matrix, and Verification table patterns adopted in Ch. 06 and expanded in Ch. 09. URL: https://github.com/zoomvideo/zoom-dev-skills/tree/main/skills/lazy-scrum-team.">Fan, 2026</a>]</span> 是本书全程采用的一个具体实例。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · SDD × Paddock · Verification Table pattern from lazy-scrum-team --&gt;
+
+<span class="gh"># Acceptance Gate — Verification Table</span>
+
+A story is <span class="sb">`done`</span> only when every row below is checked by the named role.
+
+| # | Requirement                          | Evidence (file or URL)       | Checked by        |
+|---|--------------------------------------|------------------------------|-------------------|
+| 1 | Acceptance tests green               | CI run link                  | Test Engineer     |
+| 2 | <span class="sb">`AGENTS.md`</span> rules unchanged or versioned | <span class="sb">`git diff`</span> summary       | Architect         |
+| 3 | <span class="sb">`CHANGELOG.md`</span> entry under Unreleased | diff hunk                   | PO                |
+| 4 | No new TODO/FIXME markers added      | <span class="sb">`rg -c TODO`</span> before/after    | Code Reviewer     |
+| 5 | HarnessCard cell score unchanged or explained | HarnessCard delta note | Final Acceptance  |
+
+Rows may only be marked by the named role; self-certification is rejected.
+</pre></div>
+</div>
+</section>
+<section id="sdd-x-groom">
+<span id="id14"></span><h3>SDD × 梳理 —— 让规约面持续鲜活<a class="headerlink" href="#sdd-x-groom" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的梳理动作，是一项 <em>反复运行的维护作业</em>，用来刷新规约面，以使智能体的输入永远不会悄无声息地腐烂。典型做法：扫坏链、重写过期的 <code class="docutils literal notranslate"><span class="pre">verified:</span></code> 头、重新跑一次 AGENTS.md 的仓库发现、核验里面列出的命令仍然存在、并更新 <code class="docutils literal notranslate"><span class="pre">last_updated</span></code> <span id="id15">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 978-1491986363.">Ford <em>et al.</em>, 2017</a>]</span>。没有梳理，SDD 的熵累积速度会快过作者跟得上的速度。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># verified: 2026-04-24 · SDD × Groom · weekly agent-spec refresh job</span>
+<span class="c1"># Refreshes living documentation so the spec surface the agent reads does</span>
+<span class="c1"># not silently drift from the code it describes.</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+make<span class="w"> </span>book-linkcheck<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;::warning::broken links surfaced&quot;</span>
+
+<span class="c1"># Keep AGENTS.md small, current, and connected to real repo facts.</span>
+<span class="nb">test</span><span class="w"> </span>-f<span class="w"> </span>AGENTS.md<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;::error::AGENTS.md missing&quot;</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="p">;</span><span class="w"> </span><span class="o">}</span>
+grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;last_updated&quot;</span><span class="w"> </span>AGENTS.md<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;::warning::AGENTS.md missing last_updated&quot;</span>
+grep<span class="w"> </span>-Eq<span class="w"> </span><span class="s2">&quot;pytest|npm test|go test|cargo test|make test&quot;</span><span class="w"> </span>AGENTS.md<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="o">||</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;::warning::AGENTS.md lists no recognizable test command&quot;</span>
+
+<span class="c1"># Re-run the agents-md-generate skill after layout or command changes; commit</span>
+<span class="c1"># the refreshed AGENTS.md only after reviewing the diff.</span>
+make<span class="w"> </span>book-lint
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——SDD 行的失败模式</p>
+<p>SDD 行的特异失败，不是规约 <em>缺席</em>，而是规约 <em>无法被证伪</em>。有两种按格子分的变体值得点名（第三种——&quot;愿望型 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>&quot;，已经被第 03 章覆盖）：</p>
+<ul class="simple">
+<li><p><strong>比 handler 活得还久的 MCP manifest。</strong> schema 里写着一个服务器早已不再实现的工具；智能体自信地调用它，得到一条莫名其妙的错误。SDD × 护栏正是为了抓这种失败而存在的，但前提是这道护栏 <em>两端</em> 都要被接上&quot;schema－handler&quot;契约的两头。</p></li>
+<li><p><strong>没有版本的规约。</strong> 一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>，没有 changelog、没有 <code class="docutils literal notranslate"><span class="pre">verified:</span></code> 日期、看不出被演进过。评审者判断不出里面的主张是当下的还是遗留的；智能体和人都把它当作权威来读。SDD × 梳理是答案——但前提是，当规约 N 周没被碰过时，这项梳理作业会大声失败。</p></li>
+</ul>
+<p>行级自测：针对 SDD 的每一格，你都能点出今天仓库里对应的一件制品、以及一条若它坏掉会在 <em>本周之内</em> 触发的检查吗？哪一格的答案若是&quot;我们相信大家会把它保持新鲜&quot;，那无论那一格里的文件内容多好，它的分数都是零。</p>
+</div>
+</section>
+<section id="tdd">
+<span id="tdd-x-bridle"></span><h3>TDD × 缰绳 —— 先失败的测试作为给智能体的输入<a class="headerlink" href="#tdd" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的缰绳，是一份 <em>故意为红</em> 的测试套件，在智能体被请进来之前就先提交进仓库。智能体把这些失败的测试作为上下文的一部分读进来，从而明白 <em>在它动手写生产代码之前，必须把哪些测试变绿</em> <span id="id16">[<a class="reference internal" href="../references.html#id12" title="Kent Beck. Test-Driven Development: By Example. Addison-Wesley Professional, 2002. ISBN 978-0321146533.">Beck, 2002</a>]</span>。关键性质是&quot;commit 时是红的&quot;，而不是&quot;某处存在着一条测试&quot;。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · TDD × Bridle · starter tests steer the agent before it writes</span>
+<span class="sd">&quot;&quot;&quot;A minimal failing-first suite that pins the agent loop shape.</span>
+
+<span class="sd">Committing this file before the first prompt means the agent cannot fake</span>
+<span class="sd">progress: a turn that does not green one of these tests did not advance</span>
+<span class="sd">the project.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_loop_halts_on_empty_plan</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">loop</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">plan</span><span class="o">=</span><span class="p">[])</span> <span class="o">==</span> <span class="s2">&quot;halt&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_loop_consumes_one_tool_call_per_step</span><span class="p">(</span><span class="n">loop</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">loop</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">plan</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;noop_tool&quot;</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">tool_calls</span> <span class="o">==</span> <span class="mi">1</span>
+
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">loop</span><span class="p">():</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">todo.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentLoop</span>
+    <span class="k">return</span> <span class="n">AgentLoop</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="tdd-commit">
+<span id="tdd-x-fence"></span><h3>TDD × 护栏 —— 拒绝红树 commit 的钩子<a class="headerlink" href="#tdd-commit" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的护栏，会在测试树为红时拦住任何修改或 commit。pre-commit 钩子、Claude-Code 的 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 钩子、以及必过的 CI 检查都属于这里 <span id="id17">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 978-0321601919.">Humble and Farley, 2010</a>]</span>。它和 TDD × 牧场的区别在于 <em>及时性</em>——TDD 护栏在键盘敲击那一刻就触发，TDD 牧场在 PR 那一刻才触发。</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;verified: 2026-04-17 · TDD x Fence · Claude Code hook blocks on red tests&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;PreToolUse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;matcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Write|Edit|MultiEdit&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pytest -q -m &#39;not slow&#39;&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;stopOnFailure&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;refuse edits while tests are red&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;PostToolUse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;matcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Write|Edit|MultiEdit&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ruff check .&quot;</span><span class="p">,</span>
+<span class="w">       </span><span class="nt">&quot;stopOnFailure&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="tdd-ci">
+<span id="tdd-x-paddock"></span><h3>TDD × 牧场 —— CI 关卡与环境对等<a class="headerlink" href="#tdd-ci" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的牧场，是一次 <em>必过、分支保护下</em> 的测试运行，发生在一个忠实于生产环境的环境中。它是 TDD × 护栏在集成层面上的孪生兄弟：覆盖更广、周转更慢、判决更权威 <span id="id18">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 978-1942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>。</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · TDD × Paddock · required status check on protected branch</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ci-gate</span>
+<span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">test</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.11&quot;</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -e &quot;.[test]&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest -q --junitxml=junit.xml</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">failure()</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">echo &quot;::error::gate failed — branch cannot merge&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="tdd-flake">
+<span id="tdd-x-groom"></span><h3>TDD × 梳理 —— flake 维护与测试面演进<a class="headerlink" href="#tdd-flake" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的梳理动作，是一套处理&quot;不再承重的测试&quot;的 <em>反复政策</em>——flake、早已消失的回归、以及与它当初所核验的那份规约脱节的测试。没有梳理，测试语料会不断累积死重，最终 <em>失去</em> 团队的信任 <span id="id19">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span>。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · TDD × Groom · flaky-test quarantine policy --&gt;
+
+<span class="gh"># Flaky Test Quarantine</span>
+
+A test that fails intermittently without a code change enters quarantine:
+
+<span class="k">1.</span> Move it from <span class="sb">`tests/`</span> into <span class="sb">`tests/quarantine/`</span>; mark with <span class="sb">`@pytest.mark.flaky`</span>.
+<span class="k">2.</span> Open an issue tagged <span class="sb">`quarantine`</span> with the last three failure logs.
+<span class="k">3.</span> CI runs <span class="sb">`tests/quarantine/`</span> separately; failures post a comment but do
+   not block the merge.
+<span class="k">4.</span> If the quarantined test is green for 7 consecutive nightly runs, promote
+   it back into <span class="sb">`tests/`</span>; if red for 30 days, delete with an explicit
+   justification in the commit message.
+
+Quarantine is a paddock <span class="ge">*inside*</span> the paddock: a space where flakes cannot
+poison the main gate while still being tracked.
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——TDD 行的失败模式</p>
+<p>TDD 行的失败方式，跟 SDD 行不同，因为测试有一项不寻常的性质：一条失败的测试 <em>便宜</em>；而一条 <em>仍然通过、但已经与它核验的那份行为失联的测试</em>，比没有测试还糟。三种行级失败：</p>
+<ul class="simple">
+<li><p><strong>红却被忽略的测试。</strong> 一条 flaky 测试每周失败一次；有人加了 <code class="docutils literal notranslate"><span class="pre">&#64;pytest.mark.skip(&quot;flaky,</span> <span class="pre">fix</span> <span class="pre">later&quot;)</span></code>；那个&quot;later&quot;永远不会来。这条测试如今在消耗 CI 周期、污染输出，并教会团队&quot;红是可以忽略的&quot;——这恰恰是 TDD × 护栏存在目的的反面。如果一条测试被信任不到能挡住 commit 的程度，那它也配不上住在主测试套件里。把它挪进隔离区、署名指定一位 owner、写上日期，否则就删了。</p></li>
+<li><p><strong>绿且过期的测试。</strong> 一条测试钉的是两个季度前产品需求早已移除的行为。没人注意到，因为它一直是绿的。一位在 TDD × 缰绳框架下读这条测试的智能体，如今学到的是一份 <em>错误的</em> 契约，然后照着它写新代码。绿本身不等于相关；梳理必须周期性地问：<em>每一条测试现在对应的是哪一条规约，那条规约还活着吗？</em></p></li>
+<li><p><strong>那条从来没被写出来的敌意测试。</strong> 那条人本 <em>应该</em> 写但没写的测试，正是能找出智能体捷径的那条。若 PR 里从不追加&quot;再写一条专门攻击通向绿的最省力路径的测试&quot;（参见第 04 章&quot;第一把就过&quot;那条陷阱），TDD × 牧场就会慢慢地 <em>训练</em> 智能体，而不是防它。</p></li>
+</ul>
+<p>行级自测：AI 辅助的 PR 之后，你团队的&quot;测试／LOC&quot;比例 <em>上升</em> 了，还是没动？如果没动，那你正是在这条红—绿循环最便宜的时刻，对循环的测试一侧投入不足。</p>
+</div>
+</section>
+<section id="mdd">
+<span id="mdd-x-bridle"></span><h3>MDD × 缰绳 —— 真正在引导的那一个度量<a class="headerlink" href="#mdd" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的缰绳，是一条在生产流量打到系统上之前 <em>就已被命名</em> 的 <em>北极星度量</em>。其他的一切都是诊断性的。对一具 AI 编码马具而言，经典候选是：在一份固定基准套件上的 <strong>智能体 mean turns to green</strong>（平均变绿轮数）<span id="id20">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · MDD × Bridle · the one metric that steers --&gt;
+
+<span class="gh"># Metrics North-Star</span>
+
+Pick exactly one metric that captures <span class="ge">*fitness for purpose*</span> of the harness
+itself, then let every other metric be diagnostic of that one.
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Project-level north-star:**</span> <span class="gs">**mean agent turns to green**</span> on a fixed
+  benchmark suite, measured weekly.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Why:**</span> rising turns-to-green is the earliest observable signal that
+  spec (SDD), tests (TDD), or tooling (MDD) has silently degraded.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Diagnostic metrics**</span> (each tied to a guardian):
+<span class="w">  </span><span class="k">-</span><span class="w"> </span>SDD — stale <span class="sb">`verified:`</span> header count, broken links in <span class="sb">`AGENTS.md`</span>
+<span class="w">  </span><span class="k">-</span><span class="w"> </span>TDD — flaky-test count, coverage floor
+<span class="w">  </span><span class="k">-</span><span class="w"> </span>MDD — cost per turn, prompt cache hit rate
+</pre></div>
+</div>
+</section>
+<section id="mdd-x-fence">
+<span id="id21"></span><h3>MDD × 护栏 —— 成本上限与熔断器<a class="headerlink" href="#mdd-x-fence" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的护栏，是在&quot;被观测到的成本、延迟、或错误率信号越过预先声明的阈值&quot;那一刻的 <em>自动化拒绝</em>。LLM 调用上的成本上限、工具调用的限流、以及软／硬关闭开关都是典型做法 <span id="id22">[<a class="reference internal" href="../references.html#id26" title="Charity Majors, Liz Fong-Jones, and George Miranda. Observability Engineering: Achieving Production Excellence. O'Reilly Media, 2022. ISBN 978-1492076445.">Majors <em>et al.</em>, 2022</a>]</span>。</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · MDD × Fence · budget circuit-breaker, rejected over limit</span>
+<span class="nt">cost_cap_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">per_session_usd</span><span class="p">:</span><span class="w">   </span><span class="l l-Scalar l-Scalar-Plain">2.00</span>
+<span class="nt">per_day_usd</span><span class="p">:</span><span class="w">       </span><span class="l l-Scalar l-Scalar-Plain">50.00</span>
+<span class="nt">per_month_usd</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">800.00</span>
+<span class="nt">action_on_breach</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">soft</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">warn_in_status_line</span>
+<span class="w">  </span><span class="nt">hard</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">refuse_new_tool_calls_until_reset</span>
+<span class="nt">alerts</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slack</span>
+<span class="w">    </span><span class="nt">at</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.75</span><span class="w">  </span><span class="c1"># of the monthly cap</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">email</span>
+<span class="w">    </span><span class="nt">at</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.95</span>
+</pre></div>
+</div>
+</section>
+<section id="mdd-sli-staging">
+<span id="mdd-x-paddock"></span><h3>MDD × 牧场 —— 发布 SLI 与 staging 浸泡<a class="headerlink" href="#mdd-sli-staging" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的牧场，是一道 <em>发布关卡</em>：要求&quot;等价于生产的信号&quot;在一个有界的 staging 窗口里都达标，之后这批二进制才被允许毕业 <span id="id23">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 978-1491986363.">Ford <em>et al.</em>, 2017</a>]</span>。窗口本身是牧场；窗口边上的 SLI，则是这道护栏。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · MDD × Paddock · pre-release SLI gate --&gt;
+
+<span class="gh"># Release SLI Gate</span>
+
+A release candidate is blocked from production until these SLIs meet their
+targets for a rolling 24h window in staging:
+
+| SLI                        | Target       | Window  |
+|----------------------------|--------------|---------|
+| p99 latency (user paths)   | ≤ 400 ms     | 24h     |
+| error rate                 | ≤ 0.1 %      | 24h     |
+| harness-internal cost/turn | ≤ $0.03      | 24h     |
+| spec-vs-prod drift score   | ≤ 2 findings | 24h     |
+
+The paddock is the rolling 24h staging run; crossing the gate requires all
+four targets, not three-of-four.
+</pre></div>
+</div>
+</section>
+<section id="mdd-x-groom">
+<span id="id24"></span><h3>MDD × 梳理 —— 每周度量审计与仪表盘卫生<a class="headerlink" href="#mdd-x-groom" title="Link to this heading">#</a></h3>
+<p><strong>定义。</strong> 这一格里的梳理动作，是一场 <em>每周对度量面本身的复盘</em>——哪些信号还在真正引导决策、哪些仪表盘已经没有 owner、哪些告警在没有 runbook 的情况下就会触发。Lehman 的演化律 <span id="id25">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> 对度量的适用度与对代码一样：没人维护的信号，会衰减成噪声。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># verified: 2026-04-17 · MDD × Groom · weekly audit that tends the metric surface</span>
+<span class="c1"># Not &quot;collect more metrics&quot; — prune stale ones and verify the living ones</span>
+<span class="c1"># still steer something.</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== metrics retention ==&quot;</span>
+python<span class="w"> </span>scripts/audit_metrics.py<span class="w"> </span>--older-than<span class="w"> </span>90d<span class="w"> </span>--action<span class="w"> </span>list-unused
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== dashboard coverage ==&quot;</span>
+python<span class="w"> </span>scripts/audit_dashboards.py<span class="w"> </span>--require-owner<span class="w"> </span>--require-runbook
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;== cost trend ==&quot;</span>
+python<span class="w"> </span>scripts/cost_trend.py<span class="w"> </span>--since<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>date<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;7 days ago&#39;</span><span class="w"> </span>+%F<span class="k">)</span><span class="s2">&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;write the findings to metrics-review-</span><span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span><span class="s2">.md and open a PR&quot;</span>
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——MDD 行的失败模式</p>
+<p>MDD 行失败得比另外两行更安静，因为度量的衰减是 <em>渐近</em> 的：坏掉的测试会红、过期的规约会产出明显的矛盾，而一块正在衰减的仪表盘，只是变得越来越不管用。三种行级失败：</p>
+<ul class="simple">
+<li><p><strong>没人盯的北极星。</strong> 一条度量被宣布承重、一块仪表盘被搭起来、一个阈值被设上——然后除了事故时以外没人看。信号在，但它不 <em>引导</em>；MDD × 缰绳这一格，有文件，有空椅子。<strong>解法</strong>：每一条北极星都必须有一位署名 owner，和每周一个议程格子，否则就把它降级为诊断度量。</p></li>
+<li><p><strong>没有绊线的成本上限。</strong> 在 API 层配了一条成本上限，它从不触发。要么这条上限太松（它沉默地放行了回归），要么它紧到值得关心、却没人在它命中时被呼叫。MDD × 护栏若整整一个季度都没拒绝过任何东西，和&quot;没有护栏&quot;没有区别。</p></li>
+<li><p><strong>与现实脱节的 SLI。</strong> staging 的 SLI 仍然在量端点的 P99，但产品上个季度转了向，真正的承重路径已经变成一个后台作业，而这条 SLI 恰好忽略了它的延迟。发布关卡一路都在过；回归照样上线。MDD × 牧场要求：每当产品的承重路径发生位移，SLI 就必须被重新审计——而智能体的速度，让这种位移变得 <em>更</em> 频繁，不是更少。</p></li>
+</ul>
+<p>行级自测：针对 MDD 的每一格，你都能点出 <em>既有</em> 那条信号、<em>也有</em> 它在过去三十天内驱动的某一项具体决定吗？一条没有驱动任何决定的信号，是仪表盘上的一个像素，而不是一位护法。</p>
+</div>
+</section>
+</section>
+<section id="id26">
+<h2>研究脉络<a class="headerlink" href="#id26" title="Link to this heading">#</a></h2>
+<p>这张矩阵的分析主张，靠五根可引用的支柱支着：</p>
+<ul class="simple">
+<li><p><strong>首要学术来源</strong>：把 Harness Engineering 作为一门独立学科对待——CAR 分解与 HarnessCard 报告格式 <span id="id27">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span>。</p></li>
+<li><p><strong>业界三点定位</strong>：两份独立、非学术的框法——Thoughtworks 技术雷达的条目 <span id="id28">[<a class="reference internal" href="../references.html#id30" title="Thoughtworks Technology Radar. Harnesses for AI coding agents. Technology Radar Vol. 32, “Trial” ring, 2026. Industry validation of the harness-engineering idea; referenced in Ch. 03 and Ch. 05 Provenance. URL: https://www.thoughtworks.com/radar.">Thoughtworks Technology Radar, 2026</a>]</span>、以及 LangChain 的五段式解剖 <span id="id29">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p></li>
+<li><p><strong>四区域的适配函数谱系</strong>：Ford／Parsons／Kua 的 <em>Building Evolutionary Architectures</em> <span id="id30">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 978-1491986363.">Ford <em>et al.</em>, 2017</a>]</span> 提供了 <em>架构适配函数</em> 这套词汇——四区域把它做成了可操作的形式。</p></li>
+<li><p><strong>05.梳理 背后的演化律谱系</strong>：Lehman 1980 年的软件演化律 <span id="id31">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span>，是&quot;为什么梳理列压根需要存在&quot;这件事背后的底层理论。</p></li>
+<li><p><strong>四区域在 AI 时代诠释的实践者谱系</strong>：作者本人 2026-03-28 那篇博客 <span id="id32">[<a class="reference internal" href="../references.html#id43" title="Walter Fan. Ai coding 的三大护法：可验证、可观察、可理解. Walter Fan's Journal, 2026. Original source for the “Three Guardians” (SDD/TDD/MDD) thesis; forms the backbone of Chapter 04. URL: https://walterfan.com/journal/ai_coding_3_protector.">Fan, 2026</a>]</span>，以及 lazy-scrum-team 工作流仓库 <span id="id33">[<a class="reference internal" href="../references.html#id53" title="Walter Fan. lazy-scrum-team: a multi-role scrum skill for AI coding agents. Zoom Dev Skills repository, internal, 2026. Source of the Artefact State Model, Rework Matrix, and Verification table patterns adopted in Ch. 06 and expanded in Ch. 09. URL: https://github.com/zoomvideo/zoom-dev-skills/tree/main/skills/lazy-scrum-team.">Fan, 2026</a>]</span>。</p></li>
+</ul>
+</section>
+<section id="id34">
+<h2>动手环节<a class="headerlink" href="#id34" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">source/_handson/05-harness-anatomy/</span></code> 下住着十二份制品，每格一份，按 <code class="docutils literal notranslate"><span class="pre">&lt;guardian&gt;-x-&lt;zone&gt;/&lt;filename&gt;</span></code> 的目录结构排布：</p>
+<ul class="simple">
+<li><p><strong>SDD 行：</strong> <code class="docutils literal notranslate"><span class="pre">AGENTS.md.sample</span></code>（agents.md 风格样本）、<code class="docutils literal notranslate"><span class="pre">prompt-schema.json</span></code>、<code class="docutils literal notranslate"><span class="pre">acceptance-gate.md</span></code>、<code class="docutils literal notranslate"><span class="pre">update-docs.sh</span></code></p></li>
+<li><p><strong>TDD 行：</strong> <code class="docutils literal notranslate"><span class="pre">starter-tests/test_loop.py</span></code>（位于 <code class="docutils literal notranslate"><span class="pre">tdd-x-bridle/</span></code> 下）、<code class="docutils literal notranslate"><span class="pre">hooks.json</span></code>、<code class="docutils literal notranslate"><span class="pre">ci-gate.yml</span></code>、<code class="docutils literal notranslate"><span class="pre">flaky-test-quarantine.md</span></code></p></li>
+<li><p><strong>MDD 行：</strong> <code class="docutils literal notranslate"><span class="pre">metrics-north-star.md</span></code>、<code class="docutils literal notranslate"><span class="pre">cost-cap.yaml</span></code>、<code class="docutils literal notranslate"><span class="pre">release-sli.md</span></code>、<code class="docutils literal notranslate"><span class="pre">weekly-audit.sh</span></code></p></li>
+</ul>
+<p>每一份制品的内容都已内联渲染在上面各自的 H3 小节里；磁盘上的那份文件是唯一真源。想一格一格上线的读者，可以拷出任一份文件开始动手。本书在第 12 章的核心建议是：一支团队应当在 <strong>60 天内上线完整的一行或完整的一列</strong>——也就是三十天读本章，另外三十天交付四份制品。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04-three-guardians.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">三大护法：SDD、TDD、MDD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06-operating-a-harness.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">运行一具马具：熵、可观测性、审批关卡与元马具演进</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">出处</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">05.全景 —— 3 × 4 矩阵</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd">SDD × 缰绳 —— 引导智能体的规约</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-x-fence">SDD × 护栏 —— 在关卡处强制规约合法性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-x-paddock">SDD × 牧场 —— 与规约相符的验收</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sdd-x-groom">SDD × 梳理 —— 让规约面持续鲜活</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd">TDD × 缰绳 —— 先失败的测试作为给智能体的输入</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-commit">TDD × 护栏 —— 拒绝红树 commit 的钩子</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-ci">TDD × 牧场 —— CI 关卡与环境对等</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tdd-flake">TDD × 梳理 —— flake 维护与测试面演进</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd">MDD × 缰绳 —— 真正在引导的那一个度量</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-x-fence">MDD × 护栏 —— 成本上限与熔断器</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-sli-staging">MDD × 牧场 —— 发布 SLI 与 staging 浸泡</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdd-x-groom">MDD × 梳理 —— 每周度量审计与仪表盘卫生</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id34">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

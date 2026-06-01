@@ -1,0 +1,771 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>案例研究：通过《马书》看 Claude Code &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/10-claude-code';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例" href="11-lazy-ai-coder.html" />
+    <link rel="prev" title="案例研究：lazy-scrum-team —— 用工作流编码出来的马具" href="09-lazy-scrum-team.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-lazy-ai-coder.html">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="13-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/10-claude-code.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/10-claude-code.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>案例研究：通过《马书》看 Claude Code</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">逆向工程免责声明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.1 —— 用三大护法 × 四区域矩阵来读 Claude Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.2 —— 十二格亮点图（含置信等级）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks-claude-code">10.3 —— hooks 契约 —— Claude Code 的主要护栏</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">10.4 —— 哪些可以搬走，哪些不行</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">闭源马具的结构性风险</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="claude-code">
+<h1>案例研究：通过《马书》看 Claude Code<a class="headerlink" href="#claude-code" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>本书中唯一一份闭源案例。带着这一点去读。</em></p>
+</div></blockquote>
+<section id="id1">
+<h2>逆向工程免责声明<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>Claude Code 产品是闭源的。本章的分析依赖三类证据，按权威性递减排列：</p>
+<ol class="arabic simple">
+<li><p><strong>Anthropic 的官方公开文档与发布文章</strong> <span id="id2">[<a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span> 以及 MCP 规范 <span id="id3">[<a class="reference internal" href="../references.html#id49" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 11 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span> —— 第一权威。</p></li>
+<li><p><strong>运行时实测行为</strong>：作者在 2026-03 到 2026-04 的观察窗口里，在 macOS 与 Linux 上运行 Claude Code CLI，记入会话日志的观察结果。</p></li>
+<li><p><strong>张汉东《马书》2026 年的逆向工程分析</strong> <span id="id4">[<a class="reference internal" href="../references.html#id44" title="Handong Zhang. Harness engineering: from claude code to ai coding (《马书》). Self-published, 2026. Reverse-engineering of Claude Code's harness; used as the Ch. 10 case study. This book's Ch. 10 builds on the《马书》with a disclaimer about the unofficial nature of the findings. URL: https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding.">Zhang, 2026</a>]</span> —— 下文称 <em>马书</em> ——一份公开发行的中文研究，系统拆解了 Claude Code 的内置提示、技能库、hooks 契约与工具 schema。</p></li>
+</ol>
+<p><strong>观察窗口。</strong> 下文所有结论只反映 Claude Code 在 <strong>2026-03-01 到 2026-04-15</strong> 之间的行为。此窗口之外的行为不保证一致。</p>
+<p><strong>撤回承诺。</strong> 若 Anthropic 发布官方文档或公开声明与下文任一结论冲突，本章将在 30 天内更新，并把被撤回的结论划掉，附上注明日期的说明。本书把逆向观察视为 <em>临时性</em> 结论，而非权威结论。</p>
+<p><strong>版权。</strong> 本章不会原样转载《马书》或 Claude Code 的内部捆绑内容，单段引用不超过合理使用上限的 20 行，在可能处标注《马书》页码。</p>
+</section>
+<section id="id5">
+<h2>10.1 —— 用三大护法 × 四区域矩阵来读 Claude Code<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>如实测所见、并被《马书》所记载：Claude Code 把马具职责，分布在三个彼此重叠的表面上：</p>
+<ul class="simple">
+<li><p><strong>内置系统提示</strong>（缰绳，主要是 SDD）—— 一份数 KB 的长文档；《马书》跨多章复刻并批注过它；里面包含角色设定、工具使用的启发式规则、引用格式、以及显式的&quot;红旗自问清单&quot;。</p></li>
+<li><p><strong>hooks 契约</strong>（护栏，横跨 TDD 与 MDD）—— <code class="docutils literal notranslate"><span class="pre">.claude/hooks.json</span></code> 支持 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code>、<code class="docutils literal notranslate"><span class="pre">PostToolUse</span></code>、<code class="docutils literal notranslate"><span class="pre">SessionEnd</span></code>、<code class="docutils literal notranslate"><span class="pre">UserPromptSubmit</span></code> 几类匹配器；<code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 钩子以非零退出码结束，就会拒掉那次工具调用。</p></li>
+<li><p><strong>技能系统</strong>（缰绳 ＋ 牧场，主要是 SDD）—— <code class="docutils literal notranslate"><span class="pre">~/.claude/skills/</span></code> 下的 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 文件，智能体根据 front-matter 里的 <code class="docutils literal notranslate"><span class="pre">description:</span></code> 自动发现并调用。</p></li>
+</ul>
+<p>以下是《马书》对内置提示的一段简短摘录（原文为中文；为便于叙述，译文由作者自行翻译）：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[摘录，≤ 20 行，译自《马书》第 4 章 4.2，p. 113]
+
+系统消息尾部：
+    - 被问到事实性问题时，至少引用一处来源。
+    - 写代码时，优先&quot;修改&quot;而非&quot;新建&quot;。
+    - 输出中绝不要包含&quot;由 AI 生成&quot;的落款。
+    - 若有 skill 适用，作答之前先读并遵循它。
+    - 把用户文件视作权威；未确认之前不覆盖。
+</pre></div>
+</div>
+<p>《马书》主张——实测行为也佐证——这些&quot;提示尾部规则&quot;是本产品里最承重的那一件 SDD × 缰绳 制品。</p>
+</section>
+<section id="id6">
+<h2>10.2 —— 十二格亮点图（含置信等级）<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>下表每一格都标注一条置信等级：<code class="docutils literal notranslate"><span class="pre">observed</span></code>（直接可在运行时行为中复现）、<code class="docutils literal notranslate"><span class="pre">inferred</span></code>（由《马书》＋ 官方文档 ＋ 实测三角印证推得）、或 <code class="docutils literal notranslate"><span class="pre">speculative</span></code>（当前是最佳猜测，未来的官方披露可能把它升级或推翻）。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 6.0%" />
+<col style="width: 16.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>格子</p></th>
+<th class="head"><p>得分</p></th>
+<th class="head"><p>置信等级</p></th>
+<th class="head"><p>证据，以及什么会改变这个置信等级</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDD × 缰绳</p></td>
+<td><p>5</p></td>
+<td><p>observed</p></td>
+<td><p>内置提示 ＋ 技能系统直接塑造每一回合；被《马书》第 4 章 <span id="id7">[<a class="reference internal" href="../references.html#id44" title="Handong Zhang. Harness engineering: from claude code to ai coding (《马书》). Self-published, 2026. Reverse-engineering of Claude Code's harness; used as the Ch. 10 case study. This book's Ch. 10 builds on the《马书》with a disclaimer about the unofficial nature of the findings. URL: https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding.">Zhang, 2026</a>]</span> 与 Anthropic 官方文档 <span id="id8">[<a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span> 双重印证。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 护栏</p></td>
+<td><p>3</p></td>
+<td><p>inferred</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 的 front-matter schema 无官方文档；格式不对的 skill 会被悄悄跳过。《马书》第 5 章复现了解析器的这种&quot;宽容模式&quot;。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>inferred</p></td>
+<td><p>内置并无验收仪式；评审纪律交由宿主团队自己定。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p>inferred</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/cost</span></code>、<code class="docutils literal notranslate"><span class="pre">/status</span></code>、<code class="docutils literal notranslate"><span class="pre">/clear</span></code> 几条斜杠命令支持梳理，但节奏由操作者自己掌控。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p>inferred</p></td>
+<td><p>默认技能与《马书》第 6 章都在鼓励&quot;测试先行&quot;的表述，但并未强制。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 护栏</p></td>
+<td><p>5</p></td>
+<td><p>observed</p></td>
+<td><p>非零退出码的 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 钩子会拒掉编辑；Anthropic 文档有记载，hands-on 的 <code class="docutils literal notranslate"><span class="pre">hooks.json</span></code> 也做了演示。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 牧场</p></td>
+<td><p>2</p></td>
+<td><p>speculative</p></td>
+<td><p>若 Anthropic 公开 CI 集成规范，这一格可被升级为 <code class="docutils literal notranslate"><span class="pre">inferred</span></code>。若上线带有文档化退出协议的 <code class="docutils literal notranslate"><span class="pre">claude-code</span> <span class="pre">ci</span></code> 子命令，也会改变置信等级。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 梳理</p></td>
+<td><p>2</p></td>
+<td><p>speculative</p></td>
+<td><p>若 Anthropic 在模型更新的 release note 中，公开标记&quot;会使旧测试假设失效&quot;的信号，这一格可被升级。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 缰绳</p></td>
+<td><p>4</p></td>
+<td><p>observed</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/cost</span></code> 端点 ＋ 状态栏 token 计数器，合起来暴露了一个能用的&quot;北极星候选项&quot;。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 护栏</p></td>
+<td><p>3</p></td>
+<td><p>inferred</p></td>
+<td><p>API 层有速率限制，但 <em>本地</em> 成本上限需要操作者自己写钩子。《马书》第 7 章记录了这些默认限制。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 牧场</p></td>
+<td><p>2</p></td>
+<td><p>speculative</p></td>
+<td><p>没有&quot;发布 SLI&quot;这个概念；Claude Code 是客户端工具，不是服务端产品。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p>inferred</p></td>
+<td><p>Anthropic 每周推送 prompt 库更新，这相当于一路上游的&quot;梳理信号&quot;。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>至少有一格——<strong>TDD × 牧场</strong>——被显式标为 <code class="docutils literal notranslate"><span class="pre">speculative</span></code>。要把它升级，需要其中之一：要么 Anthropic 上线带文档化、机器可读退出协议的 <code class="docutils literal notranslate"><span class="pre">claude-code</span> <span class="pre">ci</span></code> 子命令；要么官方 release note 正式宣告现有行为稳定且公开版本化。</p>
+</section>
+<section id="hooks-claude-code">
+<h2>10.3 —— hooks 契约 —— Claude Code 的主要护栏<a class="headerlink" href="#hooks-claude-code" title="Link to this heading">#</a></h2>
+<p>Claude Code 的 <code class="docutils literal notranslate"><span class="pre">.claude/hooks.json</span></code> 是这款产品里 <em>最可迁移</em> 的那一块，因为它是纯声明式的。实测结论是：任何钩子以退出码 2 结束，就会拒掉当前那次工具调用；这一点由 Anthropic 官方文档 <span id="id9">[<a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span> 记录，且与实测一致。</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;$comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;verified: 2026-04-17 · Ch.10 Claude Code hands-on · stop-on-test-failure hook. Synthesized from Anthropic&#39;s public hooks documentation; NOT a copy of any Claude Code internal file.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;PreToolUse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;matcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Write|Edit|MultiEdit&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pytest -q -m &#39;not slow&#39; || exit 2&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Refuse edits while the test tree is red. Exit code 2 is the documented &#39;stop the tool call&#39; signal.&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;PostToolUse&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;matcher&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Write|Edit|MultiEdit&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;git diff --stat | tee .claude/.last-edit-diff&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Capture a diff summary after every edit so the session log carries an audit trail.&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;SessionEnd&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;command&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python scripts/session_cost_report.py&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Write a per-session cost report into .claude/reports/; feeds the MDD Groom audit.&quot;</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>hands-on 制品是 <em>基于公开文档合成</em> ——明确不是任何内部文件的拷贝。读者把它搬进自己的 <code class="docutils literal notranslate"><span class="pre">.claude/</span></code> 配置，用的是一份重建版本。</p>
+</section>
+<section id="id10">
+<h2>10.4 —— 哪些可以搬走，哪些不行<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>可搬走的</strong>：内置提示这种纪律（一份长且承重的系统消息）、<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 的格式（带 front-matter 的简单 markdown）、以及 hooks 契约（由退出码驱动的拒绝机制）。</p></li>
+<li><p><strong>不能直接搬</strong>：Claude 专属的模型供应商耦合、斜杠命令注册表、内置技能库的原文措辞（受版权限制）。</p></li>
+</ul>
+<p>想拿到 <em>模式</em> 又不想付 Anthropic 平台成本的读者，可以：(a) 在自己的智能体里复刻第一项（任何会读取长系统消息的智能体都行）；(b) 几乎不费力地复刻第二项（它本来就是 markdown）；(c) 在任何支持 &quot;写前回调&quot; 的智能体里采纳 Claude Code 的钩子语法。</p>
+<section id="id11">
+<h3>闭源马具的结构性风险<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>从一套闭源系统里学习，其不对称性值得明说——这不是批评 Claude Code，而是在提醒读者：本章的结论该如何（以及不该如何）推广到别处。</p>
+<ul class="simple">
+<li><p><strong>观察窗口偏置。</strong> 10.2 的每一条结论都锚定在 2026-03 到 2026-04 的观察窗口。Anthropic 每周都在更新 prompt 库；任何关于&quot;内置提示 <em>内容</em>&quot;的结论，其半衰期是以周计的，不是以季度计。这不是缺陷——这是产品的正常演进——但它意味着：把 10.2 当作静态参考的读者，心里那份模型会逐渐过时。</p></li>
+<li><p><strong>不可证伪的 speculative 等级。</strong> 10.2 里有两格挂着 <code class="docutils literal notranslate"><span class="pre">speculative</span></code> 置信等级。诚实地说，这些分数是猜测；更微妙的一层是——<em>没有 Anthropic 的配合，它们就无法被证伪</em>。读者应当把 speculative 格视为占位符，而非证据。</p></li>
+<li><p><strong>与 Anthropic 发布节奏的耦合。</strong> 上面每一条&quot;可迁移模式&quot;，都假设 Anthropic 继续按当前轨迹发布（hooks 保持声明式、SKILL.md 保持简单 markdown、内置提示仍可被覆盖）。厂商若决定合并、简化、或替换这些表面，对应那条可迁移性就作废。马具工程意义上正确的做法是——<strong>采纳模式，不要采纳表面</strong>——自己在一层稳定抽象之上写一套 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 风格钩子语法的团队，能挺过 Claude Code 2.0 的重写；直接绑死当前 <code class="docutils literal notranslate"><span class="pre">hooks.json</span></code> schema 的团队则不能。</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——把观察当成规范</p>
+<p>一支团队读完第 10 章，把 10.3 合成出来的 <code class="docutils literal notranslate"><span class="pre">hooks.json</span></code> 拷过去，在&quot;退出码 2 拒掉当前工具调用&quot;这条实测行为之上建了半年工具链。随后 Anthropic 发布一次 Claude Code 更新——把退出码 2 用于另一种语义，并改以结构化 JSON 响应代之。这套工具有一半悄悄坏了。<strong>为什么</strong>：实测行为从来不是 API ——那是行为，而行为是厂商可以随意修改的。本章的&quot;撤回承诺&quot;覆盖的是本书；没有什么来覆盖团队的工具链。<strong>解法</strong>：在依赖任何一份逆向得来的接口之前，<em>先</em> 用自己的抽象把它包住。一只名叫 <code class="docutils literal notranslate"><span class="pre">refuse_tool_call(reason)</span></code> 的函数——今天退出 2、下个季度退出 3——能扛过厂商的内部演进；直接 <code class="docutils literal notranslate"><span class="pre">sys.exit(2)</span></code> 的调用扛不住。这与 Feathers <span id="id12">[<a class="reference internal" href="../references.html#id27" title="Michael C. Feathers. Working Effectively with Legacy Code. Prentice Hall, 2004. ISBN 978-0131177055.">Feathers, 2004</a>]</span> 对遗留接口开出的那剂药方是同一种纪律——只不过这次应用在&quot;团队并不拥有&quot;的那套系统上。</p>
+</div>
+</section>
+</section>
+<section id="harnesscard">
+<h2>HarnessCard<a class="headerlink" href="#harnesscard" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HarnessCard schema 版本</p></td>
+<td><p>CAR-HarnessCard v0.2 <span id="id13">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>对象</p></td>
+<td><p>Claude Code，2026-03 到 2026-04 观察窗口 <span id="id14">[<a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span></p></td>
+</tr>
+<tr class="row-even"><td><p>许可证</p></td>
+<td><p>对象本身为闭源；合成示例以 Apache-2.0 协议发布</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control 层（CAR）</p></td>
+<td><p>主张极强；内置提示长达数 KB。</p></td>
+</tr>
+<tr class="row-even"><td><p>Agency 层（CAR）</p></td>
+<td><p>工具访问被 hooks 与用户确认提示强力把守。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Runtime 层（CAR）</p></td>
+<td><p>云端 LLM ＋ 本地 CLI；可通过 hooks 选装 Docker 沙箱。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD（均值）</p></td>
+<td><p>3.5（observed=1，inferred=3，speculative=0）</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD（均值）</p></td>
+<td><p>3.0（observed=1，inferred=1，speculative=2）</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD（均值）</p></td>
+<td><p>3.0（observed=1，inferred=2，speculative=1）</p></td>
+</tr>
+<tr class="row-odd"><td><p>主要引用</p></td>
+<td><p><span id="id15">[<a class="reference internal" href="../references.html#id44" title="Handong Zhang. Harness engineering: from claude code to ai coding (《马书》). Self-published, 2026. Reverse-engineering of Claude Code's harness; used as the Ch. 10 case study. This book's Ch. 10 builds on the《马书》with a disclaimer about the unofficial nature of the findings. URL: https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding.">Zhang, 2026</a>]</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>上述每一项分数，都带有 10.2 中对应格子的置信等级。</p>
+</section>
+<section id="id16">
+<h2>研究脉络<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>马书</strong> <span id="id17">[<a class="reference internal" href="../references.html#id44" title="Handong Zhang. Harness engineering: from claude code to ai coding (《马书》). Self-published, 2026. Reverse-engineering of Claude Code's harness; used as the Ch. 10 case study. This book's Ch. 10 builds on the《马书》with a disclaimer about the unofficial nature of the findings. URL: https://github.com/ZhangHanDong/harness-engineering-from-cc-to-ai-coding.">Zhang, 2026</a>]</span> —— 对内置提示、技能库、hooks 行为的首要逆向工程来源。</p></li>
+<li><p><strong>Anthropic Claude Code 发布文章</strong> <span id="id18">[<a class="reference internal" href="../references.html#id48" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span> —— 作为权威记录的官方文档。</p></li>
+<li><p><strong>MCP 规范</strong> <span id="id19">[<a class="reference internal" href="../references.html#id49" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 11 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span> —— Claude Code 工具生态所对齐的公开规范。</p></li>
+<li><p><strong>CAR 分解</strong> <span id="id20">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span> —— 本章把 HarnessCard 序列化到的那套 schema。</p></li>
+</ul>
+</section>
+<section id="id21">
+<h2>动手环节<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">source/_handson/10-claude-code/</span></code> 下，住着一份可直接拷走的制品：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hooks.json</span></code> —— 一份最小的 <code class="docutils literal notranslate"><span class="pre">.claude/hooks.json</span></code> 示例，含：一条&quot;测试失败就停&quot;的 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 规则、一条抓取 diff 的 <code class="docutils literal notranslate"><span class="pre">PostToolUse</span></code> 规则，以及一条 <code class="docutils literal notranslate"><span class="pre">SessionEnd</span></code> 成本报告触发器。基于公开文档合成；不是任何内部文件的拷贝。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="09-lazy-scrum-team.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="11-lazy-ai-coder.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">逆向工程免责声明</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">10.1 —— 用三大护法 × 四区域矩阵来读 Claude Code</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">10.2 —— 十二格亮点图（含置信等级）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks-claude-code">10.3 —— hooks 契约 —— Claude Code 的主要护栏</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">10.4 —— 哪些可以搬走，哪些不行</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">闭源马具的结构性风险</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

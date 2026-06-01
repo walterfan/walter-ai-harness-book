@@ -1,0 +1,876 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>运行一具马具：熵、可观测性、审批关卡与元马具演进 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/09-operating-a-harness';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="案例研究：OpenHarness" href="10-openharness.html" />
+    <link rel="prev" title="马具解剖：三大护法 × 四区域" href="08-harness-anatomy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/09-operating-a-harness.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/09-operating-a-harness.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>运行一具马具：熵、可观测性、审批关卡与元马具演进</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">关切一 —— 熵管理</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">这是什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">日常做法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">关切二 —— 可观测性实践</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">这是什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">日常做法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">关切三 —— 审批关卡（硬 vs 软）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">这是什么</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">关切四 —— 元马具演进</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">这是什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">日常做法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">"马具剧场"那种失败，给它起个名字</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tauri-todo">Tauri-Todo：一个故事弧里的四项关切</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#claude-md">片段 1 —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>（缰绳兼容层）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit-config-yaml">片段 2 —— <code class="docutils literal notranslate"><span class="pre">pre-commit-config.yaml</span></code>（护栏）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md">片段 3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>（牧场 + 梳理）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>运行一具马具：熵、可观测性、审批关卡与元马具演进<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>马具不是一件交付就完事的项目，它是一片你要持续照料的环境。</em></p>
+</div></blockquote>
+<p>第 08 章把那十二个格子画成了一张静态矩阵。本章回答矩阵留下的运行层问题：格子被填满之后，<em>周一到周五</em> 究竟是什么样子？答案围绕四项关切组织——<strong>熵管理</strong>、<strong>可观测性实践</strong>、<strong>审批关卡</strong>、<strong>元马具演进</strong>——并直接从第 12 章将要完整讨论的 <code class="docutils literal notranslate"><span class="pre">lazy-scrum-team</span></code> 工作流仓库里借来三种结构性的模式。</p>
+<section id="id2">
+<h2>关切一 —— 熵管理<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>这是什么<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>每一具马具都在累积熵：过期的 <code class="docutils literal notranslate"><span class="pre">verified:</span></code> 头、<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 里的死链、比上游审计源落后两个 minor 版本的 npm 依赖、上周 <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">audit</span></code> 报警而后被悄悄关掉的 Rust crate。放任不管，熵会把一具能工作的马具变成一具 <em>装饰性</em> 的马具——文件还在、评审人还在打勾，但智能体和人都绕着它走。Cunningham 1992 年提出的技术债比喻 <span id="id4">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span>、以及 Tom 等人 2013 年的系统综述 <span id="id5">[<a class="reference internal" href="../references.html#id41" title="Edith Tom, Aybuke Aurum, and Richard Vidgen. An exploration of technical debt. 2013. Classification of technical-debt types; used in Ch. 15 to score Lazy AI Coder's backlog. doi:10.1016/j.jss.2012.12.052.">Tom <em>et al.</em>, 2013</a>]</span> 都适用，但本章特意把这种现象叫做 <em>熵</em>，以强调：即便马具所包裹的代码并未衰变，马具本身仍在衰变。</p>
+</section>
+<section id="id6">
+<h3>日常做法<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<p>熵靠两项反复运行的作业来压住：一条 <strong>文档同步检查</strong>——当文档与代码漂移时拒绝合并（下方的 <code class="docutils literal notranslate"><span class="pre">doc-sync-check.sh</span></code>），以及一条 <strong>每周审计工作流</strong>——在一遍流水里跑完 <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">audit</span></code>／<code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">audit</span></code>／<code class="docutils literal notranslate"><span class="pre">gitleaks</span></code>，并在 <code class="docutils literal notranslate"><span class="pre">reports/</span></code> 下写一份带日期的报告。两份报告之间的 diff，就是 <em>那条</em> 熵信号；不保留至少两周报告的团队，没法把熵和天气分开。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># verified: 2026-04-17 · entropy · refuse the merge when docs and code drift</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="c1"># Any source file touched in this MR that has a docstring-exposed API must</span>
+<span class="c1"># also have been listed in the MR&#39;s doc-update checklist.</span>
+<span class="nv">changed</span><span class="o">=</span><span class="k">$(</span>git<span class="w"> </span>diff<span class="w"> </span>--name-only<span class="w"> </span>origin/main...HEAD<span class="k">)</span>
+<span class="nv">undoc</span><span class="o">=</span><span class="k">$(</span>python<span class="w"> </span>scripts/which_need_docs.py<span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="s2">&quot;</span><span class="nv">$changed</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">true</span><span class="k">)</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$undoc</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;::error::the following changed files export public symbols but have no matching doc update:&quot;</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$undoc</span><span class="s2">&quot;</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · entropy · weekly dep/secret audit — .github/workflows/entropy-audit.yml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">entropy-audit</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[{</span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">8</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">MON&quot;</span><span class="p p-Indicator">}]</span><span class="w">  </span><span class="c1"># every Monday 08:00 UTC</span>
+<span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">audit</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cargo audit</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cargo install cargo-audit --locked &amp;&amp; cargo audit</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm audit</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">npm audit --audit-level=moderate || true</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitleaks</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gitleaks/gitleaks-action@v2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write weekly report</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python scripts/entropy_report.py &gt; reports/entropy-$(date +%F).md</span>
+</pre></div>
+</div>
+<p>更深一层的机制，叫 <strong>差分衰减</strong>。代码的熵，由每一条 bug、每一条评审意见、每一次构建失败来偿还——成千上万股小的压力让它贴近现实。而马具的熵，由 <em>没有任何东西</em> 偿还：一条过期的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 规则不会崩任何东西，它只会悄无声息地把方向引偏。一个季度下来，两者发散——代码保持当下，马具开始漂移——而马具的腐烂是最看不见的那种腐烂，恰恰因为它不会自己喊出来。这就是梳理为什么是一 <em>列</em> 而不是一条脚注。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;出了事再审计&quot;</p>
+<p>一支团队推迟每周的熵审计，因为&quot;没什么在着火&quot;。六个月后真的着火了：一条带已知 CVE 的依赖被带到了生产，一路回溯，发现三月份就有一条 <code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">audit</span></code> 告警——没人看见，因为当时没有周报可以和四月份那份对照。<strong>为什么</strong>：熵审计是 <em>校准</em>，不是诊断——它的价值来自于&quot;一周一周产生基线&quot;。只在事故期间跑审计的团队，没有基线，审计输出就读成噪声。<strong>症状</strong>：CVE 的修复周转以月计而非以天计；<code class="docutils literal notranslate"><span class="pre">npm</span> <span class="pre">audit</span> <span class="pre">--audit-level=high</span></code> 返回几十条结果，却没有意见说哪些是新增的；每次事故的第一步都是&quot;我们来看看当时有没有告警&quot;。<strong>解法</strong>：审计按日历跑，<em>即便</em>（尤其是）没事的时候也跑；带日期的 <code class="docutils literal notranslate"><span class="pre">reports/</span></code> 目录就是基线；周与周之间的 diff 才是信号。</p>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>关切二 —— 可观测性实践<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h3>这是什么<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>在马具的语境里，可观测性意味着三面被持续可读 <span id="id9">[<a class="reference internal" href="../references.html#id26" title="Charity Majors, Liz Fong-Jones, and George Miranda. Observability Engineering: Achieving Production Excellence. O'Reilly Media, 2022. ISBN 9781492076445.">Majors <em>et al.</em>, 2022</a>]</span>：(a) 产品团队本来就在盯的生产 SLI；(b) 产品团队通常 <em>不</em> 盯的那类马具内部信号——token 成本、缓存命中率、智能体 turns-to-green <span id="id10">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>；(c) <em>规约遵循度</em> 信号——把 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 这张面，与日志里看到的行为对起来比。</p>
+</section>
+<section id="id11">
+<h3>日常做法<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<p>一份最小化的可观测性配置，从把 Claude Code 的 <code class="docutils literal notranslate"><span class="pre">/cost</span></code> 端点暴露给 Prometheus 开始，剩下的交给现有的 dashboard 栈去做。这事是三行 scrape 配置，不是一次平台重设计：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · observability · Prometheus scrape-config for Claude Code /cost</span>
+<span class="nt">scrape_configs</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">claude_code_cost</span>
+<span class="w">    </span><span class="nt">metrics_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/cost</span>
+<span class="w">    </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+<span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;localhost:8911&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">metric_relabel_configs</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">source_labels</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">__name__</span><span class="p p-Indicator">]</span>
+<span class="w">        </span><span class="nt">regex</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cc_(tokens|usd|cache_hits|turns)_total&quot;</span>
+<span class="w">        </span><span class="nt">action</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">keep</span>
+</pre></div>
+</div>
+<p>比配置更重要的是那一步 <em>文化</em> 动作：有一个人成为这块 dashboard 的 owner，在周一的复盘上照着它发言。没有 owner 的 dashboard，腐烂得比没有埋点的代码还快 <span id="id12">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span>。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;规约遵循度盲区&quot;</p>
+<p>一支团队把生产 SLI 接到了 Prometheus、加上每轮成本埋点，两头都盯得一丝不苟——却从来没给 <em>规约遵循度</em> 做埋点。结果：当智能体的代码悄悄偏离 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 的宣称时（新的写操作绕过 repository 模式、新端点跳过认证中间件），所有 dashboard 都是一片绿，因为偏差不在产品延迟里、也不在智能体成本里——它就在&quot;规约承诺的&quot;和&quot;代码做的&quot;之间那条缝里。<strong>症状</strong>：事故起因是&quot;我们这儿不是这么做的&quot;，此前 dashboard 上没有任何信号；架构师抱怨智能体&quot;不守规矩&quot;，可那些规矩从未被机械化监控。<strong>解法</strong>：对 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 里每一条承重条目，问一句&quot;若这条被违反，哪条度量会变为非零？&quot;——答案若是 <em>没有</em>，那这条就是无法执行的散文，它属于文档目录，不属于规约。</p>
+</div>
+</section>
+</section>
+<section id="vs">
+<h2>关切三 —— 审批关卡（硬 vs 软）<a class="headerlink" href="#vs" title="Link to this heading">#</a></h2>
+<section id="id13">
+<h3>这是什么<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<p>关卡，是人或自动评审者说 <em>还不行</em> 的那些点。两种常见失败模式：<strong>关卡类别未声明</strong>（所有人都默认某道关卡是硬关卡，直到周五下午五点有人需要豁免），以及 <strong>关卡蒸发</strong>（一道总是通过的关卡，会悄悄从团队的心智模型里消失）。这两种失败，都可以靠从 <code class="docutils literal notranslate"><span class="pre">lazy-scrum-team</span></code> 工作流技能 <span id="id14">[<a class="reference internal" href="../references.html#id57" title="Walter Fan. lazy-scrum-team: a multi-role scrum skill for AI coding agents. ExampleCorp Dev Skills repository, 2026. Source of the Artefact State Model, Rework Matrix, and Verification table patterns adopted in Ch. 09 and expanded in Ch. 12. URL: https://github.com/example-org/examplecorp-dev-skills/tree/main/skills/lazy-scrum-team.">Fan, 2026</a>]</span> 借来的三种模式来规避：</p>
+<ul class="simple">
+<li><p><strong>制品状态机</strong> —— draft → review → approved → archived —— 带显式的跃迁规则和按角色署名的不变量。这里给出一份可被读者直接采用的 YAML 编码：</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · approval gates · lazy-scrum-team Artefact State Model</span>
+<span class="nt">artefact_state_model_version</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0.1&quot;</span>
+<span class="nt">states</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">draft</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">review</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">approved</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">archived</span><span class="p p-Indicator">]</span>
+<span class="nt">transitions</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="nv">draft</span><span class="p p-Indicator">,</span><span class="nt">     to</span><span class="p">:</span><span class="w"> </span><span class="nv">review</span><span class="p p-Indicator">,</span><span class="nt">   trigger</span><span class="p">:</span><span class="w"> </span><span class="nv">author_submit</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="nv">review</span><span class="p p-Indicator">,</span><span class="nt">    to</span><span class="p">:</span><span class="w"> </span><span class="nv">draft</span><span class="p p-Indicator">,</span><span class="nt">    trigger</span><span class="p">:</span><span class="w"> </span><span class="nv">reviewer_request_changes</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="nv">review</span><span class="p p-Indicator">,</span><span class="nt">    to</span><span class="p">:</span><span class="w"> </span><span class="nv">approved</span><span class="p p-Indicator">,</span><span class="nt"> trigger</span><span class="p">:</span><span class="w"> </span><span class="nv">reviewer_approve</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="nv">approved</span><span class="p p-Indicator">,</span><span class="nt">  to</span><span class="p">:</span><span class="w"> </span><span class="nv">archived</span><span class="p p-Indicator">,</span><span class="nt"> trigger</span><span class="p">:</span><span class="w"> </span><span class="nv">release_shipped</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">from</span><span class="p">:</span><span class="w"> </span><span class="nv">archived</span><span class="p p-Indicator">,</span><span class="nt">  to</span><span class="p">:</span><span class="w"> </span><span class="nv">review</span><span class="p p-Indicator">,</span><span class="nt">   trigger</span><span class="p">:</span><span class="w"> </span><span class="nv">reopen_for_change</span><span class="p p-Indicator">}</span>
+<span class="nt">invariants</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;an</span><span class="nv"> </span><span class="s">approved</span><span class="nv"> </span><span class="s">artefact</span><span class="nv"> </span><span class="s">cannot</span><span class="nv"> </span><span class="s">go</span><span class="nv"> </span><span class="s">back</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">draft</span><span class="nv"> </span><span class="s">without</span><span class="nv"> </span><span class="s">an</span><span class="nv"> </span><span class="s">archive</span><span class="nv"> </span><span class="s">step&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;only</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Final</span><span class="nv"> </span><span class="s">Acceptance</span><span class="nv"> </span><span class="s">role</span><span class="nv"> </span><span class="s">can</span><span class="nv"> </span><span class="s">transition</span><span class="nv"> </span><span class="s">review</span><span class="nv"> </span><span class="s">→</span><span class="nv"> </span><span class="s">approved&quot;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>返工矩阵</strong> —— 一张&quot;发现者 × 修复者&quot;矩阵，命名了每一次交接都必须随附的返工制品。第 12 章会完整讲这个。</p></li>
+</ul>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · approval gates · who sends what back to whom --&gt;
+
+<span class="gh"># Rework Matrix</span>
+
+Rows are <span class="ge">*who found the defect*</span>, columns are <span class="ge">*who must fix it*</span>. Each cell
+names the artefact that makes the hand-off explicit.
+
+|               | PO (spec) | Architect (design) | Dev (code) | Test (acceptance) |
+|---------------|-----------|--------------------|------------|-------------------|
+| <span class="gs">**PO**</span>        | —         | <span class="sb">`spec-delta.md`</span>    | —          | <span class="sb">`acceptance.md`</span>   |
+| <span class="gs">**Architect**</span> | —         | —                  | <span class="sb">`adr-rework.md`</span> | —             |
+| <span class="gs">**Dev**</span>       | <span class="sb">`spec-question.md`</span> | —         | —          | —                 |
+| <span class="gs">**Test**</span>      | <span class="sb">`acceptance-gap.md`</span> | —        | <span class="sb">`bug-report.md`</span> | —            |
+| <span class="gs">**Final Acc**</span> | <span class="sb">`reject-reason.md`</span> | <span class="sb">`reject-reason.md`</span> | <span class="sb">`reject-reason.md`</span> | — |
+
+A defect never crosses this matrix without a rework artefact attached;
+&quot;just fix it&quot; is an anti-pattern.
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>硬关卡 vs 软关卡</strong> —— 每一道关卡在创建时就要声明自己的类别；软关卡的豁免必须带上署名角色和到期时间。完整枚举在第 12 章；这里复刻一份模板，对多数新马具已够用：</p></li>
+</ul>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · approval gates · Hard vs Soft classification --&gt;
+
+<span class="gh"># Hard vs Soft Gates</span>
+
+Every gate must declare its class at creation time. Misclassification is
+the leading cause of gate evaporation.
+
+| Gate kind       | Example                          | Class | Bypass policy                       |
+|-----------------|----------------------------------|-------|-------------------------------------|
+| unit-test suite | <span class="sb">`pytest -q`</span>                      | Hard  | never bypass; fix test or revert     |
+| lint            | <span class="sb">`ruff check .`</span>                   | Hard  | never bypass for new code            |
+| coverage floor  | <span class="sb">`coverage &gt;= 80%`</span>                | Soft  | waivable by Architect + reason       |
+| cost cap        | <span class="sb">`cost/turn ≤ $0.03`</span>              | Soft  | waivable for 24h by MDD owner        |
+| secrets scan    | <span class="sb">`gitleaks`</span>                       | Hard  | never bypass; rotate the secret      |
+| docs link-check | <span class="sb">`make book-linkcheck`</span>            | Soft  | waivable if external site is down    |
+
+Soft-gate waivers get a <span class="sb">`waiver: &lt;role&gt;, &lt;expiry&gt;`</span> entry in the PR body.
+</pre></div>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——关卡疲劳与&quot;永远豁免&quot;漂移</p>
+<p>一支团队以很紧的关卡起步。六周之后，有三道关卡会在超出它原始范围的合法改动上经常触发；豁免在累积；软关卡的默认值悄悄变成 <em>先豁免，万一出事再查</em>。一个季度之内，软关卡充其量只是一层 telemetry——它报告的是什么被豁免，而不是什么被拒绝。<strong>为什么</strong>：误报率大约超过 20% 的关卡会失去心理权威；评审人的默认动作，会从 <em>质疑这个改动</em> 翻转为 <em>质疑这道关卡</em>。一旦翻转，不经过一次显式重置，它不会再翻回来。<strong>症状</strong>：每个 sprint 的豁免数单调上升；&quot;这一次就破例一下&quot;变成一句大家都懂的口头禅；新人学会这道关卡可以被绕过，比学会它是干什么用的更早。<strong>解法</strong>：把豁免率当作一等度量追踪（每一道软关卡的豁免率本身，就是一条 MDD 信号）；当某道关卡的豁免率越过 20%，<em>把这道关卡的覆盖范围收紧</em>（削小它的面积，直到它只在真正的违规上触发），而不是放松策略。一道只在该触发时才触发的关卡，是团队会捍卫的关卡；一道一直在触发的关卡，是团队会绕着走的关卡。</p>
+</div>
+</section>
+</section>
+<section id="id15">
+<h2>关切四 —— 元马具演进<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<section id="id16">
+<h3>这是什么<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<p>一具不能自我更新的马具，是一具被锁死在它最初作者 2024 年那份世界模型里的马具。元演进，就是把这具马具当作 <em>它自己的一等产品</em> 来看待：它有 release、它有 changelog、它有关于自己的度量、它按节奏升级，而不是一慌就升。Ford／Parsons／Kua 的演化式架构 <span id="id17">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 9781491986363.">Ford <em>et al.</em>, 2017</a>]</span> 与 Lehman 的演化律 <span id="id18">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span>，是这件事的理论靠山。</p>
+</section>
+<section id="id19">
+<h3>日常做法<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<p>把元演进作为 <em>习惯</em> 来做，成本很低；作为 <em>项目</em> 来做，则是灾难。习惯的样子是：</p>
+<ol class="arabic simple">
+<li><p>HarnessCard 的每一次更新，都以一个 PR 的形式落到马具自己的仓库里，享有与生产代码同等的评审纪律。</p></li>
+<li><p>马具配备一份专属于马具（不是产品）的 <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code>，列出每一次缰绳／护栏／牧场／梳理的变更。</p></li>
+<li><p>每季度一次，团队跑一场 <em>HarnessCard 评审</em>，为下个季度设定一项显式的、格子级的目标。</p></li>
+</ol>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——元马具的无穷倒退</p>
+<p>一支团队把&quot;马具本身就是一件产品&quot;认真起来，然后提出一具 <em>元马具</em>：一具用来治理&quot;马具如何演进&quot;的马具。再接着是一具 meta-meta-harness，用来审计这具元马具。两个 sprint 之内，团队已经拥有一座评审人分不清层次的 YAML 塔，没有哪一层对应到任何一条生产信号，而原来那具马具一步也没动。<strong>为什么</strong>：多一层&quot;meta&quot;只多出评审成本、不多出强制力——元马具里的规则是愿望式的，因为没有任何一层 meta-meta <em>护栏</em> 去拒绝坏的 meta 变更。这种倒退，只有当你锚定在一条具体生产信号上时，才会收敛。<strong>解法</strong>：只做一层就打住。马具治理智能体；团队治理马具；马具自身那套 PR 评审纪律，已经够做自治。如果你感到有股拉力在把你往&quot;元马具&quot;那边拽，请改问：哪一条生产信号能告诉我们&quot;这具马具已经退化&quot;了？那条信号，接到每周复盘里，就是唯一值得拥有的一层 meta。</p>
+</div>
+</section>
+<section id="id20">
+<h3>&quot;马具剧场&quot;那种失败，给它起个名字<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
+<p>第 01 章承诺过，本章会给一种失败模式起个名字：马具在长大，杠杆却没涨。那种失败模式叫 <em>马具剧场</em>，它有一个可靠的诊断：<strong>马具型制品</strong> 数与 <strong>每周被拒绝的制品</strong> 数之比。一具健康的马具，大部分日子里都会拒绝些什么——一次 commit、一次工具调用、一个 PR、一份豁免申请。一具剧场式的马具，在文件数持续上升的同时，连续数周什么都不拒绝。周一复盘上的经典提问，不是 <em>&quot;我们给马具加了什么？&quot;</em> 而是 <em>&quot;马具拒绝了什么？拒绝得对不对？&quot;</em> 答不出第二个问题的团队，不该给第一个问题加分。</p>
+</section>
+</section>
+<section id="tauri-todo">
+<h2>Tauri-Todo：一个故事弧里的四项关切<a class="headerlink" href="#tauri-todo" title="Link to this heading">#</a></h2>
+<p>下面这段动手故事，用一个真实的 Tauri 2 + Rust + TypeScript 桌面应用，把所有四项运行关切缝进一条连贯的故事弧。可运行的配套仓库在 <code class="docutils literal notranslate"><span class="pre">walterfan/lazy-todo-app</span></code>；下面三段马具片段住在 <code class="docutils literal notranslate"><span class="pre">source/_handson/09-operating-a-harness/tauri-todo/</span></code> 下，合起来构成一具 Tauri 应用所能拥有的最小、但完整的马具。</p>
+<section id="claude-md">
+<h3>片段 1 —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>（缰绳兼容层）<a class="headerlink" href="#claude-md" title="Link to this heading">#</a></h3>
+<p>Rust 的所有权纪律 <span id="id21">[<a class="reference internal" href="../references.html#id21" title="Ralf Jung, Jacques-Henri Jourdan, Robbert Krebbers, and Derek Dreyer. RustBelt: securing the foundations of the Rust programming language. In Proc. 45th ACM SIGPLAN Symposium on Principles of Programming Languages (POPL). 2018. Foundational result motivating Rust's ownership discipline as a harness-like constraint; cited in Ch. 09 Tauri-Todo arc. doi:10.1145/3158154.">Jung <em>et al.</em>, 2018</a>]</span>，以及 Tauri 的 IPC 边界 <span id="id22">[<a class="reference internal" href="../references.html#id36" title="Tauri Working Group. Tauri 2.0 security white paper. Tauri Project documentation, 2024. Primary security model for Tauri 2 cited in Ch. 09 Tauri-Todo hands-on arc. URL: https://tauri.app/v2/security/.">Tauri Working Group, 2024</a>]</span>，在写下应用代码第一行之前，就给智能体提供了两条强结构性约束。下面这份 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 是 Claude Code 兼容层；在新仓库里，同样内容应优先进入 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>，再由客户端特定文件指回它。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · Tauri-Todo worked arc · Bridle --&gt;
+
+<span class="gh"># CLAUDE.md — lazy-todo-app compatibility mirror</span>
+
+This file is kept for Claude Code clients. Keep the canonical agent-facing
+contract in <span class="sb">`AGENTS.md`</span> and mirror only the Claude-specific Bridle rules here.
+
+<span class="gu">## Project shape</span>
+
+<span class="k">-</span><span class="w"> </span>Rust crate <span class="sb">`src-tauri/`</span> owns IPC, storage, and OS integration.
+<span class="k">-</span><span class="w"> </span>TypeScript app in <span class="sb">`src/`</span> owns UI and input validation only.
+<span class="k">-</span><span class="w"> </span>Never call OS APIs directly from TS; route through <span class="sb">`invoke()`</span> to a
+  Rust command.
+
+<span class="gu">## Agent rules</span>
+
+<span class="k">-</span><span class="w"> </span>Before editing any <span class="sb">`.rs`</span> file, read <span class="sb">`tests/rust/`</span> if it exists.
+<span class="k">-</span><span class="w"> </span>Never add a dependency without <span class="sb">`cargo audit`</span> in the same commit.
+<span class="k">-</span><span class="w"> </span>Storage writes must go through <span class="sb">`src-tauri/src/storage.rs::save()`</span>;
+  direct disk writes elsewhere are rejected by <span class="sb">`pre-commit`</span>.
+
+<span class="gu">## House style</span>
+
+<span class="k">-</span><span class="w"> </span><span class="sb">`pnpm run fmt`</span> before any commit; <span class="sb">`cargo fmt &amp;&amp; cargo clippy -- -D warnings`</span> too.
+<span class="k">-</span><span class="w"> </span>Errors cross the IPC boundary as <span class="sb">`TauriError`</span>, never as <span class="sb">`Result&lt;_, String&gt;`</span>.
+</pre></div>
+</div>
+</section>
+<section id="pre-commit-config-yaml">
+<h3>片段 2 —— <code class="docutils literal notranslate"><span class="pre">pre-commit-config.yaml</span></code>（护栏）<a class="headerlink" href="#pre-commit-config-yaml" title="Link to this heading">#</a></h3>
+<p>pre-commit 钩子在键盘敲击那一刻就执行缰绳。Tauri 特有的那几条追加——<code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">clippy</span> <span class="pre">-D</span> <span class="pre">warnings</span></code>、推送时的 <code class="docutils literal notranslate"><span class="pre">cargo</span> <span class="pre">audit</span></code>、以及一条 <code class="docutils literal notranslate"><span class="pre">gitleaks</span></code> 钩子——让智能体的 Rust 修改变得和它的 TypeScript 修改一样便宜可审。</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · Tauri-Todo worked arc · Fence</span>
+<span class="c1"># .pre-commit-config.yaml</span>
+<span class="nt">repos</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/pre-commit/pre-commit-hooks</span>
+<span class="w">    </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v4.6.0</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">trailing-whitespace</span><span class="p p-Indicator">},</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">end-of-file-fixer</span><span class="p p-Indicator">},</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">check-yaml</span><span class="p p-Indicator">}]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/gitleaks/gitleaks</span>
+<span class="w">    </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v8.18.4</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">gitleaks</span><span class="p p-Indicator">}]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cargo-clippy</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cargo clippy -D warnings</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash -c &quot;cd src-tauri &amp;&amp; cargo clippy -- -D warnings&quot;</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cargo-audit</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cargo audit</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bash -c &quot;cd src-tauri &amp;&amp; cargo audit&quot;</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">        </span><span class="nt">stages</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">pre-push</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pnpm-test</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pnpm test</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pnpm test --run</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="agents-md">
+<h3>片段 3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>（牧场 + 梳理）<a class="headerlink" href="#agents-md" title="Link to this heading">#</a></h3>
+<p>最后，<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 声明角色班底、可合并 PR 契约（硬关卡必须过，软关卡可带带日期的豁免）、以及每周的梳理排班。每一项都引用到本章前面出现过的某份文件——这把通用的运行原语与这段动手故事弧之间的循环闭上了。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-17 · Tauri-Todo worked arc · Role contracts (Paddock + Groom) --&gt;
+
+<span class="gh"># AGENTS.md — canonical agent contract for lazy-todo-app</span>
+
+This is the canonical agent-facing contract. <span class="sb">`CLAUDE.md`</span> mirrors the
+Claude-specific Bridle rules for clients that still look there first.
+
+<span class="gu">## Roles</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**PO**</span> — owns <span class="sb">`specs/*.md`</span>; signs off feature intent before dev starts.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Architect**</span> — owns <span class="sb">`src-tauri/src/storage.rs`</span> + ADRs under <span class="sb">`docs/adr/`</span>.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Developer**</span> — implements against tests; never modifies signed ADRs.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Reviewer**</span> — runs <span class="sb">`hard-vs-soft-gates.md`</span>; cannot self-approve.
+<span class="k">-</span><span class="w"> </span><span class="gs">**MDD Owner**</span> — maintains the HarnessCard at repo root; runs the weekly audit.
+
+<span class="gu">## Gate contract (Paddock)</span>
+
+A PR is mergeable when:
+
+<span class="k">1.</span> All Hard gates (see <span class="sb">`../hard-vs-soft-gates.md`</span>) pass.
+<span class="k">2.</span> Soft gates pass OR carry a dated waiver.
+<span class="k">3.</span> Reviewer has ticked every row of <span class="sb">`acceptance-gate.md`</span>.
+
+<span class="gu">## Groom contract</span>
+
+<span class="k">-</span><span class="w"> </span>Monday: MDD Owner runs <span class="sb">`../entropy-audit.yml`</span> and opens issues for any
+  delta vs last week&#39;s report.
+<span class="k">-</span><span class="w"> </span>Friday: Architect reviews drift between <span class="sb">`specs/`</span> and implemented code;
+  if drift &gt; 3 items, triggers a mid-sprint re-spec.
+</pre></div>
+</div>
+<p>Copilot 生产力相关文献 <span id="id23">[<a class="reference internal" href="../references.html#id9" title="Sida Peng, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. The impact of AI on developer productivity: evidence from GitHub Copilot. 2023. URL: https://arxiv.org/abs/2302.06590, arXiv:2302.06590.">Peng <em>et al.</em>, 2023</a>, <a class="reference internal" href="../references.html#id10" title="Albert Ziegler, Eirini Kalliamvakou, X. Alice Li, Andrew Rice, Devon Rifkin, Shawn Simister, Ganesh Sittampalam, and Edward Aftandilian. Productivity assessment of neural code completion. 2022. Companion quantitative study for Copilot's harness claims. URL: https://arxiv.org/abs/2205.06537, arXiv:2205.06537.">Ziegler <em>et al.</em>, 2022</a>]</span> 表明：智能体会对环境里 <em>已经有</em> 的那种护栏做加速；上面这几份 Tauri-Todo 片段一次性把三层护栏都配齐。把它们 commit 进一份全新 <code class="docutils literal notranslate"><span class="pre">lazy-todo-app</span></code> 克隆的开发者，在第一个功能落地之前，就已经拥有一具能工作的马具。</p>
+</section>
+</section>
+<section id="id24">
+<h2>研究脉络<a class="headerlink" href="#id24" title="Link to this heading">#</a></h2>
+<p>运行一具马具，靠五条可引用的谱系支着：</p>
+<ul class="simple">
+<li><p><strong>熵与技术债</strong>——Cunningham 1992 年的债务比喻 <span id="id25">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span>、以及 Tom 等人 2013 年的系统综述 <span id="id26">[<a class="reference internal" href="../references.html#id41" title="Edith Tom, Aybuke Aurum, and Richard Vidgen. An exploration of technical debt. 2013. Classification of technical-debt types; used in Ch. 15 to score Lazy AI Coder's backlog. doi:10.1016/j.jss.2012.12.052.">Tom <em>et al.</em>, 2013</a>]</span>，为&quot;周一早上的审计&quot;提供了动机。</p></li>
+<li><p><strong>可观测性</strong>——Majors／Fong-Jones／Miranda 的 <em>Observability Engineering</em> <span id="id27">[<a class="reference internal" href="../references.html#id26" title="Charity Majors, Liz Fong-Jones, and George Miranda. Observability Engineering: Achieving Production Excellence. O'Reilly Media, 2022. ISBN 9781492076445.">Majors <em>et al.</em>, 2022</a>]</span> 把马具内部信号框成了一等公民；LangChain Terminal-Bench 2.0 的数据点 <span id="id28">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span> 给出了行业里把 <em>turns-to-green</em> 当作可观测量的基线。</p></li>
+<li><p><strong>审批关卡与发布纪律</strong>——Humble &amp; Farley 的 <em>Continuous Delivery</em> <span id="id29">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span> 提供了硬关卡的语法；<code class="docutils literal notranslate"><span class="pre">lazy-scrum-team</span></code> 技能 <span id="id30">[<a class="reference internal" href="../references.html#id57" title="Walter Fan. lazy-scrum-team: a multi-role scrum skill for AI coding agents. ExampleCorp Dev Skills repository, 2026. Source of the Artefact State Model, Rework Matrix, and Verification table patterns adopted in Ch. 09 and expanded in Ch. 12. URL: https://github.com/example-org/examplecorp-dev-skills/tree/main/skills/lazy-scrum-team.">Fan, 2026</a>]</span> 把它扩展成了上面用到的那张&quot;角色感知&quot;的返工矩阵。</p></li>
+<li><p><strong>元演进</strong>——Ford／Parsons／Kua <span id="id31">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 9781491986363.">Ford <em>et al.</em>, 2017</a>]</span> 与 Lehman <span id="id32">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> 立下的基础：一个不持续适应的系统会丢失适配度；马具遵守同一条定律。</p></li>
+<li><p><strong>Tauri-Todo 故事弧的地基</strong>——Jung 等人的 <em>RustBelt</em> <span id="id33">[<a class="reference internal" href="../references.html#id21" title="Ralf Jung, Jacques-Henri Jourdan, Robbert Krebbers, and Derek Dreyer. RustBelt: securing the foundations of the Rust programming language. In Proc. 45th ACM SIGPLAN Symposium on Principles of Programming Languages (POPL). 2018. Foundational result motivating Rust's ownership discipline as a harness-like constraint; cited in Ch. 09 Tauri-Todo arc. doi:10.1145/3158154.">Jung <em>et al.</em>, 2018</a>]</span> 给&quot;所有权即马具&quot;的论点奠了地基；Tauri 2 的安全白皮书 <span id="id34">[<a class="reference internal" href="../references.html#id36" title="Tauri Working Group. Tauri 2.0 security white paper. Tauri Project documentation, 2024. Primary security model for Tauri 2 cited in Ch. 09 Tauri-Todo hands-on arc. URL: https://tauri.app/v2/security/.">Tauri Working Group, 2024</a>]</span> 给 IPC 边界的讨论奠了地基；Peng 等人与 Ziegler 等人 <span id="id35">[<a class="reference internal" href="../references.html#id9" title="Sida Peng, Eirini Kalliamvakou, Peter Cihon, and Mert Demirer. The impact of AI on developer productivity: evidence from GitHub Copilot. 2023. URL: https://arxiv.org/abs/2302.06590, arXiv:2302.06590.">Peng <em>et al.</em>, 2023</a>, <a class="reference internal" href="../references.html#id10" title="Albert Ziegler, Eirini Kalliamvakou, X. Alice Li, Andrew Rice, Devon Rifkin, Shawn Simister, Ganesh Sittampalam, and Edward Aftandilian. Productivity assessment of neural code completion. 2022. Companion quantitative study for Copilot's harness claims. URL: https://arxiv.org/abs/2205.06537, arXiv:2205.06537.">Ziegler <em>et al.</em>, 2022</a>]</span> 说明了为什么当智能体处在回路里时，缰绳是承重的。</p></li>
+</ul>
+</section>
+<section id="id36">
+<h2>动手环节<a class="headerlink" href="#id36" title="Link to this heading">#</a></h2>
+<p>运行原语与 Tauri-Todo 故事弧都住在 <code class="docutils literal notranslate"><span class="pre">source/_handson/09-operating-a-harness/</span></code> 下：</p>
+<ul class="simple">
+<li><p><strong>运行原语：</strong> <code class="docutils literal notranslate"><span class="pre">doc-sync-check.sh</span></code>、<code class="docutils literal notranslate"><span class="pre">entropy-audit.yml</span></code>、<code class="docutils literal notranslate"><span class="pre">prometheus-scrape.yml</span></code>、<code class="docutils literal notranslate"><span class="pre">artefact-state-model.yaml</span></code>、<code class="docutils literal notranslate"><span class="pre">rework-matrix.md</span></code>、<code class="docutils literal notranslate"><span class="pre">hard-vs-soft-gates.md</span></code>。</p></li>
+<li><p><strong>Tauri-Todo 故事弧：</strong> <code class="docutils literal notranslate"><span class="pre">tauri-todo/AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">tauri-todo/CLAUDE.md</span></code> 兼容层、<code class="docutils literal notranslate"><span class="pre">tauri-todo/pre-commit-config.yaml</span></code>，以及一份 <code class="docutils literal notranslate"><span class="pre">tauri-todo/README.md</span></code>，交叉链接到可运行的配套仓库 <code class="docutils literal notranslate"><span class="pre">walterfan/lazy-todo-app</span></code>。</p></li>
+</ul>
+<p>这些制品合起来，填满了第 08 章矩阵里整列 MDD、以及 SDD × 梳理 那格里的大部分。剩下的 SDD 与 TDD 格子，住在各自章节的动手环节、以及第四部分随后那几章案例研究里。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="08-harness-anatomy.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">马具解剖：三大护法 × 四区域</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="10-openharness.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">案例研究：OpenHarness</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">关切一 —— 熵管理</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">这是什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">日常做法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">关切二 —— 可观测性实践</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">这是什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">日常做法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">关切三 —— 审批关卡（硬 vs 软）</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">这是什么</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">关切四 —— 元马具演进</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">这是什么</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">日常做法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">"马具剧场"那种失败，给它起个名字</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tauri-todo">Tauri-Todo：一个故事弧里的四项关切</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#claude-md">片段 1 —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>（缰绳兼容层）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-commit-config-yaml">片段 2 —— <code class="docutils literal notranslate"><span class="pre">pre-commit-config.yaml</span></code>（护栏）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md">片段 3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>（牧场 + 梳理）</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id36">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

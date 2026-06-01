@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>从这里出发，往哪走 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/12-where-we-go-from-here';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="附录" href="13-appendices/index.html" />
+    <link rel="prev" title="案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例" href="11-lazy-ai-coder.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-lazy-ai-coder.html">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="13-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/12-where-we-go-from-here.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/12-where-we-go-from-here.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>从这里出发，往哪走</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1 —— 一页纸上的立论</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2 —— 30/60/90 天行动清单</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-130">Day 1–30 · 一格</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-3160">Day 31–60 · 一行，或一列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-6190-harnesscard">Day 61–90 · 一次生产级 HarnessCard 评审</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.3 —— 悬而未决的问题</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">12.4 —— 本书 <em>并未</em> 主张的事</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="id1">
+<h1>从这里出发，往哪走<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>一本不以清单收尾的书，就是一本不打算被拿来用的书。</em></p>
+</div></blockquote>
+<section id="id2">
+<h2>12.1 —— 一页纸上的立论<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>本书的分析骨架，一页就装得下：三大护法 × 四区域 ＝ 十二格，每一格都是一件团队可以交付的制品。下表每一格都是一条 <code class="docutils literal notranslate"><span class="pre">{ref}</span></code> 链接，回指第 05 章里对应的 H3 小节。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 10.2%" />
+<col style="width: 22.4%" />
+<col style="width: 22.4%" />
+<col style="width: 22.4%" />
+<col style="width: 22.4%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head"><p><strong>缰绳</strong> —— 在下笔之前先掰方向</p></th>
+<th class="head"><p><strong>护栏</strong> —— 拒掉不合格的活</p></th>
+<th class="head"><p><strong>牧场</strong> —— 圈定智能体能跑的范围</p></th>
+<th class="head"><p><strong>梳理</strong> —— 照看马具本身</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>SDD</strong></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#sdd-x-bridle"><span class="std std-ref">SDD × 缰绳 —— 引导智能体的规约</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#sdd-x-fence"><span class="std std-ref">SDD × 护栏 —— 在关卡处强制规约合法性</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#sdd-x-paddock"><span class="std std-ref">SDD × 牧场 —— 与规约相符的验收</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#sdd-x-groom"><span class="std std-ref">SDD × 梳理 —— 让规约面持续鲜活</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>TDD</strong></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#tdd-x-bridle"><span class="std std-ref">TDD × 缰绳 —— 先失败的测试作为给智能体的输入</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#tdd-x-fence"><span class="std std-ref">TDD × 护栏 —— 拒绝红树 commit 的钩子</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#tdd-x-paddock"><span class="std std-ref">TDD × 牧场 —— CI 关卡与环境对等</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#tdd-x-groom"><span class="std std-ref">TDD × 梳理 —— flake 维护与测试面演进</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p><strong>MDD</strong></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#mdd-x-bridle"><span class="std std-ref">MDD × 缰绳 —— 真正在引导的那一个度量</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#mdd-x-fence"><span class="std std-ref">MDD × 护栏 —— 成本上限与熔断器</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#mdd-x-paddock"><span class="std std-ref">MDD × 牧场 —— 发布 SLI 与 staging 浸泡</span></a></p></td>
+<td><p><a class="reference internal" href="05-harness-anatomy.html#mdd-x-groom"><span class="std std-ref">MDD × 梳理 —— 每周度量审计与仪表盘卫生</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>全部十二条 <code class="docutils literal notranslate"><span class="pre">{ref}</span></code> 链接都指向第 05 章中实打实的小节；读者点开任何一条，都会落在一件可用的制品与一则定义上。</p>
+</section>
+<section id="id3">
+<h2>12.2 —— 30/60/90 天行动清单<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>本书最重要的那一条主张是：你 <em>不必</em> 把十二格一次性全采纳。你挑 <strong>一格</strong>、把它交付、再把它所在的那一 <em>列</em> 或 <em>行</em> 交付，然后跑一轮完整的 HarnessCard 评审。下面是这三个子任务，带 hands-on 指针；独立副本放在 <code class="docutils literal notranslate"><span class="pre">_handson/12-where-we-go-from-here/checklist-30-60-90.md</span></code>。若你想直接把这套计划搬进团队会议，附录 F 的 <a class="reference internal" href="13-appendices/f-engineer-playbook.html#apf-engineer-playbook"><span class="std std-ref">附录 F —— 工程师落地手册</span></a> 提供了一份更像工作手册的版本。</p>
+<section id="day-130">
+<h3>Day 1–30 · 一格<a class="headerlink" href="#day-130" title="Link to this heading">#</a></h3>
+<p>挑一格矩阵单元，为它交付一件制品，再拿附录 D 的 HarnessCard 评分尺跑一遍。</p>
+<ul class="simple">
+<li><p><strong>SDD × 缰绳。</strong> 运行 <code class="docutils literal notranslate"><span class="pre">agents-md-generate</span></code> 做一次 repo discovery，再以 <code class="docutils literal notranslate"><span class="pre">_handson/05-harness-anatomy/sdd-x-bridle/AGENTS.md.sample</span></code> 为底，提交一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>；与 <a class="reference internal" href="05-harness-anatomy.html#sdd-x-bridle"><span class="std std-ref">SDD × 缰绳 —— 引导智能体的规约</span></a> 相挂钩。</p></li>
+<li><p><strong>TDD × 护栏。</strong> 以 <code class="docutils literal notranslate"><span class="pre">_handson/05-harness-anatomy/tdd-x-fence/hooks.json</span></code> 为底，装一条 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 钩子；与 <a class="reference internal" href="05-harness-anatomy.html#tdd-x-fence"><span class="std std-ref">TDD × 护栏 —— 拒绝红树 commit 的钩子</span></a> 相挂钩。</p></li>
+<li><p><strong>MDD × 护栏。</strong> 采纳 <code class="docutils literal notranslate"><span class="pre">_handson/05-harness-anatomy/mdd-x-fence/cost-cap.yaml</span></code> 中那条&quot;单次会话成本上限&quot;；与 <a class="reference internal" href="05-harness-anatomy.html#mdd-x-fence"><span class="std std-ref">MDD × 护栏 —— 成本上限与熔断器</span></a> 相挂钩。</p></li>
+</ul>
+<p>Ford、Parsons 与 Kua <span id="id4">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 978-1491986363.">Ford <em>et al.</em>, 2017</a>]</span> 提供了这件事的大框架：一次只上一条 fitness function，就已是一次真实的改进。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱 —— 第 30 天 &quot;我们搞完了&quot; 的坑</p>
+<p>一支团队在第 30 天交付了一格，庆祝、然后停下来。九十天之后，这格已经腐化——没有 Groom 任务被加上、没有评审节奏被建立、没有人署名持有这件制品。那个 +1 变成 +0.3，并在往 0 靠拢。<strong>为什么</strong>：单一格子是一粒种子，不是一茬庄稼。第 30 天的里程碑是为了证明这支团队 <em>能</em> 交付一件马具制品；第 60 天的里程碑则是为了证明这支团队 <em>能让它活下来</em>。跳过第二个里程碑的团队，季末拿到的还是当初那场马具剧场，只不过额外赔掉了一周工程师时间。<strong>解法</strong>：第 30 天的出口判据不是&quot;制品已合并&quot;，而是&quot;这件制品有归属、有评审节奏、日志里至少有一次 refused 或 measured 事件&quot;。没被用起来的格子是排练，不是演出。</p>
+</div>
+</section>
+<section id="day-3160">
+<h3>Day 31–60 · 一行，或一列<a class="headerlink" href="#day-3160" title="Link to this heading">#</a></h3>
+<p>扩展到完整一行（一位护法横跨全部四个区域），或完整一列（一个区域横跨全部三位护法）。</p>
+<ul class="simple">
+<li><p><strong>完整 SDD 行。</strong> 交付 <code class="docutils literal notranslate"><span class="pre">_handson/05-harness-anatomy/sdd-x-*/</span></code> 下的缰绳 ＋ 护栏 ＋ 牧场 ＋ 梳理 四件制品。若是 monorepo，同时明确&quot;nearest <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> wins&quot;：根文件只放全局命令与索引，子包文件只放局部命令与边界。对应格子：<a class="reference internal" href="05-harness-anatomy.html#sdd-x-bridle"><span class="std std-ref">SDD × 缰绳 —— 引导智能体的规约</span></a>、<a class="reference internal" href="05-harness-anatomy.html#sdd-x-fence"><span class="std std-ref">SDD × 护栏 —— 在关卡处强制规约合法性</span></a>、<a class="reference internal" href="05-harness-anatomy.html#sdd-x-paddock"><span class="std std-ref">SDD × 牧场 —— 与规约相符的验收</span></a>、<a class="reference internal" href="05-harness-anatomy.html#sdd-x-groom"><span class="std std-ref">SDD × 梳理 —— 让规约面持续鲜活</span></a>。</p></li>
+<li><p><strong>完整护栏列。</strong> 交付 <code class="docutils literal notranslate"><span class="pre">_handson/05-harness-anatomy/*-x-fence/</span></code> 下的 SDD ＋ TDD ＋ MDD 三道护栏。对应格子：<a class="reference internal" href="05-harness-anatomy.html#sdd-x-fence"><span class="std std-ref">SDD × 护栏 —— 在关卡处强制规约合法性</span></a>、<a class="reference internal" href="05-harness-anatomy.html#tdd-x-fence"><span class="std std-ref">TDD × 护栏 —— 拒绝红树 commit 的钩子</span></a>、<a class="reference internal" href="05-harness-anatomy.html#mdd-x-fence"><span class="std std-ref">MDD × 护栏 —— 成本上限与熔断器</span></a>。</p></li>
+<li><p><strong>运行节拍。</strong> 采纳每周熵审计（<code class="docutils literal notranslate"><span class="pre">_handson/06-operating-a-harness/entropy-audit.yml</span></code>）与制品状态机（<code class="docutils literal notranslate"><span class="pre">_handson/06-operating-a-harness/artefact-state-model.yaml</span></code>）；这两件一起，把&quot;梳理&quot;那一行夯实 —— <a class="reference internal" href="05-harness-anatomy.html#sdd-x-groom"><span class="std std-ref">SDD × 梳理 —— 让规约面持续鲜活</span></a>、<a class="reference internal" href="05-harness-anatomy.html#tdd-x-groom"><span class="std std-ref">TDD × 梳理 —— flake 维护与测试面演进</span></a>、<a class="reference internal" href="05-harness-anatomy.html#mdd-x-groom"><span class="std std-ref">MDD × 梳理 —— 每周度量审计与仪表盘卫生</span></a>。</p></li>
+</ul>
+<p>Forsgren、Humble 与 Kim 的 DORA 度量工作 <span id="id5">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 978-1942788331.">Forsgren <em>et al.</em>, 2018</a>]</span> 主张：季度节奏才是度量的合适单位；第 31–60 天就是你第一个季度的第二个月。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱 —— 第 60 天 &quot;一行还是一列？&quot; 的瘫痪</p>
+<p>一支团队在第 31 天时已经交付了一格，接下来三周全耗在一场委员会辩论里：是 <em>一行</em> 还是 <em>一列</em>？哪位护法？哪一区域？到第 60 天，第二件制品一件都没出；团队在回顾会上汇报&quot;战略工作&quot;。<strong>为什么</strong>：一行或一列，本身是一场&quot;优化剧场&quot;——任一方向都是真实改进，而&quot;错误选择&quot;（如果真有的话）在下一个季度都可救。选择时花掉的时间，就是没有交付的时间。<strong>解法</strong>：挑那个 <em>最弱格子</em> 最让你不好意思当众说出口的方向。如果今天把 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 给同事看你会脸红，就上完整 SDD 行；如果 CI 时不时挂、却没人去轮换那把能修它的密钥，就上完整护栏列。这个&quot;尴尬测试&quot;能在五分钟内解开这场瘫痪，并挑出那个原本就最重要的方向。</p>
+</div>
+</section>
+<section id="day-6190-harnesscard">
+<h3>Day 61–90 · 一次生产级 HarnessCard 评审<a class="headerlink" href="#day-6190-harnesscard" title="Link to this heading">#</a></h3>
+<p>在一份生产代码库上，用附录 D 的空白模板（见 <a class="reference internal" href="13-appendices/d-harnesscard.html#apd-harnesscard-template"><span class="std std-ref">空白模板</span></a>）跑一次完整 HarnessCard 评审，合入至少一项由马具驱动的改进，并记录可度量的 delta。</p>
+<ul class="simple">
+<li><p><strong>打分。</strong> 把 <a class="reference internal" href="13-appendices/d-harnesscard.html#apd-harnesscard-template"><span class="std std-ref">空白模板</span></a> 里那张十二格的空白 HarnessCard 填满 —— 每格给出 0–5 的分数与一行证据备注。用 <code class="docutils literal notranslate"><span class="pre">_handson/11-lazy-ai-coder/HarnessCard-Act1.md</span></code> 作为实例参考，跟 <a class="reference internal" href="05-harness-anatomy.html#sdd-x-bridle"><span class="std std-ref">SDD × 缰绳 —— 引导智能体的规约</span></a>、<a class="reference internal" href="05-harness-anatomy.html#tdd-x-fence"><span class="std std-ref">TDD × 护栏 —— 拒绝红树 commit 的钩子</span></a> 与 <a class="reference internal" href="05-harness-anatomy.html#mdd-x-fence"><span class="std std-ref">MDD × 护栏 —— 成本上限与熔断器</span></a> 交叉核对。</p></li>
+<li><p><strong>抬升一格。</strong> 选得分最低的那一格，合入一项收束在这一格里的修复（一个 <code class="docutils literal notranslate"><span class="pre">make</span></code> 目标、一个钩子、一段 YAML、一段脚本 —— 以 <code class="docutils literal notranslate"><span class="pre">_handson/11-lazy-ai-coder/reproduce.sh</span></code> 为已跑通的样板），并把这项修复绑回它所针对的那一格（例如 <a class="reference internal" href="05-harness-anatomy.html#mdd-x-paddock"><span class="std std-ref">MDD × 牧场 —— 发布 SLI 与 staging 浸泡</span></a>）。</p></li>
+<li><p><strong>重评并挂载。</strong> 用 <code class="docutils literal notranslate"><span class="pre">_handson/11-lazy-ai-coder/HarnessCard-Act4.md</span></code> 作模板，写出修复后的 HarnessCard，挂到发布 PR 上，并附一行 delta 备注：指名是哪一格在动（例如 <a class="reference internal" href="05-harness-anatomy.html#sdd-x-groom"><span class="std std-ref">SDD × 梳理 —— 让规约面持续鲜活</span></a>）、动了多少。</p></li>
+</ul>
+<p>Lehman 的演化定律 <span id="id6">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> 解释了&quot;季度重评&quot;为什么不是可选项：无人维护的马具，默认就是会腐化。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱 —— 第 90 天评审会翻车的三种方式</p>
+<p><strong>自打分。</strong> 交付修复的那位工程师同时也是打分人；分数平均偏移 +0.5。<em>解法</em>：第 90 天的打分人，不能是第 30 天的交付人。</p>
+<p><strong>投入而非产出。</strong> 格子得分在涨，DORA 指标却不动。每一项格子得分，都必须配一条它 <em>被预言要移动</em> 的产出指标（第 11 章的 <em>虚荣 delta</em> 陷阱对此做了完整展开）。</p>
+<p><strong>抬高顶、不抬低底。</strong> 团队把一个 4 抬成 5，而不是把一个 1 抬成 2；均值在升，承重最弱的那个维度却纹丝不动。<em>解法</em>：第 90 天的仪式必须去挑得分最低的那一格，哪怕更强的某一格更诱人。</p>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2>12.3 —— 悬而未决的问题<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>最多七个方向——在这些方向上，本书提出了自己并未回答的问题。每一条至少配一处引用，勾勒相邻文献。</p>
+<ul class="simple">
+<li><p><strong>多租户 LLM 部署下的元马具版本化。</strong> 当供应商在季度中段推送模型变更、尤其当多个客户共享同一租户时，马具规则该如何存活？<span id="id8">[<a class="reference internal" href="../references.html#id29" title="Chip Huyen. AI Engineering: Building Applications with Foundation Models. O'Reilly Media, 2025. ISBN 978-1098166304. Systems-level view of building with LLMs; Chapter 3 &quot;Evaluation&quot; motivates the TDD guardian in 4.">Huyen, 2025</a>]</span>。</p></li>
+<li><p><strong>何时把博客体 <code class="docutils literal notranslate"><span class="pre">.md</span></code> 上下文迁移到结构化 RAG 管道。</strong> Karpathy 的 context engineering 定义 <span id="id9">[<a class="reference internal" href="../references.html#id37" title="Andrej Karpathy. Context is the new code. Twitter/X thread, later syndicated as blog post, 2025. Popularized “context engineering” framing referenced in Ch. 02's four-stage evolution. URL: https://karpathy.bearblog.dev/context-is-the-new-code/.">Karpathy, 2025</a>]</span> 与此相关，但并没有给出答案。</p></li>
+<li><p><strong>多语言 monorepo 与跨地域团队的 HarnessCard。</strong> 当分析单位被放大，这套 3 × 4 矩阵还扛得住吗？<span id="id10">[<a class="reference internal" href="../references.html#id16" title="Melvin E. Conway. How do committees invent? Datamation, 14(4):28–31, 1968.">Conway, 1968</a>]</span>。</p></li>
+<li><p><strong>连续型 vs 里程碑型熵度量。</strong> 熵的下降能在一次 sprint 中被连续度量吗？还是说&quot;按里程碑&quot;就已经是最高有用分辨率？<span id="id11">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span>。</p></li>
+<li><p><strong>能把好马具与坏马具区分开的基准测试。</strong> Terminal-Bench 2.0 提供了一个暗示性的数据点，但尚未成为定论 <span id="id12">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p></li>
+<li><p><strong>安全关键型智能体的 HarnessCard 披露要求。</strong> 监管机构是否应像要求 SBOM 一样，要求 HarnessCard 式披露？<span id="id13">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span>。</p></li>
+<li><p><strong>一项技能的半衰期。</strong> 在 prompt 漂移把一份 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 侵蚀掉之前，它还能承重多久？<span id="id14">[<a class="reference internal" href="../references.html#id34" title="Anthropic. Claude Code skills: structured prompt scaffolds. Anthropic documentation, 2024. Official documentation of the Skill format cited in Ch. 08. URL: https://docs.anthropic.com/en/docs/claude-code/skills.">Anthropic, 2024</a>]</span>。</p></li>
+</ul>
+</section>
+<section id="id15">
+<h2>12.4 —— 本书 <em>并未</em> 主张的事<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<p>一位读到这里的读者，有资格拿到一则诚实的脚注——说明本书的主张所包含、以及 <em>不</em> 包含的东西。</p>
+<ul class="simple">
+<li><p><strong>马具不能替代品味。</strong> 3×4 矩阵里没有一格会告诉一支团队 <em>哪个问题值得解决</em>、该采用何种架构、或某份 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 在回答一个错问题。马具约束的是&quot;智能体 <em>怎样</em> 写代码&quot;；它不产生&quot;<em>什么</em> 代码值得写&quot;。第 02 章 Stage-4 的陷阱，在整本书层面同样成立。</p></li>
+<li><p><strong>并不是每支团队都需要每一格。</strong> 03.5 的&quot;何时不用&quot;并不是一段修辞让步；独自做的原型、一次性的脚本、一套被冻结的遗留系统，的确不会偿还这份马具投资。一支为了一段四十行 CSV 解析器就去采用十二格纪律的团队，无论自觉与否，都在上演一场马具剧场。</p></li>
+<li><p><strong>命名并未板上钉钉。</strong> 这份四区域词汇来自从业者（见 05.Provenance）。若 CAR <span id="id16">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span> 或 LangChain 的五部分解剖 <span id="id17">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 05. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span> 更适合你的团队，就用那一套框架，并做翻译即可。本书押注的是 <em>三大护法 × 十二格分解</em> 作为&quot;周一早上可用的规划工具&quot;，并未押注&quot;这些区域名&quot;成为终极分类法。</p></li>
+<li><p><strong>那些陷阱并未穷尽。</strong> 行内的 callout 只点出了作者自己调试过、看别人调试过、或读过可信记录的那些失败模式。它们是一份起步词汇表，不是一部完整异兽录——12.3 指出了下一轮新失败模式最可能冒出来的地方。</p></li>
+</ul>
+<p>若本章的 30/60/90 清单、3×4 矩阵、以及这份陷阱词汇表，能在接下来九十天里给你的团队带来：一次被拒的 commit 事件、一条被度量的信号、一条被修订过的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 条目——那本书的活儿就算干完了。</p>
+</section>
+<section id="id18">
+<h2>研究脉络<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>DORA ／ Accelerate</strong> <span id="id19">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 978-1942788331.">Forsgren <em>et al.</em>, 2018</a>]</span> —— 支撑 30/60/90 这一框架的节奏与度量谱系。</p></li>
+<li><p><strong>Lehman 定律</strong> <span id="id20">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> —— 为什么 90 天评审必须周而复始。</p></li>
+<li><p><strong>演化式架构</strong> <span id="id21">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 978-1491986363.">Ford <em>et al.</em>, 2017</a>]</span> —— 支撑&quot;一次一格&quot;式改进的那条 fitness-function 谱系。</p></li>
+</ul>
+</section>
+<section id="id22">
+<h2>动手环节<a class="headerlink" href="#id22" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">source/_handson/12-where-we-go-from-here/</span></code> 下，住着两份可直接拷走的制品：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">checklist-30-60-90.md</span></code> —— 以独立 markdown 形式交付的这份清单，适合直接粘进团队 wiki。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">open-questions.md</span></code> —— 以独立文件形式交付的悬而未决问题清单，便于研究者引用。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="11-lazy-ai-coder.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="13-appendices/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">附录</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">12.1 —— 一页纸上的立论</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">12.2 —— 30/60/90 天行动清单</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-130">Day 1–30 · 一格</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-3160">Day 31–60 · 一行，或一列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#day-6190-harnesscard">Day 61–90 · 一次生产级 HarnessCard 评审</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">12.3 —— 悬而未决的问题</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">12.4 —— 本书 <em>并未</em> 主张的事</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

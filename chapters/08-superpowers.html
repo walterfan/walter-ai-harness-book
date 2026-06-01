@@ -1,0 +1,761 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>案例研究：Superpowers &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/08-superpowers';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="案例研究：lazy-scrum-team —— 用工作流编码出来的马具" href="09-lazy-scrum-team.html" />
+    <link rel="prev" title="案例研究：OpenHarness" href="07-openharness.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-lazy-ai-coder.html">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="13-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/08-superpowers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/08-superpowers.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>案例研究：Superpowers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">08.1 —— 以技能为先的工作流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">08.2 —— 一条代表性的技能（不超过 20 行）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openharness-vs-superpowers">08.3 —— OpenHarness vs Superpowers：互补，不是竞争</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">08.4 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">08.5 —— 什么时候该抄起 Superpowers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Superpowers 在结构上弱的地方</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="superpowers">
+<h1>案例研究：Superpowers<a class="headerlink" href="#superpowers" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>不是框架，不是平台。是一整套技能（skills），教智能体在动笔之前先想两遍。</em></p>
+</div></blockquote>
+<p>Superpowers 由 Joseph Vincent 编写，以 <code class="docutils literal notranslate"><span class="pre">obra/superpowers</span></code> 仓库开源发布 <span id="id1">[<a class="reference internal" href="../references.html#id42" title="Joseph Vincent. Superpowers: a prompt scaffolding library for claude code. GitHub &amp; personal blog, 2025. Walkthrough essay accompanying the Superpowers release used as the Ch. 08 case study. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>, <a class="reference internal" href="../references.html#id47" title="Joseph Vincent. Obra/superpowers. GitHub repository, 2025. Repository artefact for Chapter 08; mirrored under \texttt oss/superpowers/. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>]</span>。它在哲学上是 OpenHarness 的反面：OpenHarness 交付的是运行时和沙箱，Superpowers 交付的 <em>只是</em> 一组 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 文件，用来塑造一个智能体（具体说是 Claude Code）&quot;如何框自己的工作&quot;。整个项目本质上就是三十来份 markdown 文件——这本身，就是它的论点。</p>
+<section id="id2">
+<h2>08.1 —— 以技能为先的工作流<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Superpowers 的经典工作流是一条五步弧：</p>
+<ol class="arabic simple">
+<li><p><strong>头脑风暴</strong>（<code class="docutils literal notranslate"><span class="pre">skills/brainstorming/SKILL.md</span></code>）—— 在意图被澄清之前，拒绝开始实现。</p></li>
+<li><p><strong>写计划</strong>（<code class="docutils literal notranslate"><span class="pre">skills/writing-plans/SKILL.md</span></code>）—— 把头脑风暴编译成一份带评审节点的书面计划。</p></li>
+<li><p><strong>测试驱动开发</strong>（<code class="docutils literal notranslate"><span class="pre">skills/test-driven-development/SKILL.md</span></code>）—— 只对着一条失败的测试来实现。</p></li>
+<li><p><strong>代码评审</strong>（<code class="docutils literal notranslate"><span class="pre">skills/requesting-code-review/SKILL.md</span></code>）—— 合并之前，进行一次带有明确评价细则的显式评审。</p></li>
+<li><p><strong>收尾</strong>（<code class="docutils literal notranslate"><span class="pre">skills/finishing-a-development-branch/SKILL.md</span></code>）—— 集成、清理、提 PR。</p></li>
+</ol>
+<p>每一步都是智能体通过 <code class="docutils literal notranslate"><span class="pre">using-superpowers</span></code> 这条元技能 <em>选择</em> 进入（或被 <em>推</em> 进入）的一项技能。Anthropic 的 skills 文档 <span id="id3">[<a class="reference internal" href="../references.html#id34" title="Anthropic. Claude Code skills: structured prompt scaffolds. Anthropic documentation, 2024. Official documentation of the Skill format cited in Ch. 08. URL: https://docs.anthropic.com/en/docs/claude-code/skills.">Anthropic, 2024</a>]</span> 描述了这套机制；Superpowers 是迄今为止、针对这套机制最完整的公开技能库。</p>
+</section>
+<section id="id4">
+<h2>08.2 —— 一条代表性的技能（不超过 20 行）<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">test-driven-development/SKILL.md</span></code> 是承重的那一份，同时也是最短的一份。下面摘录了它的核心（用省略号标出省略的散文），并在上游许可证下引用：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Test-Driven Development</span>
+
+<span class="gu">## When to use</span>
+
+Use when implementing any feature or bugfix, before writing implementation code.
+
+<span class="gu">## What this skill does</span>
+
+<span class="k">1.</span> Writes a failing test that captures the requirement.
+<span class="k">2.</span> Runs the test suite and confirms only this test fails.
+<span class="k">3.</span> Implements the minimum code to make the test pass.
+<span class="k">4.</span> Refactors while the test stays green.
+
+<span class="gu">## Red flags that stop this skill</span>
+
+<span class="k">-</span><span class="w"> </span>&quot;I&#39;ll write the test after.&quot; — no. The skill exits.
+<span class="k">-</span><span class="w"> </span>A passing first test — suspect; re-read the requirement.
+</pre></div>
+</div>
+<p>这是一份技能文件，<em>不是</em> 一个代码模块——智能体的行为是靠读散文被改变的，而不是靠调用 API。Mills 的 Socratic design 论文 <span id="id5">[<a class="reference internal" href="../references.html#id40" title="Ashley Mills. The socratic method in software design. Essay, self-published, 2015. Placeholder for the Socratic-method design essay cited in Ch. 08; replace with canonical source on archival sweep. URL: https://example.org/socratic-software-design.">Mills, 2015</a>]</span>、以及 Zeller 的系统性调试 <span id="id6">[<a class="reference internal" href="../references.html#id41" title="Andreas Zeller. Why programs fail: a guide to systematic debugging. 2009. Cited in Ch. 08 for the systematic-debugging lineage behind the Superpowers debugging skill.">Zeller, 2009</a>]</span>，是这类做法的思想先人：技能要求智能体在提交行动之前，先审问自己。</p>
+</section>
+<section id="openharness-vs-superpowers">
+<h2>08.3 —— OpenHarness vs Superpowers：互补，不是竞争<a class="headerlink" href="#openharness-vs-superpowers" title="Link to this heading">#</a></h2>
+<p>OpenHarness 提供的是 <em>引擎</em>；Superpowers 提供的是 <em>纪律</em>。一具生产级马具通常两样都要。这两个项目沿着三条轴彼此不同，对于要在二者之间做取舍的读者，有必要把这三条轴显式列出：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>轴</p></th>
+<th class="head"><p>OpenHarness</p></th>
+<th class="head"><p>Superpowers</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>首要制品</p></td>
+<td><p>Python 包 ＋ Docker 沙箱</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">~/.claude/skills/**/SKILL.md</span></code> 这些 markdown 文件</p></td>
+</tr>
+<tr class="row-odd"><td><p>护法侧重</p></td>
+<td><p>TDD × 护栏、MDD × 护栏（通过权限、沙箱）</p></td>
+<td><p>SDD × 缰绳、TDD × 缰绳（通过技能的被调用）</p></td>
+</tr>
+<tr class="row-even"><td><p>采用成本</p></td>
+<td><p>高——新依赖、新运行时</p></td>
+<td><p>低——把 markdown 拷进 <code class="docutils literal notranslate"><span class="pre">~/.claude/skills/</span></code> 就完</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id7">
+<h2>08.4 —— 十二格亮点图<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 8.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>格子</p></th>
+<th class="head"><p>得分</p></th>
+<th class="head"><p>证据</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDD × 缰绳</p></td>
+<td><p>5</p></td>
+<td><p>整个项目的存在，就是为了强化这一格；<code class="docutils literal notranslate"><span class="pre">using-superpowers/SKILL.md</span></code> 加上约 30 条兄弟技能，直接塑造智能体动笔之前的上下文。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 护栏</p></td>
+<td><p>2</p></td>
+<td><p>技能是散文；针对技能 front-matter 没有 schema 校验器。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD × 牧场</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">requesting-code-review/SKILL.md</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">receiving-code-review/SKILL.md</span></code> 构成按角色划定的验收关卡。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">finishing-a-development-branch/SKILL.md</span></code> 以及&quot;头脑风暴 → 计划&quot;那条链，本身就在让技能保持新鲜。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 缰绳</p></td>
+<td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">test-driven-development/SKILL.md</span></code> 在整个技能库里承重。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 护栏</p></td>
+<td><p>3</p></td>
+<td><p>技能里的散文在测试为红时拒绝继续；真正的执行层面，仍然依赖宿主仓库的 Claude Code hook。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 牧场</p></td>
+<td><p>2</p></td>
+<td><p>Superpowers 自身不附带集成测试套件。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 梳理</p></td>
+<td><p>2</p></td>
+<td><p>flaky 测试的处置策略，在技能库层面并未定义。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 缰绳</p></td>
+<td><p>2</p></td>
+<td><p>技能库里没有一条北极星度量。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 护栏</p></td>
+<td><p>1</p></td>
+<td><p>没有成本上限，没有限流，没有熔断。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 牧场</p></td>
+<td><p>1</p></td>
+<td><p>没有发布 SLI（这个库是一份无状态的 markdown）。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 梳理</p></td>
+<td><p>2</p></td>
+<td><p>没有定义每周审计；漂移由上游 changelog 捕捉。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>最强的一列：<strong>缰绳</strong>（均值 4.25）。最弱的一条：<strong>MDD 整行</strong>（均值 1.5）。Superpowers 一整个往 SDD／TDD × 缰绳 那侧倾斜，这与它的目的一致——它是一个技能库，不是一套运行时。</p>
+</section>
+<section id="id8">
+<h2>08.5 —— 什么时候该抄起 Superpowers<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>你的团队已经在用 Claude Code，想要更强的&quot;动笔前纪律&quot;，又不想额外上一个新平台。</p></li>
+<li><p>你已经有一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 或 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容层，但留意到智能体仍然跳过测试；TDD 技能能帮上忙。</p></li>
+<li><p>你想要一套评审仪式，<em>同时</em> 作用在智能体的产出和人类的产出上；code-review 系列技能两头都覆盖。</p></li>
+<li><p>以下情况 <em>不要</em> 抄 Superpowers：你需要的是运行时隔离（应当抄 OpenHarness、或 Claude Code 的 hooks ＋ 沙箱），或者你面对的是一个不尊重 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 的非 Claude 智能体。</p></li>
+</ul>
+<section id="id9">
+<h3>Superpowers 在结构上弱的地方<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>08.4 那张十二格记分卡，把这份取舍摆得明明白白：在 SDD × 缰绳 与 TDD × 缰绳 两格上，Superpowers 是最强的公开范例；在整行 MDD 上，它则是最弱的。这种不对称是 <em>结构性</em> 的——一堆 markdown 文件，既不能强制执行它所开出的处方，也观测不到处方到底有没有被照办。两种失败模式直接由此而来。</p>
+<ul class="simple">
+<li><p><strong>开了方子，却没有执行力。</strong> 一份技能的散文说&quot;测试为红时拒绝继续&quot;。若宿主仓库里没有哪一条 hook <em>机械地</em> 拒绝&quot;继续&quot;，这份技能就会变成&quot;合规剧场&quot;（第 02 章第 3 阶段那条陷阱，在这里贴脸适用）。Superpowers 与 Claude Code 的 hook 搭配时最强；单独使用时，它就是一条措辞强烈的建议而已。</p></li>
+<li><p><strong>没有自我可观测性。</strong> 这个库没有任何信号能告诉你&quot;团队安装了 30 条技能，只有 4 条是常用的&quot;。Skill-sprawl（第 02 章第 3 阶段那条陷阱）在&quot;只有技能&quot;的马具里打得最狠，恰恰是因为根本没有&quot;技能调用率&quot;这一类度量。</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;技能就是我们的马具&quot;</p>
+<p>一支团队采用了 Superpowers，把三十条技能拷到 <code class="docutils literal notranslate"><span class="pre">~/.claude/skills/</span></code> 下，然后宣称马具造完了。三个月后，产出质量的可测量值没有动——尽管团队在复盘里报告&quot;技能采纳率很高&quot;。<strong>为什么</strong>：在没有一条 <em>拒绝</em> &quot;跳过了某项技能的那次对话轮次&quot; 的护栏、以及没有一条度量报告 &quot;哪些技能实际被触发过&quot; 的情况下，这座技能库是在靠荣誉制度运作。团队的意图与智能体的行为，只能靠自我汇报来度量。<strong>症状</strong>：复盘里对这些技能赞不绝口；事故复盘却揭示，相关技能本来在，只是没被调用。<strong>解法</strong>：为每一条承重技能，配一条 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> hook——当技能的前置条件（红色测试、尚未签字的设计、缺失的验收表）不满足时就失败。Superpowers 提供处方；Claude Code 的 hook 提供执行。单独哪一端，都不是马具。</p>
+</div>
+</section>
+</section>
+<section id="harnesscard">
+<h2>HarnessCard<a class="headerlink" href="#harnesscard" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HarnessCard schema 版本</p></td>
+<td><p>CAR-HarnessCard v0.2 <span id="id10">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>对象</p></td>
+<td><p>Superpowers，2026-04 快照 <span id="id11">[<a class="reference internal" href="../references.html#id47" title="Joseph Vincent. Obra/superpowers. GitHub repository, 2025. Repository artefact for Chapter 08; mirrored under \texttt oss/superpowers/. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-even"><td><p>许可证</p></td>
+<td><p>MIT <span id="id12">[<a class="reference internal" href="../references.html#id42" title="Joseph Vincent. Superpowers: a prompt scaffolding library for claude code. GitHub &amp; personal blog, 2025. Walkthrough essay accompanying the Superpowers release used as the Ch. 08 case study. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Control 层（CAR）</p></td>
+<td><p>通过约 30 条散文技能，持有强烈主张。</p></td>
+</tr>
+<tr class="row-even"><td><p>Agency 层（CAR）</p></td>
+<td><p>与宿主 Claude Code 安装相比没有变化。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Runtime 层（CAR）</p></td>
+<td><p>交由 Claude Code 处理；Superpowers 不自带运行时。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD（均值）</p></td>
+<td><p>3.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD（均值）</p></td>
+<td><p>3.0</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD（均值）</p></td>
+<td><p>1.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>主要引用</p></td>
+<td><p><span id="id13">[<a class="reference internal" href="../references.html#id42" title="Joseph Vincent. Superpowers: a prompt scaffolding library for claude code. GitHub &amp; personal blog, 2025. Walkthrough essay accompanying the Superpowers release used as the Ch. 08 case study. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>]</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id14">
+<h2>研究脉络<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>TDD</strong> <span id="id15">[<a class="reference internal" href="../references.html#id12" title="Kent Beck. Test-Driven Development: By Example. Addison-Wesley Professional, 2002. ISBN 978-0321146533.">Beck, 2002</a>]</span> —— TDD 技能的学术谱系。</p></li>
+<li><p><strong>调试</strong> <span id="id16">[<a class="reference internal" href="../references.html#id41" title="Andreas Zeller. Why programs fail: a guide to systematic debugging. 2009. Cited in Ch. 08 for the systematic-debugging lineage behind the Superpowers debugging skill.">Zeller, 2009</a>]</span> —— systematic-debugging 和 receiving-code-review 两条技能背后的谱系。</p></li>
+<li><p><strong>代码评审</strong> <span id="id17">[<a class="reference internal" href="../references.html#id17" title="Alberto Bacchelli and Christian Bird. Expectations, outcomes, and challenges of modern code review. In Proceedings of the 35th International Conference on Software Engineering (ICSE). 2013. doi:10.1109/ICSE.2013.6606617.">Bacchelli and Bird, 2013</a>]</span> —— 现代代码评审的研究，正是 request / receive review 两条技能的动机所在。</p></li>
+<li><p><strong>Socratic design 论文</strong> <span id="id18">[<a class="reference internal" href="../references.html#id40" title="Ashley Mills. The socratic method in software design. Essay, self-published, 2015. Placeholder for the Socratic-method design essay cited in Ch. 08; replace with canonical source on archival sweep. URL: https://example.org/socratic-software-design.">Mills, 2015</a>]</span> —— 给&quot;先向智能体提问、再允许它行动&quot;这类技能提供哲学支撑。</p></li>
+<li><p><strong>Anthropic 的 skills 文档</strong> <span id="id19">[<a class="reference internal" href="../references.html#id34" title="Anthropic. Claude Code skills: structured prompt scaffolds. Anthropic documentation, 2024. Official documentation of the Skill format cited in Ch. 08. URL: https://docs.anthropic.com/en/docs/claude-code/skills.">Anthropic, 2024</a>]</span> —— <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 文件的官方格式规范。</p></li>
+</ul>
+</section>
+<section id="id20">
+<h2>动手环节<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">source/_handson/08-superpowers/</span></code> 下，住着两份可直接拷走的制品：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> —— 一份可直接扔进去就能用的技能，读者可以把它拷到 <code class="docutils literal notranslate"><span class="pre">~/.claude/skills/spec-first-feature/SKILL.md</span></code>。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">walkthrough.md</span></code> —— 一段 <em>安装 → 调用 → 观察</em> 的走查，用来端到端验证这份技能确实被触发。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="07-openharness.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">案例研究：OpenHarness</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="09-lazy-scrum-team.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">08.1 —— 以技能为先的工作流</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">08.2 —— 一条代表性的技能（不超过 20 行）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openharness-vs-superpowers">08.3 —— OpenHarness vs Superpowers：互补，不是竞争</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">08.4 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">08.5 —— 什么时候该抄起 Superpowers</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Superpowers 在结构上弱的地方</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

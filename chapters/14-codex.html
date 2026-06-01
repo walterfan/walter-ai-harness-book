@@ -1,0 +1,1232 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>案例研究：Codex —— 把代理式编码变成一套可审计的工作面 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/14-codex';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="案例研究：OpenSpec —— 把意图变成可合并的工程制品" href="15-openspec.html" />
+    <link rel="prev" title="案例研究：通过《马书》看 Claude Code" href="13-claude-code.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/14-codex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/14-codex.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>案例研究：Codex —— 把代理式编码变成一套可审计的工作面</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">14.1 —— Codex 的五个可持有表面</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">14.2 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md">14.3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是入口，不是杂物间</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks">14.4 —— 规则与 hooks：把"请小心"变成边界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">14.5 —— 记忆只放长期偏好</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-codex-harness-checklist">14.6 —— 给 AI 工具跑的 Codex Harness Checklist</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="codex">
+<h1>案例研究：Codex —— 把代理式编码变成一套可审计的工作面<a class="headerlink" href="#codex" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>Codex 的重点不只是&quot;会写代码的模型&quot;，而是模型周围那一圈可配置、可回滚、可审计的工作环境。</em></p>
+</div></blockquote>
+<p>OpenAI 对 Codex 的公开叙述，已经把注意力从单次补全转向了更完整的代理式编码工作面：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、权限规则、hooks、记忆、技能与 worktree，一起构成了一个团队可以调校的马具 <span id="id1">[<a class="reference internal" href="../references.html#id55" title="OpenAI Codex Team. Codex best practices: AGENTS.md, rules, hooks, memories, skills and worktrees. OpenAI Engineering Talks / public release notes, 2026. Vendor articulation of the Codex CLI's harness surfaces; primary source for Ch. 14's case study. URL: https://openai.com/codex.">OpenAI Codex Team, 2026</a>]</span>。本章把 Codex 当作一具厂商托管的闭源马具来读：不试图复刻产品内部实现，只抽取那些团队能够在自己仓库中明确持有的表面。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>边界。</strong> 本章只分析 Codex 的公开可见配置面与可迁移实践。凡涉及运行时内部策略、模型选择、调度器、远端执行环境的判断，都按&quot;不可见&quot;处理；读者不应把本章当作产品内部实现说明。</p>
+</div>
+<section id="id2">
+<h2>14.1 —— Codex 的五个可持有表面<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>Codex 对团队真正有用的地方，是它把&quot;让智能体怎么工作&quot;这件事拆成几类可以被版本化的材料：</p>
+<ol class="arabic simple">
+<li><p><strong>项目手册。</strong> <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 让仓库拥有一份给智能体看的 onboarding 文件。它不是百科全书，而是入口、边界、验证命令与团队约定。</p></li>
+<li><p><strong>权限规则。</strong> 规则文件把&quot;哪些命令可以静默运行、哪些必须问人、哪些默认拒绝&quot;做成显式策略。</p></li>
+<li><p><strong>hooks。</strong> 会话开始、工具调用之后、任务结束时的固定动作，让智能体形成可重复的工作节奏。</p></li>
+<li><p><strong>记忆。</strong> 长期偏好与一次性任务上下文分开；稳定、低敏、长期有效的偏好才进入记忆。</p></li>
+<li><p><strong>任务提示模板。</strong> 人类把需求写成小型 work ticket，而不是模糊愿望。</p></li>
+</ol>
+<p>这五个表面分别对应三大护法：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 和任务模板主要是 <strong>SDD × 缰绳</strong>；权限规则与 hooks 是 <strong>TDD × 护栏</strong>；记忆与结束自检则落在 <strong>MDD × 梳理</strong>。</p>
+</section>
+<section id="id3">
+<h2>14.2 —— 十二格亮点图<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 8.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>格子</p></th>
+<th class="head"><p>得分</p></th>
+<th class="head"><p>证据</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDD × 缰绳</p></td>
+<td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、任务提示模板、技能入口共同塑造每回合上下文；这是 Codex 最强的可迁移表面。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p>项目手册可以写明目录边界、公开 API、隐私规则与验证矩阵；坏规则仍需靠 hooks 或 CI 执行。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>worktree 让任务有独立工作区，但验收标准仍主要由团队在 PR 与 CI 中定义。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 可被版本化评审；但若没有固定审计节奏，它也会像普通文档一样漂移。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p>任务提示模板把&quot;Done When&quot;前置，能引导智能体找测试，但不等于测试先行。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 护栏</p></td>
+<td><p>5</p></td>
+<td><p>权限规则与 hooks 能把危险命令、廉价检查、结束自检变成机器执行的边界。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>独立 worktree 降低相互踩踏；真正的发布关卡仍要靠仓库自己的 CI/CD。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p>hooks 可以记录检查结果；是否把失败模式沉淀回测试套件，是团队责任。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p>结束自检可以要求列出命令、结果、风险；成本和吞吐仍需要外部度量承接。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p>权限规则能把高风险命令转成人类确认点，是成本与爆炸半径的实际上限。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 牧场</p></td>
+<td><p>2</p></td>
+<td><p>Codex 客户端本身不是团队发布系统；生产 SLI 仍要在业务侧定义。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 梳理</p></td>
+<td><p>4</p></td>
+<td><p>记忆、会话结束摘要、工作区隔离，给复盘提供了稳定抓手。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这张图的形状很鲜明：Codex 强在&quot;把智能体的工作面做成可配置产品&quot;，弱在&quot;替团队定义业务验收与产出度量&quot;。这正是本书一直强调的分界：厂商可以提供马具表面，团队必须持有马具责任。</p>
+</section>
+<section id="agents-md">
+<h2>14.3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是入口，不是杂物间<a class="headerlink" href="#agents-md" title="Link to this heading">#</a></h2>
+<p>Codex 的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 最容易被误用成&quot;什么都往里塞&quot;的长文档。更稳的做法是让它保持短小，只回答四类问题：项目地图、上下文指针、工作约定、验证矩阵。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-05-21 · Ch.14 hands-on · AGENTS.md template (full-stack repo) --&gt;
+
+<span class="gh"># AGENTS.md — {{PROJECT_NAME}}</span>
+
+&lt;!--
+Keep this file under ~100 lines. AGENTS.md is the project manual the agent
+reads on every session; it is NOT a junk drawer. Long docs belong under
+docs/ and are referenced by Context Pointers below. For polyglot monorepos,
+push module-specific rules into &lt;module&gt;/AGENTS.md (or AGENTS.override.md).
+--&gt;
+
+<span class="gu">## Project Map</span>
+
+<span class="k">-</span><span class="w"> </span><span class="sb">`backend-java/`</span> — Spring services
+<span class="k">-</span><span class="w"> </span><span class="sb">`backend-go/`</span> — Go services and background jobs
+<span class="k">-</span><span class="w"> </span><span class="sb">`scripts/`</span> — Python automation
+<span class="k">-</span><span class="w"> </span><span class="sb">`native/`</span> — C++ libraries and bindings
+<span class="k">-</span><span class="w"> </span><span class="sb">`crates/`</span> — Rust components
+<span class="k">-</span><span class="w"> </span><span class="sb">`web/`</span> — Vue or React frontend
+
+<span class="gu">## Context Pointers</span>
+
+<span class="k">-</span><span class="w"> </span>Architecture overview: <span class="sb">`docs/architecture.md`</span>
+<span class="k">-</span><span class="w"> </span>API contracts: <span class="sb">`docs/api/`</span>
+<span class="k">-</span><span class="w"> </span>Database schema: <span class="sb">`db/schema/`</span>
+<span class="k">-</span><span class="w"> </span>Frontend routing: <span class="sb">`web/src/router/`</span>
+<span class="k">-</span><span class="w"> </span>Test guide: <span class="sb">`docs/testing.md`</span>
+
+<span class="gu">## Working Agreements</span>
+
+<span class="k">-</span><span class="w"> </span>Read relevant code before editing.
+<span class="k">-</span><span class="w"> </span>Prefer small, reviewable changes.
+<span class="k">-</span><span class="w"> </span>Do not reformat unrelated files.
+<span class="k">-</span><span class="w"> </span>Preserve public APIs unless the task explicitly asks for breaking changes.
+<span class="k">-</span><span class="w"> </span>Ask before running destructive commands or touching generated files.
+<span class="k">-</span><span class="w"> </span>For non-trivial changes, produce a plan first; only then edit files.
+<span class="k">-</span><span class="w"> </span>If context is insufficient, ask. Do not guess.
+
+<span class="gu">## Verification Matrix</span>
+
+Replace placeholder commands with the repo&#39;s actual task runner. Be honest
+about what does not exist yet — that is more useful than pretending.
+
+| Stack | Risk to look for | Verification |
+| --- | --- | --- |
+| Java | layering, transaction boundary | <span class="sb">`./mvnw test`</span> (or <span class="sb">`./gradlew test`</span>) |
+| Go | context propagation, goroutine / channel leaks | <span class="sb">`go test ./...`</span>, <span class="sb">`go test -race ./...`</span> for concurrency |
+| Python | argv / path / env handling, exception leaks | <span class="sb">`pytest`</span>, <span class="sb">`ruff check`</span> if configured |
+| C++ | ownership, lifetime, thread safety, ABI | existing CMake / Bazel build + <span class="sb">`ctest`</span>, sanitizer if available |
+| Rust | error types, public API stability | <span class="sb">`cargo fmt --check &amp;&amp; cargo clippy &amp;&amp; cargo test`</span> |
+| Vue | reactivity, props/emits boundary | <span class="sb">`npm run lint &amp;&amp; npm run typecheck`</span> |
+| React | hooks deps, state lifting, memo necessity | <span class="sb">`npm run lint &amp;&amp; npm run typecheck`</span> |
+
+When the repo lacks a check, say so explicitly:
+
+<span class="k">&gt; </span><span class="ge">Frontend: no component test suite yet; run `npm run typecheck` and</span>
+<span class="k">&gt; </span><span class="ge">manually verify affected pages.</span>
+
+<span class="gu">## Security And Privacy</span>
+
+<span class="k">-</span><span class="w"> </span>Never print secrets, tokens, cookies, request bodies, phone numbers,
+  emails, or payment data — to terminal, logs, or final summary.
+<span class="k">-</span><span class="w"> </span>Do not commit <span class="sb">`.env`</span>, credentials, local databases, or generated private
+  reports.
+<span class="k">-</span><span class="w"> </span>Use parameterised APIs for SQL and shell-safe argument handling for
+  commands.
+<span class="k">-</span><span class="w"> </span>Treat user files as authoritative; do not overwrite without confirmation.
+
+<span class="gu">## Done Means</span>
+
+<span class="k">-</span><span class="w"> </span>The change is explained.
+<span class="k">-</span><span class="w"> </span>Relevant tests or checks were run, or the reason they were not run is
+  stated.
+<span class="k">-</span><span class="w"> </span>Remaining risk is called out explicitly.
+<span class="k">-</span><span class="w"> </span>The final answer lists: files changed · commands run · results · risks.
+
+&lt;!-- last_updated: {{DATE}} --&gt;
+</pre></div>
+</div>
+<p>这份模板刻意要求把长材料留在 <code class="docutils literal notranslate"><span class="pre">docs/</span></code>、<code class="docutils literal notranslate"><span class="pre">db/schema/</span></code>、<code class="docutils literal notranslate"><span class="pre">web/src/router/</span></code> 之类的真实位置。<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 的作用是指路，而不是替代整个知识库。</p>
+</section>
+<section id="hooks">
+<h2>14.4 —— 规则与 hooks：把&quot;请小心&quot;变成边界<a class="headerlink" href="#hooks" title="Link to this heading">#</a></h2>
+<p>自然语言提醒很有用，但它不是边界。边界必须能在工具调用之前或之后执行。Chapter 14 的 hands-on 里给出两层：</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-05-21 · Ch.14 hands-on · Codex rules (command-permission boundary)</span>
+<span class="c1">#</span>
+<span class="c1"># Rules in Codex govern command permissions and safety boundaries — NOT</span>
+<span class="c1"># writing style. Coding standards and naming conventions belong in</span>
+<span class="c1"># AGENTS.md or skills; rules belong here only when they decide whether a</span>
+<span class="c1"># command runs at all.</span>
+<span class="c1">#</span>
+<span class="c1"># Each rule answers one question: &quot;Can the agent execute this command</span>
+<span class="c1"># without asking?&quot; The values are:</span>
+<span class="c1">#   - &quot;allow&quot;    — run silently</span>
+<span class="c1">#   - &quot;ask&quot;      — pause and ask the human</span>
+<span class="c1">#   - &quot;deny&quot;     — refuse, even if the human says yes (use sparingly)</span>
+<span class="c1">#</span>
+<span class="c1"># Ordering matters: earlier rules are checked first; the first match wins.</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Read-only inspection is free.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ls *&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;cat *&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rg *&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;git status&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;git log *&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;git diff *&quot;</span><span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;allow&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Read-only inspection has no side effects.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Local build / test loops are part of normal agent work.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;./mvnw test*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;./gradlew test*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;go test *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;pytest*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff check*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff format*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;cargo fmt --check&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;cargo clippy*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;cargo test*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;npm run lint&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;npm run typecheck&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;npm test*&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;allow&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Local verification loop; safe to run unattended.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Destructive Git operations are the #1 source of two-AM regret.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;git push --force*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git push -f*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git push --force-with-lease*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git reset --hard*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git clean -fdx*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git branch -D *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git tag -d *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;git update-ref -d *&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ask&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;History-rewriting Git ops are nearly impossible to undo if pushed.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Recursive deletes and overwrites of generated artefacts.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;rm -rf *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;rm -fr *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;find * -delete&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;find * -exec rm *&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ask&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Bulk delete; require human confirmation regardless of target.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Production / deployment / database mutation.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;kubectl apply *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;kubectl delete *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;helm upgrade *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;terraform apply*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;flyway migrate*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;alembic upgrade *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;psql -h *prod*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;mysql -h *prod*&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ask&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Touches production or shared state; always require explicit approval.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Lockfile and dependency updates have supply-chain implications.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;npm install --save*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;npm update*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;pnpm add *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;yarn add *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;poetry add *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;uv add *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;cargo add *&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;go get -u *&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ask&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;New dependency or lockfile change deserves a human glance.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Sudo and privilege escalation.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;sudo *&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;doas *&quot;</span><span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;deny&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Agent sessions never need root inside a project sandbox.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Secrets and credential surfaces.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;cat .env*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;cat *.pem&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;cat *.key&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;cat *credentials*&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;aws sso login*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;aws configure*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;gcloud auth*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;az login*&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;deny&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Default-deny on anything that reads or rotates secrets.&quot;</span>
+
+<span class="k">[[rule]]</span>
+<span class="c1"># Overwriting the harness itself is meta-dangerous.</span>
+<span class="n">match</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="s2">&quot;* &gt; AGENTS.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;* &gt; .codex/rules.toml&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;* &gt; .codex/hooks.json&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="s2">&quot;rm AGENTS.md&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;rm .codex/*&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="n">action</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ask&quot;</span>
+<span class="n">reason</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;Changing the harness should be a deliberate, reviewed act.&quot;</span>
+
+<span class="c1"># -- shape only ---------------------------------------------------------------</span>
+<span class="c1">#</span>
+<span class="c1"># The exact key names (&quot;rule&quot;, &quot;match&quot;, &quot;action&quot;, &quot;reason&quot;) and file format</span>
+<span class="c1"># above are illustrative — the Codex CLI&#39;s actual schema may differ across</span>
+<span class="c1"># versions. Treat this file as the SHAPE of a permission boundary, not as</span>
+<span class="c1"># a copy-paste-ready config. Wrap whatever permission API your version of</span>
+<span class="c1"># Codex exposes in something with this shape, so the boundary survives</span>
+<span class="c1"># vendor changes.</span>
+</pre></div>
+</div>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;_comment_verified&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-05-21 · Ch.14 hands-on · Codex hooks (SessionStart + PostToolUse + Stop)&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;_comment_purpose&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="s2">&quot;Two lightweight hooks (SessionStart, Stop) plus one PostToolUse per file-type.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Hooks here are about DISCIPLINE, not intelligence — they make sure the&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;agent always knows where it stands at the start, runs cheap checks after&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;edits, and produces a self-review at the end. Heavy checks (full test&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;matrix, integration tests) belong in CI, not in hooks — otherwise the&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;team will quietly disable them.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;Schema below is illustrative; wrap whatever your Codex version exposes&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="s2">&quot;in this shape so the discipline survives schema changes.&quot;</span>
+<span class="w">  </span><span class="p">],</span>
+
+<span class="w">  </span><span class="nt">&quot;hooks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SessionStart&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;orient-the-agent&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;echo &#39;Branch:&#39;      &amp;&amp; git rev-parse --abbrev-ref HEAD&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;echo &#39;Dirty files:&#39; &amp;&amp; git status --short&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;echo &#39;Last commit:&#39; &amp;&amp; git log -1 --oneline&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;echo &#39;Verification:&#39; &amp;&amp; grep -A 20 &#39;^## Verification&#39; AGENTS.md 2&gt;/dev/null || true&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;echo &#39;Module manuals:&#39; &amp;&amp; find . -mindepth 2 -name &#39;AGENTS.md&#39; -not -path &#39;./node_modules/*&#39; -not -path &#39;./.venv/*&#39;&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;An AI agent that does not know which branch it is on, which files are dirty, or which verification commands the repo uses, will reinvent or destroy something.&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PostToolUse&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/*.go&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;go-cheap-checks&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;gofmt -l ${path}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;go vet ./...&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;blocking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Format + vet are seconds; full test goes through agent-check.sh.&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PostToolUse&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/*.py&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;python-cheap-checks&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ruff format --check ${path}&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff check ${path}&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;blocking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PostToolUse&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/*.rs&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;rust-cheap-checks&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;cargo fmt --check&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;blocking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PostToolUse&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;match&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;tool&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;edit&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;paths&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/*.ts&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;**/*.tsx&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;**/*.vue&quot;</span><span class="p">]</span><span class="w"> </span><span class="p">},</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;frontend-cheap-checks&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;run&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;npm run -s lint --silent || true&quot;</span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;blocking&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Lint is cheap; typecheck is heavier and lives in agent-check.sh.&quot;</span>
+<span class="w">    </span><span class="p">},</span>
+
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;event&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Stop&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;session-self-review&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;instruction&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s2">&quot;Before exiting, emit a YAML block with these fields and nothing else:&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  files_changed: [&lt;relative paths&gt;]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  commands_run:  [&lt;exact commands&gt;]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  checks_passed: [&lt;lint/test/typecheck names&gt;]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  checks_skipped: [&lt;name&gt;: &lt;reason&gt;]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  new_dependencies: [&lt;package&gt;: &lt;reason&gt;]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  secrets_or_pii_in_output: false  # MUST be false; if true, redact and re-emit&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  remaining_risks: [&lt;short bullet&gt;]&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s2">&quot;  suggested_next_step: &lt;one sentence&gt;&quot;</span>
+<span class="w">      </span><span class="p">],</span>
+<span class="w">      </span><span class="nt">&quot;reason&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Closes the loop. Avoids &#39;I assumed you ran the tests.&#39;&quot;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>这里的要点不是具体 schema，而是形状：读操作自由、验证操作便宜、破坏性操作问人、秘密相关操作默认拒绝。团队把这个形状包到自己当前版本的 Codex 配置里，就能避免被某个版本的字段名绑死。</p>
+</section>
+<section id="id4">
+<h2>14.5 —— 记忆只放长期偏好<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>记忆是最容易污染的表面。把一次性 bug 背景、票号、生产主机、客户样本写进长期记忆，会让后续任务背上隐私与幻觉双重债务。更好的边界是：只保存三个月后仍可能正确、且可以对新同事公开说出的偏好。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-05-21 · Ch.14 hands-on · Codex memory (long-term preferences only) --&gt;
+
+<span class="gh"># Codex Memory — long-term preferences</span>
+
+Memory is a notebook, not a vault.
+
+Anything you put in here is injected into every Codex session forever. So
+it should only contain long-term, stable, low-sensitivity preferences —
+the kind of thing you would happily say out loud to a new teammate on day
+one. Never put secrets, tokens, production hostnames, sample user data,
+one-off task details, or unverified guesses in memory.
+
+<span class="gu">## Working Preference</span>
+
+<span class="k">-</span><span class="w"> </span>For any non-trivial change, do <span class="sb">`research → plan → execute`</span>. Do not edit
+  files in the same turn as receiving the goal.
+<span class="k">-</span><span class="w"> </span>Prefer small diffs and focused commits. Refactors that touch many files
+  must be proposed as a plan first.
+<span class="k">-</span><span class="w"> </span>Never run destructive Git commands (force push, hard reset, branch
+  delete, history rewrite) without explicit human approval in the same
+  turn.
+<span class="k">-</span><span class="w"> </span>When unsure, ask. &quot;Asking&quot; is preferred over &quot;guessing&quot;, even if it
+  costs a round-trip.
+<span class="k">-</span><span class="w"> </span>The final answer must include: files changed, commands run, results,
+  remaining risks. No &quot;done&quot; without evidence.
+
+<span class="gu">## Verification Preference (by stack)</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Go**</span> concurrency changes must mention race-test coverage
+  (<span class="sb">`go test -race ./...`</span>). If race-test was not run, say why.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Rust**</span> changes must run or recommend <span class="sb">`cargo fmt --check`</span>,
+  <span class="sb">`cargo clippy`</span>, and <span class="sb">`cargo test`</span>. Public-API changes must call out the
+  semver impact.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Java**</span> changes that touch transactional boundaries must call out the
+  before/after isolation level or the absence of a transaction.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Python**</span> scripts that take user input must validate paths, env vars,
+  and argv before use. Log lines that include arbitrary input must be
+  treated as untrusted.
+<span class="k">-</span><span class="w"> </span><span class="gs">**C++**</span> changes that move or store pointers must call out ownership and
+  lifetime in the summary.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Frontend**</span> changes must mention lint, typecheck, and (when present)
+  affected component or e2e test status.
+
+<span class="gu">## Privacy Preference</span>
+
+<span class="k">-</span><span class="w"> </span>Do not include secrets, tokens, cookies, request bodies, phone numbers,
+  emails, payment data, or any production hostname in prompts, logs, or
+  final summaries.
+<span class="k">-</span><span class="w"> </span>If the user pastes a value that looks like a secret, refuse to echo it
+  back; ask them to revoke and rotate, then continue with a placeholder.
+<span class="k">-</span><span class="w"> </span>Treat sample data labelled <span class="sb">`prod`</span>, <span class="sb">`prd`</span>, <span class="sb">`live`</span>, <span class="sb">`customer`</span>, or
+  similar as sensitive by default.
+
+<span class="gu">## What NOT to put in memory</span>
+
+<span class="k">-</span><span class="w"> </span>Tokens, cookies, passwords, certificate paths.
+<span class="k">-</span><span class="w"> </span>Production hostnames, internal URLs, sample customer IDs.
+<span class="k">-</span><span class="w"> </span>One-off task context (bug ticket numbers, sprint goals, this week&#39;s
+  feature flag).
+<span class="k">-</span><span class="w"> </span>Anything you are not at least 80% sure is still true in three months.
+<span class="k">-</span><span class="w"> </span>A summary of a specific user&#39;s bug report.
+
+If you find yourself reaching for memory to remember a single task, you
+probably want a scratchpad or an <span class="sb">`AGENTS.md`</span> change, not a memory write.
+</pre></div>
+</div>
+<p>同样的原则也适用于提示。一次性任务应该留在当前线程或 issue 里，而不是写进长期记忆；真正可复用的是&quot;如何写好任务&quot;的模板：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-05-21 · Ch.14 hands-on · Codex prompt template (Goal / Context / Constraints / Done When) --&gt;
+
+<span class="gh"># Codex prompt template — the small work ticket</span>
+
+The point of this template is to stop treating prompts as wishes and start
+treating them as small work tickets. Four fields cover every non-trivial
+change. Copy, fill in, send.
+
+<span class="sb">```text</span>
+Please do not edit files yet. Do research first, then plan.
+
+Goal:
+  &lt;what you want to achieve, and why&gt;
+
+Context Pointers:
+  - &lt;entry file or function you suspect is involved&gt;
+  - &lt;similar existing implementation to copy from&gt;
+  - &lt;relevant tests&gt;
+  - &lt;docs or interface contracts&gt;
+
+Constraints:
+  - &lt;compatibility that must not break&gt;
+  - &lt;files or directories that are off-limits&gt;
+  - &lt;language / framework conventions that must be honoured&gt;
+  - &lt;security, privacy, logging rules&gt;
+
+Done When:
+  - &lt;tests or checks that must pass&gt;
+  - &lt;scenarios that need manual verification&gt;
+  - &lt;what the final answer must include&gt;
+
+Please output:
+  1. Relevant code paths you found.
+  2. Your reading of the current implementation.
+  3. 2–3 candidate approaches with trade-offs.
+  4. Recommended minimum-change plan.
+  5. Verification steps and remaining risks.
+<span class="sb">```</span>
+
+Once the plan looks sound, follow up with this one-liner instead of
+re-explaining the goal:
+
+<span class="sb">```text</span>
+Execute the plan. Keep the diff small; do not reformat unrelated code.
+After each phase, report: what changed, what is left, how to verify.
+<span class="sb">```</span>
+
+<span class="gu">## Why these four fields</span>
+
+<span class="k">-</span><span class="w"> </span><span class="gs">**Goal**</span> stops the agent from turning a bug fix into a half-system
+  refactor.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Context Pointers**</span> stops the agent from re-discovering the codebase
+  every turn.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Constraints**</span> stops the agent from &quot;improving&quot; things that must not
+  change — REST URLs consumed by old mobile clients, public Java APIs,
+  React state libraries the team has standardised on, and so on.
+<span class="k">-</span><span class="w"> </span><span class="gs">**Done When**</span> turns &quot;looks done&quot; into &quot;verified done&quot;.
+
+If a field is genuinely empty, write <span class="sb">`none`</span> rather than deleting the field.
+That is itself useful signal: an explicit &quot;no compatibility constraints&quot;
+is very different from a forgotten one.
+
+<span class="gu">## Bad-vs-good example</span>
+
+A bad request:
+
+<span class="sb">```text</span>
+Optimise this endpoint and update the frontend too.
+<span class="sb">```</span>
+
+A good request, in the same shape as the template above:
+
+<span class="sb">```text</span>
+Goal:
+  Reduce load time for the order detail page. It currently fans out to 6
+  HTTP calls on entry; /api/orders/{id}/items and /api/orders/{id}/summary
+  can be aggregated server-side.
+
+Context Pointers:
+  - services/order/.../OrderController.java
+  - services/account/.../AccountOverviewService.java   (aggregation precedent)
+  - web/src/pages/order/OrderDetail.tsx
+  - web/src/api/httpClient.ts
+
+Constraints:
+  - REST URLs must not change (legacy mobile clients).
+  - Java code follows the existing Spring service/controller layering.
+  - React side must not introduce a new state-management library.
+  - Plan first; do not edit files.
+
+Done When:
+  - Backend has new or updated unit tests.
+  - Frontend typecheck passes.
+  - Final answer lists which endpoints are kept vs merged.
+<span class="sb">```</span>
+
+The agent now has somewhere to land. The diff is much more likely to be
+the diff you wanted.
+</pre></div>
+</div>
+</section>
+<section id="ai-codex-harness-checklist">
+<h2>14.6 —— 给 AI 工具跑的 Codex Harness Checklist<a class="headerlink" href="#ai-codex-harness-checklist" title="Link to this heading">#</a></h2>
+<p>Codex 的可持有表面比 Claude Code 更偏&quot;项目工作面&quot;：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、rules、hooks、memory、worktree、任务提示模板。下面这份 checklist 的目标，是让一个审计型 Codex 会话进入任意仓库后，能判断这具马具是否足够让它安全地开始工作。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 42.0%" />
+<col style="width: 36.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>检查项</p></th>
+<th class="head"><p>AI 工具应该怎么查</p></th>
+<th class="head"><p>通过标准</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 入口</p></td>
+<td><p>查找根目录与子目录 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>；记录最近层级如何覆盖全局规则。</p></td>
+<td><p>根文件少于约 100 行，提供项目地图、上下文指针、工作约定、验证矩阵。</p></td>
+</tr>
+<tr class="row-odd"><td><p>模块局部规则</p></td>
+<td><p>在将要修改的路径向上查找最近的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 或同类局部说明。</p></td>
+<td><p>局部规则能解释该模块的测试、边界、生成文件、禁止改动区。</p></td>
+</tr>
+<tr class="row-even"><td><p>权限规则</p></td>
+<td><p>查找 <code class="docutils literal notranslate"><span class="pre">.codex/rules.toml</span></code> 或团队等价文件；枚举 <code class="docutils literal notranslate"><span class="pre">allow</span></code>、<code class="docutils literal notranslate"><span class="pre">ask</span></code>、<code class="docutils literal notranslate"><span class="pre">deny</span></code>。</p></td>
+<td><p>读操作可自由执行；验证命令可执行；破坏性 git、部署、secret 读取必须 ask/deny。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Hooks 廉价验证</p></td>
+<td><p>查找 <code class="docutils literal notranslate"><span class="pre">.codex/hooks.json</span></code> 或等价 hook 配置；按文件类型映射验证命令。</p></td>
+<td><p>编辑后能触发格式化、lint、typecheck 或窄测试；长测试留给显式验证阶段。</p></td>
+</tr>
+<tr class="row-even"><td><p>Worktree 隔离</p></td>
+<td><p>运行或记录 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span> <span class="pre">--short</span></code>、当前分支、是否在独立 worktree；检查未提交改动。</p></td>
+<td><p>任务开始前知道自己在哪个分支 / worktree；不会覆盖用户未提交改动。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Memory 卫生</p></td>
+<td><p>查看 Codex memory 或团队长期偏好文件；检查是否含 token、host、ticket、一次性上下文。</p></td>
+<td><p>memory 只含稳定、低敏、长期偏好；一时任务上下文留在线程或 issue。</p></td>
+</tr>
+<tr class="row-even"><td><p>Prompt 工单化</p></td>
+<td><p>检查用户请求或 issue 是否有 Goal、Context Pointers、Constraints、Done When。</p></td>
+<td><p>非平凡任务先研究 / 计划，再执行；完成标准可验证。</p></td>
+</tr>
+<tr class="row-odd"><td><p>验证矩阵</p></td>
+<td><p>从 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、package files、Makefile、CI 中提取受影响栈的验证命令。</p></td>
+<td><p>每个被改栈至少有一个明确检查；没有测试时必须说清缺口。</p></td>
+</tr>
+<tr class="row-even"><td><p>隐私与日志</p></td>
+<td><p>搜索日志规则、secret scanning、<code class="docutils literal notranslate"><span class="pre">.env</span></code> 处理、PII 禁止输出说明。</p></td>
+<td><p>final summary 不回显秘密、cookies、请求体、客户数据；日志新增语句有敏感级别判断。</p></td>
+</tr>
+<tr class="row-odd"><td><p>结束自检</p></td>
+<td><p>查 hook 或 final response 约定是否要求列文件、命令、结果、风险、跳过项。</p></td>
+<td><p>任务结束能留下可审计证据，而不是只说&quot;done&quot;。</p></td>
+</tr>
+<tr class="row-even"><td><p>梳理节奏</p></td>
+<td><p>查找 harness review、AGENTS.md 更新记录、rules/hooks 变更记录。</p></td>
+<td><p>项目有固定节奏清理过期规则、失败 hook、无用 memory 和失效命令。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Codex 可以把这份检查作为任务前的&quot;起飞前检查&quot;。一份合格输出不需要长，但必须有证据：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tool</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">codex</span>
+<span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;path&gt;&quot;</span>
+<span class="nt">readiness</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ready | ready-with-warnings | blocked</span>
+<span class="nt">checks</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">agents-entry</span>
+<span class="w">    </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pass | warn | fail</span>
+<span class="w">    </span><span class="nt">evidence</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&lt;path&gt;:&lt;line&gt;&quot;</span>
+<span class="w">    </span><span class="nt">note</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;one</span><span class="nv"> </span><span class="s">sentence&gt;&quot;</span>
+<span class="nt">blocked_by</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;&lt;only</span><span class="nv"> </span><span class="s">if</span><span class="nv"> </span><span class="s">readiness=blocked&gt;&quot;</span>
+<span class="nt">minimum_next_step</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;&lt;single</span><span class="nv"> </span><span class="s">concrete</span><span class="nv"> </span><span class="s">action&gt;&quot;</span>
+</pre></div>
+</div>
+<p>这份 checklist 也可以反向用来写 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>：如果某一项无法检查，就说明这具马具在那个面上还没有落地。比如没有验证矩阵，不要让智能体猜测试命令；没有权限规则，不要假装&quot;请小心&quot;能挡住一次 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span></code>。</p>
+</section>
+<section id="harnesscard">
+<h2>HarnessCard<a class="headerlink" href="#harnesscard" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HarnessCard schema 版本</p></td>
+<td><p>CAR-HarnessCard v0.2 <span id="id5">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>对象</p></td>
+<td><p>Codex 公开配置面，2026-05 观察窗口 <span id="id6">[<a class="reference internal" href="../references.html#id55" title="OpenAI Codex Team. Codex best practices: AGENTS.md, rules, hooks, memories, skills and worktrees. OpenAI Engineering Talks / public release notes, 2026. Vendor articulation of the Codex CLI's harness surfaces; primary source for Ch. 14's case study. URL: https://openai.com/codex.">OpenAI Codex Team, 2026</a>]</span></p></td>
+</tr>
+<tr class="row-even"><td><p>许可证</p></td>
+<td><p>Codex 产品本身为闭源；本章 hands-on 示例以 MIT 协议发布</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control 层（CAR）</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、提示模板、记忆共同塑造任务上下文。</p></td>
+</tr>
+<tr class="row-even"><td><p>Agency 层（CAR）</p></td>
+<td><p>工具与 shell 行动通过权限规则、hooks、人类确认共同约束。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Runtime 层（CAR）</p></td>
+<td><p>本地仓库、worktree、远端模型与客户端运行时的组合；业务验收仍归团队 CI/CD。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD（0–5）</p></td>
+<td><p>3.75</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD（0–5）</p></td>
+<td><p>3.5</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD（0–5）</p></td>
+<td><p>3.25</p></td>
+</tr>
+<tr class="row-odd"><td><p>主要引用</p></td>
+<td><p><span id="id7">[<a class="reference internal" href="../references.html#id55" title="OpenAI Codex Team. Codex best practices: AGENTS.md, rules, hooks, memories, skills and worktrees. OpenAI Engineering Talks / public release notes, 2026. Vendor articulation of the Codex CLI's harness surfaces; primary source for Ch. 14's case study. URL: https://openai.com/codex.">OpenAI Codex Team, 2026</a>]</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id8">
+<h2>研究脉络<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>OpenAI Codex 公开实践</strong> <span id="id9">[<a class="reference internal" href="../references.html#id55" title="OpenAI Codex Team. Codex best practices: AGENTS.md, rules, hooks, memories, skills and worktrees. OpenAI Engineering Talks / public release notes, 2026. Vendor articulation of the Codex CLI's harness surfaces; primary source for Ch. 14's case study. URL: https://openai.com/codex.">OpenAI Codex Team, 2026</a>]</span> —— 本章的主要厂商来源。</p></li>
+<li><p><strong>AGENTS.md 约定</strong> <span id="id10">[<a class="reference internal" href="../references.html#id53" title="Agentic AI Foundation. agents.md: open format for coding agent instructions. Open standard website, 2025. Vendor-neutral entry-file standard cited in Ch. 03 and Ch. 08 as the canonical SDD x Bridle file. URL: https://agents.md.">Agentic AI Foundation, 2025</a>]</span> —— 项目级智能体手册的生态背景。</p></li>
+<li><p><strong>CAR 分解</strong> <span id="id11">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span> —— HarnessCard 所使用的三层框架。</p></li>
+<li><p><strong>Fowler 的 Harness Engineering 词汇</strong> <span id="id12">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span> —— 本章把 Codex 映射到&quot;三大护法 × 四区域&quot;的语言来源之一。</p></li>
+</ul>
+</section>
+<section id="id13">
+<h2>动手环节<a class="headerlink" href="#id13" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">source/_handson/14-codex/</span></code> 下，住着五份可直接改造的制品：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">AGENTS.md.template</span></code> —— 一份少于 100 行的项目手册模板。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rules.toml</span></code> —— 一份命令权限边界的形状示例。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hooks.json</span></code> —— 会话开始、编辑后廉价检查、结束自检的 hooks 示例。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory.md</span></code> —— 长期记忆的内容边界。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prompt-template.md</span></code> —— 把一次性需求写成小 work ticket 的提示模板。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="13-claude-code.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">案例研究：通过《马书》看 Claude Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="15-openspec.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">案例研究：OpenSpec —— 把意图变成可合并的工程制品</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">14.1 —— Codex 的五个可持有表面</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">14.2 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agents-md">14.3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是入口，不是杂物间</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks">14.4 —— 规则与 hooks：把"请小心"变成边界</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">14.5 —— 记忆只放长期偏好</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ai-codex-harness-checklist">14.6 —— 给 AI 工具跑的 Codex Harness Checklist</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

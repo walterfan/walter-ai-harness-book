@@ -1,0 +1,1040 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Slides 大纲 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/00-presentation/slides';</script>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="前言" href="../01-foreword.html" />
+    <link rel="prev" title="Speaker Outline —— 分钟级节奏表" href="outline.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/00-presentation/slides.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/chapters/00-presentation/slides.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Slides 大纲</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-1">Slide 1 —— 标题页</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-2">Slide 2 —— 议程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-3-f-0-model-environment">Slide 3 —— F.0 开场：Model → Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-4-f-0-2026">Slide 4 —— F.0 · 三条 2026 年的事实</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-5-f-1">Slide 5 —— F.1 · 四阶段演化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-6-f-1">Slide 6 —— F.1 · 每阶段的主要制品</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-7-f-1">Slide 7 —— F.1 · 两句带走</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-8-f-2">Slide 8 —— F.2 · 一句话定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-9-f-2-5">Slide 9 —— F.2 · 是 × 5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-10-f-2-5">Slide 10 —— F.2 · 不是 × 5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-11-f-2-pdca">Slide 11 —— F.2 · PDCA × 防跑偏</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-12-f-2-agent-loop">Slide 12 —— F.2 · Agent Loop（驯服把手）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-13-f-3">Slide 13 —— F.3 · 因果顺序反转</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-14-f-3">Slide 14 —— F.3 · 三护法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-15-f-4-3-4">Slide 15 —— F.4 · 3 × 4 矩阵（全屏）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-16-f-4">Slide 16 —— F.4 · 四区域各一句</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-17-f-5">Slide 17 —— F.5 · 四个案例横轴</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-18-f-5">Slide 18 —— F.5 · 每案一句</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-19-f-6-lazy-ai-coder">Slide 19 —— F.6 · Lazy AI Coder 四幕</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-20-f-6-act-4-delta">Slide 20 —— F.6 · Act 4 的 delta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-21-f-7">Slide 21 —— F.7 · 三个里程碑</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-22-f-7-day-30">Slide 22 —— F.7 · Day 30 三个推荐切入点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-23-f-7">Slide 23 —— F.7 · 三个要提防的陷阱</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-24-f-8">Slide 24 —— F.8 · 三句要被记住的话</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-25-f-8-q1">Slide 25 —— F.8 · 常见问 Q1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-26-f-8-q2-q3">Slide 26 —— F.8 · 常见问 Q2 + Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-27-f-8">Slide 27 —— F.8 · 收尾画面</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-28">Slide 28 —— 资源链接</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-29">Slide 29 —— 谢谢</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-30">Slide 30（可选）—— 工作坊手册索引</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="slides">
+<h1>Slides 大纲<a class="headerlink" href="#slides" title="Link to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">使用方式</p>
+<p>本文件是 <strong>每页一张 slide 的大纲</strong> —— 每一个 <code class="docutils literal notranslate"><span class="pre">##</span></code> 对应一张 slide。</p>
+<ul class="simple">
+<li><p><strong>bullet</strong> 是片上文字（精简，不超过 5 行；每行原则上不超过 10 个汉字）。</p></li>
+<li><p><strong>引用块</strong> <code class="docutils literal notranslate"><span class="pre">&gt;</span></code> 是 speaker notes（讲稿备注），不上屏。</p></li>
+<li><p>可以直接复制到 Keynote / Google Slides / PowerPoint 的 Outline 视图
+一次性导入，也可以用 <a class="reference external" href="https://sli.dev/">slidev</a> 或 <a class="reference external" href="https://marp.app/">Marp</a>
+渲染。</p></li>
+<li><p>如果你想直接拿一份 <strong>排好版的 Marp 幻灯片</strong>，见
+<code class="docutils literal notranslate"><span class="pre">../_handson/13-one-hour-talk/SLIDES.md</span></code>；本文件是它的来源大纲。</p></li>
+</ul>
+<p>一共 <strong>~30 张 slide</strong>（开场 / 结尾各 1 张 + 8 段内容 × 2–4 张 + F.2 穿插 2 张）。
+排练时如果某张停留超 3 分钟，说明那张内容太多，需要拆或砍。</p>
+<p><strong>术语约定</strong>：<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span> <span class="pre">/</span> <span class="pre">CLAUDE.md</span> <span class="pre">兼容层</span> <span class="pre">/</span> <span class="pre">SKILL.md</span> <span class="pre">/</span> <span class="pre">MCP</span> <span class="pre">/</span> <span class="pre">pre-commit</span> <span class="pre">/</span> <span class="pre">Bridle</span> <span class="pre">/</span> <span class="pre">Fence</span> <span class="pre">/</span> <span class="pre">Paddock</span> <span class="pre">/</span> <span class="pre">Groom</span> <span class="pre">/</span> <span class="pre">SDD</span> <span class="pre">/</span> <span class="pre">TDD</span> <span class="pre">/</span> <span class="pre">MDD</span> <span class="pre">/</span> <span class="pre">HarnessCard</span></code>
+不翻译。</p>
+</div>
+<hr class="docutils" />
+<section id="slide-1">
+<h2>Slide 1 —— 标题页<a class="headerlink" href="#slide-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Harnessing AI —— 给 AI 套上缰绳</p></li>
+<li><p>面向同行的一小时公开分享</p></li>
+<li><p>Walter Fan · 2026</p></li>
+</ul>
+<blockquote>
+<div><p>开场不要急着讲话。让标题停 10 秒。报家门 1 句。
+承诺 —— <em>&quot;我今天只讲主脊，不陷细节；最后留 4 分钟给 Q&amp;A。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-2">
+<h2>Slide 2 —— 议程<a class="headerlink" href="#slide-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>8 段 × 约 7 分钟 + Q&amp;A 4 分钟</p></li>
+<li><p>F.0 开场 → F.8 收尾</p></li>
+<li><p>每段都有 <strong>一张白板 + 一句中心论点 + 回书锚点</strong></p></li>
+</ul>
+<blockquote>
+<div><p>15 秒。不念完整张表。只说 —— <em>&quot;我会走 8 段，每段 7 分钟；
+最后留 4 分钟 Q&amp;A。整场没有问答环节 —— 所有问题都请憋到最后
+一次性问。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-3-f-0-model-environment">
+<h2>Slide 3 —— F.0 开场：Model → Environment<a class="headerlink" href="#slide-3-f-0-model-environment" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>M → E</p></li>
+<li><p>杠杆点移动了</p></li>
+<li><p>过去：调模型；现在：造环境</p></li>
+</ul>
+<blockquote>
+<div><p>在白板左边写大写 &quot;M&quot;，右边写大写 &quot;E&quot;。
+画箭头 <strong>2022–2024: M ← 调得更听话</strong> / <strong>2026: E ← 建得让模型干不坏事</strong>。
+说 —— <em>&quot;过去我们想着怎么把模型调得更听话；现在我们想着怎么把
+环境建得让一个普通模型也干不坏事。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-4-f-0-2026">
+<h2>Slide 4 —— F.0 · 三条 2026 年的事实<a class="headerlink" href="#slide-4-f-0-2026" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>OpenAI Codex：8 周 100 万行生产代码，0 行人手写</p></li>
+<li><p>LangChain：不换模型，改脚手架，Terminal Bench 2.0 进前 5</p></li>
+<li><p>Anthropic：权限 / 技能 / MCP 的工程时间 &gt; 模型权重</p></li>
+</ul>
+<blockquote>
+<div><p>每条 15 秒，一共 45 秒。念完之后加一句 ——
+<em>&quot;三件事的共性是 —— 他们变的都不是模型，是模型周围的东西。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-5-f-1">
+<h2>Slide 5 —— F.1 · 四阶段演化<a class="headerlink" href="#slide-5-f-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>2022–2024 · <strong>Prompt</strong> · 怎么问？</p></li>
+<li><p>2025 · <strong>Context</strong> · 给看什么？</p></li>
+<li><p>2025–2026 · <strong>Skill</strong> · 怎么把流程写下来？</p></li>
+<li><p>2026– · <strong>Harness</strong> · 造什么环境？</p></li>
+</ul>
+<blockquote>
+<div><p>画时间轴时故意停在 <strong>Skill</strong> 这一格，问一句 <em>&quot;那 2026 以后呢？&quot;</em>
+让听众接 &quot;Harness&quot;（大概率有人接得上）。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-6-f-1">
+<h2>Slide 6 —— F.1 · 每阶段的主要制品<a class="headerlink" href="#slide-6-f-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Prompt：一条巧妙的提示字符串</p></li>
+<li><p>Context：一张检索图</p></li>
+<li><p>Skill：<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> / command</p></li>
+<li><p>Harness：<strong>仓库本身</strong> —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> + 护栏 + 钩子 + 巡检</p></li>
+</ul>
+<blockquote>
+<div><p>强调 <strong>&quot;仓库本身&quot;</strong> —— 这是 Harness 和前三阶段最大的分野。
+前三阶段可以一个工程师单独做；Harness 必须以仓库为单位做。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-7-f-1">
+<h2>Slide 7 —— F.1 · 两句带走<a class="headerlink" href="#slide-7-f-1" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>前三阶段调&quot;询问层&quot;，Harness 把干预点移到&quot;环境层&quot;</p></li>
+<li><p>前三阶段个人做，Harness <strong>以仓库为单位</strong>做</p></li>
+</ol>
+<blockquote>
+<div><p>放慢念。这两句是 F.1 的全部。
+如果超时，可以把前面的 Slide 6 砍掉，直接从 Slide 5 跳到这里。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-8-f-2">
+<h2>Slide 8 —— F.2 · 一句话定义<a class="headerlink" href="#slide-8-f-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Harness Engineering =</p></li>
+<li><p><strong>刻意设计、运行、演化</strong></p></li>
+<li><p>AI 编码智能体<strong>周围的结构</strong></p></li>
+<li><p>目的：让产出 <strong>可验证 / 可观测 / 可理解</strong></p></li>
+</ul>
+<blockquote>
+<div><p>可验证 / 可观测 / 可理解三词竖着写在白板左栏，停 3 秒再说 ——
+<em>&quot;这三词不是修辞。每一个背后都有一门四十年历史的工程学科。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-9-f-2-5">
+<h2>Slide 9 —— F.2 · 是 × 5<a class="headerlink" href="#slide-9-f-2-5" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>面向智能体的规约（<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>/<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容层/<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>/MCP manifest）</p></li>
+<li><p>审批门与护栏（pre-commit / lint / PR review / CI）</p></li>
+<li><p>沙箱（容器 / VM / 只读挂载 / 临时 worktree）</p></li>
+<li><p>面向智能体的文档（runbook / ADR / skill）</p></li>
+<li><p>度量与反馈面（成本 / 违规数 / turns-to-green）</p></li>
+</ol>
+<blockquote>
+<div><p><strong>快念</strong>。每条 10 秒。重点不在记住每条，而在听众形成
+<em>&quot;原来 harness 的范围是这些东西&quot;</em> 的整体印象。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-10-f-2-5">
+<h2>Slide 10 —— F.2 · 不是 × 5<a class="headerlink" href="#slide-10-f-2-5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>不是</strong> 推理运行栈（AI Engineering）</p></li>
+<li><p><strong>不是</strong> ML 评测基准</p></li>
+<li><p><strong>不是</strong> IDE 插件（Cursor / Copilot 是客户端）</p></li>
+<li><p><strong>不是</strong> Agent 框架 SDK（LangChain / AutoGen）</p></li>
+<li><p><strong>不是</strong> 部署流水线（DevOps）</p></li>
+</ul>
+<blockquote>
+<div><p>比&quot;是&quot;还要快。每条 8 秒。
+关键在于收尾那句 <strong>归属检验</strong> ——
+<em>&quot;commit 之前 = harness；commit 之后 = DevOps。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-11-f-2-pdca">
+<h2>Slide 11 —— F.2 · PDCA × 防跑偏<a class="headerlink" href="#slide-11-f-2-pdca" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>P：<strong>规约</strong> · D：<strong>人 + AI 写</strong> · C：<strong>测 / lint / CI</strong> · A：<strong>Groom + 恢复</strong></p></li>
+<li><p><strong>规则</strong>：可执行条文（路径 / 成本 / hook）</p></li>
+<li><p><strong>校验</strong>：合入前客观信号</p></li>
+<li><p><strong>恢复</strong>：revert / 绿色 commit 重启上下文</p></li>
+</ul>
+<blockquote>
+<div><p>画 <code class="docutils literal notranslate"><span class="pre">P→D→C→A</span></code> 小环，D 格里写 tiny「AI」。金句 —— <em>&quot;D 很快、C 很慢必跑偏。&quot;</em>
+与 <code class="docutils literal notranslate"><span class="pre">index.md</span></code> F.2 穿插段同文；<strong>可砍</strong>省进 F.3。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-12-f-2-agent-loop">
+<h2>Slide 12 —— F.2 · Agent Loop（驯服把手）<a class="headerlink" href="#slide-12-f-2-agent-loop" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>用户输入 → context → decision → tools → observation</p></li>
+<li><p>memory / skill / controller 让 loop 持续</p></li>
+<li><p>跑偏时：看 trace，不看态度</p></li>
+<li><p>Harness 接在输入、context、tools、loop、输出证据上</p></li>
+<li><p><strong>少即是多</strong>：收敛方向、立规矩、progressive disclosure</p></li>
+</ul>
+<blockquote>
+<div><p>只画一圈，不展开系统图。强调 —— <em>&quot;Harness 决定 agent 在什么制度下写你的代码。&quot;</em>
+细节指到第 03B 章，现场不要陷进 memory 实现。补一句 —— <em>&quot;不要把整座图书馆塞进 context，LLM 已经知道很多；你要给它边界和判据。&quot;</em>
+下一张接 F.3 因果翻转。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-13-f-3">
+<h2>Slide 13 —— F.3 · 因果顺序反转<a class="headerlink" href="#slide-13-f-3" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>传统：  test   →  implement  →  observe
+AI：    specify → test       →  observe
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>人写代码：测试是第一份规约</p></li>
+<li><p>智能体写代码：<strong>规约前置</strong>，测试抓幻觉</p></li>
+<li><p>不是推翻传统工程，是让老原则重新发光</p></li>
+</ul>
+<blockquote>
+<div><p>画完后停 5 秒不说话，让听众自己读出 <em>&quot;咦，SDD 顶到最前面去了&quot;</em>。
+然后说 —— <em>&quot;为什么翻转？因为人写的主要制品从代码移到了规约。小步提交、测试先行、可回滚、可追踪，在 agent 时代更值钱。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-14-f-3">
+<h2>Slide 14 —— F.3 · 三护法<a class="headerlink" href="#slide-14-f-3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>SDD</strong> · Specification-Driven · 说 · 可理解</p></li>
+<li><p><strong>TDD</strong> · Test-Driven · 证 · 可验证</p></li>
+<li><p><strong>MDD</strong> · Metric-Driven · 观 · 可观测</p></li>
+</ul>
+<blockquote>
+<div><p>三个单词 + 三个动词 + 三个形容词。<strong>念完即走</strong>。
+一个要提防的误读：<em>&quot;我们已经有 CI 了啊。&quot;</em> —— 回一句：
+<em>&quot;CI 是 TDD/MDD 的牧场；harness 在键盘按下那一刻就发声。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-15-f-4-3-4">
+<h2>Slide 15 —— F.4 · 3 × 4 矩阵（全屏）<a class="headerlink" href="#slide-15-f-4-3-4" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>          <span class="n">Bridle</span>    <span class="n">Fence</span>      <span class="n">Paddock</span>     <span class="n">Groom</span>
+          <span class="n">写前</span>      <span class="n">写时</span>        <span class="n">写后</span>        <span class="n">维护</span>
+
+<span class="n">SDD</span> <span class="p">(</span><span class="n">说</span><span class="p">)</span>  <span class="n">AGENTS</span>    <span class="n">lint</span>       <span class="n">gate</span>        <span class="n">索引</span>
+<span class="n">TDD</span> <span class="p">(</span><span class="n">证</span><span class="p">)</span>  <span class="n">pre</span><span class="o">-</span><span class="n">edit</span>  <span class="n">pre</span><span class="o">-</span><span class="n">commit</span> <span class="n">CI</span>          <span class="n">flaky</span> <span class="n">隔离</span>
+<span class="n">MDD</span> <span class="p">(</span><span class="n">观</span><span class="p">)</span>  <span class="n">北极星</span>    <span class="n">成本上限</span>    <span class="n">SLI</span>         <span class="n">指标轮替</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>本场最重要的一张 slide</strong>。不要用动画 —— 一上来就全显示。
+讲稿停在这里 4 分钟：4 列各 30 秒 + 3 行各 30 秒 + 收尾 30 秒。
+收尾那句：<em>&quot;这张表是剩下 30 分钟的地图。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-16-f-4">
+<h2>Slide 16 —— F.4 · 四区域各一句<a class="headerlink" href="#slide-16-f-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Bridle（缰绳）</strong> 敲第一个键之前 <em>看什么、听什么</em></p></li>
+<li><p><strong>Fence（护栏）</strong> 不管作者是谁，<em>一律拒绝</em> 坏制品</p></li>
+<li><p><strong>Paddock（牧场）</strong> <em>可以撒欢的那块地</em> 的边界</p></li>
+<li><p><strong>Groom（梳理）</strong> 维护 <em>马具本身</em> 的重复性工作</p></li>
+</ul>
+<blockquote>
+<div><p>如果 Slide 13 时间用完了，这张可以砍。否则 1 分钟讲完。
+强调 Groom —— <em>&quot;没有 Groom 的马具，是装饰。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-17-f-5">
+<h2>Slide 17 —— F.5 · 四个案例横轴<a class="headerlink" href="#slide-17-f-5" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OpenHarness</span>  <span class="n">Superpowers</span>  <span class="n">lazy</span><span class="o">-</span><span class="n">scrum</span><span class="o">-</span><span class="n">team</span>  <span class="n">Claude</span> <span class="n">Code</span>
+<span class="n">运行时</span><span class="o">+</span><span class="n">沙箱</span>   <span class="n">技能库</span>       <span class="n">工作流编码</span>        <span class="n">闭源产品</span>
+<span class="p">(</span><span class="n">第</span> <span class="mi">10</span> <span class="n">章</span><span class="p">)</span>   <span class="p">(</span><span class="n">第</span> <span class="mi">11</span> <span class="n">章</span><span class="p">)</span>   <span class="p">(</span><span class="n">第</span> <span class="mi">12</span> <span class="n">章</span><span class="p">)</span>       <span class="p">(</span><span class="n">第</span> <span class="mi">13</span> <span class="n">章</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>同一张矩阵，落在四种形态的项目上</p></li>
+</ul>
+<blockquote>
+<div><p>画完后问一句 —— <em>&quot;大家手里这个 repo，更像左边还是右边？&quot;</em>
+停两秒再继续。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-18-f-5">
+<h2>Slide 18 —— F.5 · 每案一句<a class="headerlink" href="#slide-18-f-5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>OpenHarness</strong> —— 唯一&quot;读过第 08 章才写的&quot;开源参考实现</p></li>
+<li><p><strong>Superpowers</strong> —— 哲学反面：只出技能不出运行时</p></li>
+<li><p><strong>lazy-scrum-team</strong> —— 把 Scrum 角色与交接当马具</p></li>
+<li><p><strong>Claude Code</strong> —— 闭源；职责分布在 prompt+hooks+skills 三处</p></li>
+</ul>
+<blockquote>
+<div><p>每个 60 秒。重点是让听众 <strong>识别</strong> 自己项目最像哪个，不是评判哪个更好。
+一句带走 —— <em>&quot;矩阵是尺子，案例是刻度。挑最像你技术栈的那一个抄。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-19-f-6-lazy-ai-coder">
+<h2>Slide 19 —— F.6 · Lazy AI Coder 四幕<a class="headerlink" href="#slide-19-f-6-lazy-ai-coder" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Act</span> <span class="mi">1</span>    <span class="n">Act</span> <span class="mi">2</span>        <span class="n">Act</span> <span class="mi">3</span>       <span class="n">Act</span> <span class="mi">4</span>
+<span class="n">审计</span>     <span class="n">短板</span>         <span class="n">修复</span>         <span class="n">度量</span> <span class="n">delta</span>
+<span class="n">Audit</span>    <span class="n">Short</span><span class="o">-</span>       <span class="n">Fixes</span>        <span class="n">Measure</span>
+         <span class="n">comings</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>本书对自己的仓库做了一次实盘</p></li>
+<li><p>矩阵 → 审计 → 修复 → 重打分</p></li>
+</ul>
+<blockquote>
+<div><p>开场一句 —— <em>&quot;如果这套框架连书自己的宿主仓库都打不分、改不动，
+那它就是错的。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-20-f-6-act-4-delta">
+<h2>Slide 20 —— F.6 · Act 4 的 delta<a class="headerlink" href="#slide-20-f-6-act-4-delta" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>SDD 均值 <strong>1.75 → 3.00</strong>（+1.25）</p></li>
+<li><p>TDD 均值 <strong>2.00 → 2.75</strong>（+0.75）</p></li>
+<li><p>MDD 均值 <strong>1.50 → 1.50</strong>（+0.00）</p></li>
+<li><p><strong>总分 1.75 → 2.42</strong>（+0.67）</p></li>
+</ul>
+<blockquote>
+<div><p>念 &quot;1.75&quot; 慢，念 &quot;3.00&quot; 快 —— 听众自己会算 delta。
+提防 —— <em>&quot;HarnessCard ≠ 虚荣分数。只要你公开评分尺、证据指针、
+delta，它就是分析工具不是虚荣。&quot;</em>
+说明 —— <em>&quot;MDD 没动是故意的。90 天内先把 SDD 做到及格才配谈 MDD。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-21-f-7">
+<h2>Slide 21 —— F.7 · 三个里程碑<a class="headerlink" href="#slide-21-f-7" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Day 1–30     Day 31–60        Day 61–90
+一格         一行 或 一列      一次完整评审
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>不必一次做完 12 格</strong></p></li>
+<li><p>挑一格 → 扩到行/列 → 公开打分</p></li>
+</ul>
+<blockquote>
+<div><p>画完后直接问 —— <em>&quot;如果你所在的团队只做 Day 30 这一步，
+你会选 SDD × Bridle 还是 TDD × Fence？为什么？&quot;</em>
+这一问会让下一张 slide 的 Q&amp;A 氛围自动热起来。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-22-f-7-day-30">
+<h2>Slide 22 —— F.7 · Day 30 三个推荐切入点<a class="headerlink" href="#slide-22-f-7-day-30" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>SDD × Bridle</strong> —— 写一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>
+（便宜，之后每一轮都赚）</p></li>
+<li><p><strong>TDD × Fence</strong> —— 装一条 <code class="docutils literal notranslate"><span class="pre">PreToolUse</span></code> 钩子
+（测试红时拒写；单兵受益）</p></li>
+<li><p><strong>MDD × Fence</strong> —— LLM 调用加会话成本上限
+（过线拒新调用）</p></li>
+</ul>
+<blockquote>
+<div><p>三条都是&quot;单兵 Day 1 就能上&quot;的格。
+团队通常从 SDD × Bridle 起步；单兵通常从 TDD × Fence 起步。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-23-f-7">
+<h2>Slide 23 —— F.7 · 三个要提防的陷阱<a class="headerlink" href="#slide-23-f-7" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>&quot;Day 30 搞定了&quot;陷阱</strong> —— 无 Groom，90 天后分数回落</p></li>
+<li><p><strong>&quot;Groom 以后再说&quot;陷阱</strong> —— 一开始就不放 Groom = 装饰</p></li>
+<li><p><strong>&quot;凑齐了再发布&quot;陷阱</strong> —— 等 12 格 ≥ 3 再上线 = 永远不上</p></li>
+</ul>
+<blockquote>
+<div><p>这张是 F.7 的收口。念完三条再放 Slide 22。
+强调中间那条 —— <em>&quot;没有 Groom 的马具，不是马具，是装饰。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-24-f-8">
+<h2>Slide 24 —— F.8 · 三句要被记住的话<a class="headerlink" href="#slide-24-f-8" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Harness Engineering 不是加一层流程，是 <strong>提取会机械拒绝坏工作的那一小撮制品</strong></p></li>
+<li><p><strong>SDD → TDD → MDD</strong>，顺序不能乱</p></li>
+<li><p>不做 12 格 —— <strong>挑 1 格，30 天上线，90 天公开 HarnessCard</strong></p></li>
+</ol>
+<blockquote>
+<div><p><strong>逐字念</strong>。这是全场信号量最高的一张 slide。
+念完后停 3 秒，再开 Q&amp;A mic。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-25-f-8-q1">
+<h2>Slide 25 —— F.8 · 常见问 Q1<a class="headerlink" href="#slide-25-f-8-q1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Q：<strong>跟 CI 流水线有什么区别？</strong></p></li>
+<li><p>A：CI 是 TDD / MDD 的 <strong>牧场</strong></p>
+<ul>
+<li><p>合入那一刻发声</p></li>
+</ul>
+</li>
+<li><p>Harness 在 <strong>键盘按下那一刻</strong> 发声</p></li>
+</ul>
+<blockquote>
+<div><p>60–90 秒。如果听众追问 <em>&quot;那我们把 CI 加个 pre-commit 不就行了？&quot;</em> ——
+回答 <em>&quot;那就是 Fence。你已经在做 harness 了，只是还没意识到。&quot;</em></p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-26-f-8-q2-q3">
+<h2>Slide 26 —— F.8 · 常见问 Q2 + Q3<a class="headerlink" href="#slide-26-f-8-q2-q3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Q：<strong>三个护法一定要全上吗？</strong></p>
+<ul>
+<li><p>A：不用。Day 30 一格就算进展</p></li>
+</ul>
+</li>
+<li><p>Q：<strong>这不就是 DevOps 重新包装？</strong></p>
+<ul>
+<li><p>A：不是。<strong>commit 前 = harness；commit 后 = DevOps</strong></p></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<div><p>每问 45 秒。不要展开。
+如果听众继续追问 DevOps 边界，引到附录 A（FAQ）。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-27-f-8">
+<h2>Slide 27 —— F.8 · 收尾画面<a class="headerlink" href="#slide-27-f-8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>只剩下 E</p></li>
+<li><p>从今天起，<strong>先从环境开始</strong></p></li>
+<li><p><em>谁愿意做 Day 30 的那一格？</em></p></li>
+</ul>
+<blockquote>
+<div><p>把开场那张 M → E 图擦掉一半，只留 E。
+最后一句是 <strong>行动号召</strong> —— 让分享会从&quot;听讲&quot;变成&quot;行动&quot;。
+当场记下志愿者的名字。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-28">
+<h2>Slide 28 —— 资源链接<a class="headerlink" href="#slide-28" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>本书仓库：<a class="github reference external" href="https://github.com/walterfan/async-harness-book">walterfan/async-harness-book</a></p></li>
+<li><p>讲稿 / 大纲 / 幻灯片：<code class="docutils literal notranslate"><span class="pre">source/chapters/00-presentation/</span></code></p></li>
+<li><p>Marp 版幻灯片：<code class="docutils literal notranslate"><span class="pre">_handson/13-one-hour-talk/SLIDES.md</span></code></p></li>
+<li><p>30/60/90 清单：<code class="docutils literal notranslate"><span class="pre">_handson/16-where-we-go-from-here/</span></code></p></li>
+<li><p>HarnessCard 模板：附录 D · <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容样板：附录 E</p></li>
+<li><p>Agent Loop 插章：第 03B 章 · 工程师落地手册：附录 F</p></li>
+</ul>
+<blockquote>
+<div><p>停在这一页不关机。让想私下追问的听众有时间逮住讲者。
+附录 C 的阅读单打印出来当 handout 发。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-29">
+<h2>Slide 29 —— 谢谢<a class="headerlink" href="#slide-29" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>谢谢</p></li>
+<li><p>问题 &amp; 讨论</p></li>
+<li><p>联系方式见仓库 README</p></li>
+</ul>
+<blockquote>
+<div><p>最后 2–3 分钟 Q&amp;A。
+如果没人问，可以自问自答 —— <em>&quot;我猜有人会问 X，答案是 Y。&quot;</em>
+这是一种可用的&quot;暖场&quot;手法，尤其在中国技术分享会里。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="slide-30">
+<h2>Slide 30（可选）—— 工作坊手册索引<a class="headerlink" href="#slide-30" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>30 分钟版</strong>：F.0 → F.1 → F.2 → F.4 → F.7</p></li>
+<li><p><strong>60 分钟版</strong>：全跑</p></li>
+<li><p><strong>90 分钟版</strong>：F.7 后加 25 分钟动手填 HarnessCard</p></li>
+</ul>
+<blockquote>
+<div><p>这张只在 90 分钟工作坊场景展示。详见 <code class="docutils literal notranslate"><span class="pre">outline.md</span> <span class="pre">·</span> <span class="pre">应急切法</span></code> 一节。</p>
+</div></blockquote>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="outline.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Speaker Outline —— 分钟级节奏表</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../01-foreword.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">前言</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-1">Slide 1 —— 标题页</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-2">Slide 2 —— 议程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-3-f-0-model-environment">Slide 3 —— F.0 开场：Model → Environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-4-f-0-2026">Slide 4 —— F.0 · 三条 2026 年的事实</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-5-f-1">Slide 5 —— F.1 · 四阶段演化</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-6-f-1">Slide 6 —— F.1 · 每阶段的主要制品</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-7-f-1">Slide 7 —— F.1 · 两句带走</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-8-f-2">Slide 8 —— F.2 · 一句话定义</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-9-f-2-5">Slide 9 —— F.2 · 是 × 5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-10-f-2-5">Slide 10 —— F.2 · 不是 × 5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-11-f-2-pdca">Slide 11 —— F.2 · PDCA × 防跑偏</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-12-f-2-agent-loop">Slide 12 —— F.2 · Agent Loop（驯服把手）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-13-f-3">Slide 13 —— F.3 · 因果顺序反转</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-14-f-3">Slide 14 —— F.3 · 三护法</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-15-f-4-3-4">Slide 15 —— F.4 · 3 × 4 矩阵（全屏）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-16-f-4">Slide 16 —— F.4 · 四区域各一句</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-17-f-5">Slide 17 —— F.5 · 四个案例横轴</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-18-f-5">Slide 18 —— F.5 · 每案一句</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-19-f-6-lazy-ai-coder">Slide 19 —— F.6 · Lazy AI Coder 四幕</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-20-f-6-act-4-delta">Slide 20 —— F.6 · Act 4 的 delta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-21-f-7">Slide 21 —— F.7 · 三个里程碑</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-22-f-7-day-30">Slide 22 —— F.7 · Day 30 三个推荐切入点</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-23-f-7">Slide 23 —— F.7 · 三个要提防的陷阱</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-24-f-8">Slide 24 —— F.8 · 三句要被记住的话</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-25-f-8-q1">Slide 25 —— F.8 · 常见问 Q1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-26-f-8-q2-q3">Slide 26 —— F.8 · 常见问 Q2 + Q3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-27-f-8">Slide 27 —— F.8 · 收尾画面</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-28">Slide 28 —— 资源链接</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-29">Slide 29 —— 谢谢</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slide-30">Slide 30（可选）—— 工作坊手册索引</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

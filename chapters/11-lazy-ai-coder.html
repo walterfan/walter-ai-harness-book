@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/11-lazy-ai-coder';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="从这里出发，往哪走" href="12-where-we-go-from-here.html" />
+    <link rel="prev" title="案例研究：通过《马书》看 Claude Code" href="10-claude-code.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03a-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03b-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="13-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/11-lazy-ai-coder.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/11-lazy-ai-coder.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">第一幕 —— 审计</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">第二幕 —— 缺陷</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">第三幕 —— 把马具工程真正落下去</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">第四幕 —— 丈量增量</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delta">这个 delta <em>不能</em> 证明什么</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">阅读单扩展</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="lazy-ai-coder">
+<h1>案例研究：Lazy AI Coder —— 一则四幕剧形式的实证示例<a class="headerlink" href="#lazy-ai-coder" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>若这套框架连&quot;给本书所承载的仓库打分、再改进它&quot;这件事都做不了，那这框架就是错的。</em></p>
+</div></blockquote>
+<p>到目前为止，每一篇案例研究都 <em>关于</em> 别人的马具。本章不同：它把&quot;三大护法 × 四区域&quot;矩阵，套到本书所承载的那个仓库——<a class="reference external" href="https://github.com/walterfan/async-harness-book"><code class="docutils literal notranslate"><span class="pre">walterfan/async-harness-book</span></code></a>——上，并把真正的修复合入 <code class="docutils literal notranslate"><span class="pre">main</span></code>。本章以四幕剧的形式展开。</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><strong>状态。</strong> 本章会保持 <code class="docutils literal notranslate"><span class="pre">status:</span> <span class="pre">draft</span></code>，直到第三幕列出的修复 commit
+合入宿主仓库的 <code class="docutils literal notranslate"><span class="pre">main</span></code> 分支。book-lint 脚本会用 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cat-file</span> <span class="pre">-e</span></code>
+遍历第三幕的 commit SHA；在至少两笔解析成功之前，本章仍应被视为一份
+待验证案例。</p>
+</div>
+<section id="id1">
+<h2>第一幕 —— 审计<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>起点是一份 HarnessCard，记录仓库在这一轮变更开始那笔 commit 时的状态。每一格的证据都是仓库内一条具体的文件路径；完整打分表以 hands-on 制品形式交付，读者可与之做 diff。</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-24 · Ch.11 Act 1 · Audit HarnessCard --&gt;
+
+<span class="gh"># HarnessCard — Act 1 (Audit)</span>
+
+<span class="gs">**Subject.**</span> <span class="sb">`walterfan/async-harness-book`</span>, starting commit SHA: <span class="sb">`&lt;TBD — captured when Act-3 fixes land&gt;`</span>.
+
+<span class="gs">**Date.**</span> 2026-04-17 (pre-fix baseline).
+
+<span class="gs">**Schema version.**</span> CAR-HarnessCard v0.2.
+
+| Cell            | Score | Evidence                                      |
+|-----------------|-------|-----------------------------------------------|
+| SDD × Bridle    | 3     | <span class="sb">`CLAUDE.md`</span>, <span class="sb">`AGENTS.md`</span> exist but drift from <span class="sb">`openspec/`</span>. |
+| SDD × Fence     | 1     | No <span class="sb">`make prompts-lint`</span>; <span class="sb">`config/prompts.yaml`</span> unchecked.  |
+| SDD × Paddock   | 2     | Review is GitHub PR default; no Verification Table.       |
+| SDD × Groom     | 1     | No sources-of-truth index; docs drift silently.           |
+| TDD × Bridle    | 2     | <span class="sb">`tests/`</span> exists but not failing-first.                    |
+| TDD × Fence     | 1     | No MCP tool schema check; no secrets scan in pre-commit.  |
+| TDD × Paddock   | 3     | GitHub Actions CI runs <span class="sb">`go test`</span> + Python tests.          |
+| TDD × Groom     | 2     | Flake policy undefined; recent flakes closed ad-hoc.      |
+| MDD × Bridle    | 1     | No cost dashboard; LLM spend unobservable.                |
+| MDD × Fence     | 2     | Rate limits at provider only; no local cap.               |
+| MDD × Paddock   | 2     | Release notes exist; no SLI gate.                         |
+| MDD × Groom     | 1     | No weekly audit script.                                   |
+
+<span class="gs">**SDD mean.**</span> 1.75.  <span class="gs">**TDD mean.**</span> 2.0.  <span class="gs">**MDD mean.**</span> 1.5.
+
+<span class="gs">**Overall.**</span> 1.75. This is the pre-fix baseline; Act 4 re-scores after
+the 14 fixes land.
+</pre></div>
+</div>
+<p>这份审计稳稳地落在矩阵的左下角：SDD × 护栏、SDD × 梳理、TDD × 护栏、以及 MDD × 缰绳／梳理，是五个最弱的格子。Cunningham 1992 年的&quot;技术债&quot;隐喻 <span id="id2">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span>，以及 Feathers 的 <em>Working Effectively with Legacy Code</em> <span id="id3">[<a class="reference internal" href="../references.html#id27" title="Michael C. Feathers. Working Effectively with Legacy Code. Prentice Hall, 2004. ISBN 978-0131177055.">Feathers, 2004</a>]</span>，提供了解释&quot;为什么这很重要&quot;的词汇：这不是一份 <em>糟糕的</em> 仓库，而是一份 <em>其马具累积了普通可生存之债</em> 的仓库——任其发展就会复利恶化。Lehman 的演化定律 <span id="id4">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> 预言的正是这个模式。</p>
+</section>
+<section id="id5">
+<h2>第二幕 —— 缺陷<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<p>五项具体缺陷——每一项都附有严重度、证据指针、以及它映射到的矩阵坐标：</p>
+<ol class="arabic simple">
+<li><p><strong>缺少 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">prompts-lint</span></code>。</strong> <code class="docutils literal notranslate"><span class="pre">config/prompts.yaml</span></code> 未经 schema 校验就被提交；格式被破坏的模板只能在运行时才被发现。（<strong>SDD × 护栏</strong>，<code class="docutils literal notranslate"><span class="pre">major</span></code>；证据 <code class="docutils literal notranslate"><span class="pre">config/prompts.yaml</span></code>。）</p></li>
+<li><p><strong>MCP 工具 schema 未与其 handler 做一致性校验。</strong> 新加了一个 handler 却没有 schema（反之亦然）——CI 照样绿灯放行。（<strong>TDD × 护栏</strong>，<code class="docutils literal notranslate"><span class="pre">major</span></code>；证据 <code class="docutils literal notranslate"><span class="pre">internal/mcp/server.go</span></code>、<code class="docutils literal notranslate"><span class="pre">internal/mcp/handlers.go</span></code>。）</p></li>
+<li><p><strong>LLM 调用没有成本可观测面板。</strong> 月度花销在供应商账单到来之前完全不可见。（<strong>MDD × 缰绳</strong>，<code class="docutils literal notranslate"><span class="pre">major</span></code>；证据是 <code class="docutils literal notranslate"><span class="pre">deploy/</span></code> 下没有任何面板配置。）</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 与 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 已与 <code class="docutils literal notranslate"><span class="pre">openspec/</span></code> 工作笔记漂移。</strong> 这两份&quot;门面文档&quot;引用了已经不存在的概念，却没有引用现在已经存在的概念。（<strong>SDD × 梳理</strong>，<code class="docutils literal notranslate"><span class="pre">minor</span></code>；证据 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>、<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">openspec/</span></code>。）</p></li>
+<li><p><strong>没有 pre-commit 钩子来拦住&quot;被提交进来的密钥&quot;。</strong> <code class="docutils literal notranslate"><span class="pre">.env</span></code> 文件已被 gitignore 忽略，但作为安全网的钩子层整个缺席。（<strong>TDD × 护栏</strong> 与 <strong>MDD × 缰绳</strong> 联合，<code class="docutils literal notranslate"><span class="pre">critical</span></code>；证据：仓库根目录不存在 <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code>。）</p></li>
+</ol>
+<p>Adzic 的 <em>Specification by Example</em> <span id="id6">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 978-1617290084.">Adzic, 2011</a>]</span> 与 DORA 度量 <span id="id7">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 978-1942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>，框定了补救工作的方向：每一项缺陷，都要被转化为一道可执行关卡——它的存在或缺席，本身就成为一条被度量的指标。</p>
+</section>
+<section id="id8">
+<h2>第三幕 —— 把马具工程真正落下去<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<p>四项修复合入 <code class="docutils literal notranslate"><span class="pre">main</span></code>，每一项都收束到单一矩阵格子上，并以 commit SHA 为引用。下文的 SHA 槽位会在后续修复合入时填入；book-lint 脚本在每次构建时都会用 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">cat-file</span> <span class="pre">-e</span></code> 遍历它们。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 28.0%" />
+<col style="width: 26.0%" />
+<col style="width: 16.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>修复</p></th>
+<th class="head"><p>格子</p></th>
+<th class="head"><p>严重度</p></th>
+<th class="head"><p>Commit SHA</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">prompts-lint</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">scripts/prompts_lint.py</span></code></p></td>
+<td><p>SDD × 护栏</p></td>
+<td><p>major</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;待填</span> <span class="pre">SHA&gt;</span></code>（修复 1）</p></td>
+</tr>
+<tr class="row-odd"><td><p>MCP 工具的 &quot;schema vs handler&quot; 一致性检查</p></td>
+<td><p>TDD × 护栏</p></td>
+<td><p>major</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;待填</span> <span class="pre">SHA&gt;</span></code>（修复 2）</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">openspec/docs/sources-of-truth.md</span></code> 索引，用以调和 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code></p></td>
+<td><p>SDD × 梳理</p></td>
+<td><p>minor</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;待填</span> <span class="pre">SHA&gt;</span></code>（修复 3）</p></td>
+</tr>
+<tr class="row-odd"><td><p>带 gitleaks ＋ <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">secrets-check</span></code> 的 <code class="docutils literal notranslate"><span class="pre">.pre-commit-config.yaml</span></code> 基线</p></td>
+<td><p>TDD × 护栏 联合 MDD × 缰绳</p></td>
+<td><p>critical</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;待填</span> <span class="pre">SHA&gt;</span></code>（修复 4）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>每一份 PR 的描述里，都按名引用本章（<code class="docutils literal notranslate"><span class="pre">book</span> <span class="pre">—</span> <span class="pre">Ch.11</span> <span class="pre">Act</span> <span class="pre">3</span></code>），并附上一行 <em>HarnessCard delta</em> 说明：哪一格的分数在动、动了多少。</p>
+</section>
+<section id="id9">
+<h2>第四幕 —— 丈量增量<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<p>在第三幕的 commit 合入之后，写出第二份 HarnessCard，把格子得分与第一幕做 diff，并报告量化增量：</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-04-24 · Ch.11 Act 4 · Measuring the Delta --&gt;
+
+<span class="gh"># HarnessCard — Act 4 (Post-fix)</span>
+
+<span class="gs">**Subject.**</span> <span class="sb">`walterfan/async-harness-book`</span>, end-of-Act-3 commit SHA:
+<span class="sb">`&lt;TBD — captured when Act-3 fixes land&gt;`</span>.
+
+<span class="gs">**Date.**</span> 2026-04-17 (post-fix, to be re-verified when Act-3 fixes land).
+
+<span class="gs">**Schema version.**</span> CAR-HarnessCard v0.2.
+
+| Cell            | Act 1 | Act 4 | Delta | Fix                                   |
+|-----------------|-------|-------|-------|---------------------------------------|
+| SDD × Bridle    | 3     | 3     | 0     | (unchanged in 14 scope)              |
+| SDD × Fence     | 1     | 4     | +3    | <span class="sb">`make prompts-lint`</span> + schema validator |
+| SDD × Paddock   | 2     | 2     | 0     | (unchanged)                           |
+| SDD × Groom     | 1     | 3     | +2    | <span class="sb">`openspec/docs/sources-of-truth.md`</span> index |
+| TDD × Bridle    | 2     | 2     | 0     | (unchanged)                           |
+| TDD × Fence     | 1     | 4     | +3    | MCP schema check + gitleaks pre-commit |
+| TDD × Paddock   | 3     | 3     | 0     | (unchanged)                           |
+| TDD × Groom     | 2     | 2     | 0     | (unchanged)                           |
+| MDD × Bridle    | 1     | 1     | 0     | (out of 14 scope)                    |
+| MDD × Fence     | 2     | 2     | 0     | (unchanged)                           |
+| MDD × Paddock   | 2     | 2     | 0     | (unchanged)                           |
+| MDD × Groom     | 1     | 1     | 0     | (unchanged)                           |
+
+<span class="gs">**SDD mean.**</span> 1.75 → 3.0 (+1.25).
+<span class="gs">**TDD mean.**</span> 2.0 → 2.75 (+0.75).
+<span class="gs">**MDD mean.**</span> 1.5 → 1.5 (+0.0).
+<span class="gs">**Overall.**</span> 1.75 → 2.42 (+0.67).
+
+<span class="gu">## Quantitative metrics</span>
+
+| Metric                       | Act 1 | Act 4 | Delta |
+|------------------------------|-------|-------|-------|
+| prompts-lint rule count      | 0     | 7     | +7    |
+| MCP schema mismatches at CI  | N/A   | 0     | —     |
+| secrets-scan coverage (% committed files) | 0     | 100   | +100  |
+| <span class="sb">`sources-of-truth.md`</span> entries | 0     | ≥ 6   | +6    |
+</pre></div>
+</div>
+<p>本章契约 <em>要求</em> 至少两条量化指标；hands-on 版的 HarnessCard 报告了四条：</p>
+<ul class="simple">
+<li><p><strong>prompts-lint 规则条数</strong>：0 → 7。</p></li>
+<li><p><strong>CI 上的 MCP schema 不一致数</strong>：N/A → 0（全新检查）。</p></li>
+<li><p><strong>secrets 扫描覆盖率（已提交文件占比，%）</strong>：0 → 100。</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">sources-of-truth.md</span></code> 条目数</strong>：0 → ≥ 6。</p></li>
+</ul>
+<p>HarnessCard 总均值从 1.75 升到 2.42 —— +0.67 的改善集中落在两个&quot;护栏&quot;格（各 +3）和 SDD × 梳理（+2）上。第四幕刻意不动 MDD 那一行；第 12 章的 30/60/90 计划会在下一个季度接手。</p>
+<section id="delta">
+<h3>这个 delta <em>不能</em> 证明什么<a class="headerlink" href="#delta" title="Link to this heading">#</a></h3>
+<p>第三幕的四个 commit，把 HarnessCard 均值抬升了 0.67。这是一个真实的数字，也是一个 <em>有边界</em> 的数字——在把它当作&quot;马具在起作用&quot;的证据去引用之前，值得先仔细读清楚。</p>
+<ul class="simple">
+<li><p><strong>这个 delta 度量的是投入，不是产出。</strong> 格子得分上升，意味着仓库里多了一批&quot;评分尺会给分&quot;的制品；它还不等于智能体的输出变好了。DORA 风格的产出指标（部署频率、变更失败率、平均恢复时间），才是&quot;投入有所回报&quot;的证据——第 12 章的 90 天复盘，才是期望这些产出真正移动的时点，而不是第四幕的这张快照。</p></li>
+<li><p><strong>打分人与作者是同一个人。</strong> 第一幕的基线与第四幕的重评，都由同一位工程师执笔，用同一把评分尺，且对&quot;改了什么&quot;心知肚明。这对于&quot;自审计&quot;来说是诚实的，但不是独立验证——这些分数是校准，不是度量。读者在自己仓库上复制这套模式时，应预期自己也会有类似偏置。</p></li>
+<li><p><strong>四项修复里有三项是&quot;护栏&quot;形的。</strong> 护栏格最容易抬分——因为&quot;拒绝&quot;是机械且可测的。缰绳格和牧场格抬得更慢——因为它们需要改变人和智能体所 <em>做</em> 的事，不是仅仅改变 CI 拒绝什么。一份 HarnessCard 的均值主要由&quot;护栏收益&quot;主导，在第一个季度里是一种诚实的模式；但一份 <em>连续四个季度</em> 其 delta <em>只有</em> 护栏的 HarnessCard，则是一支&quot;只投资于拒绝、却未抬升意图与验收&quot;的团队的画像。</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">陷阱 —— HarnessCard 虚荣增量</p>
+<p>一支团队跑完第 11 章的 playbook，合入了四个&quot;护栏&quot;commit，向上汇报 +0.67 的均值 delta。领导很满意。两个季度之后，产出指标一动未动；这个团队于是加码，又合入四个&quot;护栏&quot;commit；均值再次上升。马具在长胖；产出没在长。<strong>为什么</strong>：HarnessCard 是一份 <em>诊断</em> —— 它的角色是&quot;识别弱格&quot;，不是&quot;被优化的对象&quot;。一支为&quot;分数&quot;而非&quot;产出&quot;优化的团队，在跑的是 Goodhart 律的一个变种（Cunningham 的债务隐喻 <span id="id10">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span> 反着用一次：你 <em>确实</em> 可以去还一笔本来根本没在收利息的债）。<strong>症状</strong>：格子得分在涨，仪表盘没在涨；回顾会上对&quot;马具工作&quot;描述得温情脉脉，事故复盘里对&quot;产品工作&quot;描述得痛不欲生。<strong>解法</strong>：每一项 HarnessCard delta 都要配一项它 <em>被预言会移动</em> 的产出指标。若一个季度后该产出未移动，则这份 delta 属于虚荣；下一季度的投资应该换到另一格（或彻底换一个维度）。</p>
+</div>
+</section>
+</section>
+<section id="id11">
+<h2>阅读单扩展<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<p>第四幕的可复现性主张，建立在一段简短 shell 脚本之上——它针对&quot;第四幕 SHA&quot;处的一份全新 clone，跑三个新的 make 目标：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># verified: 2026-04-17 · Ch.11 hands-on · reproduce the HarnessCard delta</span>
+<span class="c1"># Run from a fresh clone of walterfan/async-harness-book at the Act-4 SHA.</span>
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="c1"># 1. SDD × Fence — prompts-lint validates config/prompts.yaml</span>
+make<span class="w"> </span>prompts-lint
+
+<span class="c1"># 2. TDD × Fence — MCP tool schema-vs-handler consistency check</span>
+make<span class="w"> </span>mcp-schema-check
+
+<span class="c1"># 3. TDD × Fence — pre-commit hooks refuse secrets</span>
+make<span class="w"> </span>secrets-check
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;If all three targets exited 0, the harness is at its Act-4 score.&quot;</span>
+</pre></div>
+</div>
+<p>第四项修复里的 <code class="docutils literal notranslate"><span class="pre">pre-commit-config.yaml</span></code> 基线，也一并交付，方便想原样拿走的读者：</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-04-17 · Ch.11 hands-on · symlink-safe copy of the final pre-commit config</span>
+<span class="c1"># To be landed on main as the fourth Act-3 fix.</span>
+<span class="nt">repos</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/pre-commit/pre-commit-hooks</span>
+<span class="w">    </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v4.6.0</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">trailing-whitespace</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">end-of-file-fixer</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">check-yaml</span><span class="p p-Indicator">}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">detect-private-key</span><span class="p p-Indicator">}</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/gitleaks/gitleaks</span>
+<span class="w">    </span><span class="nt">rev</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v8.18.4</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">gitleaks</span><span class="p p-Indicator">}]</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">repo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<span class="w">    </span><span class="nt">hooks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prompts-lint</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prompts-lint</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python scripts/prompts_lint.py config/prompts.yaml</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mcp-schema-check</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mcp-schema-check</span>
+<span class="w">        </span><span class="nt">entry</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">go run ./cmd/mcp-schema-check</span>
+<span class="w">        </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span>
+<span class="w">        </span><span class="nt">pass_filenames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h2>研究脉络<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>技术债</strong> <span id="id13">[<a class="reference internal" href="../references.html#id22" title="Ward Cunningham. The WyCash portfolio management system. In Addendum to the Proceedings of the 1992 OOPSLA. 1992. The original “technical debt” metaphor. doi:10.1145/157709.157715.">Cunningham, 1992</a>]</span> —— 第一幕的词汇来源。</p></li>
+<li><p><strong>遗留代码</strong> <span id="id14">[<a class="reference internal" href="../references.html#id27" title="Michael C. Feathers. Working Effectively with Legacy Code. Prentice Hall, 2004. ISBN 978-0131177055.">Feathers, 2004</a>]</span> —— 第二幕的补救模式。</p></li>
+<li><p><strong>DORA ／ Accelerate</strong> <span id="id15">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 978-1942788331.">Forsgren <em>et al.</em>, 2018</a>]</span> —— 第四幕所依据的度量谱系。</p></li>
+<li><p><strong>演化定律</strong> <span id="id16">[<a class="reference internal" href="../references.html#id20" title="Meir M. Lehman. Programs, life cycles, and laws of software evolution. Proceedings of the IEEE, 68(9):1060–1076, 1980. doi:10.1109/PROC.1980.11805.">Lehman, 1980</a>]</span> —— 为什么一旦停止&quot;梳理&quot;投资，总均值就会持续漂移。</p></li>
+</ul>
+</section>
+<section id="id17">
+<h2>动手环节<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">source/_handson/11-lazy-ai-coder/</span></code> 下，住着四份可直接拷走的制品：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HarnessCard-Act1.md</span></code> —— 修复前的基线。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">HarnessCard-Act4.md</span></code> —— 修复后的再审计，含 delta。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reproduce.sh</span></code> —— 三个 <code class="docutils literal notranslate"><span class="pre">make</span></code> 目标，一段脚本。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pre-commit-config.yaml</span></code> —— 最终基线的 symlink-safe 拷贝。</p></li>
+</ul>
+<p>当第三幕那批 commit 合入 <code class="docutils literal notranslate"><span class="pre">main</span></code>，HarnessCard 将针对真实 SHA 重新打分，本章状态也会翻为 <code class="docutils literal notranslate"><span class="pre">status:</span> <span class="pre">complete</span></code>。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="10-claude-code.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">案例研究：通过《马书》看 Claude Code</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="12-where-we-go-from-here.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">从这里出发，往哪走</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">第一幕 —— 审计</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">第二幕 —— 缺陷</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">第三幕 —— 把马具工程真正落下去</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">第四幕 —— 丈量增量</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delta">这个 delta <em>不能</em> 证明什么</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">阅读单扩展</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

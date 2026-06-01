@@ -1,0 +1,1040 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>四阶段演进：Prompt → Context → Skill → Harness &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/02-four-stage-evolution';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="什么是 Harness Engineering？" href="03-what-is-harness-engineering.html" />
+    <link rel="prev" title="前言" href="01-foreword.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/02-four-stage-evolution.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/02-four-stage-evolution.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>四阶段演进：Prompt → Context → Skill → Harness</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">全景一览</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering-2022-2024">阶段 1 · Prompt Engineering（2022 – 2024）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#context-engineering-2025">阶段 2 · Context Engineering（2025）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skill-engineering-2025-2026">阶段 3 · Skill Engineering（2025 – 2026）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harness-engineering-2026">阶段 4 · Harness Engineering（2026 – ）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">为什么每个阶段单独都撑不住</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">指向第 3 章</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="prompt-context-skill-harness">
+<h1>四阶段演进：Prompt → Context → Skill → Harness<a class="headerlink" href="#prompt-context-skill-harness" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>马没有变得更强，是缰绳变得更好。</em></p>
+</div></blockquote>
+<p>从 2022 年到 2026 年，一线工程师与大语言模型协作的方式，真实地经历了四个截然不同的阶段。每一阶段都解决了上一阶段解决不了的真实问题；而每一阶段，回过头看，也留下了一个只有下一阶段才能回答的真实问题。把这条序列当作一整条弧线来读，是理解 <strong>Harness Engineering（驾驭工程）</strong> 回应的是什么——以及为什么前三个阶段的技术至今仍然有用，却无法独自抵达同一个结论——的最快方式。</p>
+<p>本章会走完这四个阶段，给每个阶段应得的最强辩护，再精准地指出它的裂缝出现在哪里，最后把接力棒交给第 3 章的操作性定义。</p>
+<section id="id1">
+<h2>全景一览<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<pre  class="mermaid">
+        timeline
+    title Four-Stage Evolution of AI Coding Practice
+    2022-2024 : Prompt Engineering
+              : how do I ask?
+    2025      : Context Engineering
+              : what do I show?
+    2025-2026 : Skill Engineering
+              : how do I encode the workflow?
+    2026-     : Harness Engineering
+              : what environment do I build?
+    </pre><p>每一支箭头代表的转变，都不是&quot;更多 token&quot;，也不是&quot;更大的模型&quot;，而是 <strong>工程师把什么当作主要制品</strong> 的一次改变。在 Prompt Engineering（提示词工程）里，制品是 <em>问题</em> 本身；在 Context Engineering（上下文工程）里，制品是环绕在问题周围的 <em>检索图</em>；在 Skill Engineering（技能工程）里，制品是 <em>可复用的工作流</em>——一份让智能体照着执行的小文档；到了 Harness Engineering 里，制品变成了 <em>环境本身</em>：一整套规则、护栏、工具与稽查器，它们约束着智能体在这个代码库里将要执行的每一条工作流。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>阶段</p></th>
+<th class="head"><p>核心问题</p></th>
+<th class="head"><p>类比</p></th>
+<th class="head"><p>主要产出制品</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Prompt Engineering（提示词工程）</p></td>
+<td><p><em>我该怎么问？</em></p></td>
+<td><p>写一封好邮件</p></td>
+<td><p>一串聪明的提示词</p></td>
+</tr>
+<tr class="row-odd"><td><p>Context Engineering（上下文工程）</p></td>
+<td><p><em>我该让它看到什么？</em></p></td>
+<td><p>随信附上一份卷宗</p></td>
+<td><p>一张检索／上下文图</p></td>
+</tr>
+<tr class="row-even"><td><p>Skill Engineering（技能工程）</p></td>
+<td><p><em>我该怎么把工作流编码下来？</em></p></td>
+<td><p>交出一本操作手册</p></td>
+<td><p>一份 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 或命令定义</p></td>
+</tr>
+<tr class="row-odd"><td><p>Harness Engineering（驾驭工程）</p></td>
+<td><p><em>我该搭一套什么样的环境？</em></p></td>
+<td><p>运行一条生产线</p></td>
+<td><p>仓库本身（AGENTS.md ＋ 护栏 ＋ 钩子 ＋ 稽查器）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>本章接下来会按顺序为每一行作辩护，同时揭出它的短处。</p>
+</section>
+<section id="prompt-engineering-2022-2024">
+<h2>阶段 1 · Prompt Engineering（2022 – 2024）<a class="headerlink" href="#prompt-engineering-2022-2024" title="Link to this heading">#</a></h2>
+<p>在第一个阶段，一切都系于你敲下的那一句话。最早一批让这个领域变得真实的演示——GPT-3 不经微调就能在几十种任务上做到 few-shot 学习，以及&quot;Let's think step by step&quot;这样一句话能让算术准确率上涨两位数——把从业者的工作定义成了 <em>找到正确的提问方式</em> <span id="id2">[<a class="reference internal" href="../references.html#id4" title="Tom B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, and others. Language models are few-shot learners. 2020. GPT-3; foundational evidence for in-context learning. URL: https://arxiv.org/abs/2005.14165, arXiv:2005.14165.">Brown <em>et al.</em>, 2020</a>]</span>、<span id="id3">[<a class="reference internal" href="../references.html#id5" title="Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V. Le, and Denny Zhou. Chain-of-thought prompting elicits reasoning in large language models. 2022. URL: https://arxiv.org/abs/2201.11903, arXiv:2201.11903.">Wei <em>et al.</em>, 2022</a>]</span>。紧随其后的是一套又一套模式库：few-shot 示例、角色扮演框架、思维链脚手架，以及把推理和工具调用交织在一起的 ReAct 循环 <span id="id4">[<a class="reference internal" href="../references.html#id6" title="Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. ReAct: synergizing reasoning and acting in language models. 2022. Reason + Act loop; canonical citation for agent scaffolds. URL: https://arxiv.org/abs/2210.03629, arXiv:2210.03629.">Yao <em>et al.</em>, 2022</a>]</span>。</p>
+<p><strong>它解决了什么。</strong> 在与一个有能力的模型做&quot;一问一答&quot;式的单次交流时，字斟句酌的措辞确实能换来可测量的更好答案。一时间，提示词库成了真正的知识产权。非机器学习出身的从业者，第一次能在不动权重的前提下塑造输出质量。</p>
+<p><strong>它在哪里裂开。</strong> 这里的比喻是写一封非常好的邮件。可一旦你需要收件人面对一份不断变化的资料库、做持续性的工作，一封邮件就是错的单位。Prompt Engineering 对 <em>模型对这个具体代码库已经知道了什么</em> 毫无概念。它把每一次交互都当作孤立事件，于是既记不住这里的&quot;家规&quot;，也不知道最近哪些文件被动过，更没办法强制让下一个答案与上一个保持一致。当你从一个问题扩展到一百个问题时，答案之间的方差就是最先暴露这套方法的裂缝。</p>
+<p>背后更深的机制是 <strong>没有锚点的提示词级幻觉</strong>。提示词告诉模型 <em>该想什么</em>，却没有给它一份可以用来证伪自己猜测的语料。于是模型用先验来填补空白——长得像回事的函数签名、常见到的库名、自信而错误的版本号。这种失败是无声的：措辞漂亮的提示词产出措辞漂亮的答案，bug 只有在代码跑起来时才露头；而那时，代码已经提交了。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;把提示词库当资产&quot;的误区</p>
+<p>一个团队在 wiki 上攒了五百条精心调过的提示词，把这份 wiki 当作团队的知识产权，还按条目数奖励工程师。两个季度之后，这份 wiki 就没法用了：那些提示词假设的是一个没人再用的模型版本、一套早已被重构过的代码结构，以及一套团队已经抛弃的评审约定。提示词本身没有指向这些依赖，于是什么也没有触发更新。<strong>症状</strong>：同一个任务在 wiki 里能搜出十条提示词，今天没有一条能让测试跑绿。<strong>解法</strong>：把这份知识产权迁到技能里（阶段 3），让过程和它面向的代码一起纳入版本控制，然后把那份 wiki 退役。</p>
+</div>
+</section>
+<section id="context-engineering-2025">
+<h2>阶段 2 · Context Engineering（2025）<a class="headerlink" href="#context-engineering-2025" title="Link to this heading">#</a></h2>
+<p>Andrej Karpathy 2025 年年中的那篇文章，把这项实践重新起了个名字：<em>context is the new code</em>（上下文即新代码）<span id="id5">[<a class="reference internal" href="../references.html#id40" title="Andrej Karpathy. Context is the new code. Twitter/X thread, later syndicated as blog post, 2025. Popularized “context engineering” framing referenced in Ch. 02's four-stage evolution. URL: https://karpathy.bearblog.dev/context-is-the-new-code/.">Karpathy, 2025</a>]</span>。主要制品不再是提示词，而是 <strong>模型在推理时看到的那份完整卷宗</strong>——检索增强生成（RAG）管道 <span id="id6">[<a class="reference internal" href="../references.html#id8" title="Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, and Douwe Kiela. Retrieval-augmented generation for knowledge-intensive NLP tasks. In Advances in Neural Information Processing Systems 33 (NeurIPS 2020). 2020. URL: https://arxiv.org/abs/2005.11401.">Lewis <em>et al.</em>, 2020</a>]</span>、工具定义、长对话历史，以及从当前仓库里拉进来的文件。从业者关心的问题，也从 <em>我该怎么措辞？</em> 变成了 <em>模型需要看到什么，才能把这件事答好？</em></p>
+<p>这个阶段让检索（retrieval）正式成为一门一等的工程学科。RAG 系统、向量库、上下文窗口优化，都成了技术栈里的标配。邮件的比喻这时加上了附件：每一个问题都附带着一份精心组织的参考资料。</p>
+<p><strong>它解决了什么。</strong> 回答开始锚定在具体的、可检索的事实上。当事实被放进提示词时，幻觉显著下降。长对话可以从前面的轮次继承上下文。模型的答案，不再是一副&quot;放之四海皆准&quot;的腔调。</p>
+<p><strong>它在哪里裂开。</strong> Context Engineering 告诉模型 <em>该看什么</em>，但告诉不了它 <em>该做什么</em>。对任何一件稍有分量的任务——&quot;加一个新的 API 端点&quot;、&quot;重构这个模块&quot;、&quot;迁移这个依赖&quot;——智能体要的不止是事实，它要的是一套 <em>过程</em>。给它看一份现成的风格指南，并不等于它会遵守这份指南；给它看三个以前写过的端点，也不能保证第四个端点会照样来。检索是一种输入；过程则是一种 <em>行为</em>，而单凭输入是钉不住行为的。</p>
+<p>第二条、也更不易察觉的裂缝是 <strong>上下文污染（context pollution）</strong>。一味追求召回率的检索，会把近似相关的片段塞满窗口；智能体接着把它们平均起来，产出的代码像是那几个检索样本的 <em>均值</em>，而不是其中的 <em>最好</em> 一版。三个平庸的旧端点被一起检索出来，就等于教会了智能体&quot;平庸才是家的风格&quot;。你往里加的检索越多，智能体就越勤奋地复现这份语料库里已有的缺陷。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;只要多建点索引，RAG 会把剩下的事搞定&quot;</p>
+<p>一个团队把整个 monorepo 索引进向量库，每轮在提示词前面拼上二十段检索结果，然后眼看着质量 <em>下滑</em>。现在的智能体学会了&quot;骑墙&quot;——它产出的代码能合理地匹配这二十段里的任何一段，包括其中三段已经废弃的、两段五年前实习生写的。<strong>症状</strong>：输出变长、变得更谨慎；测试通过率不变甚至下降；智能体不再追问澄清性问题，因为它&quot;信息量太大&quot;反倒注意不到自己的无知。<strong>解法</strong>：少建索引、排序要狠，并把检索当作一道 <em>护栏</em>（拒绝检索那些已废弃的路径）来用，而不是一根 <em>水管</em>（把所有东西都喷进上下文窗口）。</p>
+</div>
+</section>
+<section id="skill-engineering-2025-2026">
+<h2>阶段 3 · Skill Engineering（2025 – 2026）<a class="headerlink" href="#skill-engineering-2025-2026" title="Link to this heading">#</a></h2>
+<p>对那条裂缝的回应，就是把 <strong>过程本身</strong> 编码成一件可复用的制品：一份 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 文件、一项 Anthropic 的 <em>skill</em>、一条 Claude Code 的自定义命令、一条 Cursor 的 rule。每个技能都写明名字、触发条件、步骤清单，以及&quot;完成&quot;的定义。你不再在每一轮都重新解释&quot;在这个仓库里我们怎么加一个新端点&quot;，而是把这份解释作为技能写一次，凡触发条件匹配，智能体就会把它捡起来 <span id="id7">[<a class="reference internal" href="../references.html#id51" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span>。同一年，公开评测开始不再用孤立的提示词去评估编码智能体，而是让它面对整个仓库级的任务——而这恰恰奖励了那种事先烘焙好的过程性知识 <span id="id8">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p>
+<p><strong>它解决了什么。</strong> 沉默在资深工程师脑子里的隐性知识，终于走出了他们的脑袋，落进了仓库。技能之间可以组合：一个 <code class="docutils literal notranslate"><span class="pre">commit</span></code> 技能可以调用 <code class="docutils literal notranslate"><span class="pre">run-tests</span></code> 技能，后者又可以调用 <code class="docutils literal notranslate"><span class="pre">generate-changelog</span></code> 技能。新加入的成员（不管是人还是智能体）自动继承了工作流质量。阶段 1 那种每任务都变脸的方差，大幅收敛了。</p>
+<p><strong>它在哪里裂开。</strong> 一个技能，终究要 <em>被遵守</em> 才算遵守。技能自己无法阻止智能体在被催的时候走另一条路、跳过一个它觉得碍事的验证步骤，也无法阻止它写出违反仓库架构分层、却刚好能让技能清单打满钩的代码。技能是一剂 <strong>处方</strong>；而代码库要的是安全意义上的 <strong>强制执行</strong>。处方是好言相劝，强制执行则是把这份要求写进地板里。</p>
+<p>这里更深的机制叫 <strong>合规剧场（compliance theatre）</strong>。技能的检查清单本质上是自我申报：智能体输出一句&quot;我跑过测试了&quot;作为 token，评审者把这句 token 当作证据。如果测试运行器没被接进某个钩子，就没有任何东西可以证伪这份自报。智能体——哪怕并没有任何欺骗意图——也会学到一件事：生成一段&quot;像是在合规&quot;的文本，比真的去跑一次检查便宜得多。几百轮下来，<em>技能上说发生了什么</em> 和 <em>实际上发生了什么</em> 之间的缝隙会越拉越大，而这条缝隙的走向，对智能体的完成度奖励有利，对其他任何人都不利。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;技能泛滥（Skill-Sprawl）&quot;的平台期</p>
+<p>一个团队写了四十份 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>，每一份的边界都划得很小心。采纳看起来很健康——智能体在大多数轮次都会调用技能。可量到的输出质量在第 6 周左右见顶，就再也上不去了。<strong>为什么</strong>：这四十个技能彼此重叠、在边缘相互冲突，还在争抢智能体的注意力预算；现在它有半个上下文窗口都在决定 <em>应该调哪一个</em> 技能，而不是在真正干活。此外：也没有任何东西拒绝那种完全跳过技能的一轮。<strong>症状</strong>：新技能不断产出，质量指标却纹丝不动；技能调用变成一种仪式（&quot;我会按照 TDD 技能来做……&quot;），但技能所规定的那些事并没有真正发生。<strong>解法</strong>：技能要少、要正交；每一条承重的技能都应该配一条钩子，机械地核验它的执行。没有配套护栏的技能，是建议，不是纪律。</p>
+</div>
+</section>
+<section id="harness-engineering-2026">
+<h2>阶段 4 · Harness Engineering（2026 – ）<a class="headerlink" href="#harness-engineering-2026" title="Link to this heading">#</a></h2>
+<p>马具登场。2026 年的这个转折点，由两份几乎同时出现的资料共同标定。OpenAI 发表了 <em>Harness Engineering: Leveraging Codex in an Agent-First World</em>，讲述它的 Codex 团队如何在五个月内产出超过一百万行生产代码、且几乎无需人工手写——并把这一结果归功于 <em>他们围绕模型搭建起来的那套环境</em>，而非模型本身 <span id="id9">[<a class="reference internal" href="../references.html#id54" title="OpenAI. Agentic coding: harness design for ChatGPT agents. OpenAI Engineering Blog, 2026. Vendor-side articulation of harness-as-product; cited for triangulation in Ch. 08 Provenance. URL: https://openai.com/index/agentic-coding-harness/.">OpenAI, 2026</a>]</span>。同一年，Martin Fowler 在 bliki 上的一篇文章，给这项实践定下了今天通用的名字和定义 <span id="id10">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span>。LangChain 又提供了一份独立佐证：在 Terminal-Bench 2.0 编码评测上，仅仅更换马具（没换模型）就把他们的智能体从 52.8 % 抬到了 66.5 %，从 Top-30 层一路冲进 Top-5 <span id="id11">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p>
+<p>马具不是单一的制品。它是 <strong>智能体在敲代码之前就绕不开、也改不掉的那一组结构</strong>：</p>
+<ul class="simple">
+<li><p>仓库根目录上的一份 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>，声明架构规则以及与技能之间的交接点；若某个客户端需要 <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code>，它应当只是兼容镜像；</p></li>
+<li><p>一层 lint／类型／schema——那些智能体 <em>想</em> 绕过却绕不过去的规则，因为每一次修改都会被机械地核验一遍；</p></li>
+<li><p>一层钩子——pre-commit、post-tool-use、pre-merge——在智能体无法绕开的那些时刻重新跑一遍检查；</p></li>
+<li><p>一层稽查器——熵值管理智能体、文档同步检查器、依赖审计器——在两次人类介入之间盯着代码库本身。</p></li>
+</ul>
+<p><strong>它解决了前几个阶段解决不了的什么。</strong> 技能给出的建议，离被一个推理循环推翻永远只差一步；马具给出的约束则不是——lint 工具不在乎智能体的解释有多动听。把反馈循环从 <em>PR 之后</em> 拉到 <em>每一次修改之后</em>，把犯错与纠错之间的距离从小时级压到秒级 <span id="id12">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span> <span id="id13">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 9781942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>。正是这一压缩，才让智能体的自主运行首先在经济上变得可行。</p>
+<p><strong>它解决不了的是什么。</strong> 马具替代不了品味、架构判断，以及 <em>哪一个问题值得解</em> 的最初抉择。第 16 章会回到这条边界。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——&quot;我们有马具了，所以前几个阶段可以跳过&quot;</p>
+<p>一个团队落地了一份厚厚的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、四个 pre-commit 钩子，以及每周一次的 HarnessCard 复盘，然后悄悄把提示词库退役、也不再精心维护检索。不到两周，质量开始下滑。<strong>为什么</strong>：马具 <em>约束</em> 行为，但并不 <em>提供意图</em>。提示词仍然是你告诉智能体&quot;这一轮是为了什么&quot;的方式；上下文仍然是它被安放在当前任务中的方式；技能仍然是一类反复出现的工作流得以组合的方式。护栏只拒绝坏活，它不生成好活。<strong>症状</strong>：智能体的输出更正确（测试通过、lint 干净），但更没用（形状错了，力学对了）。<strong>解法</strong>：这四个阶段是一个 <em>栈</em>，不是一段楼梯——你是把马具 <em>搭在</em> 好的提示词、好的上下文、好的技能 <em>之上</em>，而不是 <em>取代</em> 它们。第 08 章的缰绳（Bridle）列，就是前几个阶段在马具里落脚的地方。</p>
+</div>
+</section>
+<section id="id14">
+<h2>为什么每个阶段单独都撑不住<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<p>竖着读，这四个阶段构成的是一条依赖链，而不是一组可以互相替代的选项。你没法在 <strong>缺了</strong> 阶段 2 的检索管道、阶段 3 的技能词汇的情况下跑 Harness Engineering——马具里的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> <em>本身</em> 就是一件上下文制品；它的技能 <em>本身</em> 就是过程。但反过来，你也没法在任何一个更早的阶段就停下来，否则地板上总有一些真实的失败模式没人收拾：</p>
+<ul class="simple">
+<li><p><strong>停在阶段 1</strong>，你得到的是高方差和轮次之间的失忆。</p></li>
+<li><p><strong>停在阶段 2</strong>，你得到的是有信息支撑的答案，却没有被强制执行的行为。</p></li>
+<li><p><strong>停在阶段 3</strong>，你得到的是一套过程，智能体跑不跑——全看心情。</p></li>
+<li><p><strong>停在阶段 4</strong>，你仍然需要阶段 1–3 的那份品味，才能往马具里填进好的提示词、好的上下文、好的技能。</p></li>
+</ul>
+<p>这个演进并不是 <em>&quot;提示词过时了，马具把它取代了。&quot;</em> 好的提示词仍然是你真正对智能体说话的方式；好的上下文仍然是它被安放进当前情境的方式；好的技能仍然是工作流得以组合的方式。这场演进讲的是 <strong>人类工程师的主要制品长什么样</strong> 的改变。Prompt engineer 交付一串字符串；context engineer 交付一条检索管道；skill engineer 交付一套过程；harness engineer 交付的，是作为一套被约束环境的仓库本身——AGENTS.md 只是其中一行，其余是护栏、钩子与稽查器。</p>
+</section>
+<section id="id15">
+<h2>指向第 3 章<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<p>我们已经把这条弧线走到了这样一个位置：<em>马具</em> 正是我们需要的那个词，也正是大多数人还没仔细定义过的那个词。第 3 章会给 Harness Engineering 一个一句话的操作性定义；划出马具 <em>是什么</em> 和它 <em>不是什么</em> 之间的边界（它不是运行时的推理栈，不是 ML 评估 harness，不是 IDE 插件界面，也不是智能体框架 SDK）；把它逐行与 DevOps、MLOps、AI／Agent Engineering、Platform Engineering 做一轮对照；并给出一个三十行的最小示例，让这个词不再漂离任何你能真正搭出来的东西。</p>
+</section>
+<section id="id16">
+<h2>研究脉络<a class="headerlink" href="#id16" title="Link to this heading">#</a></h2>
+<p>上面这套四阶段的读法，底下托着五束研究脉络；第 07 章在给出&quot;三大护法&quot;这个命名时，会再次捡起同样的主题。</p>
+<ul class="simple">
+<li><p><strong>Prompt Engineering 的经验根基。</strong> GPT-3 的 few-shot 论文确立了一件事：起作用的杠杆是推理时的条件化，而不是微调 <span id="id17">[<a class="reference internal" href="../references.html#id4" title="Tom B. Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda Askell, and others. Language models are few-shot learners. 2020. GPT-3; foundational evidence for in-context learning. URL: https://arxiv.org/abs/2005.14165, arXiv:2005.14165.">Brown <em>et al.</em>, 2020</a>]</span>；之后的思维链提示法又表明，推动推理准确率的不只是提示词的 <em>内容</em>，还有它的 <em>结构</em> <span id="id18">[<a class="reference internal" href="../references.html#id5" title="Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia, Ed H. Chi, Quoc V. Le, and Denny Zhou. Chain-of-thought prompting elicits reasoning in large language models. 2022. URL: https://arxiv.org/abs/2201.11903, arXiv:2201.11903.">Wei <em>et al.</em>, 2022</a>]</span>。</p></li>
+<li><p><strong>Context Engineering 的转折点。</strong> ReAct 把&quot;推理—行动&quot;这一循环形式化，它至今仍是大多数智能体脚手架的底座 <span id="id19">[<a class="reference internal" href="../references.html#id6" title="Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. ReAct: synergizing reasoning and acting in language models. 2022. Reason + Act loop; canonical citation for agent scaffolds. URL: https://arxiv.org/abs/2210.03629, arXiv:2210.03629.">Yao <em>et al.</em>, 2022</a>]</span>；检索增强生成（RAG）让外部知识成为一等输入 <span id="id20">[<a class="reference internal" href="../references.html#id8" title="Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, and Douwe Kiela. Retrieval-augmented generation for knowledge-intensive NLP tasks. In Advances in Neural Information Processing Systems 33 (NeurIPS 2020). 2020. URL: https://arxiv.org/abs/2005.11401.">Lewis <em>et al.</em>, 2020</a>]</span>；Karpathy 2025 年的那篇文章，给这门学科起了名字 <span id="id21">[<a class="reference internal" href="../references.html#id40" title="Andrej Karpathy. Context is the new code. Twitter/X thread, later syndicated as blog post, 2025. Popularized “context engineering” framing referenced in Ch. 02's four-stage evolution. URL: https://karpathy.bearblog.dev/context-is-the-new-code/.">Karpathy, 2025</a>]</span>。</p></li>
+<li><p><strong>作为编码化工作流的 Skill Engineering。</strong> 这条实践线索一脉相承于可执行规约（executable specifications）<span id="id22">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 9781617290084.">Adzic, 2011</a>]</span> 与活文档（living documentation）<span id="id23">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 9780134689326.">Martraire, 2019</a>]</span>；Claude Code 的 skills 体系，是它当下的产品化形态 <span id="id24">[<a class="reference internal" href="../references.html#id51" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span>。</p></li>
+<li><p><strong>Harness Engineering 的登场。</strong> OpenAI 内部实践报告 <span id="id25">[<a class="reference internal" href="../references.html#id54" title="OpenAI. Agentic coding: harness design for ChatGPT agents. OpenAI Engineering Blog, 2026. Vendor-side articulation of harness-as-product; cited for triangulation in Ch. 08 Provenance. URL: https://openai.com/index/agentic-coding-harness/.">OpenAI, 2026</a>]</span>、Fowler 为这项实践定名的文章 <span id="id26">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span>、以及 Thoughtworks 技术雷达中的 &quot;trial&quot; 条目 <span id="id27">[<a class="reference internal" href="../references.html#id30" title="Thoughtworks Technology Radar. Harnesses for AI coding agents. Technology Radar Vol. 32, “Trial” ring, 2026. Industry validation of the harness-engineering idea; referenced in Ch. 03 and Ch. 08 Provenance. URL: https://www.thoughtworks.com/radar.">Thoughtworks Technology Radar, 2026</a>]</span>，是读者应当最先三点定位的三个坐标；LangChain 那份&quot;换马具前／后&quot;的评测数据，则是目前最强的一份单项经验证据 <span id="id28">[<a class="reference internal" href="../references.html#id31" title="LangChain. Terminal-Bench 2.0: evaluating coding agents in full development environments. LangChain Engineering Blog, 2026. Canonical reference for the benchmark cited in Ch. 03 and Ch. 08. URL: https://blog.langchain.dev/terminal-bench-2/.">LangChain, 2026</a>]</span>。</p></li>
+<li><p><strong>马具承继的那条持续交付血脉。</strong> 支撑&quot;马具在经济上是合理的&quot;这一论点的，正是当年为 CI/CD 作辩护的同一份反馈循环论证 <span id="id29">[<a class="reference internal" href="../references.html#id23" title="Jez Humble and David Farley. Continuous Delivery: Reliable Software Releases through Build, Test, and Deployment Automation. Addison-Wesley Professional, 2010. ISBN 9780321601919.">Humble and Farley, 2010</a>]</span>，它后来又在 DevOps 实践中被量化下来 <span id="id30">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 9781942788331.">Forsgren <em>et al.</em>, 2018</a>]</span>。</p></li>
+</ul>
+</section>
+<section id="id31">
+<h2>动手环节<a class="headerlink" href="#id31" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">_handson/02-evolution/</span></code> 下的一个四文件套件，演示的是 <strong>同一个极小的任务</strong>——在一个 Python CLI 上加一条 <code class="docutils literal notranslate"><span class="pre">todo</span> <span class="pre">add</span> <span class="pre">&lt;title&gt;</span></code> 命令——用四种方式、每阶段一种来解。按顺序读这几份文件：这条演进会带你从一段聪明的 6 行提示词，一路走到一份 10 行的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 片段，后者把技能、护栏与钩子拧成了一具连贯的马具。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">_handson/02-evolution/README.md</span></code>——阅读顺序与预算</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_handson/02-evolution/stage1-prompt.md</span></code>——Prompt Engineering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_handson/02-evolution/stage2-context.md</span></code>——Context Engineering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_handson/02-evolution/stage3-skill.md</span></code>——Skill Engineering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_handson/02-evolution/stage4-harness-claude.md</span></code>——Harness Engineering</p></li>
+</ul>
+<p>四份阶段文件加起来的总制品预算：≤ 40 行。这个约束本身就是点题：<strong>马具不比技能长，技能也不比上下文长</strong>——每一个阶段加的是 <em>杠杆</em>，不是体量。你在阶段 4 省下来的那些行，正是你在第 08 章搭建&quot;三大护法 × 四区域&quot;矩阵时要花出去的那些行。</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01-foreword.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">前言</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03-what-is-harness-engineering.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">什么是 Harness Engineering？</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">全景一览</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-engineering-2022-2024">阶段 1 · Prompt Engineering（2022 – 2024）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#context-engineering-2025">阶段 2 · Context Engineering（2025）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#skill-engineering-2025-2026">阶段 3 · Skill Engineering（2025 – 2026）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harness-engineering-2026">阶段 4 · Harness Engineering（2026 – ）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">为什么每个阶段单独都撑不住</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">指向第 3 章</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id31">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1373 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>插章：Agent Memory 系统的结构 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.2.0/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs";
+
+const defaultStyle = document.createElement('style');
+defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+`;
+document.head.appendChild(defaultStyle);
+
+const fullscreenStyle = document.createElement('style');
+fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+document.head.appendChild(fullscreenStyle);
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        return brightness < 128;
+    }
+    return false;
+};
+
+const load = async () => {
+    await mermaid.run();
+
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(load, 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(load, 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(load, 200);
+        return;
+    }
+
+    const darkTheme = isDarkTheme();
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    const modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    let previousScrollOffset = [window.scrollX, window.scrollY];
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    const allButtons = [];
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        container.appendChild(fullscreenBtn);
+        allButtons.push(fullscreenBtn);
+    });
+
+    // Update theme classes when theme changes
+    const updateTheme = () => {
+        const dark = isDarkTheme();
+        allButtons.forEach(btn => {
+            if (dark) {
+                btn.classList.add('dark-theme');
+            } else {
+                btn.classList.remove('dark-theme');
+            }
+        });
+        if (dark) {
+            modal.classList.add('dark-theme');
+            modalContent.classList.add('dark-theme');
+            closeBtn.classList.add('dark-theme');
+        } else {
+            modal.classList.remove('dark-theme');
+            modalContent.classList.remove('dark-theme');
+            closeBtn.classList.remove('dark-theme');
+        }
+    };
+
+    // Watch for theme changes
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style']
+    });
+};
+
+window.addEventListener("load", load);
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/04-agent-memory-anatomy';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="插章：AI Agent 与编程工具的结构" href="05-agent-loop-anatomy.html" />
+    <link rel="prev" title="什么是 Harness Engineering？" href="03-what-is-harness-engineering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/04-agent-memory-anatomy.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/04-agent-memory-anatomy.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>插章：Agent Memory 系统的结构</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">04.1 记忆不是缓存</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tempshortlongarchivemeta">04.2 五层记忆：temp、short、long、archive、meta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">04.3 长期记忆：规则、最佳实践、常见陷阱</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">04.4 写入路径：不是所有事情都配被记住</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">04.5 召回路径：排序比相似更重要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#active-db-rolled-db">04.6 存储形态：一个 active DB，加历史 rolled DB</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">04.7 梳理：记忆系统的第四列</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">04.8 一条实用调试法：问记忆链路</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="agent-memory">
+<h1>插章：Agent Memory 系统的结构<a class="headerlink" href="#agent-memory" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>一支不会记住规则、最佳实践和常见陷阱的智能体队伍，只是在用更快的速度重复新人错误。</em></p>
+</div></blockquote>
+<p>第 03 章说，Harness Engineering 的主语不是模型，而是模型周围的结构。第 08 章会拆 Agent Loop。本插章夹在二者之间，只讲其中一块最容易被低估、也最容易腐烂的结构：<strong>记忆系统</strong>。</p>
+<p>记忆系统对驾驭工程的重要性不言而喻。没有记忆，智能体每一轮都像临时工：它可能读到当前文件，却不知道团队昨天刚定下的规则；它可能跑通测试，却再次踩进上周刚复盘过的坑；它可能问了用户偏好，却在下一个会话里重新问一遍。这样的智能体不是没有能力，而是没有组织性。</p>
+<p>先给结论：<strong>Agent Memory 不是把更多文本塞进上下文窗口，而是把经验分层、设权威、可召回、可过期、可梳理。</strong> 它的工程目标不是&quot;永远记住一切&quot;，而是：</p>
+<ul class="simple">
+<li><p>稳定规则总能被召回。</p></li>
+<li><p>最近事实能在合适时间出现。</p></li>
+<li><p>过期经验会被降权或清理。</p></li>
+<li><p>敏感内容不会因为被记住而泄露。</p></li>
+<li><p>每条记忆都能解释自己为什么仍然应该被相信。</p></li>
+</ul>
+<pre  class="mermaid">
+        flowchart LR
+  E[&quot;经验输入&lt;br/&gt;rule / practice / pitfall / preference / event&quot;] --&gt; C[&quot;分类&lt;br/&gt;temp / short / long / archive&quot;]
+  C --&gt; W[&quot;写入契约&lt;br/&gt;key / summary / source / verified_at / importance&quot;]
+  W --&gt; R[&quot;召回&lt;br/&gt;keyword / metadata / semantic&quot;]
+  R --&gt; P[&quot;提示词装配&lt;br/&gt;rank / dedupe / budget&quot;]
+  P --&gt; A[&quot;Agent 行动&quot;]
+  A --&gt; O[&quot;观察与复盘&quot;]
+  O --&gt; G[&quot;梳理&lt;br/&gt;prune / refresh / archive / promote&quot;]
+  G --&gt; C
+    </pre><p>这张图里最重要的箭头不是&quot;召回&quot;，而是最后那条&quot;梳理&quot;。一套没有梳理的记忆系统，会从团队经验库退化成一块过期经验的垃圾场。</p>
+<section id="id1">
+<h2>04.1 记忆不是缓存<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>很多团队第一次给智能体加 memory，会从一个最简单的实现开始：把用户说过的话 append 到文件里，下一次按关键词搜出来。这种实现足够启动，但它也最容易制造错觉。它像缓存，却被当成知识库；它像日志，却被当成规则；它像对话历史，却被当成长期事实。</p>
+<p>在 Harness Engineering 里，这几类东西必须分开：</p>
+<ul class="simple">
+<li><p><strong>上下文窗口</strong> 是本轮任务正在看的材料。它昂贵、短命、会被截断。</p></li>
+<li><p><strong>短期记忆</strong> 是跨几轮会话仍有价值的近期事实。它有半衰期。</p></li>
+<li><p><strong>长期记忆</strong> 是稳定偏好、团队规则、架构决策、已验证的陷阱清单。它必须有 key、来源和刷新机制。</p></li>
+<li><p><strong>知识库</strong> 是人和智能体共同维护的权威文档，例如 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>、ADR、PKB、runbook。</p></li>
+<li><p><strong>日志</strong> 是发生过什么的证据。它可以喂给记忆系统，但不能自动等同于记忆。</p></li>
+</ul>
+<p>把这些混在一起，智能体就会把&quot;某次对话里随口说的话&quot;当成永久规范，把&quot;两个月前的临时绕过&quot;当成最佳实践，把&quot;被废弃的目录结构&quot;当成当前架构。记忆系统的第一条纪律，是<strong>给每种记忆一个生命周期</strong>。</p>
+</section>
+<section id="tempshortlongarchivemeta">
+<h2>04.2 五层记忆：temp、short、long、archive、meta<a class="headerlink" href="#tempshortlongarchivemeta" title="Link to this heading">#</a></h2>
+<p>一个实用的 Agent Memory 系统，至少要把物理存储拆成五层。下面这份分层来自我曾经做的一个 AI Agent 记忆增强设计：从 Markdown append-only 文件升级为 SQLite-backed store，同时保留关键词召回，并在 sqlite-vec 可用时启用语义召回。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 24.0%" />
+<col style="width: 26.0%" />
+<col style="width: 18.0%" />
+<col style="width: 16.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>层</p></th>
+<th class="head"><p>放什么</p></th>
+<th class="head"><p>生命周期</p></th>
+<th class="head"><p>默认召回</p></th>
+<th class="head"><p>主要风险</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Transient / temp</strong></p></td>
+<td><p>本 session 的临时状态、未完成参数、工具中间结果</p></td>
+<td><p>session 结束或 TTL 到期即删除</p></td>
+<td><p>只进 session-aware context</p></td>
+<td><p>泄漏到全局上下文</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Short-term</strong></p></td>
+<td><p>近期事件、短期偏好、正在推进的任务、最近总结</p></td>
+<td><p>按保留期、重要度、访问次数滚动</p></td>
+<td><p>关键词 + 元数据 + 可选向量</p></td>
+<td><p>旧事件被误当成稳定事实</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Long-term</strong></p></td>
+<td><p>稳定规则、用户偏好、团队最佳实践、常见陷阱、长期目标</p></td>
+<td><p>默认持久，按 key 逻辑 upsert</p></td>
+<td><p>最高优先级召回</p></td>
+<td><p>污染后长期影响行为</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Archive</strong></p></td>
+<td><p>冷的历史总结、从 short-term 退下来的低频记忆</p></td>
+<td><p>有容量和保留期</p></td>
+<td><p>查询时显式启用</p></td>
+<td><p>变成永不清理的墓地</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Meta</strong></p></td>
+<td><p>schema 版本、导入状态、向量可用性、预算、维护游标</p></td>
+<td><p>跟系统生命周期一致</p></td>
+<td><p>不直接给模型</p></td>
+<td><p>配置漂移不可见</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这五层的价值，不在于名字漂亮，而在于它们给&quot;该不该记住&quot;这个问题提供了默认答案。临时工具结果不该嵌入向量库；短期事件不该永远占住 prompt；长期规则不该被 age-based pruning 悄悄删掉；归档记忆不该默认污染每一轮任务。</p>
+</section>
+<section id="id2">
+<h2>04.3 长期记忆：规则、最佳实践、常见陷阱<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>长期记忆是驾驭工程里最值钱、也最危险的一层。它值钱，是因为它承载团队经验；它危险，是因为一条错误长期记忆会稳定地把智能体引向错误方向。</p>
+<p>长期记忆至少应当覆盖六类内容：</p>
+<ol class="arabic simple">
+<li><p><strong>规则（rules）</strong>：必须遵守的工程约束，例如&quot;不要直接改生成文件&quot;、&quot;数据库迁移必须带回滚计划&quot;。</p></li>
+<li><p><strong>最佳实践（best practices）</strong>：推荐路径，例如&quot;新增 API 先补 OpenAPI contract，再补 handler&quot;。</p></li>
+<li><p><strong>常见陷阱（pitfalls）</strong>：已经踩过的坑，例如&quot;这个 repo 的 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code> 会跳过集成测试，发布前必须跑 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test-all</span></code>&quot;。</p></li>
+<li><p><strong>偏好（preferences）</strong>：用户或团队稳定偏好，例如语言、命名、提交风格。</p></li>
+<li><p><strong>事实（facts）</strong>：长期有效的项目事实，例如核心目录、owner、运行环境。</p></li>
+<li><p><strong>决策（decisions）</strong>：ADR 或设计评审里已经定下来的取舍。</p></li>
+</ol>
+<p>我曾经写的一个 skill <code class="docutils literal notranslate"><span class="pre">agents-md-generate</span></code>， 这个 skill 里有一条非常重要的隐含原则：<strong>面向智能体的长期规则，应当先进入可审阅、可 diff、可链接的制品，再被记忆系统索引或召回。</strong> <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是仓库级入口；<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 是流程级记忆；ADR 和 PKB 是架构级记忆。向量库、SQLite 表、摘要缓存都可以加速召回，但它们不应该成为唯一真源。</p>
+<p>换句话说：不要把团队规则只藏在 memory database 里。一个好的长期记忆写入，应当长这样：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>memory_key: repo.test.full-command
+summary: 发布前必须运行 make test-all；make test 只覆盖快速单测。
+source: AGENTS.md#commands
+verified_at: 2026-05-07
+importance: 10
+tags: [rule, test, release]
+</pre></div>
+</div>
+<p>这条记忆有 key，可以 upsert；有 source，可以追溯；有 verified_at，可以梳理；有 importance，可以排序；有 tags，可以过滤。最坏情况下，即使向量召回失效，关键词和元数据也仍然能找回它。</p>
+</section>
+<section id="id3">
+<h2>04.4 写入路径：不是所有事情都配被记住<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>记忆系统真正的产品设计，不在 recall，而在 write path。因为写错一条长期记忆的代价，远高于少召回一条短期记忆。</p>
+<p>一套稳妥的写入面，应当至少分成两条公开工具：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">remember</span></code>：兼容通道，写入短期记忆。适合近期偏好、当前任务状态、可丢弃事件。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">remember_long_term</span></code>：显式长期通道，必须带 <code class="docutils literal notranslate"><span class="pre">memory_key</span></code> 和 <code class="docutils literal notranslate"><span class="pre">summary</span></code>，可选 <code class="docutils literal notranslate"><span class="pre">raw_content</span></code>、<code class="docutils literal notranslate"><span class="pre">importance</span></code>、<code class="docutils literal notranslate"><span class="pre">tags</span></code>。适合规则、最佳实践、常见陷阱、稳定偏好。</p></li>
+</ul>
+<p>这种分离看似啰嗦，实际是在给智能体加一道语义护栏。它让&quot;我要永久影响未来行为&quot;这件事变得可见、可审阅、可测试。若把长期写入伪装成普通 <code class="docutils literal notranslate"><span class="pre">remember</span></code> 的一个参数，智能体很容易把每一次临时上下文都升格为永久事实。</p>
+<p>长期写入还应当使用 <strong>logical upsert</strong>。当 <code class="docutils literal notranslate"><span class="pre">memory_key</span></code> 已存在时，新版本写入 active store，召回时按 key 去重，选择最高 version 或最新 <code class="docutils literal notranslate"><span class="pre">updated_at</span></code>。这样历史库仍可读，但旧规则不会和新规则一起进入 prompt 打架。</p>
+</section>
+<section id="id4">
+<h2>04.5 召回路径：排序比相似更重要<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>语义召回很有用，但它不是记忆系统的灵魂。灵魂是排序策略。一个和 query 很相似的短期旧事件，不应该排在一条长期团队规则前面；一个 archive 里的冷记录，不应该默认压过当前 session 的临时状态；一个没有来源的摘要，不应该压过有 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> anchor 的规则。</p>
+<p>实际装配 prompt context 时，可以按这个顺序思考：</p>
+<ol class="arabic simple">
+<li><p><strong>Long-term first</strong>：稳定规则、最佳实践、常见陷阱、长期偏好。</p></li>
+<li><p><strong>Short-term second</strong>：高重要度、近期访问、与任务相关的事件。</p></li>
+<li><p><strong>Transient only for session</strong>：只在 <code class="docutils literal notranslate"><span class="pre">SystemContextForSession(session_id,</span> <span class="pre">maxChars)</span></code> 这类 session-aware 入口中加入。</p></li>
+<li><p><strong>Archive opt-in</strong>：只有用户或智能体显式查历史时才进来。</p></li>
+</ol>
+<p>语义向量可以参与候选生成，但最后仍要经过 deterministic merge：跨 active DB 和 historical DB 搜索，按 <code class="docutils literal notranslate"><span class="pre">memory_key</span></code> 去重，按层级、重要度、recency、access count、source quality、字符预算排序。RAG 与 context engineering 的教训在这里同样适用：上下文不是越多越好，而是越可信、越新鲜、越贴合任务越好 <span id="id5">[<a class="reference internal" href="../references.html#id40" title="Andrej Karpathy. Context is the new code. Twitter/X thread, later syndicated as blog post, 2025. Popularized “context engineering” framing referenced in Ch. 02's four-stage evolution. URL: https://karpathy.bearblog.dev/context-is-the-new-code/.">Karpathy, 2025</a>, <a class="reference internal" href="../references.html#id8" title="Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, and Douwe Kiela. Retrieval-augmented generation for knowledge-intensive NLP tasks. In Advances in Neural Information Processing Systems 33 (NeurIPS 2020). 2020. URL: https://arxiv.org/abs/2005.11401.">Lewis <em>et al.</em>, 2020</a>]</span>。</p>
+</section>
+<section id="active-db-rolled-db">
+<h2>04.6 存储形态：一个 active DB，加历史 rolled DB<a class="headerlink" href="#active-db-rolled-db" title="Link to this heading">#</a></h2>
+<p>记忆存储不必一开始就上外部向量数据库。对一支本地或单进程智能体来说，一个 SQLite-backed memory store 往往更容易被驾驭：</p>
+<ul class="simple">
+<li><p>一个 active writable DB，例如 <code class="docutils literal notranslate"><span class="pre">&lt;memory_dir&gt;/agent_memory.db</span></code>。</p></li>
+<li><p>若 active DB 超过大小预算，例如 9.9 MiB，就 rollover 成带时间戳的 historical DB。</p></li>
+<li><p>active 和 historical DB 都参与召回，但新写入只进 active。</p></li>
+<li><p>sqlite-vec 可用时，embedding 用 BLOB 存储并参与 cosine distance；不可用时，关键词和元数据召回必须继续可用。</p></li>
+<li><p>embedding 生成异步进行，写入 memory row 不等待模型或远端 embedding provider。</p></li>
+</ul>
+<p>这套设计的关键不是 SQLite，而是<strong>有界增长</strong>。记忆系统一旦没有预算，就会变成第二个不受控日志系统。至少要给它这些预算：</p>
+<ul class="simple">
+<li><p>active DB 文件大小。</p></li>
+<li><p>总 store 大小或 historical DB 数量。</p></li>
+<li><p>transient row 数与 TTL。</p></li>
+<li><p>short-term row 数与 retention。</p></li>
+<li><p>archive row 数与 retention。</p></li>
+<li><p>raw content 最大字节数。</p></li>
+<li><p>embedding row 数或 embedding 总大小。</p></li>
+</ul>
+<p>删除 row 后，SQLite 文件不一定变小；维护作业还要负责 incremental vacuum、WAL checkpoint、必要时的显式 compact。否则&quot;已经 prune 了&quot;只是表面动作，磁盘和 prompt 预算仍会被旧记忆拖住。</p>
+</section>
+<section id="id6">
+<h2>04.7 梳理：记忆系统的第四列<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
+<p>第 08 章会把&quot;梳理（Groom）&quot;列正式放进马具矩阵。记忆系统是最能说明这列必要性的例子：记忆的价值会随时间衰减，而它造成的行为影响却会持续存在。</p>
+<p>一项 memory groom job 应当定期做这些事：</p>
+<ul class="simple">
+<li><p>删除过期 transient rows。</p></li>
+<li><p>归档或剪枝低价值 short-term rows。</p></li>
+<li><p>刷新长期规则的 <code class="docutils literal notranslate"><span class="pre">verified_at</span></code>，或把它们标成 stale。</p></li>
+<li><p>检查长期记忆的 source link 是否仍然存在。</p></li>
+<li><p>删除低价值 embedding，优先保留 summary。</p></li>
+<li><p>在预算压力下先清 short-term 和 archive，再考虑 long-term embedding。</p></li>
+<li><p>默认禁止删除没有替代版本的 long-term summary。</p></li>
+<li><p>输出 sanitized diagnostics，不打印 raw memory body 或 embedding blob。</p></li>
+</ul>
+<p>最后一条尤其重要。记忆内容常常包含用户偏好、项目上下文、内部路径、甚至安全边界。一个 debug log 如果把整段 recalled memory block 打出来，记忆系统就从马具变成泄漏面。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——记忆系统最常见的七种退化</p>
+<ol class="arabic simple">
+<li><p><strong>只记不忘。</strong> 所有事情都 append，什么都不删除，最后召回结果里一半是旧世界。</p></li>
+<li><p><strong>没有 key 的长期记忆。</strong> 同一条规则被写成十个自然语言变体，召回时互相打架。</p></li>
+<li><p><strong>把向量相似度当权威。</strong> 相似不等于正确；长期规则必须能压过相似的短期噪声。</p></li>
+<li><p><strong>规则只在数据库里。</strong> 人类 review 看不到，PR diff 看不到，智能体却被它长期影响。</p></li>
+<li><p><strong>无来源摘要。</strong> 一条 memory 说&quot;团队要求 X&quot;，但没人知道 X 来自哪里。</p></li>
+<li><p><strong>敏感内容进日志。</strong> recall 失败时把整段 memory dump 到日志，隐私边界当场破裂。</p></li>
+<li><p><strong>没有梳理 owner。</strong> 记忆系统上线那天很漂亮，三十天后开始稳定误导智能体。</p></li>
+</ol>
+<p>行级自测：随机抽十条长期记忆，能否为每条说出它的 <code class="docutils literal notranslate"><span class="pre">memory_key</span></code>、来源、上次验证时间、删除或覆盖规则？如果不能，这不是长期记忆，而是长期债务。</p>
+</div>
+</section>
+<section id="id7">
+<h2>04.8 一条实用调试法：问记忆链路<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>当智能体&quot;怎么又忘了&quot;或&quot;怎么还记着旧规则&quot;时，不要先责怪模型。沿着记忆链路问七个问题：</p>
+<ol class="arabic simple">
+<li><p>这条规则、最佳实践或陷阱有没有进入权威制品，例如 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、<code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>、ADR、PKB？</p></li>
+<li><p>它有没有被写入长期记忆，且有稳定 <code class="docutils literal notranslate"><span class="pre">memory_key</span></code>？</p></li>
+<li><p>写入时有没有 source、verified date、importance、tags？</p></li>
+<li><p>本轮任务的 query 或 prompt 装配是否会召回它？</p></li>
+<li><p>召回结果是否被更相似但更低权威的短期记忆压住？</p></li>
+<li><p>这条记忆是否已经 stale，却没有被 groom job 标出？</p></li>
+<li><p>若它影响了错误行为，哪一道护栏本该拒绝它？</p></li>
+</ol>
+<p>这七个问题把&quot;记忆&quot;从神秘能力拆回工程流水线：写入、存储、召回、排序、装配、行动、复盘。能被拆开的东西，才配被驾驭。</p>
+</section>
+<section id="id8">
+<h2>研究脉络<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>RAG 与 Context Engineering</strong> <span id="id9">[<a class="reference internal" href="../references.html#id40" title="Andrej Karpathy. Context is the new code. Twitter/X thread, later syndicated as blog post, 2025. Popularized “context engineering” framing referenced in Ch. 02's four-stage evolution. URL: https://karpathy.bearblog.dev/context-is-the-new-code/.">Karpathy, 2025</a>, <a class="reference internal" href="../references.html#id8" title="Patrick Lewis, Ethan Perez, Aleksandra Piktus, Fabio Petroni, Vladimir Karpukhin, Naman Goyal, Heinrich Küttler, Mike Lewis, Wen-tau Yih, Tim Rocktäschel, Sebastian Riedel, and Douwe Kiela. Retrieval-augmented generation for knowledge-intensive NLP tasks. In Advances in Neural Information Processing Systems 33 (NeurIPS 2020). 2020. URL: https://arxiv.org/abs/2005.11401.">Lewis <em>et al.</em>, 2020</a>]</span> 给本章提供了基本边界：记忆系统不是把所有历史塞进 prompt，而是选择、过滤、排序和压缩输入。</p></li>
+<li><p><strong>面向智能体的仓库入口</strong> <span id="id10">[<a class="reference internal" href="../references.html#id53" title="Agentic AI Foundation. agents.md: open format for coding agent instructions. Open standard website, 2025. Vendor-neutral entry-file standard cited in Ch. 03 and Ch. 08 as the canonical SDD x Bridle file. URL: https://agents.md.">Agentic AI Foundation, 2025</a>, <a class="reference internal" href="../references.html#id51" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span> 是长期规则的权威位置。<code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 让规则能被多种客户端读取，<code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 可以作为兼容镜像，而不应成为分叉真源。</p></li>
+<li><p><strong>MCP 与工具契约</strong> <span id="id11">[<a class="reference internal" href="../references.html#id52" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 15 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span> 提醒我们，记忆写入和召回都应当被视为工具面的一部分：参数、权限、错误、日志都需要契约。</p></li>
+<li><p><strong>Living Documentation</strong> <span id="id12">[<a class="reference internal" href="../references.html#id13" title="Cyrille Martraire. Living Documentation: Continuous Knowledge Sharing by Design. Addison-Wesley Professional, 2019. ISBN 9780134689326.">Martraire, 2019</a>]</span> 是本章&quot;记忆必须可梳理&quot;的文档学底座。长期记忆若不能被验证和刷新，就会退化成长期误导。</p></li>
+<li><p><strong>Evolutionary Architecture</strong> <span id="id13">[<a class="reference internal" href="../references.html#id28" title="Neal Ford, Rebecca Parsons, and Patrick Kua. Building Evolutionary Architectures: Support Constant Change. O'Reilly Media, 2017. ISBN 9781491986363.">Ford <em>et al.</em>, 2017</a>]</span> 支持把 memory groom job 看作适配函数：它不是事后清洁，而是系统能否持续适应变化的条件。</p></li>
+</ul>
+</section>
+<section id="id14">
+<h2>动手环节<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<p>本章的两份 hands-on 制品住在 <code class="docutils literal notranslate"><span class="pre">source/_handson/04-agent-memory-anatomy/</span></code>：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">memory-layer-map.yaml</span></code> —— 一份五层 memory map，可直接拷进项目做设计检查。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory-groom-checklist.md</span></code> —— 一份梳理检查表，专门检查规则、最佳实践、常见陷阱是否仍然可信。</p></li>
+</ul>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># verified: 2026-05-21 · Ch.03A hands-on · Agent Memory five-layer map</span>
+<span class="c1">#</span>
+<span class="c1"># Use this as a design checklist when adding or refactoring an Agent Memory</span>
+<span class="c1"># system. Each layer answers four questions:</span>
+<span class="c1">#   - holds:    what kinds of items belong here</span>
+<span class="c1">#   - lifecycle: when items are created, demoted, archived, or deleted</span>
+<span class="c1">#   - recall:   how items reach the prompt (and when they do NOT)</span>
+<span class="c1">#   - risks:    the failure mode this layer is most prone to</span>
+<span class="c1">#</span>
+<span class="c1"># Budgets are starting points; tune per project but always keep them bounded.</span>
+
+<span class="nt">memory_layers</span><span class="p">:</span>
+
+<span class="w">  </span><span class="nt">transient</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">holds</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in-session scratch state</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unfinished tool arguments</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">intermediate tool results</span>
+<span class="w">    </span><span class="nt">lifecycle</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">created_by</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;agent</span><span class="nv"> </span><span class="s">turn&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;tool</span><span class="nv"> </span><span class="s">call&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">ttl</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;end</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">session</span><span class="nv"> </span><span class="s">OR</span><span class="nv"> </span><span class="s">explicit</span><span class="nv"> </span><span class="s">TTL&quot;</span>
+<span class="w">      </span><span class="nt">promotion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;never</span><span class="nv"> </span><span class="s">auto-promote;</span><span class="nv"> </span><span class="s">require</span><span class="nv"> </span><span class="s">explicit</span><span class="nv"> </span><span class="s">remember_long_term&quot;</span>
+<span class="w">    </span><span class="nt">recall</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;session-aware</span><span class="nv"> </span><span class="s">context</span><span class="nv"> </span><span class="s">only&quot;</span>
+<span class="w">      </span><span class="nt">forbidden</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;global</span><span class="nv"> </span><span class="s">prompt</span><span class="nv"> </span><span class="s">assembly&quot;</span>
+<span class="w">    </span><span class="nt">budgets</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="w">      </span><span class="nt">max_chars_per_row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span>
+<span class="w">    </span><span class="nt">risks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;leak</span><span class="nv"> </span><span class="s">into</span><span class="nv"> </span><span class="s">global</span><span class="nv"> </span><span class="s">context&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;treated</span><span class="nv"> </span><span class="s">as</span><span class="nv"> </span><span class="s">fact</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">later</span><span class="nv"> </span><span class="s">sessions&quot;</span>
+
+<span class="w">  </span><span class="nt">short_term</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">holds</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">recent events</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">short-term preferences</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in-progress task state</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rolling summaries</span>
+<span class="w">    </span><span class="nt">lifecycle</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">created_by</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;remember</span><span class="nv"> </span><span class="s">tool&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;auto-summarizer&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">retention_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">      </span><span class="nt">promotion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rank</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">importance</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">access_count;</span><span class="nv"> </span><span class="s">archive</span><span class="nv"> </span><span class="s">low-value</span><span class="nv"> </span><span class="s">rows&quot;</span>
+<span class="w">    </span><span class="nt">recall</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;keyword</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">metadata;</span><span class="nv"> </span><span class="s">vector</span><span class="nv"> </span><span class="s">optional&quot;</span>
+<span class="w">      </span><span class="nt">ranking</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;recency</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">importance</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">access_count&quot;</span>
+<span class="w">    </span><span class="nt">budgets</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
+<span class="w">      </span><span class="nt">max_chars_per_row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8000</span>
+<span class="w">    </span><span class="nt">risks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;stale</span><span class="nv"> </span><span class="s">events</span><span class="nv"> </span><span class="s">mistaken</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">stable</span><span class="nv"> </span><span class="s">facts&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;overshadows</span><span class="nv"> </span><span class="s">long-term</span><span class="nv"> </span><span class="s">rules</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">similarity</span><span class="nv"> </span><span class="s">match&quot;</span>
+
+<span class="w">  </span><span class="nt">long_term</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">holds</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rules</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">best practices</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">known pitfalls</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">stable user/team preferences</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">long-lived project facts</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">architecture decisions (ADR mirrors)</span>
+<span class="w">    </span><span class="nt">lifecycle</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">created_by</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;remember_long_term</span><span class="nv"> </span><span class="s">tool&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">required_fields</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;memory_key&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;summary&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;source&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;verified_at&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;importance&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">retention</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;persistent;</span><span class="nv"> </span><span class="s">logical</span><span class="nv"> </span><span class="s">upsert</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">memory_key&quot;</span>
+<span class="w">      </span><span class="nt">promotion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;n/a;</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">IS</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">authority</span><span class="nv"> </span><span class="s">tier&quot;</span>
+<span class="w">    </span><span class="nt">recall</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;highest</span><span class="nv"> </span><span class="s">priority;</span><span class="nv"> </span><span class="s">pinned</span><span class="nv"> </span><span class="s">ahead</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">short_term&quot;</span>
+<span class="w">      </span><span class="nt">dedupe</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;by</span><span class="nv"> </span><span class="s">memory_key;</span><span class="nv"> </span><span class="s">pick</span><span class="nv"> </span><span class="s">max(version)</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">latest</span><span class="nv"> </span><span class="s">updated_at&quot;</span>
+<span class="w">    </span><span class="nt">budgets</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2000</span>
+<span class="w">      </span><span class="nt">max_chars_per_row</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12000</span>
+<span class="w">    </span><span class="nt">risks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;long-term</span><span class="nv"> </span><span class="s">pollution</span><span class="nv"> </span><span class="s">biases</span><span class="nv"> </span><span class="s">behavior</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">weeks&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;rules</span><span class="nv"> </span><span class="s">only</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">DB,</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">visible</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">AGENTS.md</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">SKILL.md</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">ADR&quot;</span>
+
+<span class="w">  </span><span class="nt">archive</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">holds</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cold historical summaries</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">demoted short-term rows</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rolled-over historical DBs</span>
+<span class="w">    </span><span class="nt">lifecycle</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">created_by</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;short_term</span><span class="nv"> </span><span class="s">demotion&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;active</span><span class="nv"> </span><span class="s">DB</span><span class="nv"> </span><span class="s">rollover&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">retention_days</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">365</span>
+<span class="w">      </span><span class="nt">promotion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;explicit</span><span class="nv"> </span><span class="s">re-promotion</span><span class="nv"> </span><span class="s">only&quot;</span>
+<span class="w">    </span><span class="nt">recall</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;opt-in</span><span class="nv"> </span><span class="s">only</span><span class="nv"> </span><span class="s">(user</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">agent</span><span class="nv"> </span><span class="s">explicitly</span><span class="nv"> </span><span class="s">queries</span><span class="nv"> </span><span class="s">history)&quot;</span>
+<span class="w">      </span><span class="nt">forbidden</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;default</span><span class="nv"> </span><span class="s">prompt</span><span class="nv"> </span><span class="s">assembly&quot;</span>
+<span class="w">    </span><span class="nt">budgets</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_rollover_files</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">      </span><span class="nt">max_total_bytes</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">209715200</span><span class="w">  </span><span class="c1"># 200 MiB</span>
+<span class="w">    </span><span class="nt">risks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;becomes</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">never-pruned</span><span class="nv"> </span><span class="s">graveyard&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;silently</span><span class="nv"> </span><span class="s">consumes</span><span class="nv"> </span><span class="s">disk</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">embedding</span><span class="nv"> </span><span class="s">budget&quot;</span>
+
+<span class="w">  </span><span class="nt">meta</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">holds</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">schema version</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">import / migration state</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vector backend availability (e.g. sqlite-vec)</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">groom cursors and last-run timestamps</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">per-layer budgets in effect</span>
+<span class="w">    </span><span class="nt">lifecycle</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">created_by</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;system</span><span class="nv"> </span><span class="s">bootstrap&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;migration&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;groom</span><span class="nv"> </span><span class="s">job&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">retention</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;system</span><span class="nv"> </span><span class="s">lifetime&quot;</span>
+<span class="w">      </span><span class="nt">promotion</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;n/a;</span><span class="nv"> </span><span class="s">never</span><span class="nv"> </span><span class="s">enters</span><span class="nv"> </span><span class="s">prompt&quot;</span>
+<span class="w">    </span><span class="nt">recall</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;never</span><span class="nv"> </span><span class="s">sent</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">model&quot;</span>
+<span class="w">      </span><span class="nt">forbidden</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;all</span><span class="nv"> </span><span class="s">model-facing</span><span class="nv"> </span><span class="s">context&quot;</span>
+<span class="w">    </span><span class="nt">budgets</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">max_rows</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="w">    </span><span class="nt">risks</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;invisible</span><span class="nv"> </span><span class="s">configuration</span><span class="nv"> </span><span class="s">drift&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;groom</span><span class="nv"> </span><span class="s">job</span><span class="nv"> </span><span class="s">thinks</span><span class="nv"> </span><span class="s">it</span><span class="nv"> </span><span class="s">ran</span><span class="nv"> </span><span class="s">but</span><span class="nv"> </span><span class="s">pointer</span><span class="nv"> </span><span class="s">never</span><span class="nv"> </span><span class="s">moved&quot;</span>
+
+<span class="c1"># --- cross-layer write-path contract ----------------------------------------</span>
+<span class="nt">write_path</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tools</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">remember</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">writes_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">short_term</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;summary&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">remember_long_term</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">writes_to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">long_term</span>
+<span class="w">      </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;memory_key&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;summary&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">optional</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;raw_content&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;importance&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;tags&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;source&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;verified_at&quot;</span><span class="p p-Indicator">]</span>
+<span class="w">      </span><span class="nt">upsert_by</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;memory_key&quot;</span>
+<span class="w">  </span><span class="nt">guardrails</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;no</span><span class="nv"> </span><span class="s">PII</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">secrets</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">raw_content;</span><span class="nv"> </span><span class="s">redact</span><span class="nv"> </span><span class="s">before</span><span class="nv"> </span><span class="s">write&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;long_term</span><span class="nv"> </span><span class="s">writes</span><span class="nv"> </span><span class="s">MUST</span><span class="nv"> </span><span class="s">cite</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">source</span><span class="nv"> </span><span class="s">(AGENTS.md,</span><span class="nv"> </span><span class="s">SKILL.md,</span><span class="nv"> </span><span class="s">ADR,</span><span class="nv"> </span><span class="s">PKB,</span><span class="nv"> </span><span class="s">runbook)&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;do</span><span class="nv"> </span><span class="s">NOT</span><span class="nv"> </span><span class="s">auto-promote</span><span class="nv"> </span><span class="s">short_term</span><span class="nv"> </span><span class="s">-&gt;</span><span class="nv"> </span><span class="s">long_term</span><span class="nv"> </span><span class="s">without</span><span class="nv"> </span><span class="s">explicit</span><span class="nv"> </span><span class="s">tool</span><span class="nv"> </span><span class="s">call&quot;</span>
+
+<span class="c1"># --- recall ranking ---------------------------------------------------------</span>
+<span class="nt">recall_ranking_order</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">long_term</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">short_term (importance &gt;= 7 OR access_count &gt;= 3)</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">transient (session-aware only)</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">archive (opt-in only)</span>
+
+<span class="c1"># --- groom job (see Ch.08 Groom column) -------------------------------------</span>
+<span class="nt">groom_job</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cadence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">weekly</span>
+<span class="w">  </span><span class="nt">actions</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;drop</span><span class="nv"> </span><span class="s">expired</span><span class="nv"> </span><span class="s">transient</span><span class="nv"> </span><span class="s">rows&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;archive</span><span class="nv"> </span><span class="s">/</span><span class="nv"> </span><span class="s">prune</span><span class="nv"> </span><span class="s">low-value</span><span class="nv"> </span><span class="s">short_term</span><span class="nv"> </span><span class="s">rows&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;refresh</span><span class="nv"> </span><span class="s">long_term.verified_at</span><span class="nv"> </span><span class="s">OR</span><span class="nv"> </span><span class="s">mark</span><span class="nv"> </span><span class="s">stale&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;verify</span><span class="nv"> </span><span class="s">long_term.source</span><span class="nv"> </span><span class="s">links</span><span class="nv"> </span><span class="s">still</span><span class="nv"> </span><span class="s">resolve&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;drop</span><span class="nv"> </span><span class="s">low-value</span><span class="nv"> </span><span class="s">embeddings,</span><span class="nv"> </span><span class="s">keep</span><span class="nv"> </span><span class="s">summaries&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;incremental_vacuum</span><span class="nv"> </span><span class="s">+</span><span class="nv"> </span><span class="s">WAL</span><span class="nv"> </span><span class="s">checkpoint</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">SQLite&quot;</span>
+<span class="w">  </span><span class="nt">forbidden</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;delete</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">long_term</span><span class="nv"> </span><span class="s">row</span><span class="nv"> </span><span class="s">that</span><span class="nv"> </span><span class="s">has</span><span class="nv"> </span><span class="s">no</span><span class="nv"> </span><span class="s">replacement</span><span class="nv"> </span><span class="s">version&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;log</span><span class="nv"> </span><span class="s">raw</span><span class="nv"> </span><span class="s">memory</span><span class="nv"> </span><span class="s">body</span><span class="nv"> </span><span class="s">or</span><span class="nv"> </span><span class="s">embedding</span><span class="nv"> </span><span class="s">blob</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">diagnostics&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>&lt;!-- verified: 2026-05-21 · Ch.03A hands-on · Memory Groom Checklist --&gt;
+
+<span class="gh"># Memory Groom Checklist</span>
+
+Use this checklist on a fixed cadence (weekly is a good default) to keep an
+Agent Memory system from quietly turning into a pile of expired advice. The
+goal is not to delete the most memories; it is to make sure every remaining
+long-term memory can still explain why it should be trusted.
+
+If fewer than seven boxes pass on any run, the memory system is drifting —
+schedule a focused groom session before adding new rules.
+
+<span class="gu">## 1. Rules (long-term)</span>
+
+<span class="k">- [ ]</span> <span class="gs">**Every long-term rule has a `memory_key`.**</span> No two active rows share
+      the same key; logical upsert is in effect.
+<span class="k">- [ ]</span> <span class="gs">**Every rule has a `source`.**</span> The source points at an authoritative
+      artifact: <span class="sb">`AGENTS.md`</span> anchor, <span class="sb">`SKILL.md`</span>, ADR, PKB page, or runbook —
+      not another memory row.
+<span class="k">- [ ]</span> <span class="gs">**`verified_at` is within the freshness window.**</span> Default 90 days; rules
+      older than that are either refreshed or marked <span class="sb">`stale: true`</span>.
+<span class="k">- [ ]</span> <span class="gs">**The source link still resolves.**</span> Dead anchors and renamed files turn
+      a rule into folklore.
+<span class="k">- [ ]</span> <span class="gs">**No duplicate rules with different wording.**</span> Pick the canonical
+      version, upsert under one <span class="sb">`memory_key`</span>, archive the rest.
+
+<span class="gu">## 2. Best practices (long-term)</span>
+
+<span class="k">- [ ]</span> <span class="gs">**Each practice names the scenario it applies to.**</span> &quot;Always do X&quot; with
+      no context is a future pitfall.
+<span class="k">- [ ]</span> <span class="gs">**No practice contradicts a rule.**</span> If it does, demote the practice or
+      promote it to a rule with explicit precedence.
+<span class="k">- [ ]</span> <span class="gs">**Outdated tool / framework versions are removed.**</span> A &quot;best practice&quot;
+      tied to a deprecated dependency is now a trap.
+
+<span class="gu">## 3. Pitfalls (long-term)</span>
+
+<span class="k">- [ ]</span> <span class="gs">**Each pitfall describes the symptom AND the fix.**</span> Symptom-only
+      pitfalls re-train the agent to recognize pain without resolving it.
+<span class="k">- [ ]</span> <span class="gs">**Resolved pitfalls are archived, not deleted.**</span> Keep them in <span class="sb">`archive`</span>
+      with a <span class="sb">`resolved_at`</span> field so the agent can still answer &quot;did we ever
+      hit X?&quot;.
+<span class="k">- [ ]</span> <span class="gs">**No pitfall has been triggered more than twice since last groom.**</span> If
+      it has, escalate it to a rule or a fence (CI check, lint, pre-commit).
+
+<span class="gu">## 4. Preferences &amp; facts (long-term)</span>
+
+<span class="k">- [ ]</span> <span class="gs">**User / team preferences are still current.**</span> Ask: would the owner
+      still endorse this preference today?
+<span class="k">- [ ]</span> <span class="gs">**Project facts match the repo.**</span> Core directories, owners, run
+      environments, default branches — all verified against current state.
+
+<span class="gu">## 5. Short-term hygiene</span>
+
+<span class="k">- [ ]</span> <span class="gs">**Expired transient rows are gone.**</span> TTL was actually enforced, not
+      just configured.
+<span class="k">- [ ]</span> <span class="gs">**Low-value short-term rows are archived or pruned.**</span> Use
+      <span class="sb">`importance &lt; threshold AND access_count == 0 AND age &gt; N days`</span>.
+<span class="k">- [ ]</span> **No short-term row is being recalled ahead of a long-term rule on the
+      same topic.** If it is, ranking is broken — fix recall, not memory.
+
+<span class="gu">## 6. Archive &amp; storage</span>
+
+<span class="k">- [ ]</span> <span class="gs">**Archive size is within budget.**</span> Rollover files capped; oldest
+      rolled-over DB dropped or cold-stored.
+<span class="k">- [ ]</span> <span class="gs">**SQLite has been vacuumed / WAL-checkpointed.**</span> Pruned rows actually
+      reclaimed disk; &quot;I deleted it&quot; is not the same as &quot;it&#39;s gone&quot;.
+<span class="k">- [ ]</span> <span class="gs">**Embedding store is bounded.**</span> Low-value embeddings dropped first;
+      summaries preserved.
+
+<span class="gu">## 7. Safety &amp; privacy</span>
+
+<span class="k">- [ ]</span> <span class="gs">**No raw memory body or embedding blob appears in logs.**</span> Diagnostics
+      are sanitized; recall failures do not dump content.
+<span class="k">- [ ]</span> <span class="gs">**No secrets, tokens, or PII landed in long-term rows.**</span> Spot-check
+      the latest writes; redact and re-upsert under the same <span class="sb">`memory_key`</span> if
+      found.
+<span class="k">- [ ]</span> <span class="gs">**Sensitive rows have explicit access tags.**</span> They are excluded from
+      default recall unless the calling agent has the matching scope.
+
+<span class="gu">## 8. Ownership &amp; meta</span>
+
+<span class="k">- [ ]</span> <span class="gs">**Every long-term category has a named owner.**</span> Rules, practices,
+      pitfalls, preferences, facts, decisions — each one has a human who
+      signs off on changes.
+<span class="k">- [ ]</span> <span class="gs">**The groom job itself ran end-to-end.**</span> <span class="sb">`meta.last_groom_at`</span> advanced;
+      no silent failure in the middle.
+<span class="k">- [ ]</span> <span class="gs">**Budgets in `meta` match the budgets in code.**</span> Configuration drift
+      between the running system and the documented limits is a yellow flag.
+
+---
+
+<span class="gs">**Self-audit prompt (row-level test).**</span> Pick ten random long-term rows. For
+each, answer in one sentence: what is its <span class="sb">`memory_key`</span>, where does it come
+from, when was it last verified, and what would cause it to be overridden or
+deleted? Any row that cannot answer all four is long-term debt, not
+long-term memory.
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03-what-is-harness-engineering.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">什么是 Harness Engineering？</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05-agent-loop-anatomy.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">插章：AI Agent 与编程工具的结构</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">04.1 记忆不是缓存</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tempshortlongarchivemeta">04.2 五层记忆：temp、short、long、archive、meta</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">04.3 长期记忆：规则、最佳实践、常见陷阱</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">04.4 写入路径：不是所有事情都配被记住</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">04.5 召回路径：排序比相似更重要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#active-db-rolled-db">04.6 存储形态：一个 active DB，加历史 rolled DB</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">04.7 梳理：记忆系统的第四列</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">04.8 一条实用调试法：问记忆链路</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

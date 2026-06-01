@@ -1,0 +1,778 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>案例研究：OpenHarness &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/10-openharness';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="案例研究：Superpowers" href="11-superpowers.html" />
+    <link rel="prev" title="运行一具马具：熵、可观测性、审批关卡与元马具演进" href="09-operating-a-harness.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/10-openharness.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/10-openharness.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>案例研究：OpenHarness</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1 —— 一眼看清十个子系统</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agent-loop-20-mit">10.2 —— Agent Loop（不超过 20 行，MIT 署名）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toolformer">10.3 —— 43 个工具的分类（Toolformer 风格）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">10.4 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">10.5 —— 哪些值得拷贝，哪些应该跳过</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">OpenHarness <em>不</em> 适合被当作哪些事的范本</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="openharness">
+<h1>案例研究：OpenHarness<a class="headerlink" href="#openharness" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>开源世界里，最接近&quot;教科书级马具&quot;的那一具。</em></p>
+</div></blockquote>
+<p>OpenHarness 由香港大学数据科学实验室（HKUDS）编写，以 MIT 许可开源发布 <span id="id1">[<a class="reference internal" href="../references.html#id49" title="HKU Data Science Lab. OpenHarness: an open-source harness for LLM coding agents. GitHub repository, 2025. Primary case study for Chapter 07. Mirrored in this repo under \texttt oss/OpenHarness/. URL: https://github.com/HKUDS/OpenHarness.">HKU Data Science Lab, 2025</a>]</span>。它是本书最常回头引用的那份参考实现。读它的感觉，就像作者们已经先写过第 08 章：仓库整齐地分成十个子系统，每一个都刚好对应到&quot;三护法 × 四区域&quot;矩阵里的某一格、或某一小簇格子。本章逐个走过这些子系统、引用 Agent Loop 核心那一小段代码，并给整个项目按第 08 章的矩阵打一次分。</p>
+<section id="id2">
+<h2>10.1 —— 一眼看清十个子系统<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>以 2026-03 的快照为准，OpenHarness 围绕十个子系统组织，大致对应上游仓库 <code class="docutils literal notranslate"><span class="pre">src/openharness/</span></code> 下面的十个目录：</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">api/</span></code> —— OpenAI 兼容的客户端，以及 Copilot 认证适配器。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">autopilot/</span></code> —— 那个长期运行的智能体服务，本书第 02 章第 4 阶段的例子就隐指它。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">channels/</span></code> —— 与 Slack、Discord、飞书、Telegram 以及另外八个消息面的集成。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config/</span></code> —— schema、settings、路径助手；教科书式的 SDD × 护栏。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coordinator/</span></code> —— 智能体定义的注册表。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">engine/</span></code> —— Agent Loop 本身（见下文 10.2）。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hooks/</span></code> —— 事件总线，驱动那道以 hook 为核心的护栏。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mcp/</span></code> —— MCP 客户端接线；工具使用的那条通道。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">memory/</span></code> —— 会话记忆管理器。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sandbox/</span></code> —— 基于 Docker 的执行隔离；Runtime 层的牧场。</p></li>
+</ol>
+<p>想逐条核对本章说法的读者，可以在一份全新的 <a class="reference external" href="https://github.com/HKUDS/OpenHarness"><code class="docutils literal notranslate"><span class="pre">HKUDS/OpenHarness</span></code></a> 克隆里 <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">src/openharness/</span></code>，会看到同样这十个名字。这份分类学是 <em>从代码里抽取出来</em> 的，不是外部强加上去的。</p>
+</section>
+<section id="agent-loop-20-mit">
+<h2>10.2 —— Agent Loop（不超过 20 行，MIT 署名）<a class="headerlink" href="#agent-loop-20-mit" title="Link to this heading">#</a></h2>
+<p>任何一具马具的核心，都是它的 agent loop。OpenHarness 的 <code class="docutils literal notranslate"><span class="pre">engine/query_engine.py</span></code> 把 ReAct 式循环 <span id="id3">[<a class="reference internal" href="../references.html#id6" title="Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. ReAct: synergizing reasoning and acting in language models. 2022. Reason + Act loop; canonical citation for agent scaffolds. URL: https://arxiv.org/abs/2210.03629, arXiv:2210.03629.">Yao <em>et al.</em>, 2022</a>]</span> 压缩成一种既便于审计、也便于埋点的形态。为便于讲解，这里略作删节：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adapted from OpenHarness/src/openharness/engine/query_engine.py</span>
+<span class="c1"># MIT License, Copyright (c) 2025 HKUDS.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+    <span class="n">messages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">window</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">plan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">complete</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">schemas</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">plan</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">plan</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">]</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">plan</span><span class="p">,</span> <span class="n">outputs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="s2">&quot;continue&quot;</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">memory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">plan</span><span class="p">,</span> <span class="p">[]),</span> <span class="s2">&quot;halt&quot;</span>
+</pre></div>
+</div>
+<p>对本书的论点而言，重要的不是这不到二十行本身，而是它们把三项决定编码了进去：(a) 模型把工具调用当作一等结构化输出发出，而不是自由文本；(b) 记忆管理器 <em>持有</em> 上下文窗口策略；(c) 这个循环 <em>显式地</em> 把&quot;continue&quot;和&quot;halt&quot;两种状态分开。这三项决定，对人类评审者都是 <em>可见</em> 的——而正是这份可见性，让这具马具可以被审计。</p>
+</section>
+<section id="toolformer">
+<h2>10.3 —— 43 个工具的分类（Toolformer 风格）<a class="headerlink" href="#toolformer" title="Link to this heading">#</a></h2>
+<p>在 2026-03 的快照里，OpenHarness 自带 43 个一方工具 <span id="id4">[<a class="reference internal" href="../references.html#id49" title="HKU Data Science Lab. OpenHarness: an open-source harness for LLM coding agents. GitHub repository, 2025. Primary case study for Chapter 07. Mirrored in this repo under \texttt oss/OpenHarness/. URL: https://github.com/HKUDS/OpenHarness.">HKU Data Science Lab, 2025</a>]</span>。部分分组如下：</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>分组</p></th>
+<th class="head"><p>数量</p></th>
+<th class="head"><p>例子</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>文件与代码浏览</p></td>
+<td><p>9</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">read_file</span></code>、<code class="docutils literal notranslate"><span class="pre">grep</span></code>、<code class="docutils literal notranslate"><span class="pre">list_dir</span></code>、<code class="docutils literal notranslate"><span class="pre">semantic_search</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>编辑</p></td>
+<td><p>6</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">write_file</span></code>、<code class="docutils literal notranslate"><span class="pre">str_replace</span></code>、<code class="docutils literal notranslate"><span class="pre">apply_patch</span></code>、<code class="docutils literal notranslate"><span class="pre">delete_file</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Shell 与进程</p></td>
+<td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">run_command</span></code>、<code class="docutils literal notranslate"><span class="pre">await_job</span></code>、<code class="docutils literal notranslate"><span class="pre">tail_terminal</span></code>、<code class="docutils literal notranslate"><span class="pre">kill_job</span></code>、<code class="docutils literal notranslate"><span class="pre">cat_terminal</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>VCS</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">git_status</span></code>、<code class="docutils literal notranslate"><span class="pre">git_diff</span></code>、<code class="docutils literal notranslate"><span class="pre">git_commit</span></code>、<code class="docutils literal notranslate"><span class="pre">git_log</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Web 与抓取</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">web_search</span></code>、<code class="docutils literal notranslate"><span class="pre">web_fetch</span></code>、<code class="docutils literal notranslate"><span class="pre">read_lints</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>MCP 客户端</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mcp_call</span></code>、<code class="docutils literal notranslate"><span class="pre">mcp_fetch_resource</span></code>、<code class="docutils literal notranslate"><span class="pre">mcp_list_resources</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>其他杂项</p></td>
+<td><p>13</p></td>
+<td><p>记忆、sandbox、channel、notebook 及各类辅助工具</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这份分组，把 Toolformer 式的论点 <span id="id5">[<a class="reference internal" href="../references.html#id7" title="Timo Schick, Jane Dwivedi-Yu, Roberto Dessì, Roberta Raileanu, Maria Lomeli, Luke Zettlemoyer, Nicola Cancedda, and Thomas Scialom. Toolformer: language models can teach themselves to use tools. 2023. URL: https://arxiv.org/abs/2302.04761, arXiv:2302.04761.">Schick <em>et al.</em>, 2023</a>]</span> 做成了具体的东西：工具不是事后补上的附属品，它们是智能体 <em>行动</em> 所经过的首要平面。MCP 规范 <span id="id6">[<a class="reference internal" href="../references.html#id52" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 15 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span> 把这个面进一步延伸到了第三方工具。</p>
+</section>
+<section id="id7">
+<h2>10.4 —— 十二格亮点图<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<p>本书的每一章案例研究，都会按第 08 章的十二格、以 0–5 分制给马具打分，并用 1–3 句话、引用 <code class="docutils literal notranslate"><span class="pre">oss/OpenHarness/</span></code> 下的具体文件作为证据。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 8.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>格子</p></th>
+<th class="head"><p>得分</p></th>
+<th class="head"><p>证据</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDD × 缰绳</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code>、<code class="docutils literal notranslate"><span class="pre">src/openharness/prompts/system_prompt.py</span></code>，以及 <code class="docutils literal notranslate"><span class="pre">openharness/prompts/context.py</span></code> 打包在一起引导智能体的行为。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">config/schema.py</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">config/settings.py</span></code> 校验每一次启动时的配置；坏配置直接让进程终止。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>没有显式的验收表模式；评审依赖上游的 PR review，加上 <code class="docutils literal notranslate"><span class="pre">autopilot/service.py</span></code> 的状态机。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">plugins/loader.py</span></code> 和 <code class="docutils literal notranslate"><span class="pre">commands/registry.py</span></code> 会刷新进程内注册表，但对&quot;活文档&quot;的梳理是临时性的。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tests/</span></code> 下上游测试套件分量很足，但不是&quot;先 commit 为红&quot;那种模式；智能体的上下文默认不会读测试。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">sandbox/adapter.py</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">sandbox/docker_backend.py</span></code> 拒绝任何 Docker 之外的代码执行；<code class="docutils literal notranslate"><span class="pre">permissions/checker.py</span></code> 按策略拒绝工具调用。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>CI 会在 PR 上跑 <code class="docutils literal notranslate"><span class="pre">pytest</span></code>；没有故障注入或敌意测试套件。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 梳理</p></td>
+<td><p>2</p></td>
+<td><p>没有公开的 flaky 测试隔离区；上游的分诊是人工的。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">engine/stream_events.py</span></code> 与 <code class="docutils literal notranslate"><span class="pre">services/__init__.py</span></code> 暴露了事件流——这是一个不错的 <em>潜在</em> 北极星，但未被正式宣布。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">permissions/checker.py</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">sandbox/path_validator.py</span></code> 作为代码实现的成本上限与爆炸半径上限。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>有发布 staging（tag + changelog）；没有公开的 SLI 关卡。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 梳理</p></td>
+<td><p>2</p></td>
+<td><p>没有公开的每周审计脚本；dashboard 由部署 OpenHarness 的运维自行托管。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>最强的两列：<strong>护栏</strong>（均值 4）与 <strong>缰绳</strong>（均值 3.3）。最弱的一列：<strong>梳理</strong>（均值 2.3）。这个分布与一个偏研究倾向的开源项目很一致——关卡和上下文做得出色，反复发生的维护则留给运维去做。</p>
+</section>
+<section id="id8">
+<h2>10.5 —— 哪些值得拷贝，哪些应该跳过<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>值得拷。</strong> 那种分成十个子系统的目录切法、Agent Loop 的形状（<span id="id9">[<a class="reference internal" href="../references.html#id6" title="Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. ReAct: synergizing reasoning and acting in language models. 2022. Reason + Act loop; canonical citation for agent scaffolds. URL: https://arxiv.org/abs/2210.03629, arXiv:2210.03629.">Yao <em>et al.</em>, 2022</a>]</span>）、<code class="docutils literal notranslate"><span class="pre">permissions/</span></code> 下&quot;以代码表达的权限&quot;、以及 <code class="docutils literal notranslate"><span class="pre">sandbox/</span></code> 下的沙箱隔离。</p></li>
+<li><p><strong>可以跳过</strong>（或当作脚手架处理）。<code class="docutils literal notranslate"><span class="pre">channels/impl/</span></code> 里那十一个通道适配器——它们本身很有价值，但不是 <em>马具核心</em> 的一部分；想为另一个产品造马具的读者，可以在第一天就删掉 <code class="docutils literal notranslate"><span class="pre">channels/</span></code> 目录，方法论上不会丢失任何东西。</p></li>
+</ul>
+<section id="id10">
+<h3>OpenHarness <em>不</em> 适合被当作哪些事的范本<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>一个案例研究一旦变成圣人传记，它的教学价值就没了；OpenHarness 有三处短板值得点名，方便读者只拷它的优点、不把它的盲区一起拷走。</p>
+<ul class="simple">
+<li><p><strong>梳理被留给了运维。</strong> 10.4 里梳理列 2.3 的均值是诚实的信号：这个项目交付的是一台引擎和一台沙箱，而不是一套维护纪律。若一支团队把 OpenHarness 整套搬进来，不加上自己的每周审计、自己的 doc-sync 检查、自己的 HarnessCard 节奏，那这具马具的衰减速度会和任何一份没人照料的仓库一样——第 09 章的那份熵关切，<em>不会</em> 由这个框架替你提供。</p></li>
+<li><p><strong>没有宣布过一条北极星度量。</strong> 10.4 给 MDD × 缰绳 的打分是 3（<em>&quot;事件流存在，但没有一条被正式宣布的北极星&quot;</em>）。第 07 章的警告在这里适用：一具没有人持有、没有阈值看护的北极星的马具，会收集一堆 dashboard，却哪一块都引导不了。OpenHarness 给的是原料，宣布度量这件事是你的职责。</p></li>
+<li><p><strong>43 个工具的表面是把双刃剑。</strong> 一个丰富的工具面，会降低造一个智能体的成本，但会提高 <em>推理&quot;这个智能体能做什么&quot;</em> 的成本。若一支团队不做裁剪就把全部 43 个工具上到生产，等于默默接受了 43 个攻击面、43 个成本中心、以及 43 处 schema 漂移可能会悄悄打断东西的位置。Harness Engineering 的打法是：先采用一个小子集，按需扩宽。</p></li>
+</ul>
+<div class="warning admonition">
+<p class="admonition-title">陷阱——把目录结构当作 cargo cult</p>
+<p>一支团队读了 10.1，在自己仓库里照 OpenHarness 的名字建了十个顶级目录——<code class="docutils literal notranslate"><span class="pre">autopilot/</span></code>、<code class="docutils literal notranslate"><span class="pre">channels/</span></code>、<code class="docutils literal notranslate"><span class="pre">coordinator/</span></code> 等等——然后把这副骨架上线了。六周之后，这些目录要么是空的（因为这个团队的产品不需要 coordinator），要么塞了一堆弯弯绕的胶水代码（因为这个团队的 coordinator 映射不到 OpenHarness 的那层抽象上）。<strong>为什么</strong>：十个子系统的布局，是 OpenHarness 所处问题域（多通道、长期运行的智能体服务）的 <em>涌现</em> 属性；把它套到一个不同的问题上，等于把 Conway 律 <span id="id11">[<a class="reference internal" href="../references.html#id16" title="Melvin E. Conway. How do committees invent? Datamation, 14(4):28–31, 1968.">Conway, 1968</a>]</span> 反着用一次。<strong>解法</strong>：把 <em>原理</em>（以代码表达的权限、沙箱隔离、可审计的 agent loop）拷进你产品真正需要的那种目录结构里。马具是一副契合特定负载的形状；借走那种 <em>思维模式</em>，而不是文件名清单。</p>
+</div>
+</section>
+</section>
+<section id="harnesscard">
+<h2>HarnessCard<a class="headerlink" href="#harnesscard" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HarnessCard schema 版本</p></td>
+<td><p>CAR-HarnessCard v0.2 <span id="id12">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>对象</p></td>
+<td><p>OpenHarness，2026-03 快照 <span id="id13">[<a class="reference internal" href="../references.html#id49" title="HKU Data Science Lab. OpenHarness: an open-source harness for LLM coding agents. GitHub repository, 2025. Primary case study for Chapter 07. Mirrored in this repo under \texttt oss/OpenHarness/. URL: https://github.com/HKUDS/OpenHarness.">HKU Data Science Lab, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-even"><td><p>许可证</p></td>
+<td><p>MIT（代码）、CC-BY-4.0（文档）</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control 层（CAR）</p></td>
+<td><p>有明显主张；<code class="docutils literal notranslate"><span class="pre">coordinator/agent_definitions.py</span></code> ＋ <code class="docutils literal notranslate"><span class="pre">prompts/</span></code> 设定了强默认值。</p></td>
+</tr>
+<tr class="row-even"><td><p>Agency 层（CAR）</p></td>
+<td><p>43 个工具，后面由显式权限和一只 Docker 沙箱看着。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Runtime 层（CAR）</p></td>
+<td><p>Python 3.11，基于 Docker 的沙箱，可插拔的 LLM 后端。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD（0–5，Bridle／Fence／Paddock／Groom 的均值）</p></td>
+<td><p>3.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD（0–5）</p></td>
+<td><p>3.0</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD（0–5）</p></td>
+<td><p>3.0</p></td>
+</tr>
+<tr class="row-odd"><td><p>主要引用</p></td>
+<td><p><span id="id14">[<a class="reference internal" href="../references.html#id49" title="HKU Data Science Lab. OpenHarness: an open-source harness for LLM coding agents. GitHub repository, 2025. Primary case study for Chapter 07. Mirrored in this repo under \texttt oss/OpenHarness/. URL: https://github.com/HKUDS/OpenHarness.">HKU Data Science Lab, 2025</a>]</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id15">
+<h2>研究脉络<a class="headerlink" href="#id15" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>ReAct</strong> <span id="id16">[<a class="reference internal" href="../references.html#id6" title="Shunyu Yao, Jeffrey Zhao, Dian Yu, Nan Du, Izhak Shafran, Karthik Narasimhan, and Yuan Cao. ReAct: synergizing reasoning and acting in language models. 2022. Reason + Act loop; canonical citation for agent scaffolds. URL: https://arxiv.org/abs/2210.03629, arXiv:2210.03629.">Yao <em>et al.</em>, 2022</a>]</span> —— OpenHarness 核心那具 Agent Loop 的学术谱系。</p></li>
+<li><p><strong>Toolformer</strong> <span id="id17">[<a class="reference internal" href="../references.html#id7" title="Timo Schick, Jane Dwivedi-Yu, Roberto Dessì, Roberta Raileanu, Maria Lomeli, Luke Zettlemoyer, Nicola Cancedda, and Thomas Scialom. Toolformer: language models can teach themselves to use tools. 2023. URL: https://arxiv.org/abs/2302.04761, arXiv:2302.04761.">Schick <em>et al.</em>, 2023</a>]</span> —— &quot;把工具使用当作首要动作平面的一等事物&quot;这一思路的学术谱系。</p></li>
+<li><p><strong>MCP 规范</strong> <span id="id18">[<a class="reference internal" href="../references.html#id52" title="Anthropic. Model Context Protocol specification. Protocol specification and reference implementations, 2024. MCP schema referenced by the \texttt mcp-schema-check task in Ch. 15 and 14. URL: https://modelcontextprotocol.io.">Anthropic, 2024</a>]</span> —— 让 OpenHarness 不用自己写胶水就能接入第三方工具生态的那份行业规范。</p></li>
+<li><p><strong>上游 OpenHarness 的 README</strong> <span id="id19">[<a class="reference internal" href="../references.html#id49" title="HKU Data Science Lab. OpenHarness: an open-source harness for LLM coding agents. GitHub repository, 2025. Primary case study for Chapter 07. Mirrored in this repo under \texttt oss/OpenHarness/. URL: https://github.com/HKUDS/OpenHarness.">HKU Data Science Lab, 2025</a>]</span> —— 关于&quot;仓库里交付了什么、在什么许可证下&quot;的权威记录；全书作为一手来源引用。</p></li>
+<li><p><strong>Anthropic 的 Claude Code 发布博客</strong> <span id="id20">[<a class="reference internal" href="../references.html#id51" title="Anthropic. Claude Code: an agentic coding harness. Anthropic Documentation, 2024. Primary source for Chapter 10's analysis; the proprietary harness whose design is reverse-engineered in《马书》. URL: https://docs.anthropic.com/claude/claude-code.">Anthropic, 2024</a>]</span> —— OpenHarness 在与之对位时所处的行业语境。</p></li>
+</ul>
+</section>
+<section id="id21">
+<h2>动手环节<a class="headerlink" href="#id21" title="Link to this heading">#</a></h2>
+<p>在 <code class="docutils literal notranslate"><span class="pre">source/_handson/10-openharness/</span></code> 下，住着两份可直接拷走的制品：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">quickstart.sh</span></code> —— 克隆 → 安装 → 跑一轮验证会话。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">custom-tool.py</span></code> —— 一份最小可用的&quot;添加一个自定义工具&quot;示例，改编自上游文档，并附署名。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="09-operating-a-harness.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">运行一具马具：熵、可观测性、审批关卡与元马具演进</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="11-superpowers.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">案例研究：Superpowers</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">10.1 —— 一眼看清十个子系统</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agent-loop-20-mit">10.2 —— Agent Loop（不超过 20 行，MIT 署名）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#toolformer">10.3 —— 43 个工具的分类（Toolformer 风格）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">10.4 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">10.5 —— 哪些值得拷贝，哪些应该跳过</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">OpenHarness <em>不</em> 适合被当作哪些事的范本</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

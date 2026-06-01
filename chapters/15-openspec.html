@@ -1,0 +1,914 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>案例研究：OpenSpec —— 把意图变成可合并的工程制品 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=327b96ba"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'chapters/15-openspec';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="从这里出发，往哪走" href="16-where-we-go-from-here.html" />
+    <link rel="prev" title="案例研究：Codex —— 把代理式编码变成一套可审计的工作面" href="14-codex.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Fchapters/15-openspec.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/chapters/15-openspec.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>案例研究：OpenSpec —— 把意图变成可合并的工程制品</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">15.1 —— 一眼看清这具马具</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">15.2 —— 三个最承重的实现选择</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">15.3 —— OpenSpec 的六个精华模式</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intent-ledger">15.3.1 —— Intent Ledger：把意图做成账本</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact-graph">15.3.2 —— Artifact Graph：让工作流可计算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-first-brownfield">15.3.3 —— Delta-First Brownfield：只描述变化，不重写世界</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-supply-chain">15.3.4 —— Prompt Supply Chain：提示词也有供应链</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adapter-boundary-agent">15.3.5 —— Adapter Boundary：把 agent 客户端当成输出目标</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-hosting">15.3.6 —— Self-Hosting：用自己管理自己</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">15.4 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact-graph-openspec">15.5 —— Artifact Graph：OpenSpec 的骨架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-specs-brownfield">15.6 —— Delta Specs：为 brownfield 而生的规格格式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agent">15.7 —— 跨 Agent 分发：最容易被低估的一层</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workspace-beta-repo-local-coordination-surface">15.8 —— Workspace Beta：从 repo-local 到 coordination surface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openspec-vs-superpowers">15.9 —— OpenSpec vs Superpowers：工件马具与技能马具</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#superpowers-openspec">15.9.1 —— Superpowers 强在"动笔前"，OpenSpec 强在"动笔后仍可追踪"</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">15.9.2 —— Superpowers 是认知协议，OpenSpec 是状态协议</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">15.9.3 —— 两者组合时，分工应该明确</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">15.9.4 —— 两者的共同盲点：产出度量</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">15.10 —— 风险与盲区</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">动手环节</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="openspec">
+<h1>案例研究：OpenSpec —— 把意图变成可合并的工程制品<a class="headerlink" href="#openspec" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>OpenSpec 最有意思的地方，不是它让人&quot;先写文档&quot;，而是它把文档切成一组能被智能体读取、验证、推进、归档的制品。</em></p>
+</div></blockquote>
+<p>本章分析本地快照 <code class="docutils literal notranslate"><span class="pre">/Users/walterfan/workspace/ai/OpenSpec</span></code>。这是一套 TypeScript / Node.js CLI，npm 包名为 <code class="docutils literal notranslate"><span class="pre">&#64;fission-ai/openspec</span></code>，定位是 <em>AI-native system for spec-driven development</em>。它的 README 把产品哲学压成五句：fluid not rigid、iterative not waterfall、easy not complex、built for brownfield、scalable from personal projects to enterprises。换成马具工程语言，就是：OpenSpec 不试图替智能体写代码，而是把&quot;写代码之前与之后必须被保留下来的意图&quot;变成一组可解析的、可审计的、可归档的工作制品。</p>
+<p>本章不是使用教程。它把 OpenSpec 当成一具马具来解剖：看它怎样把 proposal、specs、design、tasks 串成工件图；怎样把同一组 workflow 注入 Codex、Claude、Cursor、Gemini、GitHub Copilot 等多种 agent 客户端；又怎样用自己的 <code class="docutils literal notranslate"><span class="pre">openspec/</span></code> 目录管理 OpenSpec 自身的演化。</p>
+<section id="id1">
+<h2>15.1 —— 一眼看清这具马具<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>OpenSpec 的核心不是某一个命令，而是三层结构：</p>
+<ol class="arabic simple">
+<li><p><strong>目录契约。</strong> repo 中的 <code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code> 是当前行为的 source of truth；<code class="docutils literal notranslate"><span class="pre">openspec/changes/&lt;name&gt;/</span></code> 是一项尚未归档的变更；<code class="docutils literal notranslate"><span class="pre">openspec/changes/archive/</span></code> 是已完成变更的历史。</p></li>
+<li><p><strong>工件图。</strong> schema 把 <code class="docutils literal notranslate"><span class="pre">proposal</span> <span class="pre">→</span> <span class="pre">specs/design</span> <span class="pre">→</span> <span class="pre">tasks</span> <span class="pre">→</span> <span class="pre">apply</span></code> 变成显式依赖。<code class="docutils literal notranslate"><span class="pre">openspec</span> <span class="pre">status</span> <span class="pre">--json</span></code> 告诉智能体哪些工件已完成、哪些被依赖阻塞。</p></li>
+<li><p><strong>agent 分发层。</strong> OpenSpec 生成 skills 与 slash commands，把同一套工作流投递到不同客户端的惯用目录里，例如 <code class="docutils literal notranslate"><span class="pre">.claude/skills/</span></code>、<code class="docutils literal notranslate"><span class="pre">.codex/</span></code>、<code class="docutils literal notranslate"><span class="pre">.cursor/</span></code>、<code class="docutils literal notranslate"><span class="pre">.github/</span></code>。</p></li>
+</ol>
+<p>本地快照里，OpenSpec 已经有 <strong>40</strong> 份主规格、<strong>82</strong> 个归档变更、<strong>89</strong> 个测试文件、<strong>25</strong> 个 agent command adapter、<strong>2</strong> 套内置 schema。这些数字说明它不是&quot;演示项目里的一组 markdown&quot;，而是一个用自己管理自己的活系统。</p>
+</section>
+<section id="id2">
+<h2>15.2 —— 三个最承重的实现选择<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>第一，OpenSpec 把要求写成 <strong>delta</strong>，不是完整未来态。<code class="docutils literal notranslate"><span class="pre">openspec/specs/openspec-conventions/spec.md</span></code> 要求变更目录里的 spec 使用 <code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">ADDED</span> <span class="pre">Requirements</span></code>、<code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">MODIFIED</span> <span class="pre">Requirements</span></code>、<code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">REMOVED</span> <span class="pre">Requirements</span></code>、<code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">RENAMED</span> <span class="pre">Requirements</span></code>。归档时再按 requirement header 匹配并合并。这个设计很适合 brownfield：你不用重写整个世界，只要声明这次行为契约变哪里。</p>
+<p>第二，OpenSpec 把 workflow 从硬编码 prompt 中抽出来。<code class="docutils literal notranslate"><span class="pre">schemas/spec-driven/schema.yaml</span></code> 明确列出 <code class="docutils literal notranslate"><span class="pre">proposal</span></code>、<code class="docutils literal notranslate"><span class="pre">specs</span></code>、<code class="docutils literal notranslate"><span class="pre">design</span></code>、<code class="docutils literal notranslate"><span class="pre">tasks</span></code> 四个 artifact，每个 artifact 都有 <code class="docutils literal notranslate"><span class="pre">requires</span></code>、<code class="docutils literal notranslate"><span class="pre">template</span></code>、<code class="docutils literal notranslate"><span class="pre">instruction</span></code>。<code class="docutils literal notranslate"><span class="pre">src/core/artifact-graph/graph.ts</span></code> 用 Kahn 算法算构建顺序，<code class="docutils literal notranslate"><span class="pre">getNextArtifacts()</span></code> 判断下一步能做什么。于是智能体不是凭聊天记忆推进，而是沿着一张可计算的依赖图推进。</p>
+<p>第三，OpenSpec 承认 agent 工具生态是碎片化的。<code class="docutils literal notranslate"><span class="pre">src/core/config.ts</span></code> 里列出 20 多种工具；<code class="docutils literal notranslate"><span class="pre">src/core/command-generation/adapters/</span></code> 把同一份 <code class="docutils literal notranslate"><span class="pre">CommandContent</span></code> 格式化成各工具自己的命令文件。这个选择把 OpenSpec 从&quot;某个 IDE 的功能&quot;变成&quot;跨 agent 的规格层&quot;。</p>
+<p>这三个选择可以压成一句话：<strong>OpenSpec 把意图从聊天窗口里搬出来，落到可版本化的工件图里，再把这张图翻译给不同 agent 客户端。</strong> 这就是它相对普通 spec 模板的本质差异。模板只规定&quot;文档长什么样&quot;；OpenSpec 规定&quot;文档之间如何依赖、如何推进、如何验证、如何归档&quot;。</p>
+</section>
+<section id="id3">
+<h2>15.3 —— OpenSpec 的六个精华模式<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>OpenSpec 最值得搬走的，不是文件名，也不是 <code class="docutils literal notranslate"><span class="pre">/opsx:*</span></code> 命令本身，而是六个可复用模式。</p>
+<section id="intent-ledger">
+<h3>15.3.1 —— Intent Ledger：把意图做成账本<a class="headerlink" href="#intent-ledger" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">openspec/changes/&lt;name&gt;/</span></code> 是一份意图账本。<code class="docutils literal notranslate"><span class="pre">proposal.md</span></code> 记录为什么做，<code class="docutils literal notranslate"><span class="pre">specs/</span></code> 记录可验证行为怎么变，<code class="docutils literal notranslate"><span class="pre">design.md</span></code> 记录关键技术取舍，<code class="docutils literal notranslate"><span class="pre">tasks.md</span></code> 记录如何落地。它们不是&quot;写完就丢&quot;的文档，而是一次变更的会计凭证：实现开始前，它们约束智能体；实现过程中，它们吸收新发现；实现结束后，它们被 archive 合并回主规格。</p>
+<p>这个模式解决了 AI 编码里一个常见断裂：人类在聊天里说过的限制，智能体两轮之后忘了；智能体在实现中发现的事实，下一轮又沉回聊天历史底部。Intent Ledger 把这些东西放进仓库路径，而不是放在上下文窗口里。</p>
+</section>
+<section id="artifact-graph">
+<h3>15.3.2 —— Artifact Graph：让工作流可计算<a class="headerlink" href="#artifact-graph" title="Link to this heading">#</a></h3>
+<p>许多团队说&quot;先写需求，再写设计，再写任务&quot;，但这句话通常只是流程口号。OpenSpec 把它变成 schema：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>proposal
+  ├── specs
+  └── design
+       └── tasks
+</pre></div>
+</div>
+<p>实际 schema 里 <code class="docutils literal notranslate"><span class="pre">tasks</span></code> 同时依赖 <code class="docutils literal notranslate"><span class="pre">specs</span></code> 与 <code class="docutils literal notranslate"><span class="pre">design</span></code>，<code class="docutils literal notranslate"><span class="pre">apply.requires</span></code> 又指向 <code class="docutils literal notranslate"><span class="pre">tasks</span></code>。这意味着 agent 可以问 CLI：&quot;现在什么 artifact ready？什么被阻塞？生成这个 artifact 前要读哪些依赖？&quot; 这比提示词里的&quot;请先计划&quot;强得多，因为状态不再靠智能体自觉维持。</p>
+</section>
+<section id="delta-first-brownfield">
+<h3>15.3.3 —— Delta-First Brownfield：只描述变化，不重写世界<a class="headerlink" href="#delta-first-brownfield" title="Link to this heading">#</a></h3>
+<p>OpenSpec 没有要求每次变更都生成一份完整未来态 spec。它让 change spec 只写 delta，再由 archive 阶段合并回 <code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code>。这对 brownfield 很关键：真实软件的大多数工作是修改既有行为，而不是从空白项目开始写一份总纲。</p>
+<p>delta-first 的代价是 archive 复杂度上升，所以 OpenSpec 用 header-based matching 和 validator 把合并前提机械化：MODIFIED 要带完整 requirement block；REMOVED 要指名；RENAMED 要成对。这个选择很有工程味：把复杂度集中在工具里，而不是摊给每一次人工 review。</p>
+</section>
+<section id="prompt-supply-chain">
+<h3>15.3.4 —— Prompt Supply Chain：提示词也有供应链<a class="headerlink" href="#prompt-supply-chain" title="Link to this heading">#</a></h3>
+<p>OpenSpec 的 workflow 指令不是散落在 README、聊天模板、个人记忆里，而是从 schema、templates、project config、rules 拼装出来。<code class="docutils literal notranslate"><span class="pre">openspec/config.yaml</span></code> 可以注入项目上下文；<code class="docutils literal notranslate"><span class="pre">rules</span></code> 可以按 artifact ID 分发约束；<code class="docutils literal notranslate"><span class="pre">instructions</span></code> 命令把上下文、规则、依赖、模板、输出路径装进结构化块。</p>
+<p>这等于给 prompt 建了一条供应链：源材料在哪里、谁覆盖谁、输出给哪个 agent、什么时候需要更新，都有路径可查。对长期维护来说，这比&quot;团队共享一段大 prompt&quot;耐用得多。</p>
+</section>
+<section id="adapter-boundary-agent">
+<h3>15.3.5 —— Adapter Boundary：把 agent 客户端当成输出目标<a class="headerlink" href="#adapter-boundary-agent" title="Link to this heading">#</a></h3>
+<p>Superpowers 深度绑定 Claude Code 的 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 机制；OpenSpec 则把 agent 客户端当成 target。adapter 不改变核心 workflow，只改变落盘格式和路径。这是一个重要边界：OpenSpec 的领域模型是 proposal/spec/design/tasks，不是 Claude skill、Codex command、Cursor rule 或 Copilot instruction。</p>
+<p>因此，当某个客户端改目录规范时，应该改 adapter；不应该改 OpenSpec 的核心概念。这个分层，是它能同时支持 25 个 adapter 的原因。</p>
+</section>
+<section id="self-hosting">
+<h3>15.3.6 —— Self-Hosting：用自己管理自己<a class="headerlink" href="#self-hosting" title="Link to this heading">#</a></h3>
+<p>OpenSpec 仓库自己的 <code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code> 和 <code class="docutils literal notranslate"><span class="pre">openspec/changes/archive/</span></code> 是它最有说服力的部分。一个 spec 工具若不用自己的机制管理自己，很难证明那套机制能承受真实演化。本地快照里的 40 份主规格与 82 个归档变更，说明 OpenSpec 至少把自己的方法吃进了日常维护流程。</p>
+<p>这也暴露了它的成熟度边界：self-hosting 证明流程可用，但不自动证明流程有效。要证明有效，还需要把这些 change 与缺陷率、返工率、发布节奏、review 周期等产出指标接起来。</p>
+<div class="note admonition">
+<p class="admonition-title">这不是瀑布</p>
+<p>OpenSpec 的 <code class="docutils literal notranslate"><span class="pre">docs/opsx.md</span></code> 明确把 OPSX 描述为 actions, not phases。<code class="docutils literal notranslate"><span class="pre">proposal</span> <span class="pre">→</span> <span class="pre">specs</span> <span class="pre">→</span> <span class="pre">design</span> <span class="pre">→</span> <span class="pre">tasks</span></code> 是依赖关系，不是行政闸门。真实工作里，开发者可以实现中途回去改 specs，也可以在发现设计不成立时修订 tasks。马具工程看重的是这些修订被保留下来，而不是假装最初计划从未改变。</p>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2>15.4 —— 十二格亮点图<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 8.0%" />
+<col style="width: 72.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>格子</p></th>
+<th class="head"><p>得分</p></th>
+<th class="head"><p>证据</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>SDD × 缰绳</p></td>
+<td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">schemas/spec-driven/schema.yaml</span></code>、<code class="docutils literal notranslate"><span class="pre">docs/opsx.md</span></code>、生成的 workflow skills 共同把智能体牵到 proposal/spec/design/tasks 这条路径上。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">src/core/validation/validator.ts</span></code> 校验 spec 与 change；delta spec 要有 <code class="docutils literal notranslate"><span class="pre">SHALL</span></code>/<code class="docutils literal notranslate"><span class="pre">MUST</span></code>、scenario、无重复与跨段冲突。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD × 牧场</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openspec/changes/</span></code> 为每项变更提供独立规划空间；archive 之前不污染 <code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code>。</p></td>
+</tr>
+<tr class="row-odd"><td><p>SDD × 梳理</p></td>
+<td><p>5</p></td>
+<td><p>本地快照有 82 个归档变更；OpenSpec 用 OpenSpec 记录自己的演化，形成清晰的活文档循环。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">tasks.md</span></code> 把实现拆成可勾选项，能引导测试工作；但测试策略仍依赖项目自身约定。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p>Vitest、ESLint、TypeScript build 与 validator 构成强护栏；CI 在 PR 跑 build/test，在 main 跑 Linux/macOS/Windows 矩阵。</p></td>
+</tr>
+<tr class="row-even"><td><p>TDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>workspace beta 支持多 repo / folder 的本地视图；但 implementation 仍回到各 repo 自己的测试与发布边界。</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD × 梳理</p></td>
+<td><p>3</p></td>
+<td><p>89 个测试文件覆盖 CLI、parser、validator、workspace 等面；缺口是没有把每个 archived change 反向绑定到失败测试。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 缰绳</p></td>
+<td><p>3</p></td>
+<td><p>telemetry 只记录 command name 与 version，能观察功能使用；尚未形成用户可见的质量北极星。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 护栏</p></td>
+<td><p>4</p></td>
+<td><p>telemetry 遵守 <code class="docutils literal notranslate"><span class="pre">OPENSPEC_TELEMETRY=0</span></code>、<code class="docutils literal notranslate"><span class="pre">DO_NOT_TRACK=1</span></code>、CI 自动关闭，且不发送参数、路径、内容或 PII。</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD × 牧场</p></td>
+<td><p>3</p></td>
+<td><p>npm 包、changesets、CI 与 Nix flake 验证给发布提供基础牧场；缺少公开 SLI / release health 面板。</p></td>
+</tr>
+<tr class="row-odd"><td><p>MDD × 梳理</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">openspec</span> <span class="pre">config</span> <span class="pre">profile</span></code>、<code class="docutils literal notranslate"><span class="pre">openspec</span> <span class="pre">update</span></code>、profile drift 检测让已生成 skills/commands 能随 workflow 配置同步。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这张图的强项集中在 SDD：OpenSpec 非常擅长把意图、需求、设计与任务变成 agent 能消费的上下文。TDD 层也不错，因为它把可解析格式与 CI 结合起来。MDD 层稍弱：它已经有隐私友好的 telemetry，但还没有把&quot;规格工作是否真的提升交付质量&quot;变成一条公开北极星。</p>
+</section>
+<section id="artifact-graph-openspec">
+<h2>15.5 —— Artifact Graph：OpenSpec 的骨架<a class="headerlink" href="#artifact-graph-openspec" title="Link to this heading">#</a></h2>
+<p>OpenSpec 的 <code class="docutils literal notranslate"><span class="pre">ArtifactGraph</span></code> 很小，但它是整套系统的骨架。schema 被解析成 artifact map；<code class="docutils literal notranslate"><span class="pre">getBuildOrder()</span></code> 算拓扑序；<code class="docutils literal notranslate"><span class="pre">getNextArtifacts(completed)</span></code> 返回当前可写的工件；<code class="docutils literal notranslate"><span class="pre">getBlocked(completed)</span></code> 返回缺哪些依赖。这几个函数看似朴素，却把智能体从&quot;下一步做什么全靠提示词&quot;解放出来。</p>
+<p>这是一种很值得搬走的马具模式：把 workflow 做成数据，而不是把 workflow 藏在一段长 prompt 里。长 prompt 会漂移、会被复制粘贴污染、会随客户端而变形；schema + graph 则能被测试、能被 diff、能被不同 agent 共享。</p>
+<p><code class="docutils literal notranslate"><span class="pre">src/commands/workflow/instructions.ts</span></code> 是第二个关键点。它生成的 instructions 不是裸 prompt，而是有 <code class="docutils literal notranslate"><span class="pre">&lt;project_context&gt;</span></code>、<code class="docutils literal notranslate"><span class="pre">&lt;rules&gt;</span></code>、<code class="docutils literal notranslate"><span class="pre">&lt;dependencies&gt;</span></code>、<code class="docutils literal notranslate"><span class="pre">&lt;output&gt;</span></code>、<code class="docutils literal notranslate"><span class="pre">&lt;instruction&gt;</span></code>、<code class="docutils literal notranslate"><span class="pre">&lt;template&gt;</span></code> 的结构化上下文。这里的微妙处在于：context 与 rules 被明确标成&quot;给智能体的约束，不要复制进输出文件&quot;。这解决了很多 agent 工作流常见的污染：把系统提示原样写进设计文档。</p>
+</section>
+<section id="delta-specs-brownfield">
+<h2>15.6 —— Delta Specs：为 brownfield 而生的规格格式<a class="headerlink" href="#delta-specs-brownfield" title="Link to this heading">#</a></h2>
+<p>OpenSpec 的 delta spec 设计，明显偏向已有系统。新增需求放 ADDED，修改需求放 MODIFIED，删除需求放 REMOVED，重命名放 RENAMED。MODIFIED 要求拷贝完整 requirement block，而不是只写一句&quot;改一下登录逻辑&quot;。这降低了归档时的信息损失。</p>
+<p><code class="docutils literal notranslate"><span class="pre">src/core/validation/validator.ts</span></code> 对 delta 做了几道实用检查：</p>
+<ul class="simple">
+<li><p>ADDED / MODIFIED 必须有 requirement text。</p></li>
+<li><p>normative text 必须包含 <code class="docutils literal notranslate"><span class="pre">SHALL</span></code> 或 <code class="docutils literal notranslate"><span class="pre">MUST</span></code>。</p></li>
+<li><p>每个 requirement 至少有一个 <code class="docutils literal notranslate"><span class="pre">####</span> <span class="pre">Scenario</span></code>。</p></li>
+<li><p>同一 section 内不能重复。</p></li>
+<li><p>MODIFIED、ADDED、REMOVED 之间不能互相冲突。</p></li>
+<li><p>RENAMED 的 old/new 名称要成对，且不能和 ADDED/MODIFIED 产生歧义。</p></li>
+</ul>
+<p>这套规则不是形式主义。它让 archive 命令有足够信息把 change 合并回主 specs，也让 reviewer 能从文本里看见行为契约，而不是只看实现 diff。和 Adzic 的 Specification by Example <span id="id5">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 9781617290084.">Adzic, 2011</a>]</span> 一样，场景不是装饰；它是未来测试与验收的候选边界。</p>
+</section>
+<section id="agent">
+<h2>15.7 —— 跨 Agent 分发：最容易被低估的一层<a class="headerlink" href="#agent" title="Link to this heading">#</a></h2>
+<p>许多规格工具输在最后一公里：它们生成了一份漂亮的文档，却没有进入智能体每天工作的上下文。OpenSpec 的解法是维护一组 adapter，把 workflow 变成各 agent 会自动发现的命令或 skill。</p>
+<p>本地快照里，<code class="docutils literal notranslate"><span class="pre">src/core/config.ts</span></code> 直接列出 Amazon Q、Antigravity、Auggie、Claude Code、Cline、Codex、Cursor、Gemini CLI、GitHub Copilot、Kiro、OpenCode、Qwen、RooCode、Windsurf 等工具。<code class="docutils literal notranslate"><span class="pre">src/core/profile-sync-drift.ts</span></code> 再检查生成物是否和当前 profile / delivery 模式一致：该有的 workflow skill 缺了，要提示同步；不该存在的旧 workflow 还在，也要提示同步。</p>
+<p>这正是马具工程里的 SDD × 梳理：不是只生成一次 <code class="docutils literal notranslate"><span class="pre">.claude/skills</span></code> 或 <code class="docutils literal notranslate"><span class="pre">.codex</span></code> 文件，然后祈祷它们永远不过期，而是承认 agent 客户端与团队 workflow 会不断变化，所以必须有 drift detection 与 update 机制。</p>
+</section>
+<section id="workspace-beta-repo-local-coordination-surface">
+<h2>15.8 —— Workspace Beta：从 repo-local 到 coordination surface<a class="headerlink" href="#workspace-beta-repo-local-coordination-surface" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">docs/concepts.md</span></code> 里的 workspace beta 值得单独看。OpenSpec 把 repo-local 项目和 coordination workspace 分开：</p>
+<ul class="simple">
+<li><p>repo-local <code class="docutils literal notranslate"><span class="pre">openspec/</span></code> 存 specs、changes、archive，适合一个 repo 自己持有规划与归档。</p></li>
+<li><p>managed workspace 存在 <code class="docutils literal notranslate"><span class="pre">getGlobalDataDir()/workspaces/&lt;name&gt;/</span></code>，里面有 <code class="docutils literal notranslate"><span class="pre">workspace.yaml</span></code>、生成的 <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code>、编辑器 workspace 文件，用来把多个 repo 或 folder 链成一个本地视图。</p></li>
+</ul>
+<p>这层抽象很现实。许多 AI 编码任务不是单 repo 的：一个功能可能横跨 API、web、worker、infra。OpenSpec 没有强行把多 repo 规划塞进某个业务 repo，而是把 workspace 定义成&quot;私有本地视图&quot;，再用 stable link names 指向真实路径。这个边界很干净：workspace 提供可见性与上下文，implementation 仍归拥有代码的 repo。</p>
+</section>
+<section id="openspec-vs-superpowers">
+<h2>15.9 —— OpenSpec vs Superpowers：工件马具与技能马具<a class="headerlink" href="#openspec-vs-superpowers" title="Link to this heading">#</a></h2>
+<p>第 11 章的 Superpowers 是一套 skill-first 马具：它用约 30 份 <code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code> 教智能体在动笔前先做头脑风暴、计划、TDD、review 与收尾 <span id="id6">[<a class="reference internal" href="../references.html#id50" title="Joseph Vincent. Obra/superpowers. GitHub repository, 2025. Repository artefact for Chapter 08; mirrored under \texttt oss/superpowers/. URL: https://github.com/obra/superpowers.">Vincent, 2025</a>]</span>。OpenSpec 则是 artifact-first：它不只告诉智能体&quot;应该怎么想&quot;，还创建一组可落盘、可验证、可归档的工件。两者都属于 SDD 强马具，但它们强化的是不同肌肉。</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 41.0%" />
+<col style="width: 41.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>维度</p></th>
+<th class="head"><p>Superpowers</p></th>
+<th class="head"><p>OpenSpec</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>首要制品</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SKILL.md</span></code>，核心是工作纪律与认知步骤。</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">proposal.md</span></code>、<code class="docutils literal notranslate"><span class="pre">spec.md</span></code>、<code class="docutils literal notranslate"><span class="pre">design.md</span></code>、<code class="docutils literal notranslate"><span class="pre">tasks.md</span></code>，核心是变更账本。</p></td>
+</tr>
+<tr class="row-odd"><td><p>状态存放处</p></td>
+<td><p>主要在当前对话、计划文本、人类 review 记忆中。</p></td>
+<td><p>在 <code class="docutils literal notranslate"><span class="pre">openspec/changes/&lt;name&gt;/</span></code> 与 <code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code> 中。</p></td>
+</tr>
+<tr class="row-even"><td><p>工作流表达</p></td>
+<td><p>散文指令：何时使用、红旗、步骤、停止条件。</p></td>
+<td><p>schema + artifact graph：依赖、模板、输出路径、apply readiness。</p></td>
+</tr>
+<tr class="row-odd"><td><p>采用路径</p></td>
+<td><p>对 Claude Code 极低成本；拷入 skills 即可。</p></td>
+<td><p>需要初始化 CLI 与项目目录，但跨 agent 更稳。</p></td>
+</tr>
+<tr class="row-even"><td><p>强项</p></td>
+<td><p>改变智能体&quot;思考方式&quot;；尤其适合头脑风暴、TDD、review 纪律。</p></td>
+<td><p>改变团队&quot;状态保存方式&quot;；尤其适合需求漂移、跨轮次、跨人协作。</p></td>
+</tr>
+<tr class="row-odd"><td><p>弱项</p></td>
+<td><p>缺少机器可见状态；技能是否被执行，常靠自我汇报。</p></td>
+<td><p>容易被误用为文档流水线；artifact 是否真实更新，仍靠团队纪律。</p></td>
+</tr>
+<tr class="row-even"><td><p>最佳搭配</p></td>
+<td><p>作为 agent 的行为教练。</p></td>
+<td><p>作为变更的事实账本。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="superpowers-openspec">
+<h3>15.9.1 —— Superpowers 强在&quot;动笔前&quot;，OpenSpec 强在&quot;动笔后仍可追踪&quot;<a class="headerlink" href="#superpowers-openspec" title="Link to this heading">#</a></h3>
+<p>Superpowers 最锋利的一点，是它能在智能体即将冲进实现前拦一下：&quot;先 brainstorm&quot;、&quot;先写计划&quot;、&quot;先写红测试&quot;。它改的是 agent 的局部行为，尤其是当前回合的思考顺序。若团队的问题是 agent 太急、太自信、跳过测试，Superpowers 的收益立竿见影。</p>
+<p>OpenSpec 的锋利处在另一个位置：一周之后，谁还能知道当初为什么这么改？实现过程中学到的新事实是否回到了规格？归档时当前行为是否更新？这些问题不是 skill 能单独解决的。OpenSpec 用目录、schema、validator、archive 把&quot;记住变化&quot;这件事外部化。</p>
+</section>
+<section id="id7">
+<h3>15.9.2 —— Superpowers 是认知协议，OpenSpec 是状态协议<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<p>Superpowers 的协议对象是智能体：&quot;遇到这种任务，你应该调用这个 skill，按这些步骤思考。&quot; OpenSpec 的协议对象是仓库：&quot;一次变更应该有这些工件，它们有这些依赖，达到这些条件后才能 apply / archive。&quot;</p>
+<p>这一区别解释了两者在十二格里的形状。Superpowers 在 <strong>SDD × 缰绳</strong> 与 <strong>TDD × 缰绳</strong> 上极强，因为它直接重塑 agent 的工作姿态；OpenSpec 在 <strong>SDD × 护栏 / 牧场 / 梳理</strong> 上更强，因为它把格式校验、独立变更空间、归档循环做成了外部状态。</p>
+</section>
+<section id="id8">
+<h3>15.9.3 —— 两者组合时，分工应该明确<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>把两者叠在一起，最稳的分工是：</p>
+<ul class="simple">
+<li><p>Superpowers 管 <strong>如何思考</strong>：先澄清、先计划、先写测试、先 review。</p></li>
+<li><p>OpenSpec 管 <strong>思考留下什么制品</strong>：proposal、delta specs、design、tasks、archive。</p></li>
+<li><p>宿主仓库 CI / hooks 管 <strong>什么不能通过</strong>：测试失败、spec 格式错误、未归档变更、越权命令。</p></li>
+</ul>
+<p>例如，一个高质量的变更流可以是：</p>
+<ol class="arabic simple">
+<li><p>用 Superpowers 的 brainstorming skill 澄清问题边界。</p></li>
+<li><p>用 OpenSpec <code class="docutils literal notranslate"><span class="pre">/opsx:propose</span></code> 生成变更账本。</p></li>
+<li><p>用 Superpowers 的 TDD skill 执行 <code class="docutils literal notranslate"><span class="pre">tasks.md</span></code> 中的第一项实现。</p></li>
+<li><p>用 OpenSpec validator 检查 spec / change 格式。</p></li>
+<li><p>用 Superpowers 的 code review skill 做合并前审查。</p></li>
+<li><p>用 OpenSpec archive 把 delta 合并回主规格。</p></li>
+</ol>
+<p>这样 Superpowers 不必承担状态存储，OpenSpec 也不必假装自己能改变智能体的所有局部习惯。两者叠加，才接近一具完整马具。</p>
+</section>
+<section id="id9">
+<h3>15.9.4 —— 两者的共同盲点：产出度量<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<p>Superpowers 没有告诉你哪条 skill 被实际调用、调用后缺陷是否下降；OpenSpec 目前也没有告诉你某类 artifact 是否缩短 review 周期、减少返工、降低变更失败率。它们都能改善输入质量，但都还没有完整证明输出质量。</p>
+<p>这给团队一个很实际的落点：采用 Superpowers 或 OpenSpec 后，不要只统计&quot;写了多少 specs&quot;或&quot;安装了多少 skills&quot;。更该看：</p>
+<ul class="simple">
+<li><p>需求返工次数是否下降。</p></li>
+<li><p>PR review 中&quot;需求不清&quot;类评论是否下降。</p></li>
+<li><p>已归档 specs 与当前实现的漂移是否下降。</p></li>
+<li><p>变更失败率、回滚率、平均恢复时间是否改善。</p></li>
+</ul>
+<p>如果这些指标不动，说明马具可能只是在长胖。</p>
+</section>
+</section>
+<section id="id10">
+<h2>15.10 —— 风险与盲区<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
+<p>OpenSpec 的最大风险，是它的优势会被误用成&quot;文档生产流水线&quot;。如果团队只是在 <code class="docutils literal notranslate"><span class="pre">/opsx:propose</span></code> 里生成 proposal/spec/design/tasks，然后不在实现中更新它们，OpenSpec 会迅速退化成更漂亮的票据模板。它真正的价值在 archive：把变化后的行为契约合并回 <code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code>，让下一轮智能体读到的是当前真实系统，而不是上一次计划时的愿望。</p>
+<p>第二个风险是 validator 与语义之间仍有距离。<code class="docutils literal notranslate"><span class="pre">SHALL</span></code>、<code class="docutils literal notranslate"><span class="pre">MUST</span></code>、scenario 数量、header 唯一性都可以机器检查，但&quot;这个 requirement 是否真的表达了用户价值&quot;仍要靠 reviewer。OpenSpec 提供的是可审计表面，不是产品判断的替代品。</p>
+<p>第三个风险是 adapter 面太宽。25 个 adapter 是分发优势，也意味着每个客户端规则变化都可能引入 drift。<code class="docutils literal notranslate"><span class="pre">profile-sync-drift.ts</span></code> 已经做了生成物层面的梳理，但长期看，OpenSpec 需要持续投资 adapter 合约测试，尤其是那些客户端目录规范常变的工具。</p>
+<div class="warning admonition">
+<p class="admonition-title">陷阱 —— 把 specs 当成实现计划</p>
+<p>一支团队把所有实现细节都写进 <code class="docutils literal notranslate"><span class="pre">spec.md</span></code>：函数名、类名、数据库字段、第三方库选择，写得很认真。两周后实现发现更好的结构，代码变了，specs 却不敢动，因为它们已经像合同一样沉重。<strong>为什么</strong>：OpenSpec 的主 specs 应该描述可验证行为，而不是冻结实现。实现细节属于 <code class="docutils literal notranslate"><span class="pre">design.md</span></code> 和 <code class="docutils literal notranslate"><span class="pre">tasks.md</span></code>；行为契约才属于 <code class="docutils literal notranslate"><span class="pre">spec.md</span></code>。这也是 OpenSpec 自己的 <code class="docutils literal notranslate"><span class="pre">openspec/config.yaml</span></code> 反复强调的边界：Product language first, implementation mechanics later.</p>
+</div>
+</section>
+<section id="harnesscard">
+<h2>HarnessCard<a class="headerlink" href="#harnesscard" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>字段</p></th>
+<th class="head"><p>值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HarnessCard schema 版本</p></td>
+<td><p>CAR-HarnessCard v0.2 <span id="id11">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>对象</p></td>
+<td><p>OpenSpec，本地快照 <code class="docutils literal notranslate"><span class="pre">/Users/walterfan/workspace/ai/OpenSpec</span></code>，2026-05-30</p></td>
+</tr>
+<tr class="row-even"><td><p>许可证</p></td>
+<td><p>MIT</p></td>
+</tr>
+<tr class="row-odd"><td><p>Control 层（CAR）</p></td>
+<td><p>schema、workflow skills、project config、rules/context injection 共同塑造智能体行为。</p></td>
+</tr>
+<tr class="row-even"><td><p>Agency 层（CAR）</p></td>
+<td><p>CLI 命令、artifact graph、validator、adapter registry 共同约束 agent 可见动作。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Runtime 层（CAR）</p></td>
+<td><p>Node.js ≥20.19、pnpm、Commander CLI、Vitest、GitHub Actions、Nix flake。</p></td>
+</tr>
+<tr class="row-even"><td><p>SDD（0–5）</p></td>
+<td><p>4.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>TDD（0–5）</p></td>
+<td><p>3.25</p></td>
+</tr>
+<tr class="row-even"><td><p>MDD（0–5）</p></td>
+<td><p>3.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>主要证据</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">README.md</span></code>、<code class="docutils literal notranslate"><span class="pre">docs/opsx.md</span></code>、<code class="docutils literal notranslate"><span class="pre">schemas/spec-driven/schema.yaml</span></code>、<code class="docutils literal notranslate"><span class="pre">src/core/artifact-graph/</span></code>、<code class="docutils literal notranslate"><span class="pre">src/core/validation/validator.ts</span></code>、<code class="docutils literal notranslate"><span class="pre">openspec/specs/</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id12">
+<h2>研究脉络<a class="headerlink" href="#id12" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Specification by Example</strong> <span id="id13">[<a class="reference internal" href="../references.html#id14" title="Gojko Adzic. Specification by Example: How Successful Teams Deliver the Right Software. Manning Publications, 2011. ISBN 9781617290084.">Adzic, 2011</a>]</span> —— OpenSpec 把 requirement scenario 变成可解析格式，与&quot;示例即规格&quot;的思想同源。</p></li>
+<li><p><strong>Fowler 的 Harness Engineering 词汇</strong> <span id="id14">[<a class="reference internal" href="../references.html#id39" title="Martin Fowler. Harness engineering: shaping the environment in which coding agents work. martinfowler.com, 2026. Placeholder citation pending publication; Fowler's essay is the most-cited introduction to the term. Replace URL on archive. URL: https://martinfowler.com/articles/harness-engineering.html.">Fowler, 2026</a>]</span> —— 本章用&quot;三大护法 × 四区域&quot;来读 OpenSpec。</p></li>
+<li><p><strong>CAR 分解</strong> <span id="id15">[<a class="reference internal" href="../references.html#id11" title="CAR Research Collective. Control-agency-runtime: a decomposition for ai coding agents and the harnesscard reporting format. Working paper, 2025. Position paper introducing the CAR decomposition and HarnessCard template referenced in Chapters 05 and 13. Placeholder citation; replace DOI when published.">CAR Research Collective, 2025</a>]</span> —— HarnessCard 使用 Control / Agency / Runtime 三层描述。</p></li>
+<li><p><strong>DORA / Accelerate</strong> <span id="id16">[<a class="reference internal" href="../references.html#id24" title="Nicole Forsgren, Jez Humble, and Gene Kim. Accelerate: The Science of Lean Software and DevOps. IT Revolution Press, 2018. ISBN 9781942788331.">Forsgren <em>et al.</em>, 2018</a>]</span> —— OpenSpec 未来若要证明产出改善，需要把规格活动接到交付指标上。</p></li>
+</ul>
+</section>
+<section id="id17">
+<h2>动手环节<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
+<p>想亲手验证本章分析，可以在 <code class="docutils literal notranslate"><span class="pre">/Users/walterfan/workspace/ai/OpenSpec</span></code> 里跑以下只读或本地检查命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pnpm<span class="w"> </span>run<span class="w"> </span>build
+pnpm<span class="w"> </span><span class="nb">test</span>
+pnpm<span class="w"> </span>lint
+node<span class="w"> </span>bin/openspec.js<span class="w"> </span>list<span class="w"> </span>--specs
+node<span class="w"> </span>bin/openspec.js<span class="w"> </span>schemas<span class="w"> </span>--json
+node<span class="w"> </span>bin/openspec.js<span class="w"> </span>validate<span class="w"> </span>--specs
+</pre></div>
+</div>
+<p>最值得读的路径是：</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">schemas/spec-driven/schema.yaml</span></code> —— 默认 artifact graph。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/core/artifact-graph/graph.ts</span></code> —— 拓扑排序、ready / blocked 判断。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/commands/workflow/instructions.ts</span></code> —— 给 agent 的结构化上下文生成。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/core/validation/validator.ts</span></code> —— spec 与 delta spec 的可执行护栏。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">src/core/command-generation/adapters/</span></code> —— 跨 agent 分发层。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">openspec/specs/openspec-conventions/spec.md</span></code> —— OpenSpec 用来约束自己的元规格。</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="14-codex.html"
+       title="上一页">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="16-where-we-go-from-here.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">从这里出发，往哪走</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">15.1 —— 一眼看清这具马具</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">15.2 —— 三个最承重的实现选择</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">15.3 —— OpenSpec 的六个精华模式</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#intent-ledger">15.3.1 —— Intent Ledger：把意图做成账本</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact-graph">15.3.2 —— Artifact Graph：让工作流可计算</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-first-brownfield">15.3.3 —— Delta-First Brownfield：只描述变化，不重写世界</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prompt-supply-chain">15.3.4 —— Prompt Supply Chain：提示词也有供应链</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adapter-boundary-agent">15.3.5 —— Adapter Boundary：把 agent 客户端当成输出目标</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#self-hosting">15.3.6 —— Self-Hosting：用自己管理自己</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">15.4 —— 十二格亮点图</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#artifact-graph-openspec">15.5 —— Artifact Graph：OpenSpec 的骨架</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#delta-specs-brownfield">15.6 —— Delta Specs：为 brownfield 而生的规格格式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#agent">15.7 —— 跨 Agent 分发：最容易被低估的一层</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#workspace-beta-repo-local-coordination-surface">15.8 —— Workspace Beta：从 repo-local 到 coordination surface</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#openspec-vs-superpowers">15.9 —— OpenSpec vs Superpowers：工件马具与技能马具</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#superpowers-openspec">15.9.1 —— Superpowers 强在"动笔前"，OpenSpec 强在"动笔后仍可追踪"</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">15.9.2 —— Superpowers 是认知协议，OpenSpec 是状态协议</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">15.9.3 —— 两者组合时，分工应该明确</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">15.9.4 —— 两者的共同盲点：产出度量</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">15.10 —— 风险与盲区</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#harnesscard">HarnessCard</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">研究脉络</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">动手环节</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

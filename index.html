@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>驾驭工程：给 AI 套上缰绳 &#8212; 驾驭工程 — Harness Engineering</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=74e42580" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=327b96ba"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script src="_static/translations.js?v=beaddf03"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）" href="chapters/00-presentation/index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">驾驭工程 — Harness Engineering</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">搜索</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    驾驭工程：给 AI 套上缰绳
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapters/00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/outline.html">Speaker Outline —— 分钟级节奏表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/slides.html">Slides 大纲</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/01-foreword.html">前言</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html">什么是 Harness Engineering？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/07-three-guardians.html">三大护法：SDD、TDD、MDD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/10-openharness.html">案例研究：OpenHarness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/11-superpowers.html">案例研究：Superpowers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/13-claude-code.html">案例研究：通过《马书》看 Claude Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="chapters/16-where-we-go-from-here.html">从这里出发，往哪走</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="chapters/17-appendices/index.html">附录</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colophon.html">版记</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="源码库"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/walterfan/walter-ai-harness-book/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="创建议题"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>驾驭工程：给 AI 套上缰绳</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">本书怎么读</a><ul class="visible nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="ai">
+<h1>驾驭工程：给 AI 套上缰绳<a class="headerlink" href="#ai" title="Link to this heading">#</a></h1>
+<p><em>一本关于 <strong>驾驭工程</strong> 的长篇中文技术书 —— 一种刻意塑造 AI 编码智能体所处环境的实践，好让它们生产出来的软件是可验证、可观测、可理解的。</em></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>作者</strong></p></td>
+<td><p>Walter Fan</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>许可证</strong></p></td>
+<td><p>CC-BY-NC-SA-4.0（正文）· Apache-2.0（代码样例）</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>状态</strong></p></td>
+<td><p>草稿 —— 骨架就位，章节正在撰写中</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>源码</strong></p></td>
+<td><p><a class="reference external" href="https://github.com/walterfan/async-harness-book/tree/main/source"><code class="docutils literal notranslate"><span class="pre">source/</span></code></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="id1">
+<h2>本书怎么读<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>本书循一条六段式的论证弧线 —— <strong>为什么 → 是什么 → 怎么做 → 例子 → 结语 → 参考</strong>。大多数读者应当把第一、第二部分顺着读下去，然后进第三部分挑自己最需要的那一份方法论，再从第四部分挑一两份贴近自身技术栈的案例研究。第五部分短小、偏行动；第六部分是参考。</p>
+<p>本书最前头还有一份 <strong>Part 0 · Presentation</strong>（公开分享），它面向的是另一类读者：任何人若在一次会议前只剩六十分钟，又需要把整本书当成一场 <em>talk 讲出去</em> —— 那就从这一 Part 开始。它把全书压成一份一小时的讲稿，外加一份分钟级的 speaker outline 与一份每页一张 slide 的大纲。只想读论证的读者可以跳过 Part 0；需要把这套论证 <em>再次传递</em> 给同事的读者，应当从这里起步。</p>
+<p>每一份有实质内容的章（第 02 至第 16 章）都在正文下方遵循同一副双节骨架：<code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">研究脉络</span></code> 把论证钉在可引用的先前工作之上，<code class="docutils literal notranslate"><span class="pre">##</span> <span class="pre">动手环节</span></code> 则至少交付一件可跑起来的制品。这些章节是刻意把理论与实践配对的。</p>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Part 0 · 公开分享</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/00-presentation/index.html">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-0-2">F.0 · 开场（2 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-1-7">F.1 · 起点：四个阶段（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-2-harness-engineering-7">F.2 · 定义：Harness Engineering 是什么（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-3-sdd-tdd-mdd-7">F.3 · 三护法：SDD → TDD → MDD（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-4-3-4-7">F.4 · 骨架：3 × 4 矩阵（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-5-7">F.5 · 四个案例研究的教训（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-6-lazy-ai-coder-7">F.6 · 自证其身：Lazy AI Coder 四幕（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-7-30-60-90-7">F.7 · 周一上班怎么办：30 ／ 60 ／ 90 天清单（7 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-8-q-a-4">F.8 · Q&amp;A ／ 收尾（4 分钟）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/00-presentation/index.html#f-app">F.App · 给讲者的附加说明</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第一部分 · 为什么</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/01-foreword.html">前言</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01-foreword.html#id2">本书写给谁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01-foreword.html#id3">如何阅读本书</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01-foreword.html#id4">关于定义的一则说明，以及关于分析框架的一则说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01-foreword.html#id5">关于《马书》</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/01-foreword.html#id6">两颗种子</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/02-four-stage-evolution.html">四阶段演进：Prompt → Context → Skill → Harness</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#id1">全景一览</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#prompt-engineering-2022-2024">阶段 1 · Prompt Engineering（2022 – 2024）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#context-engineering-2025">阶段 2 · Context Engineering（2025）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#skill-engineering-2025-2026">阶段 3 · Skill Engineering（2025 – 2026）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#harness-engineering-2026">阶段 4 · Harness Engineering（2026 – ）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#id14">为什么每个阶段单独都撑不住</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#id15">指向第 3 章</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#id16">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02-four-stage-evolution.html#id31">动手环节</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第二部分 · 是什么</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html">什么是 Harness Engineering？</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id1">03.1 一句话定义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id2">03.2 操作性边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id15">03.3 相邻实践对照</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id20">03.4 一个最小示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id25">03.5 什么时候 <em>不</em> 用 Harness Engineering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id27">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03-what-is-harness-engineering.html#id39">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html">插章：Agent Memory 系统的结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id1">04.1 记忆不是缓存</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#tempshortlongarchivemeta">04.2 五层记忆：temp、short、long、archive、meta</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id2">04.3 长期记忆：规则、最佳实践、常见陷阱</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id3">04.4 写入路径：不是所有事情都配被记住</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id4">04.5 召回路径：排序比相似更重要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#active-db-rolled-db">04.6 存储形态：一个 active DB，加历史 rolled DB</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id6">04.7 梳理：记忆系统的第四列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id7">04.8 一条实用调试法：问记忆链路</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id8">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04-agent-memory-anatomy.html#id14">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html">插章：AI Agent 与编程工具的结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#agent-loop">05.1 Agent Loop：最小心智模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#id3">05.2 七个承重点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#id11">05.3 跑偏的七种原因</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#id12">05.4 针对性驾驭：把马具接到正确层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#autonomy-envelope">05.5 Autonomy Envelope：什么时候可以少人工纠正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#trace">05.6 一条实用调试法：看 trace，不看态度</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#id13">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05-agent-loop-anatomy.html#id19">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html">插章：Fowler 的 Harness 词汇 —— 两条正交轴与一份 Java 最小示例</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#langchain-agent-model-harness">06.1 LangChain 公式：Agent = Model + Harness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#feedforward-feedback">06.2 第一条轴：Feedforward × Feedback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#computational-inferential">06.3 第二条轴：Computational × Inferential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#id5">06.4 两条轴一起看：一张 2 × 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#harness-maintainabilityarchitecture-fitnessbehaviour">06.5 三类 Harness：Maintainability、Architecture Fitness、Behaviour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#harnessability">06.6 Harnessability：不是所有代码库都一样好&quot;拴&quot;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#harness">06.7 一张最小可用 Harness 清单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#java-web-harness">06.8 一个 Java Web 项目的最小 harness</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#id8">06.9 一条调试法：问 harness 链路</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#id9">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06-fowler-harness-vocabulary.html#id16">动手环节</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第三部分 · 怎么做</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/07-three-guardians.html">三大护法：SDD、TDD、MDD</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#id1">为什么一旦智能体进入回路，因果顺序就翻了</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#sdd-specification-driven-development">护法一 —— SDD（Specification-Driven Development，规约驱动开发）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#tdd-test-driven-development">护法二 —— TDD（Test-Driven Development，测试驱动开发）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#mdd-metric-driven-development">护法三 —— MDD（Metric-Driven Development，度量驱动开发）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#id28">为什么每一位护法单独都撑不住</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#id30">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07-three-guardians.html#id43">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/08-harness-anatomy.html">马具解剖：三大护法 × 四区域</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/08-harness-anatomy.html#id2">出处</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/08-harness-anatomy.html#id7">08.全景 —— 3 × 4 矩阵</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/08-harness-anatomy.html#id26">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/08-harness-anatomy.html#id34">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/09-operating-a-harness.html">运行一具马具：熵、可观测性、审批关卡与元马具演进</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#id2">关切一 —— 熵管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#id7">关切二 —— 可观测性实践</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#vs">关切三 —— 审批关卡（硬 vs 软）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#id15">关切四 —— 元马具演进</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#tauri-todo">Tauri-Todo：一个故事弧里的四项关切</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#id24">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/09-operating-a-harness.html#id36">动手环节</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第四部分 · 例子</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/10-openharness.html">案例研究：OpenHarness</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#id2">10.1 —— 一眼看清十个子系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#agent-loop-20-mit">10.2 —— Agent Loop（不超过 20 行，MIT 署名）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#toolformer">10.3 —— 43 个工具的分类（Toolformer 风格）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#id7">10.4 —— 十二格亮点图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#id8">10.5 —— 哪些值得拷贝，哪些应该跳过</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#harnesscard">HarnessCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#id15">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/10-openharness.html#id21">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/11-superpowers.html">案例研究：Superpowers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#id2">11.1 —— 以技能为先的工作流</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#id4">11.2 —— 一条代表性的技能（不超过 20 行）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#openharness-vs-superpowers">11.3 —— OpenHarness vs Superpowers：互补，不是竞争</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#id7">11.4 —— 十二格亮点图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#id8">11.5 —— 什么时候该抄起 Superpowers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#harnesscard">HarnessCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#id14">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/11-superpowers.html#id20">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/12-lazy-scrum-team.html">案例研究：lazy-scrum-team —— 用工作流编码出来的马具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#id2">12.1 —— 角色班底</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#id5">12.2 —— 模式一 —— 制品状态机</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#ch09-rework-matrix">12.3 —— 模式二 —— 返工矩阵</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#vs">12.4 —— 模式三 —— 硬关卡 vs 软关卡</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#id11">12.5 —— 十二格亮点图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#harnesscard">HarnessCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#id17">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/12-lazy-scrum-team.html#id23">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/13-claude-code.html">案例研究：通过《马书》看 Claude Code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#id1">逆向工程免责声明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#id5">13.1 —— 用三大护法 × 四区域矩阵来读 Claude Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#id6">13.2 —— 十二格亮点图（含置信等级）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#hooks-claude-code">13.3 —— hooks 契约 —— Claude Code 的主要护栏</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#id10">13.4 —— 哪些可以搬走，哪些不行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#ai-claude-code-harness-checklist">13.5 —— 给 AI 工具跑的 Claude Code Harness Checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#harnesscard">HarnessCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#id16">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/13-claude-code.html#id21">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/14-codex.html">案例研究：Codex —— 把代理式编码变成一套可审计的工作面</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#id2">14.1 —— Codex 的五个可持有表面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#id3">14.2 —— 十二格亮点图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#agents-md">14.3 —— <code class="docutils literal notranslate"><span class="pre">AGENTS.md</span></code> 是入口，不是杂物间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#hooks">14.4 —— 规则与 hooks：把&quot;请小心&quot;变成边界</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#id4">14.5 —— 记忆只放长期偏好</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#ai-codex-harness-checklist">14.6 —— 给 AI 工具跑的 Codex Harness Checklist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#harnesscard">HarnessCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#id8">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/14-codex.html#id13">动手环节</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/15-openspec.html">案例研究：OpenSpec —— 把意图变成可合并的工程制品</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id1">15.1 —— 一眼看清这具马具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id2">15.2 —— 三个最承重的实现选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id3">15.3 —— OpenSpec 的六个精华模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id4">15.4 —— 十二格亮点图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#artifact-graph-openspec">15.5 —— Artifact Graph：OpenSpec 的骨架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#delta-specs-brownfield">15.6 —— Delta Specs：为 brownfield 而生的规格格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#agent">15.7 —— 跨 Agent 分发：最容易被低估的一层</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#workspace-beta-repo-local-coordination-surface">15.8 —— Workspace Beta：从 repo-local 到 coordination surface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#openspec-vs-superpowers">15.9 —— OpenSpec vs Superpowers：工件马具与技能马具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id10">15.10 —— 风险与盲区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#harnesscard">HarnessCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id12">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/15-openspec.html#id17">动手环节</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第五部分 · 结语</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/16-where-we-go-from-here.html">从这里出发，往哪走</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/16-where-we-go-from-here.html#id2">16.1 —— 一页纸上的立论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/16-where-we-go-from-here.html#id3">16.2 —— 30/60/90 天行动清单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/16-where-we-go-from-here.html#id7">16.3 —— 悬而未决的问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/16-where-we-go-from-here.html#id15">16.4 —— 本书 <em>并未</em> 主张的事</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/16-where-we-go-from-here.html#id18">研究脉络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/16-where-we-go-from-here.html#id22">动手环节</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">第六部分 · 参考</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/17-appendices/index.html">附录</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/a-faq.html">附录 A —— 常见问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/b-glossary.html">附录 B —— 术语表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/c-reading-list.html">附录 C —— 阅读单与外部资源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/d-harnesscard.html">附录 D —— HarnessCard 模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/e-claude-md.html">附录 E —— <code class="docutils literal notranslate"><span class="pre">CLAUDE.md</span></code> 兼容模板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/17-appendices/f-engineer-playbook.html">附录 F —— 工程师落地手册</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">参考文献</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="references.html#id2">本书实际引用的作品</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references.html#id58">完整精选阅读单</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="colophon.html">版记</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="colophon.html#id2">本书是怎样造出来的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colophon.html#id3">本书本身就是它自己的那套马具示范</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colophon.html#id4">许可证与署名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colophon.html#id5">作者与致谢</a></li>
+<li class="toctree-l2"><a class="reference internal" href="colophon.html#id6">鸣谢</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="chapters/00-presentation/index.html"
+       title="下一页">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Part 0 · 公开分享：给 AI 套上缰绳（60 分钟）</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">本书怎么读</a><ul class="visible nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： Walter Fan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026, Walter Fan.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
